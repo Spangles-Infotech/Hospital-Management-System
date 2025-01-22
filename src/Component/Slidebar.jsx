@@ -15,6 +15,7 @@ import Inventory from "../assests/Inventory.png";
 
 const Slidebar = () => {
   const navigate = useNavigate();
+  
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path ? "bg-cyan-500 text-white" : "text-stone-600";
