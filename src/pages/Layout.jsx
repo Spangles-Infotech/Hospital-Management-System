@@ -1,18 +1,22 @@
 import React from 'react'
 import Header from '../Component/Header'
-import Slidebar from '../Component/Slidebar'
 import { Outlet } from 'react-router-dom'
+import { Sidebar } from '../Component/Sidebar'
 
-const layout = () => {
+const Layout = () => {
   return (
     <main>
       <Header/>
-      <div className='flex  cursor-pointer'>
-        <Slidebar/>
-        <Outlet/>
+      <div className='flex'>
+        <div className='w-[20%]'>
+          <Sidebar />
+        </div>
+        <div className='w-[80%]'>
+          <Outlet/>
+        </div>
       </div>
       </main>
   )
 }
 
-export default layout
+export default Layout

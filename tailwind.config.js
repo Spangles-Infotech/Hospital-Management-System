@@ -6,6 +6,8 @@ module.exports = {
       colors: {
         customBlue: "#F6FBFF", 
         HeadlineBlue:"#DEFCFF",
+        primary:"#F6FBFF",
+        customBlack:"#505050"
       },
     },
   },
