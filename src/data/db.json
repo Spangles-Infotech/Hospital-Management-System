@@ -85,7 +85,7 @@
         "BloodGroup": "A+",
         "Gender": "Male",
         "Doctor_Name": "Dr. Berjin",
-        "Status": "Yet to Consult",
+        "Before_Status": "Yet to Consult",
         "After_Status":"Consulted",
         "Age": "45"
       },
