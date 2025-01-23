@@ -25,36 +25,36 @@ const RegisteredOP_1 = () => {
   return (
     <section className="w-full p-1">
       <div className="flex text-stone-700 font-medium text-lg p-3 ">
-        <p className="w-12 ">Token</p>
-        <p className="w-36 ml-5">Patient ID</p>
-        <p className="w-32">Patient Name</p>
-        <p className="w-40 ml-5">Phone No.</p>
-        <p className="w-28">Blood Group</p>
-        <p className="w-20 ml-9">Gender</p>
-        <p className="w-32 ml-5">Doctor Name</p>
-        <p className="w-32 ml-10">Status</p>
-        <p className="w-28 text-center ml-3">Action</p>
+        <p className="w-[8%] ">Token</p>
+        <p className="w-[12%] ">Patient ID</p>
+        <p className="w-[14%]">Patient Name</p>
+        <p className="w-[14%]">Phone No.</p>
+        <p className="w-[14%]">Blood Group</p>
+        <p className="w-[10%]">Gender</p>
+        <p className="w-[15%]">Doctor Name</p>
+        <p className="w-[12%]">Status</p>
+        <p className="w-[10%] text-center ">Action</p>
       </div>
       <div className="w-full h-[1px] bg-stone-400 mb-3"></div>
 
       {patients.map((patient, index) => (
         <div key={index} className="flex items-center text-stone-600 p-3 border-b">
-          <p className="w-16 ">{patient.Token}</p>
-          <p className="w-40">{patient.id}</p>
-          <p className="w-32">{patient.name}</p>
-          <p className="w-48">{patient.Phone_No}</p>
-          <p className="w-32">{patient.BloodGroup}</p>
-          <p className="w-28">{patient.Gender}</p>
-          <p className="w-36">{patient.Doctor_Name}</p>
+          <p className="w-[7.5%]">{patient.Token}</p>
+          <p className="w-[11%]">{patient.id}</p>
+          <p className="w-[12%]">{patient.name}</p>
+          <p className="w-[17%]">{patient.Phone_No}</p>
+          <p className="w-[10%]">{patient.BloodGroup}</p>
+          <p className="w-[9%]">{patient.Gender}</p>
+          <p className="w-[14%]">{patient.Doctor_Name}</p>
           <p
-            className={`w-40 ${
-              patient.Status === "Consulted" ? "text-green-600" : "text-red-600"
+            className={`w-[9%] ${
+              patient.After_Status === "Consulted" ? "text-green-600" : "text-red-600"
             }`}
           >
-            {patient.Status}
+            {patient.After_Status}
           </p>
-          <div className="w-28 flex justify-center gap-3">
-            {patient.Status === "Consulted" ? (
+          <div className="w-[11%] flex justify-center gap-3">
+            {patient.After_Status === "Consulted" ? (
               <img
                 className="bg-green-100 rounded-md w-[30px] h-[30px] p-1"
                 src={Consulted}

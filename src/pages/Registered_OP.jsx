@@ -5,9 +5,9 @@ import PageNo from "../Component/PageNo";
 import New_Appointment from "../Component/New_Appointment";
 
 const Registered_OP = () => {
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   
-
   const openModal = () => {
     setIsModalOpen(true);
   };

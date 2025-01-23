@@ -7,20 +7,22 @@ import Doctors from "../Component/Doctors";
 import Appointment from "../Component/Appointment";
 
 
-
 const Dashboard = () => {
   return (
     <section className="w-full p-3 ">
-      <div className="flex gap-5 items-center justify-end text-center">
+      <div className="flex gap-5 items-center justify-end text-center mr-5">
         <button className="w-[170px] bg-cyan-500 p-2 text-white rounded-xl hover:bg-cyan-600 transition">
           + New Doctor
         </button>
+
         <button className="w-[170px] bg-cyan-500 p-2 text-white rounded-xl hover:bg-cyan-600 transition">
           + New Patient
         </button>
+
         <button className="w-[170px] bg-cyan-500 p-2 text-white rounded-xl hover:bg-cyan-600 transition">
           + Book Appointment
         </button>
+
       </div>
 
       <div className="flex -ml-4 gap-6 mt-10">
