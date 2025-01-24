@@ -25,7 +25,7 @@ export const Form = ({item}) => {
             ) : item.type === "" ?
                 <p className='w-[100%]'></p>
             : item.type === "file" ?
-                <FileUpload label={item?.label} value={formData} onChange={handleChange} name={item?.name} errors={errors} />
+                <FileUpload label={item?.label} value={formData} onChange={handleChange} name={item?.name} errors={errors} title={item?.title} />
             : 
                 <Input label={item?.label} type={item.type} options={item.options} value={formData} onChange={handleChange} name={item?.name} errors={errors} />
         }

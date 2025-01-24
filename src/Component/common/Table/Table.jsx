@@ -1,7 +1,7 @@
 import React from 'react'
 import { Action } from './Action'
 
-export const Table = ({tableHead, tableValue}) => {  
+export const Table = ({tableHead, tableValue, actionData}) => {  
     
   return (
     <table className={`w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-b-[15px]`}>
@@ -27,7 +27,7 @@ export const Table = ({tableHead, tableValue}) => {
                         className={`px-6 py-3 font-roboto text-left font-[400] text-customBlack`}
                     >{val[item.path]}</td>
                 :
-                    <Action path={item.path} />
+                    <Action path={item.path} actionData={actionData} />
             ))}
           </tr>
         ))}

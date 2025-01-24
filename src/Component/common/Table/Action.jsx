@@ -1,12 +1,15 @@
 import React from 'react'
-import { imageData } from '../../../utils/variable/action'
 
-export const Action = ({path}) => {
+export const Action = ({actionData}) => {
   return (
     <div className='flex gap-[15px] items-center h-full px-6 py-3'>
         {
-            imageData.map((item)=>(
-                <img src={require(`../../../assests/${item.name}.png`)} alt="eye-icon" className={`size-[25px] object-contain ${item.path !== path ? "hidden" : ""}`} key={item.name} />
+            actionData.map((item)=>(
+                <img 
+                  key={item.name} 
+                  src={require(`../../../assests/${item.name}.png`)} alt="eye-icon" className={`size-[25px] object-contain cursor-pointer`} 
+                  onClick={()=>item.onClick()}
+                />
             ))
         }
     </div>

@@ -4,7 +4,8 @@ import Dashboard from "../../pages/Dashboard";
 import Layout from "../../pages/Layout";
 import Patient from "../../pages/Patient";
 import Staff from "../../pages/Staff";
-import Prescription from "../../pages/pharmacy/Prescription";
+import Prescription from "../../pages/pharmacy/Prescription/Prescription";
+import PrescriptionPreview from "../../pages/pharmacy/Prescription/PrescriptionPreview";
 
 export default [
     {
@@ -34,6 +35,10 @@ export default [
             {
                 path:"pharmacy",
                 element:<Prescription />
+            },
+            {
+                path:"doctors",
+                element:<PrescriptionPreview />
             },
         ]
     }

@@ -133,7 +133,8 @@ export const staffTableHeading = [
         {
             label:"Upload Photo",
             name:"photo",
-            type:"file"
+            type:"file",
+            title:"Upload Image"
         }
     ],
     [

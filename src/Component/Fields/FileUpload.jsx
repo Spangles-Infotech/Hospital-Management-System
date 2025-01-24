@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import fileimg from "../../assests/eye.png";
 
-export const FileUpload = ({label, value, onChange, name, errors}) => {
+export const FileUpload = ({label, value, onChange, name, errors, title}) => {
 
     const [file, setFile] = useState(null);
     const handleFileChange = (event) => {
@@ -13,9 +13,14 @@ export const FileUpload = ({label, value, onChange, name, errors}) => {
         }
     };
 
+    const handleRemoveImage = ()=>{
+      setFile(null)
+    }
+
   return (
-    <div className="flex flex-col md:flex-row gap-[20px]">
-      <div className="flex items-center justify-center border-dashed border-2 border-[#C3C3C3] rounded-[15px] size-auto p-3 relative">
+    <div className="flex flex-col gap-[10px] w-full">
+      <label className="heading font-roboto font-[500] text-lg text-customBlackColorFont2 mb-3">{label}</label>
+      <div className="flex items-center justify-center border-dashed border-2 border-primary rounded-[15px] size-auto p-3 relative">
         <input
           type="file"
           id="avatar"
@@ -27,27 +32,19 @@ export const FileUpload = ({label, value, onChange, name, errors}) => {
           style={{ display: "flex" }}
         />
         {file ? (
-          <img
-            src={file}
-            className="size-[80px] z-[10]  object-cover"
-            alt="upload-image-icon"
-          />
+          <>
+            <img
+              src={file}
+              className="size-[80px] z-[10]  object-cover"
+              alt="upload-image-icon"
+            />
+            <img src={require("../../assests/cancel.png")} alt="remove-icon" className="absolute top-3 right-3 size-[20px] cursor-pointer" onClick={handleRemoveImage} />
+          </>
         ) : (
-          <img
-            src={fileimg}
-            className="size-[80px] md:size-[40px]  object-contain transition-all duration-500 ease-in-out"
-            alt="upload-image-icon"
-          />
+          <div>
+              <p className="text-primary underline text-[14px] font-[400]">{title}</p>
+          </div>
         )}
-      </div>
-      <div className="flex flex-col gap-2">
-        <div className="flex gap-2">
-            <button className="rounded-lg border-2 border-[#C3C3C3] w-[80px] h-[40px] text-[#505050] hover:text-white font-[500] hover:bg-[#C3C3C3] transition-all duration-500">Upload</button>
-            <button className="rounded-lg border-2 border-primary bg-[#148CF0] w-[80px] h-[40px] text-[#FFFFFF] font-[500] hover:bg-white hover:text-[#148CF0] transition-all duration-500">Remove</button>
-        </div>
-        <div>
-            <p className="m-0 text-[14px] font-[400]">Upload OR code image size 4MB, Format JPG, PNG, SVG</p>
-        </div>
       </div>
       {
         errors && errors[name] &&
