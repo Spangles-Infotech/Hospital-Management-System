@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import cancel from "../assests/cancel.png";
 import { IoIosSearch } from "react-icons/io";
 
-
-const New_Appointment = ({closeModal}) => {
+const New_Appointment = ({ closeModal }) => {
   const [doctor, setDoctor] = useState("");
   const [appointmentDate, setAppointmentDate] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Cash");
@@ -11,15 +10,12 @@ const New_Appointment = ({closeModal}) => {
   const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(true);
 
-
-
   const handleDiscard = () => {
     setDoctor("");
     setAppointmentDate("");
     setPaymentMethod("Cash");
     setDoctorFee("");
     setError("");
-   
   };
 
   const handleDoctorChange = (e) => {
@@ -67,9 +63,9 @@ const New_Appointment = ({closeModal}) => {
   }
 
   return (
-    <div>
-      <div className="w-[1100px] h-[550px] outline outline-cyan-600 rounded-xl bg-white place-self-center ml-52 p-3">
-        <div className="flex items-center justify-between p-7 ml-3">
+    <div className="flex items-center justify-center">
+      <div className="w-full h-full outline outline-primary rounded-xl bg-white p-5">
+        <div className="flex items-center justify-between p-5">
           <p className="text-stone-700 text-lg font-medium">New Appointment</p>
           <img
             onClick={closeModal}
@@ -80,33 +76,55 @@ const New_Appointment = ({closeModal}) => {
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div className="flex items-center gap-5 relative justify-between p-4">
-            <div className="w-[800px] outline outline-1 outline-cyan-500 rounded-xl text-gray-500 flex items-center gap-4 text-lg bg-cyan-50 ml-7">
+         
+          <div className="flex items-center gap-5 justify-between p-4">
+            <div className="flex-grow outline outline-1 outline-primary rounded-xl text-gray-500 flex items-center bg-cyan-50">
               <input
                 type="text"
                 placeholder="Enter Patient Phone no or Patient ID..."
                 className="w-full bg-transparent outline-none text-gray-600 placeholder-gray-400 p-2"
               />
-              <div className="bg-cyan-600 w-20 h-[44px] rounded-tr-lg rounded-br-lg p-2">
-                <IoIosSearch className="text-2xl ml-2 text-white" />
+              <div className="bg-primary w-[12%] h-[40px] rounded-tr-lg rounded-br-lg flex items-center justify-center">
+                <IoIosSearch className="text-2xl text-white" />
               </div>
             </div>
-            <button className="w-[200px] bg-cyan-600 p-2 text-white rounded-lg hover:bg-cyan-600 transition mr-3 text-lg">
+            <button className="w-[20%] bg-primary p-2 text-white rounded-lg hover:bg-primary transition text-lg">
               + New Patient
             </button>
           </div>
 
+          
+          <div className="p-4">
+            <div className="w-full h-[1px] bg-stone-300 mb-4"></div>
+            <div className="flex justify-between">
+              <div className="text-slate-700 text-lg font-medium flex gap-2">
+                Patient ID:
+                <p className="text-green-500">DOB003234</p>
+              </div>
+              <div className="text-slate-700 text-lg font-medium flex gap-2">
+                Patient Name:
+                <p className="text-primary">Ramesh</p>
+              </div>
+              <div className="text-slate-700 text-lg font-medium flex gap-2">
+                Phone Number:
+                <p className="text-primary">+ 91 9087654321</p>
+              </div>
+            </div>
+            <div className="w-full h-[1px] bg-stone-300 mt-4"></div>
+          </div>
+
+   
           {error && <p className="text-red-600 text-center mt-3">{error}</p>}
 
-          <div className="flex p-2">
-            <div className="flex flex-col p-2">
-              <label className="text-stone-600 text-lg font-medium ml-7">
-                Doctor
-              </label>
+     
+          <div className="flex flex-wrap gap-5 p-2">
+        
+            <div className="flex flex-col w-[48%]">
+              <label className="text-stone-600 text-lg font-medium">Doctor</label>
               <select
                 value={doctor}
                 onChange={handleDoctorChange}
-                className="w-[478px] h-[50px] outline-none border border-stone-500 rounded-lg ml-7 mt-2 p-2 text-stone-600"
+                className="w-full h-[50px] outline-none border border-stone-300 rounded-lg mt-2 p-2 text-stone-600"
               >
                 <option value="">Select a Doctor</option>
                 <option>Dr. David</option>
@@ -116,39 +134,38 @@ const New_Appointment = ({closeModal}) => {
               </select>
             </div>
 
-            <div className="flex flex-col p-2">
-              <label className="text-stone-600 text-lg font-medium ml-7">
-                Doctor Fee
-              </label>
+            <div className="flex flex-col w-[48%]">
+              <label className="text-stone-600 text-lg font-medium">Doctor Fee</label>
               <input
                 type="text"
                 value={doctorFee}
                 readOnly
-                className="w-[478px] h-[50px] outline-none border border-stone-500 bg-stone-100 rounded-lg ml-7 mt-2 p-2 text-stone-600"
+                className="w-full h-[50px] outline-none border border-stone-300 bg-stone-100 rounded-lg mt-2 p-2 text-stone-600"
               />
             </div>
-          </div>
 
-          <div className="flex mt-5 p-2">
-            <div className="flex flex-col p-2">
-              <label className="text-stone-600 text-lg font-medium ml-7">
+          
+            <div className="flex flex-col w-[48%]">
+              <label className="text-stone-600 text-lg font-medium">
                 Appointment Date
               </label>
               <input
                 type="date"
                 value={appointmentDate}
                 onChange={handleAppointmentDateChange}
-                className="w-[478px] h-[50px] outline-none border border-stone-500 rounded-lg ml-7 mt-2 p-2 text-stone-600"
+                className="w-full h-[50px] outline-none border border-stone-300 rounded-lg mt-2 p-2 text-stone-600"
               />
             </div>
-            <div className="flex flex-col p-2">
-              <label className="text-stone-600 text-lg font-medium ml-7">
+
+            
+            <div className="flex flex-col w-[48%]">
+              <label className="text-stone-600 text-lg font-medium">
                 Payment Method
               </label>
               <select
                 value={paymentMethod}
                 onChange={handlePaymentMethodChange}
-                className="w-[478px] h-[50px] outline-none border border-stone-500 rounded-lg ml-7 mt-2 p-2 text-stone-600"
+                className="w-full h-[50px] outline-none border border-stone-300 rounded-lg mt-2 p-2 text-stone-600"
               >
                 <option value="">Select Payment Method</option>
                 <option>Cash</option>
@@ -159,13 +176,14 @@ const New_Appointment = ({closeModal}) => {
             </div>
           </div>
 
+          
           <div className="flex mt-7 gap-7 items-center justify-end">
             <p className="text-red-600 cursor-pointer text-lg" onClick={handleDiscard}>
               Discard
             </p>
             <button
               type="submit"
-              className="w-[150px] bg-cyan-600 p-2 text-white rounded-lg hover:bg-cyan-600 transition mr-5 text-lg"
+              className="w-[15%] bg-primary p-2 text-white rounded-lg hover:bg-primary transition text-lg"
             >
               Save
             </button>

@@ -5,12 +5,16 @@ import Action2 from '../assests/Action2.png';
 import { IoIosSearch } from "react-icons/io";
 import Consulted from '../assests/Consulted.png';
 import { FiPlus } from "react-icons/fi";
+import New_Appointment from "./New_Appointment";
+import Vitals from './Vitals';
+import PageNo from './PageNo';
 
 const RegisteredOP_1 = () => {
-
   const [patients, setPatients] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [Date, setDate] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isVitalsOpen, setIsVitalsOpen] = useState(false); 
 
   useEffect(() => {
     const fetchPatients = async () => {
@@ -24,52 +28,65 @@ const RegisteredOP_1 = () => {
     fetchPatients();
   }, []);
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setIsVitalsOpen(false); 
+  };
+
   const handleDateChange = (e) => setDate(e.target.value);
 
+  const openVitals = () => {
+    setIsVitalsOpen(true); 
+  };
+
+  const closeVitals = () => {
+    setIsVitalsOpen(false); 
+  };
+
   return (
-    <section className="w-full p-7">
-  <div className="flex flex-wrap items-center mb-5 gap-4">
+    <section className="w-full p-7 ">
+      <div className="flex flex-wrap items-center mb-5 gap-4">
+        <div className="flex-1 min-w-[200px]">
+          <div className="text-lg p-4 font-semibold text-primary">
+            Registered OP
+          </div>
+        </div>
 
+        <div className="flex gap-4 items-center flex-1 min-w-[200px]">
+          <div className="flex-1 min-w-[150px]">
+            <input
+              type="date"
+              value={Date}
+              placeholder='Date: '
+              onChange={handleDateChange}
+              className="w-full outline-none border border-stone-400 rounded-lg p-1.5 text-stone-600"
+            />
+          </div>
 
-<div className="flex-1 min-w-[200px]">
-  <div className="text-lg p-4 font-semibold text-primary">
-    Registered OP
-  </div>
-</div>
+          <div className="flex flex-1 items-center gap-3 p-2 border border-stone-400 rounded-lg min-w-[200px]">
+            <IoIosSearch className="text-stone-600 text-2xl" />
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full outline-none text-stone-600 placeholder-stone-400"
+            />
+          </div>
+        </div>
 
-
-<div className="flex gap-4 items-center flex-1 min-w-[200px]">
- 
-  <div className="flex-1 min-w-[150px]">
-    <input
-      type="date"
-      value={Date}
-      placeholder='Date: '
-      onChange={handleDateChange}
-      className="w-full outline-none border border-stone-400 rounded-lg p-1.5 text-stone-600"
-    />
-  </div>
-
-
-  <div className="flex flex-1 items-center gap-3 p-2 border border-stone-400 rounded-lg min-w-[200px]">
-    <IoIosSearch className="text-stone-600 text-2xl" />
-    <input
-      type="text"
-      placeholder="Search..."
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      className="w-full outline-none text-stone-600 placeholder-stone-400"
-    />
-  </div>
-</div>
-
-<div className="flex-none">
-  <button className="bg-primary p-2 text-white rounded-lg hover:bg-primary transition flex items-center gap-2">
-    <FiPlus /> New Appointment
-  </button>
-</div>
-
-</div>
+        <div className="flex-none">
+          <button
+            onClick={openModal}
+            className="bg-primary p-2 text-white rounded-lg hover:bg-primary transition flex items-center gap-2">
+            <FiPlus /> New Appointment
+          </button>
+        </div>
+      </div>
 
       <table className="w-full table-auto border-collapse">
         <thead>
@@ -107,6 +124,7 @@ const RegisteredOP_1 = () => {
                   />
                 ) : (
                   <img
+                    onClick={openVitals} 
                     className="bg-orange-100 rounded-md w-[30px] h-[30px] p-1"
                     src={Action1}
                     alt="Action 1"
@@ -122,6 +140,20 @@ const RegisteredOP_1 = () => {
           ))}
         </tbody>
       </table>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <New_Appointment closeModal={closeModal} />
+        </div>
+      )}
+
+      {isVitalsOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <Vitals 
+          closeVitals={closeVitals} />
+        </div>
+      )}
+      <PageNo/>
     </section>
   );
 };
