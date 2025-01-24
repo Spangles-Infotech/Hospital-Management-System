@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { IoIosSearch } from "react-icons/io";
 import axios from 'axios'; 
 import Action3 from '../assests/Action3.png';
-import PageNo from './PageNo';
+import { Pagination } from '../Component/common/Pagination';
 
 const RegisteredOP_2 = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -87,7 +87,7 @@ const RegisteredOP_2 = () => {
           ))}
         </tbody>
       </table>
-      <PageNo/>
+      <Pagination />
     </section>
   );
 };

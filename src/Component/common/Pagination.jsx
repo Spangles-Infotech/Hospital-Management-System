@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
-const PageNo = () => {
+export const Pagination = () => {
 
   const [activePage, setActivePage] = useState(1);
 
@@ -82,4 +82,3 @@ const PageNo = () => {
   );
 };
 
-export default PageNo;

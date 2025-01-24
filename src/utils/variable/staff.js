@@ -1,27 +1,27 @@
-export const tableHeading = [
+export const staffTableHeading = [
     {
-      name:"Patient ID",
-      path:"patientId"
+      name:"Staff ID",
+      path:"staffId"
     },
     {
-      name:"Patient Name",
-      path:"patientName"
+      name:"Staff Name",
+      path:"staffName"
     },
     {
       name:"Phone No.",
       path:"phoneNumber"
     },
     {
+        name:"Gender",
+        path:"gender"
+    },
+    {
       name:"Blood Group",
       path:"bloodGroup"
     },
     {
-      name:"Gender",
-      path:"gender"
-    },
-    {
-      name:"Patient Type",
-      path:"patientType"
+      name:"Designation",
+      path:"designation"
     },
     {
       name:"Action",
@@ -29,20 +29,17 @@ export const tableHeading = [
     }
   ]
 
-
-export const patientFields = [
+  export const staffFields = [
     [
         {
-            label:"Patient ID",
-            name:"patientId",
+            label:"Staff ID",
+            name:"staffId",
             type:"text"
         },
         {
-            label:"Patient Name / Baby of",
-            options:["Patient Name", "Baby of"],
-            inputName:"name",
-            dropdownName:"nameType",
-            type:"inputdropdown"
+            label:"Staff Name",
+            name:"staffName",
+            type:"text"
         }
     ],
     [
@@ -52,26 +49,13 @@ export const patientFields = [
             type:"text"
         },
         {
-            label:"Mother's Name",
-            name:"motherName",
-            type:"text"
-        }
-    ],
-    [
-        {
             label:"Mobile Number",
             options:["+91", "+92", "+93"],
             inputName:"mobileNumber",
             dropdownName:"countryCode",
             type:"inputdropdown"
         },
-        {
-            label:"Alternate Mobile Number",
-            options:["+91", "+92", "+93"],
-            inputName:"alternateMobileNumber",
-            dropdownName:"countryCode",
-            type:"inputdropdown"
-        },
+        
     ],
     [
         [
@@ -101,70 +85,99 @@ export const patientFields = [
             type:"select"
         },
         {
+            label:"Alternate Mobile Number",
+            options:["+91", "+92", "+93"],
+            inputName:"alternateMobileNumber",
+            dropdownName:"countryCode",
+            type:"inputdropdown"
+        },
+    ],
+    [
+        {
             label:"Pincode",
             name:"pincode",
             type:"text"
-        }
-    ],
-    [
+        },
         {
             label:"State",
             name:"state",
             options:["Maharashtra", "Gujarat", "Rajasthan"],
             type:"select"
         },
+    ],
+    [
         {
             label:"District",
             name:"district",
             options:["Maharashtra", "Gujarat", "Rajasthan"],
             type:"select"
-        }
-    ],
-    [
+        },
         {
             label:"City",
             name:"city",
             type:"text"
         },
-        // {
-        //     type:""
-        // }
     ],
     {
         label:"Address",
         name:"address",
         type:"textarea"
-    }
+    },
+    [
+        {
+            label:"Designation",
+            name:"designation",
+            type:"select",
+            options:["Doctor", "Nurse"]
+        },
+        {
+            label:"Upload Photo",
+            name:"photo",
+            type:"file"
+        }
+    ],
+    [
+        {
+            label:"Joining Date",
+            name:"joiningDate",
+            type:"date"
+        },
+        {
+            label:"Reliving Date",
+            name:"relivingDate",
+            type:"date"
+        }
+    ]
 
 ]
 
-export const tableValue = [
+  export const staffTableValue = [
     {
       id:"21414",
-      patientId: "323252",
-      patientName: "John Doe",
+      staffId: "323252",
+      staffName: "John Doe",
       phoneNumber: "dasgasgasga",
       bloodGroup: "A+",
       gender: "Male",
-      patientType: "Emergency",
+      designation: "Emergency",
     },
     {
-    id:"21415",
-    patientId: "323252",
-    patientName: "John Doe",
-    phoneNumber: "dasgasgasga",
-    bloodGroup: "A+",
-    gender: "Male",
-    patientType: "Emergency",
-  },
-  {
-    id:"21416",
-    patientId: "323252",
-    patientName: "John Doe",
-    phoneNumber: "dasgasgasga",
-    bloodGroup: "A+",
-    gender: "Male",
-    patientType: "Emergency",
-  },
+      id:"214145",
+      staffId: "323252",
+      staffName: "John Doe",
+      phoneNumber: "dasgasgasga",
+      bloodGroup: "A+",
+      gender: "Male",
+      designation: "Emergency",
+    },
+    {
+      id:"214146",
+      staffId: "323252",
+      staffName: "John Doe",
+      phoneNumber: "dasgasgasga",
+      bloodGroup: "A+",
+      gender: "Male",
+      designation: "Emergency",
+    },
+   
 ]
-

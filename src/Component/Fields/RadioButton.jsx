@@ -3,11 +3,10 @@ import React from 'react'
 export const RadioButton = ({ label = "Status", value,  onChange, options=["Paid", "Unpaid"], errors, name }) => {
 
   const isGreenStatus = (item)=>{ return item === "paid" || item === "active" || item === "approved" || item === "completed"};
-
   return (
-    <div className="flex flex-row items-center gap-[100px] w-full">
+    <div className="flex flex-col justify-center gap-[10px] w-full">
       <label className="block text-sm font-medium">{label}</label>
-      <div className="flex items-center mt-1 font-roboto font-medium">
+      <div className="flex  items-center mt-1 font-roboto font-medium">
       {options.map((option, index) => (
         <label className="inline-flex items-center ml-10 mr-10" key={index}>
           <input

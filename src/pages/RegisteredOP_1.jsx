@@ -5,9 +5,9 @@ import Action2 from '../assests/Action2.png';
 import { IoIosSearch } from "react-icons/io";
 import Consulted from '../assests/Consulted.png';
 import { FiPlus } from "react-icons/fi";
-import New_Appointment from "./New_Appointment";
-import Vitals from './Vitals';
-import PageNo from './PageNo';
+import New_Appointment from "../Component/New_Appointment";
+import Vitals from '../Component/Vitals';
+import { Pagination } from '../Component/common/Pagination';
 
 const RegisteredOP_1 = () => {
   const [patients, setPatients] = useState([]);
@@ -153,7 +153,7 @@ const RegisteredOP_1 = () => {
           closeVitals={closeVitals} />
         </div>
       )}
-      <PageNo/>
+      <Pagination />
     </section>
   );
 };

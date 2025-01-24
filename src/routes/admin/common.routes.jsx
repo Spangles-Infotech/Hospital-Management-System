@@ -1,8 +1,10 @@
-import RegisteredOP_1 from "../../Component/RegisteredOP_1";
-import RegisteredOP_2 from "../../Component/RegisteredOP_2";
+import RegisteredOP_1 from "../../pages/RegisteredOP_1";
+import RegisteredOP_2 from "../../pages/RegisteredOP_2";
 import Dashboard from "../../pages/Dashboard";
 import Layout from "../../pages/Layout";
 import Patient from "../../pages/Patient";
+import Staff from "../../pages/Staff";
+import Prescription from "../../pages/pharmacy/Prescription";
 
 export default [
     {
@@ -24,7 +26,15 @@ export default [
             {
                 path:"patients",
                 element:<Patient />
-            }
+            },
+            {
+                path:"staff",
+                element:<Staff />
+            },
+            {
+                path:"pharmacy",
+                element:<Prescription />
+            },
         ]
     }
 ]

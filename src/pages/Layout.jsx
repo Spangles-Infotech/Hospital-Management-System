@@ -7,11 +7,11 @@ const Layout = () => {
   return (
     <main>
       <Header/>
-      <div className='flex h-[90vh]'>
+      <div className='flex'>
         <div className='w-[20%]'>
           <Sidebar />
         </div>
-        <div className='w-[80%] bg-[#D0FAFF33]'>
+        <div className='w-[80%] bg-[#D0FAFF33] '>
           <Outlet/>
         </div>
       </div>

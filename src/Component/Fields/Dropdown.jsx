@@ -1,12 +1,12 @@
 import React from "react";
 
 export const Dropdown = ({ value, onChange, label, options, isIndexIsValue=false, errors, name}) => {
-    const undefinedValue = value === undefined || value === ""
+    const undefinedValue = value[name] === undefined || value[name] === ""
   return (
     <div className="flex flex-col gap-2 w-full">
       {
         label &&
-        <label className="font-roboto font-medium text-lg text-customBlackColorFont2 mb-3">
+        <label className="font-roboto font-medium text-lg text-customBlack mb-3">
           {label}
         </label>
       }
@@ -14,7 +14,7 @@ export const Dropdown = ({ value, onChange, label, options, isIndexIsValue=false
         value={ !undefinedValue ? value?.[name] : "select"}
         name={name}
         onChange={onChange}
-        className={`h-[50px] border rounded-md border-[#898989] focus:ring-primary focus:border-primary p-0 pl-3`}
+        className={`h-[50px] border rounded-md border-[##DDDDDD] focus:ring-primary focus:border-primary px-3`}
       >
         {undefinedValue && <option>select</option>}
         {options.map((option, index) => (

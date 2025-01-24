@@ -9,9 +9,9 @@ export const Input = ({ label, type = "text", value, onChange, errors, name }) =
       <input
         type={type}
         name={name}
-        value={value?.[name]}
+        value={value?.[name]   || ""}
         onChange={onChange}
-        className={`h-[50px] rounded-md border border-[#DDDDDD] focus:ring-primary focus:border-primary ${type === "time" ? "appearance-none bg-time bg-no-repeat bg-bottom-4 bg-[length:20px_20px]" : ""}`}
+        className={`h-[50px] px-[10px] rounded-md border border-[#DDDDDD] focus:ring-primary focus:outline-primary ${type === "time" ? "appearance-none bg-time bg-no-repeat bg-bottom-4 bg-[length:20px_20px]" : ""}`}
       />
       {
         errors && errors[name] &&

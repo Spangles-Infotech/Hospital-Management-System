@@ -43,7 +43,7 @@ export const FileUpload = ({label, value, onChange, name, errors}) => {
       <div className="flex flex-col gap-2">
         <div className="flex gap-2">
             <button className="rounded-lg border-2 border-[#C3C3C3] w-[80px] h-[40px] text-[#505050] hover:text-white font-[500] hover:bg-[#C3C3C3] transition-all duration-500">Upload</button>
-            <button className="rounded-lg border-2 border-[#148CF0] bg-[#148CF0] w-[80px] h-[40px] text-[#FFFFFF] font-[500] hover:bg-white hover:text-[#148CF0] transition-all duration-500">Remove</button>
+            <button className="rounded-lg border-2 border-primary bg-[#148CF0] w-[80px] h-[40px] text-[#FFFFFF] font-[500] hover:bg-white hover:text-[#148CF0] transition-all duration-500">Remove</button>
         </div>
         <div>
             <p className="m-0 text-[14px] font-[400]">Upload OR code image size 4MB, Format JPG, PNG, SVG</p>

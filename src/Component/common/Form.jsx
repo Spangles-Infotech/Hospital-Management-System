@@ -10,19 +10,18 @@ import { useForm } from '../../context/FormContext'
 export const Form = ({item}) => {
 
     const { formData, handleChange, errors } = useForm()
-    console.log("item", item)
 
   return (
     <>
         {
             item.type.toLowerCase() === "inputdropdown" ? (
-                <InputDropdown label={item?.label} value={item?.value} errors={errors} onChange={handleChange} inputName={item?.inputName} dropdownName={item?.dropdownName} options={item.options} />
+                <InputDropdown label={item?.label} value={formData} errors={errors} onChange={handleChange} inputName={item?.inputName} dropdownName={item?.dropdownName} options={item.options} />
             ) : item.type.toLowerCase() === "textarea" ?
                 <TextArea label={item?.label} value={formData} onChange={handleChange}  name={item?.name} errors={errors} />
             : item.type === "select" ? (
                 <Dropdown label={item?.label} value={formData} options={item?.options} onChange={handleChange} name={item?.name} errors={errors} />
             ) : item.type === "radio" ? (
-                <RadioButton label={item?.label} value={formData} onChange={handleChange} name={item?.name} errors={errors} />
+                <RadioButton label={item?.label} value={formData} onChange={handleChange} name={item?.name} errors={errors} options={item?.options} />
             ) : item.type === "" ?
                 <p className='w-[100%]'></p>
             : item.type === "file" ?

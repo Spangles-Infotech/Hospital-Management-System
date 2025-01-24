@@ -28,8 +28,8 @@ const Vitals = ({ closeVitals }) => {
 
   return (
     <section onContextMenu={(e) => e.preventDefault()}
-    className='w-[50%] h-[600px] justify-center items-center p-5 overflow-hidden z-50'>
-      <div className="   outline outline-primary rounded-xl bg-white overflow-y-scroll">
+    className='w-[50%] h-[900px] justify-center items-center p-5  overflow-y-scroll z-50'>
+      <div className="   outline outline-primary rounded-xl bg-white">
         <div className="flex justify-between items-center p-4">
           <p className="text-lg text-stone-700 font-semibold ">Vitals</p>
           <img
