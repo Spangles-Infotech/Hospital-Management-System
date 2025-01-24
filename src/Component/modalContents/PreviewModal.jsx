@@ -72,7 +72,9 @@ const PreviewModal = ({ title, previewFields, data }) => {
 
           <div className="w-full h-[1px] bg-primary mt-4"></div>
 
-          <div className="p-6">
+          
+
+          {/* <div className="p-6">
             <p className="text-slate-700 font-medium text-xl mb-4">
               Additional Info
             </p>
@@ -89,7 +91,7 @@ const PreviewModal = ({ title, previewFields, data }) => {
                 </p>
               </div>
             ))}
-          </div>
+          </div> */}
         </Fragment>
       ))}
     </div>
