@@ -7,7 +7,7 @@ import { Pagination } from '../../../Component/common/Pagination'
 
 const Prescription = () => {
   return (
-   <section>
+   <section className='p-4'>
     <TableHeader title={"Prescriptions"}/>
     <Table tableHead={tableHeading} tableValue={tableValue}/>
     <Pagination/>

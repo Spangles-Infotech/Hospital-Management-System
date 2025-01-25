@@ -182,3 +182,65 @@ export const staffTableHeading = [
     },
    
 ]
+
+export const staffPreviewField = [
+    {
+      icon:"staffIcon",
+      head:[
+        {
+          title:"DoctorId",
+          name:"doctorId"
+        },
+        {
+          title: "Designation",
+          name:"designation"
+        }
+      ],
+      fields:[
+        {
+          label:"Doctor Name",
+          name:"doctorName"
+        },
+        {
+          label:"Address",
+          name:"address"
+        },
+        {
+          label:"Age",
+          name:"age"
+        },
+        {
+          label:"Phone Number",
+          name:"phoneNumber"
+        },
+        {
+          label:"Gender",
+          name:"gender"
+        },
+        {
+          label:"Alternate Mobile Number",
+          name:"alternateMobileNumber"
+        },
+        {
+          label:"Blood Group",
+          name:"bloodGroup"
+        }
+      ],
+      image:{
+        name:"doctorImage"
+      },
+      isStaff:true,
+      staffInfo:[
+        {
+          title:"Joining Date",
+          name:"joiningDate"
+        },
+        {
+          title:"Reliving Date",
+          name:"relivingDate"
+        }
+      ]
+
+    }
+    
+  ]

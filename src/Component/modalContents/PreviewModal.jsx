@@ -1,7 +1,9 @@
 import React, { Fragment } from "react";
-import PatientDetailIcon from "../../assests/PatientDetailIcon.png";
 import barcodeIcon from "../../assests/Barcode.png";
 import { PrintIcon } from "../../icons/PrintIcon";
+import { Timing } from "../preview content/Timing";
+import { AdditionalInfo } from "../preview content/AdditionalInfo";
+import { StaffInfo } from "../preview content/StaffInfo";
 
 const PreviewModal = ({ title, previewFields, data }) => {
   const additionalInfo = [
@@ -24,10 +26,10 @@ const PreviewModal = ({ title, previewFields, data }) => {
     <div className="w-full">
       {previewFields?.map((previewField, index) => (
         <Fragment key={index}>
-          <div className="flex items-center justify-between p-4 pt-8  border-primary">
+          <div className="flex items-center justify-between py-4 pt-8  border-[#DCFFFF]">
             <div className="flex items-center gap-3">
               <img
-                src={PatientDetailIcon}
+                src={require(`../../assests/${previewField.icon}.png`)}
                 alt="Patient Detail"
                 className="w-8 h-8"
               />
@@ -35,24 +37,24 @@ const PreviewModal = ({ title, previewFields, data }) => {
             </div>
             {previewField?.head.map((item) => (
               <div className="flex items-center gap-3">
-                <p className="text-slate-700 text-lg font-medium">
+                <p className="text-slate-700 text-[18px] font-[600]">
                   {item.title}:
                 </p>
-                <p className="text-green-500 text-lg font-medium">
+                <p className={` text-[18px] font-[600] ${item.title === "Designation" ? "text-[#740058]" : "text-green-500"}`}>
                   {data[item.name]}
                 </p>
               </div>
             ))}
           </div>
-          <div className="w-full h-[1px] bg-primary"></div>
-          <div className="flex flex-wrap gap-[10px] p-4">
+          <div className="w-full h-[1px] bg-[#DCFFFF]"></div>
+          <div className="flex flex-wrap gap-[10px] py-4 w-[700px]">
               {
                 previewField.fields.map((field)=>(
-                  <div key={field.label} className="flex items-center gap-3">
-                    <p className="text-slate-700 font-medium text-lg w-[150px]">
+                  <div key={field.label} className="flex items-center gap-3 w-[49%]">
+                    <p className="text-customBlack font-[600]  text-[16px] w-[50%]">
                       {field.label}
                     </p>
-                    <p className={`${field.name === "bloodgroup" ? "text-[#00BE5F]" : "text-primary"} text-lg font-medium`}>
+                    <p className={`w-[50%] ${field.name === "bloodgroup" ? "text-[#00BE5F]" : "text-secondaryBlue"} text-[16px] font-[600] `}>
                       {data[field.name]}
                     </p>
                   </div>
@@ -70,28 +72,10 @@ const PreviewModal = ({ title, previewFields, data }) => {
             </button>
           </div> */}
 
-          <div className="w-full h-[1px] bg-primary mt-4"></div>
-
-          
-
-          {/* <div className="p-6">
-            <p className="text-slate-700 font-medium text-xl mb-4">
-              Additional Info
-            </p>
-            {additionalInfo.map((info, index) => (
-              <div key={index} className="flex items-center gap-3 py-2">
-                <p className="text-slate-700 font-medium text-lg w-[150px]">
-                  {info.label}
-                </p>
-                {info.note && (
-                  <p className={`${info.noteColor}`}>{info.note}</p>
-                )}
-                <p className={`${info.textColor} text-lg font-medium`}>
-                  {info.value}
-                </p>
-              </div>
-            ))}
-          </div> */}
+          <div className="w-full h-[1px] bg-[#DCFFFF]"></div>
+          <Timing data={data} previewField={previewField} />
+          <StaffInfo data={data} previewField={previewField} />
+          <AdditionalInfo data={data} previewField={previewField} />
         </Fragment>
       ))}
     </div>

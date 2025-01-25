@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Action1 from '../assests/Action1.png';
-import Action2 from '../assests/Action2.png';
+import Action1 from '../../assests/Action1.png';
+import Action2 from '../../assests/Action2.png';
 import { IoIosSearch } from "react-icons/io";
-import Consulted from '../assests/Consulted.png';
+import Consulted from '../../assests/Consulted.png';
 import { FiPlus } from "react-icons/fi";
-import New_Appointment from "../Component/New_Appointment";
-import Vitals from '../Component/Vitals';
-import { Pagination } from '../Component/common/Pagination';
+import New_Appointment from "../../Component/New_Appointment";
+import Vitals from '../../Component/Vitals';
+import { Pagination } from '../../Component/common/Pagination';
 
 
 const RegisteredOP_1 = () => {

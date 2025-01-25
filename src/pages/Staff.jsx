@@ -1,7 +1,7 @@
 import React from 'react'
 import { TableHeader } from '../Component/common/Table/TableHeader'
 import { Table } from '../Component/common/Table/Table'
-import { staffTableHeading, staffTableValue, staffFields } from '../utils/variable/staff'
+import { staffTableHeading, staffTableValue, staffFields , staffPreviewField} from '../utils/variable/staff'
 import { Pagination } from '../Component/common/Pagination'
 import { useModal } from '../context/ModalContext'
 import { FormModal } from '../Component/modalContents/FormModal'
@@ -18,78 +18,30 @@ const Staff = () => {
         }
     ]
     
+    const data = {
+      doctorId:"234234",
+      designation:"cardiologist",
+      doctorName:"pandi poser pandi",
+      address:"10 main st, las vegas, nagercoil.",
+      age:25,
+      phoneNumber:"2342342342",
+      gender:"male",
+      alternateMobileNumber:"2342342342",
+      bloodGroup:"A+",
+      doctorImage:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAe9NZZk7nUE_anJir2Scf7tsqMHRdEpCbJg&s",
+      joiningDate:"10/10/2020",
+      relivingDate:"11/11/2024"
+    }
+
     const actionData = [
       {
         name:"eye",
-        onClick : ()=>{ openModal(PreviewModal, {title:"Staff Details"})}
+        onClick : ()=>{ openModal(PreviewModal, {title:"Staff Details", previewFields:staffPreviewField, data:data})}
       },
       {
         name: "editpen",
         onClick: () =>  ()=>{ openModal(FormModal, {title:"New Staff", formField:staffFields})}
       }
-    ]
-
-    const staffPreviewField = [
-      {
-        head:[
-          {
-            title:"DoctorId",
-            name:"doctorId"
-          },
-          {
-            title: "Designation",
-            name:"designation"
-          }
-        ],
-        fields:[
-          {
-            label:"Doctor Name",
-            name:"doctorName"
-          },
-          {
-            label:"Address",
-            name:"address"
-          },
-          {
-            label:"Age",
-            name:"age"
-          },
-          {
-            label:"Phone Number",
-            name:"phoneNumber"
-          },
-          {
-            label:"Gender",
-            name:"gender"
-          },
-          {
-            label:"Alternate Mobile Number",
-            name:"alternateMobileNumber"
-          },
-          {
-            label:"Blood Group",
-            name:"bloodGroup"
-          }
-        ],
-        timings:[
-          {
-            label:"Monday",
-            from:"09:30AM",
-            to:"05:00PM"
-          },
-          {
-            label:"Monday",
-            from:"09:30AM",
-            to:"05:00PM"
-          },
-          {
-            label:"Monday",
-            from:"09:30AM",
-            to:"05:00PM"
-          }
-        ]
-      }
-      
     ]
 
   return (

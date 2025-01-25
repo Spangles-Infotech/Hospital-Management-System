@@ -1,9 +1,9 @@
 import React from 'react';
 import { FaArrowLeftLong } from "react-icons/fa6";
-import PatientDetail from './pharmacy/Prescription/PatientDetail';
+import PatientDetail from '../pharmacy/Prescription/PatientDetail';
 
 
-const RegOP_PatientDetail = () => {
+const RegisteredOpPreview = () => {
   const patientDetails = [
     { label: "Weight", value: "10Kg", subLabel: "(When born)" },
     { label: "Birth Time", value: "11:30 AM" },
@@ -62,4 +62,4 @@ const RegOP_PatientDetail = () => {
   );
 };
 
-export default RegOP_PatientDetail;
+export default RegisteredOpPreview;

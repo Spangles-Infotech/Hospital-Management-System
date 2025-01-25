@@ -7,7 +7,8 @@ module.exports = {
         customBlue: "#F6FBFF", 
         HeadlineBlue:"#DEFCFF",
         primary:"#089BAB",
-        customBlack:"#505050"
+        customBlack:"#505050",
+        secondaryBlue:"#2D86AF"
       },
       screens:{
         "2xl":"1450px",

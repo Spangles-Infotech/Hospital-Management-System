@@ -1,13 +1,14 @@
-import RegisteredOP_1 from "../../pages/RegisteredOP_1";
-import RegisteredOP_2 from "../../pages/RegisteredOP_2";
+import RegisteredOP_1 from "../../pages/registered-op/RegisteredOP_1";
+import RegisteredOP_2 from "../../pages/registered-op/RegisteredOP_2";
 import Dashboard from "../../pages/Dashboard";
 import Layout from "../../pages/Layout";
 import Patient from "../../pages/Patient";
 import Staff from "../../pages/Staff";
 import Prescription from "../../pages/pharmacy/Prescription/Prescription";
 import PrescriptionPreview from "../../pages/pharmacy/Prescription/PrescriptionPreview";
-import RegOP_PatientDetail from "../../pages/RegOP_PatientDetail"
-
+import registeredPreviewRoutes from "./registeredPreview.routes";
+import pharmacyRoutes from "./pharmacy.routes";
+import Doctor from "../../pages/Doctor";
 
 export default [
     {
@@ -27,6 +28,10 @@ export default [
                 element:<RegisteredOP_2 />
             },
             {
+                path:"doctors",
+                element:<Doctor />
+            },
+            {
                 path:"patients",
                 element:<Patient />
             },
@@ -42,11 +47,9 @@ export default [
                 path:"doctors",
                 element:<PrescriptionPreview />
             },
-            {
-                path:"Expense",
-                element:<RegOP_PatientDetail/>
-               
-            }
+            ...registeredPreviewRoutes,
+            ...pharmacyRoutes,
+
         ]
     }
 ]
