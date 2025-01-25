@@ -9,6 +9,7 @@ import New_Appointment from "../Component/New_Appointment";
 import Vitals from '../Component/Vitals';
 import { Pagination } from '../Component/common/Pagination';
 
+
 const RegisteredOP_1 = () => {
   const [patients, setPatients] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');

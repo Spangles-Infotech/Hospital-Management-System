@@ -6,6 +6,8 @@ import Patient from "../../pages/Patient";
 import Staff from "../../pages/Staff";
 import Prescription from "../../pages/pharmacy/Prescription/Prescription";
 import PrescriptionPreview from "../../pages/pharmacy/Prescription/PrescriptionPreview";
+import RegOP_PatientDetail from "../../pages/RegOP_PatientDetail"
+
 
 export default [
     {
@@ -40,6 +42,11 @@ export default [
                 path:"doctors",
                 element:<PrescriptionPreview />
             },
+            {
+                path:"Expense",
+                element:<RegOP_PatientDetail/>
+               
+            }
         ]
     }
 ]

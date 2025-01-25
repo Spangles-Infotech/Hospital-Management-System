@@ -19,6 +19,7 @@ const Doctors = () => {
     fetchDoctors();
   }, []);
 
+
   return (
     <>
       <div className='flex gap-3 mt-10'>

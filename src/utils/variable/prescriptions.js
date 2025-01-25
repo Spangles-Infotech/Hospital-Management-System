@@ -124,6 +124,6 @@ export const tableValue = [
         doctorName: "Dr. Suresh",
         NoOfMedicine: "04",
         
-      },
-    
+      },    
 ]
+
