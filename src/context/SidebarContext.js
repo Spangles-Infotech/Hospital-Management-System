@@ -18,7 +18,7 @@ export const SidebarModalProvider = ({children})=>{
     }
 
     return(
-        <SidebarModalContext.Provider>
+        <SidebarModalContext.Provider value={{openSidebarModal, onClose}}>
             {children}
             <SidebarModal 
                 formField={sidebarContent.formField}

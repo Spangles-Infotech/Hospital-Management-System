@@ -2,7 +2,7 @@ import React from "react";
 import { Search } from "../../Fields/Search";
 import { AddIcon } from "../../../icons/AddIcon";
 
-export const TableHeader = ({title, buttonData, isSearch=true}) => {
+export const TableHeader = ({title, buttonData, isSearch=true,button}) => {
   return (
     <div className="flex flex-wrap items-center justify-between h-[80px] rounded-xl bg-white px-5">
       <div className="inline-flex space-x-3">
@@ -24,6 +24,11 @@ export const TableHeader = ({title, buttonData, isSearch=true}) => {
                   </div>
               ))
           }
+         {button && (
+            <div className="border border-primary text-primary p-1 cursor-pointer rounded-md w-20 text-center font-medium">
+              View All
+            </div>
+          )}
         </div>
       </div>
     </div>

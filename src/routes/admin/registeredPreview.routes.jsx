@@ -7,11 +7,11 @@ import RegisteredOpPreview from "../../pages/registered-op/RegisteredPreview";
 
 export default [
     {
-        path:"registered-op-doctor-preview",
+        path:"registered-op-doctor/preview",
         element:<RegisteredOpPreview />,
         children:[
             {
-                path:"",
+                index:true,
                 element:<Diagnosis />
             },
             {

@@ -8,7 +8,6 @@ import { Print } from "../../../Component/common/Print";
 
 const PrescriptionPreview = () => {
 
-
   return (
     <section className="p-7">
       <div className="flex flex-col gap-[20px]">
@@ -18,9 +17,12 @@ const PrescriptionPreview = () => {
           <Print />
         </div>
       </div>
+
+    
       <PatientDetail/>
-      <MedicinePrescription/>
-      <Payment_Prescription/>
+<MedicinePrescription/>
+<Payment_Prescription/>
+
     </section>
   );
 };

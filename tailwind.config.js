@@ -9,7 +9,7 @@ module.exports = {
         primary:"#089BAB",
         customBlack:"#505050",
         secondaryBlue:"#2D86AF",
-        secondaryGray:"#7A7A7A"
+        DarkTeal:"#00544F"
       },
       screens:{
         "2xl":"1450px",
