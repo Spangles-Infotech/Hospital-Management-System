@@ -1,26 +1,10 @@
 import React, { Fragment } from "react";
-import barcodeIcon from "../../assests/Barcode.png";
-import { PrintIcon } from "../../icons/PrintIcon";
 import { Timing } from "../preview content/Timing";
 import { AdditionalInfo } from "../preview content/AdditionalInfo";
 import { StaffInfo } from "../preview content/StaffInfo";
+import { BarcodePreview } from "../preview content/BarcodePreview";
 
 const PreviewModal = ({ title, previewFields, data }) => {
-  const additionalInfo = [
-    {
-      label: "Birth Place",
-      value: "Padma Hospital, Thiruvatta",
-      textColor: "text-primary",
-    },
-    { label: "Birth Time", value: "10:30 AM", textColor: "text-primary" },
-    {
-      label: "Weight",
-      value: "10kg",
-      textColor: "text-primary",
-      note: "(When born)",
-      noteColor: "text-slate-700 text-sm",
-    },
-  ];
 
   return (
     <div className="w-full">
@@ -61,17 +45,7 @@ const PreviewModal = ({ title, previewFields, data }) => {
                 ))
               }
           </div>
-
-          {/* <div className="flex justify-center -mt-7">
-            <img src={barcodeIcon} alt="Barcode" className="w-[350px]" />
-          </div>
-          <div className="flex justify-center ">
-            <button className="flex items-center gap-2 px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-all duration-500">
-              <PrintIcon />
-              <p className="font-medium">Print</p>
-            </button>
-          </div> */}
-
+          <BarcodePreview data={data} previewField={previewField} />
           <div className="w-full h-[1px] bg-[#DCFFFF]"></div>
           <Timing data={data} previewField={previewField} />
           <StaffInfo data={data} previewField={previewField} />

@@ -168,3 +168,79 @@ export const tableValue = [
   },
 ]
 
+export const patientPreviewField = [
+    {
+        icon:"PatientDetailIcon",
+        head:[
+            {
+                title:"Patient ID",
+                name:"patientId",
+            }
+        ],
+        fields:[
+            {
+                label:"Patient Name",
+                name:"doctorName"
+            },
+            {
+                label:"Address",
+                name:"address"
+            },
+            {
+                label:"Age",
+                name:"age"
+            },
+            {
+                label:"Phone Number",
+                name:"phoneNumber"
+            },
+            {
+                label:"Gender",
+                name:"gender"
+            },
+            {
+                label:"Blood Group",
+                name:"bloodGroup"
+            },
+            {
+                label:"Baby of",
+                name:"babyOf"
+            }
+        ],
+        image:{
+            name:"Barcode"
+        },
+        additionalInfo:[
+            {
+                label:"Birth Place",
+                name:"birthPlace"
+            },
+            {
+                label:"Birth Time",
+                name:"birthTime"
+            },
+            {
+                label:"Weight(when born)",
+                name:"weight"
+            }
+        ]
+    }
+]
+
+export const patientPreviewData = {
+    patientId:"P001",
+    patientName:"john",
+    address:"New York",
+    age:25,
+    phoneNumber:"1234567890",
+    gender:"Male",
+    bloodGroup:"A+",
+    babyOf:"Narmada",
+    additionalInfo:{
+        birthPlace :"Padma Hospital, Thiruvattar",
+        birthTime: "11:30 AM",
+        weight:"10kg"
+    }
+
+}
+

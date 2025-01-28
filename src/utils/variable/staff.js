@@ -188,13 +188,9 @@ export const staffPreviewField = [
       icon:"staffIcon",
       head:[
         {
-          title:"DoctorId",
+          title:"Staff If",
           name:"doctorId"
         },
-        {
-          title: "Designation",
-          name:"designation"
-        }
       ],
       fields:[
         {

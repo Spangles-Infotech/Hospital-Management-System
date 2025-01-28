@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ReportIcon } from '../icons/ReportIcon';
 import { DashboardIcon } from '../icons/DashboardIcon';
 import { RegisteredOpIcon } from '../icons/RegisteredOpIcon';
@@ -13,11 +13,27 @@ import { LabIcon } from '../icons/LabIcon';
 import { SettingsIcon } from '../icons/SettingsIcon';
 import { useCommon } from '../hooks/useCommon';
 import { adminSidebarData } from '../utils/variable/sidebar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowIcon } from '../icons/ArrowIcon';
 
 export const Sidebar = () => {
 
     const {currentLocation, isCurrentLocation} = useCommon();
+    
+    const navigate = useNavigate()
+    const [isMenuOpen, setMenuOpen] = useState("")
+
+    const handleOpenMenu = (name)=>{
+      if(name === isMenuOpen){
+        setMenuOpen("")
+      }else{
+        setMenuOpen(name)
+      }
+    }
+
+    const handleSelectMenu = (path)=>{
+      navigate(path)
+    }
 
     const sidebarIcons = {
         "dashboard" : <DashboardIcon  />,
@@ -36,15 +52,33 @@ export const Sidebar = () => {
     }
 
   return (
-    <aside className='flex flex-col gap-[10px]'>
-        {
-           adminSidebarData.map((item)=>(
-                <Link to={item.path} className={`linkss mr-3 rounded-r-[10px] flex gap-[15px] p-3 pl-6 pr-0 items-center transition-all duration-500 ease-in-out hover:text-white hover:bg-primary ${isCurrentLocation(item.path) ? "text-white bg-primary fill-white active"  : "text-[#505050] fill-custom-black"} `} key={item.name}>
-                    {sidebarIcons[item.icon]}
-                    <p className='font-[400] text-[18px]'>{item.name}</p>
-                </Link>
-           )) 
-        }
+    <aside className='flex flex-col gap-[10px] cursor-pointer'>
+      {
+        adminSidebarData.map((item)=>(
+          <div className={`mr-3 rounded-r-[10px] flex flex-col ${isMenuOpen === item.name ? "gap-3":"gap-0"} `} key={item.name}>
+              <div className={`linkss  flex justify-between p-3 pl-6 items-center pr-[10px] transition-all duration-500 ease-in-out hover:text-white hover:bg-primary rounded-r-[10px] ${isCurrentLocation(item.path) ? "text-white bg-primary fill-white active"  : "text-[#505050] fill-custom-black "}`}>
+                <div className='flex gap-[15px]' onClick={()=>handleSelectMenu(item.path)} >
+                  {sidebarIcons[item.icon]}
+                  <p className='font-[400] text-[18px]'>{item.name}</p>
+                </div>
+                <div onClick={()=>handleOpenMenu(item.name)} className={`flex items-center justify-center size-[25px] object-contain transition-all duration-500 ease-in-out  ${!item.components ? "hidden" :""} ${isMenuOpen === item.name ? "rotate-[-180deg]":"rotate-y-0"} `}>
+                  <ArrowIcon />
+                </div>
+              </div>
+              {
+                item.components &&
+                <div className={` flex flex-col pl-[30px] gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "max-h-[240px]":"max-h-0 "} `}>
+                  {item?.components.map((it)=>(
+                    <Link to={it.path} className={`flex items-center gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "visible opacity-100":"invisible opacity-0"}`} key={it.tab_path}>
+                      <p className={`size-2 rounded-full transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "bg-primary" : "bg-[#C8C8C8]"}`}></p>
+                      <p className={` text-[16px] font-[400] transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "text-primary" : "text-[#505050]"} `}>{it.tab_name}</p>
+                    </Link>
+                  ))}
+                </div>
+              }
+          </div>
+        )) 
+      }
     </aside>
   )
 }

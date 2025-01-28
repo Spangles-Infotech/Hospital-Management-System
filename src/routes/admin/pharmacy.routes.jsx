@@ -17,11 +17,11 @@ export default [
         element:<PharmacyLayout />,
         children:[
             {
-                path:"preception",
+                path:"prescriptions",
                 element:<PrescriptionLayout />,
                 children:[
                     {
-                        path:"",
+                        index:true,
                         element:<Prescription />
                     },
                     {
@@ -39,7 +39,7 @@ export default [
                 element:<SupplierLayout />,
                 children:[
                     {
-                        path:"",
+                        index:true,
                         element:<SupplierList />
                     },
                     {

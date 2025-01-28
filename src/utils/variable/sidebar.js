@@ -33,6 +33,28 @@ export const adminSidebarData = [
         name:"Pharmacy",
         icon:"pharmacy",
         path:"/admin/pharmacy",
+        components:[
+            {
+                tab_name: "Prescriptions",
+                path: "/admin/pharmacy/Prescriptions",
+                tab_path: "/admin/pharmacy/Prescriptions",
+            },
+            {
+                tab_name: "Stocks",
+                path: "/admin/pharmacy/stocks",
+                tab_path: "/admin/pharmacy/stocks",
+            },
+            {
+                tab_name: "Suppliers",
+                path: "/admin/pharmacy/suppliers",
+                tab_path: "/admin/pharmacy/suppliers",
+            },
+            {
+                tab_name: "Purchase",
+                path: "/admin/pharmacy/purchase",
+                tab_path: "/admin/pharmacy/purchase",
+            },
+        ]
     },
     {
         name:"Expense",

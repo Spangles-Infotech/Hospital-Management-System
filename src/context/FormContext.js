@@ -47,6 +47,23 @@ export const FormProvider = ({children})=>{
         setFormData({})
         setErrors({}); 
     }
+
+    const handleTimingChange = (e, label, index)=>{
+      const {name, value} = e.target
+      setFormData((prevFormData) => {
+        const updatedFormData = { ...prevFormData }
+
+        if (!updatedFormData[label]) {
+            updatedFormData[label] = []
+        }
+        if (!updatedFormData[label][index]) {
+            updatedFormData[label][index] = {}
+        }
+        updatedFormData[label][index][name] = value
+
+        return updatedFormData
+    })
+    }
     
     const handleSubmit = (e, fields)=>{
         e.preventDefault()
@@ -59,7 +76,7 @@ export const FormProvider = ({children})=>{
         }
     }
     return (
-        <FormContext.Provider value={{formData, errors, handleChange, handleSubmit, handleReset}}>
+        <FormContext.Provider value={{formData, errors, handleChange, handleSubmit, handleReset, handleTimingChange}}>
             {children}
         </FormContext.Provider>
     )

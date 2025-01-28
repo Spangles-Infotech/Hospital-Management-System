@@ -1,7 +1,7 @@
 import React from "react";
 
 export const Dropdown = ({ value, onChange, label, options, isIndexIsValue=false, errors, name}) => {
-    const undefinedValue = value[name] === undefined || value[name] === ""
+    const undefinedValue = value?.[name] === undefined || value?.[name] === ""
   return (
     <div className="flex flex-col gap-2 w-full">
       {

@@ -5,11 +5,9 @@ import { TextArea } from '../Fields/TextArea'
 import { Dropdown } from '../Fields/Dropdown'
 import { FileUpload } from '../Fields/FileUpload'
 import { Input } from '../Fields/Input'
-import { useForm } from '../../context/FormContext'
+import { DynamicForm } from './DynamicForm'
 
-export const Form = ({item}) => {
-
-    const { formData, handleChange, errors } = useForm()
+export const Form = ({item, formData, handleChange, errors}) => {
 
   return (
     <>
@@ -26,7 +24,9 @@ export const Form = ({item}) => {
                 <p className='w-[100%]'></p>
             : item.type === "file" ?
                 <FileUpload label={item?.label} value={formData} onChange={handleChange} name={item?.name} errors={errors} title={item?.title} />
-            : 
+            : item.type === "dynamic" ?
+                <DynamicForm field={item.field} title={item.label} name={item.name} />
+            :
                 <Input label={item?.label} type={item.type} options={item.options} value={formData} onChange={handleChange} name={item?.name} errors={errors} />
         }
     </>

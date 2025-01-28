@@ -1,5 +1,6 @@
 import React from 'react'
 import { Action } from './Action'
+import { Status } from './Status'
 
 export const Table = ({tableHead, tableValue, actionData}) => {  
     
@@ -21,13 +22,15 @@ export const Table = ({tableHead, tableValue, actionData}) => {
             key={val.id}
           >
              {tableHead.map((item, index)=>(
-                item.name !== "Action" ?
-                    <td
-                        key={index}
-                        className={`px-6 py-3 font-roboto text-left font-[400] text-customBlack`}
-                    >{val[item.path]}</td>
+                item.name === "Status" ?
+                  <Status data={val} item={item} />
+                : item.name !== "Action" ?
+                  <td
+                      key={index}
+                      className={`px-6 py-3 font-roboto text-left font-[400] text-customBlack`}
+                  >{val[item.path]}</td>
                 :
-                    <Action path={item.path} actionData={actionData} />
+                  <Action path={item.path} actionData={actionData} />
             ))}
           </tr>
         ))}
