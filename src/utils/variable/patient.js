@@ -126,9 +126,9 @@ export const patientFields = [
             name:"city",
             type:"text"
         },
-        // {
-        //     type:""
-        // }
+        {
+            type:""
+        }
     ],
     {
         label:"Address",

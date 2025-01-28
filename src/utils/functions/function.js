@@ -29,3 +29,22 @@ export const getStatusStyles = (status) => {
 
     return { bgColor, color };
 };
+
+export const getTableCellColor = (val, data)=>{
+    switch (val?.toLowerCase()){
+        case "time & date":
+            return "#278C0B"
+        case "In stock":
+            if( Number(data) < 400){
+                return "#ED1C00"
+            }else{
+                return "#009206"
+            }
+        case "payable balance":
+            return "#FF1111"
+        default:
+            return "#505050"
+            
+
+    }
+}

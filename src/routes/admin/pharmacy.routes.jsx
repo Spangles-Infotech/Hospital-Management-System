@@ -35,7 +35,7 @@ export default [
                 element:<Stocks />
             },
             {
-                path:"supplier",
+                path:"suppliers",
                 element:<SupplierLayout />,
                 children:[
                     {

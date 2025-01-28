@@ -11,10 +11,12 @@ const PrescriptionPreview = () => {
 
   return (
     <section className="p-7">
-      <p className="text-2xl text-stone-700 font-medium">Prescription</p>
-      <div className="flex justify-between ">
-        <img src={require("../../../assests/left-arrow.png")} alt="" />
-        <Print />
+      <div className="flex flex-col gap-[20px]">
+        <p className="text-2xl text-stone-700 font-medium">Prescriptions</p>
+        <div className="flex justify-between ">
+          <img src={require("../../../assests/left-arrow.png")} alt="left-arrow" className="size-[25px] object-contain" />
+          <Print />
+        </div>
       </div>
       <PatientDetail/>
       <MedicinePrescription/>

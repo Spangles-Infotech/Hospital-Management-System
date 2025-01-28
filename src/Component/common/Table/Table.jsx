@@ -1,6 +1,7 @@
 import React from 'react'
 import { Action } from './Action'
 import { Status } from './Status'
+import { getTableCellColor } from '../../../utils/functions/function'
 
 export const Table = ({tableHead, tableValue, actionData}) => {  
     
@@ -27,7 +28,8 @@ export const Table = ({tableHead, tableValue, actionData}) => {
                 : item.name !== "Action" ?
                   <td
                       key={index}
-                      className={`px-6 py-3 font-roboto text-left font-[400] text-customBlack`}
+                      className={`px-6 py-3 font-roboto text-left font-[400]`}
+                      style={{color: getTableCellColor(item.name, val[item.path])}}
                   >{val[item.path]}</td>
                 :
                   <Action path={item.path} actionData={actionData} />

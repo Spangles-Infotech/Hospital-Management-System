@@ -1,35 +1,25 @@
-import React from 'react'
+import React from "react";
 
 const Payment_Prescription = () => {
   return (
-   <div className='mt-5'>
-    
-    <div className="flex justify-between">
+    <div className="mt-5">
+      <div className="flex justify-between">
         <div>
-        <div className="border-primary border rounded-lg mt-5 w-[400px]  h-[150px] p-6">
-  <p className="text-lg text-stone-600">Payment Type</p>
-  <div className="flex flex-col">
-   
-    <select
-     
-      className="w-full h-[50px] border border-stone-300 ouline-none  rounded-lg mt-3  text-stone-600"
-      
-    >
-      <option value="" >
-        Select Payment Method
-      </option>
-      <option value="cash">Cash</option>
-      <option value="card">Credit/Debit Card</option>
-      <option value="upi">UPI</option>
-      <option value="net-banking">Net Banking</option>
-    </select>
-  </div>
-</div>
-
+          <div className="border-primary border-2 rounded-[15px] mt-5 w-[400px]  h-[150px] p-6 bg-white">
+            <p className="text-lg text-stone-600">Payment Type</p>
+            <div className="flex flex-col">
+              <select className="w-full h-[50px] border border-stone-300 ouline-none  rounded-lg mt-3  text-stone-600">
+                <option value="">Select Payment Method</option>
+                <option value="cash">Cash</option>
+                <option value="card">Credit/Debit Card</option>
+                <option value="upi">UPI</option>
+                <option value="net-banking">Net Banking</option>
+              </select>
+            </div>
+          </div>
         </div>
-        
 
-        <div className="border-primary border rounded-lg p-5 mt-5 w-[40%]">
+        <div className="border-primary border-2 rounded-[15px] p-5 mt-5 w-[40%] bg-white" >
           <div className="flex justify-between p-2 -ml-3">
             <div className="flex gap-3">
               <input type="checkbox" />
@@ -61,8 +51,8 @@ const Payment_Prescription = () => {
           Save & Print
         </button>
       </div>
-   </div>
-  )
-}
+    </div>
+  );
+};
 
-export default Payment_Prescription
+export default Payment_Prescription;

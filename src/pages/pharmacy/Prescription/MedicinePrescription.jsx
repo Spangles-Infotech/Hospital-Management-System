@@ -13,7 +13,7 @@ const MedicinePrescription = () => {
 
   return (
     <section className="mt-10">
-      <div className="border-2 border-primary rounded-lg overflow-hidden text-stone-500">
+      <div className="border-2 border-primary rounded-[15px] overflow-hidden text-stone-500 bg-white">
         <table className="w-full border-collapse">
           <thead>
             <tr>
@@ -25,7 +25,7 @@ const MedicinePrescription = () => {
               <th className="p-4 text-left border-b-2 border-r-2 border-primary">SALE PRICE</th>
               <th className="p-4 text-left border-b-2 border-r-2 border-primary">DISCOUNT</th>
               <th className="p-4 text-left border-b-2 border-r-2 border-primary">GST</th>
-              <th className="p-4 text-left border-b-2 border-r-2 border-primary">AMOUNT</th>
+              <th className="p-4 text-left border-b-2 border-r-0 border-primary">AMOUNT</th>
             </tr>
           </thead>
 
@@ -52,7 +52,7 @@ const MedicinePrescription = () => {
                     {prescription.gst} <MdOutlineKeyboardArrowDown />
                   </div>
                 </td>
-                <td className="p-3 border-r border-primary">
+                <td className="p-3 border-r-0 border-primary">
                   <div className="flex items-center gap-3 ml-3">
                     <span>{prescription.amount}</span>
                     <img className="w-6 h-6 cursor-pointer" src={Delete} alt="Delete" />

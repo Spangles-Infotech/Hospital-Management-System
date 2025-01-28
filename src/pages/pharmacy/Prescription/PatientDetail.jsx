@@ -31,8 +31,8 @@ const PatientDetail = () => {
         { label: "Symptom", value: "Fever", valueClass: "text-red-600 bg-red-100 rounded-md px-1" },
       ];
   return (
-      <div className="border-primary border rounded-lg mt-10">
-           <div className="flex justify-between items-center p-3">
+      <div className="border-primary border-2 rounded-[15px] mt-10 bg-white">
+           <div className="flex justify-between items-center p-3 px-5">
              <div className="flex gap-28">
                <div className="flex gap-3 items-center w-[30%]">
                  <img className="w-8 h-8" src={PatientDetailIcon} alt="Patient Details" />
