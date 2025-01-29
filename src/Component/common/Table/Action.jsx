@@ -9,7 +9,7 @@ export const Action = ({actionData}) => {
                <ToolTip name={item.name} data={item.data}>
                   <img 
                     key={item.name} 
-                    src={require(`../../../assests/${item.name}.png`)} alt="eye-icon" className={`size-[25px] object-contain cursor-pointer`} 
+                    src={require(`../../../assests/${item.name}.png`)} alt="eye-icon" className={`size-[30px] object-contain cursor-pointer rounded-[15%]`} 
                     onClick={item.name !== "tripledot" ? ()=>item.onClick() : undefined}
                   />
                </ToolTip>

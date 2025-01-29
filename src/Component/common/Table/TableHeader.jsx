@@ -2,14 +2,14 @@ import React from "react";
 import { Search } from "../../Fields/Search";
 import { AddIcon } from "../../../icons/AddIcon";
 
-export const TableHeader = ({title, buttonData, isSearch=true,button}) => {
+export const TableHeader = ({title, buttonData, isSearch=true, button, isBlue=false}) => {
   return (
-    <div className="flex flex-wrap items-center justify-between h-[80px] rounded-xl bg-white px-5">
+    <div className={`flex flex-wrap items-center justify-between h-[80px] rounded-xl px-5 ${isBlue ? "" : " bg-white "}`}>
       <div className="inline-flex space-x-3">
-        <h1 className="font-semibold text-lg text-primary">{title}</h1>
+        <h1 className={`${isBlue ? "text-customBlack font-[500] text-[24px] font-poppins" : " text-primary font-[600] text-[20px] font-roboto"}`}>{title}</h1>
       </div>
-      <div className="flex items-center space-x-5 cursor-pointer">
-        { isSearch && <Search />}
+      <div className="flex items-center gap-[20px] cursor-pointer">
+        { isSearch && <Search isBlue={isBlue} />}
         <div className="flex gap-[15px]">
           {
               buttonData?.map((item)=>(

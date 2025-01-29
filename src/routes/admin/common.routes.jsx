@@ -10,6 +10,8 @@ import registeredPreviewRoutes from "./registeredPreview.routes";
 import pharmacyRoutes from "./pharmacy.routes";
 import Doctor from "../../pages/Doctor";
 import Expense from "../../pages/Expense";
+import Inventory from "../../pages/Inventory";
+import ipBillingRoutes from "./ipBilling.routes";
 
 export default [
     {
@@ -52,6 +54,11 @@ export default [
                 path:"expense",
                 element:<Expense />
             },
+            {
+                path:"inventory",
+                element:<Inventory />
+            },
+            ...ipBillingRoutes,
             ...registeredPreviewRoutes,
             ...pharmacyRoutes,
 

@@ -13,7 +13,7 @@ export const FormModal = ({title, formField}) => {
       closeModal()
     }
   return (
-    <div className='flex flex-col gap-[20px] overflow-y-scroll'>
+    <div className='flex flex-col gap-[20px] overflow-y-scroll min-w-[600px]'>
         <p className='text-[20px] font-[500]'>{title}</p>
         <div className='flex flex-col gap-[10px]'>
             <FormLayout data={formField} />
