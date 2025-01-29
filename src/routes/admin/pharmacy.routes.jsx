@@ -10,6 +10,7 @@ import SupplierForm from "../../pages/pharmacy/supplier/SupplierForm";
 import SupplierLayout from "../../pages/pharmacy/supplier/SupplierLayout";
 import SupplierList from "../../pages/pharmacy/supplier/SupplierList";
 import SupplierPreview from "../../pages/pharmacy/supplier/SupplierPreview";
+import { SupplierPurchase } from "../../pages/pharmacy/supplier/SupplierPurchase";
 
 export default [
     {
@@ -49,6 +50,10 @@ export default [
                     {
                         path:"preview-supplier",
                         element:<SupplierPreview />
+                    },
+                    {
+                        path:"purchase-preview",
+                        element:<SupplierPurchase />
                     }
                 ]
             },

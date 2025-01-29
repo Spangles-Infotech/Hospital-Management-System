@@ -1,5 +1,4 @@
 import React from "react";
-import { FaArrowLeftLong } from "react-icons/fa6";
 import MedicinePrescription from "./MedicinePrescription";
 import Payment_Prescription from "./Payment_Prescription";
 import PatientDetail from "./PatientDetail";
@@ -17,8 +16,6 @@ const PrescriptionPreview = () => {
           <Print />
         </div>
       </div>
-
-    
       <PatientDetail/>
 <MedicinePrescription/>
 <Payment_Prescription/>

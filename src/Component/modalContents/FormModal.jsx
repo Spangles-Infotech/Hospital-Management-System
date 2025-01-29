@@ -19,8 +19,8 @@ export const FormModal = ({title, formField}) => {
             <FormLayout data={formField} />
         </div>
         <div className="flex gap-7 items-center justify-end p-5">
-          <p onClick={handleDiscard} className="text-red-600 cursor-pointer text-lg"> Discard </p>
-          <button onClick={(e)=>handleSubmit(e, formField)} className="w-[30%] bg-primary p-2 text-white rounded-lg hover:bg-primary transition text-lg" > Save </button>
+          <p onClick={handleDiscard} className="text-red-600 cursor-pointer text-lg w-[150px]"> Discard </p>
+          <button onClick={(e)=>handleSubmit(e, formField)} className="w-[150px] bg-primary p-2 text-white rounded-lg hover:bg-primary transition text-lg" > Save </button>
         </div>
     </div>
   )

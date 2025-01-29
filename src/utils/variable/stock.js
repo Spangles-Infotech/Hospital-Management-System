@@ -111,10 +111,9 @@ export const stockFormField =[
     [
         {
             label:"Category",
-            type:"inputdropdown",
-            dropdownName:"Tablet",
+            name:"category",
+            type:"select",
             options:["Syrup","injection"],
-            inputName:"category"
         }
     ],
 
@@ -156,14 +155,14 @@ export const stockFormField =[
         }
     ],
 
-    // [
-    //     {
-    //         label:"Unit",
-    //         type:"inputdropdown",
-    //         dropdownName:"Box",
-    //         option:["box"]
-    //     }
-    // ],
+    [
+        {
+            label:"Unit",
+            name:"unit",
+            type:"select",
+            options:["box"]
+        }
+    ],
 
     [
         {
@@ -190,14 +189,14 @@ export const stockFormField =[
     [
         {
             label:"Expire Alert",
-            options:[1,2,3,4,5,6,7,8,9,10,11,12],
-            inputName:"expireAlert",
-            dropdownName:"months",
+            options:["months", "weeks", "days"],
+            inputName:"duration",
+            dropdownName:"type",
             type:"inputdropdown"
         },
 
         {
-            label:"Gst%",
+            label:"Gst %",
             name:"gst",
             type:"number"
         }

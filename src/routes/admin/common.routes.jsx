@@ -9,6 +9,7 @@ import PrescriptionPreview from "../../pages/pharmacy/Prescription/PrescriptionP
 import registeredPreviewRoutes from "./registeredPreview.routes";
 import pharmacyRoutes from "./pharmacy.routes";
 import Doctor from "../../pages/Doctor";
+import Expense from "../../pages/Expense";
 
 export default [
     {
@@ -46,6 +47,10 @@ export default [
             {
                 path:"doctors",
                 element:<PrescriptionPreview />
+            },
+            {
+                path:"expense",
+                element:<Expense />
             },
             ...registeredPreviewRoutes,
             ...pharmacyRoutes,

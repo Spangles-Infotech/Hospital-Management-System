@@ -25,14 +25,16 @@ export const Table = ({tableHead, tableValue, actionData}) => {
              {tableHead.map((item, index)=>(
                 item.name === "Status" ?
                   <Status data={val} item={item} />
+                : item?.path === "si.no." ?
+                  <td className='px-6 py-3 font-roboto text-left font-[400]'>{ i +1 }</td>
                 : item.name !== "Action" ?
                   <td
                       key={index}
                       className={`px-6 py-3 font-roboto text-left font-[400]`}
                       style={{color: getTableCellColor(item.name, val[item.path])}}
                   >{val[item.path]}</td>
-                :
-                  <Action path={item.path} actionData={actionData} />
+                :   
+                <Action path={item.path} actionData={actionData} />
             ))}
           </tr>
         ))}

@@ -2,22 +2,34 @@ import React from 'react'
 import { FormLayout } from './FormLayout'
 import { useForm } from '../../context/FormContext'
 
-export const SidebarModal = ({onClose, formField}) => {
+export const SidebarModal = ({isOpen, onClose, formField}) => {
     
     const {handleSubmit} = useForm()
     
   return (
-    <div className='flex flex-col gap-[20px]'>
-        <div className='flex justify-between items-center'>
-            <p className='text-primary font-[600] text-[20px]'>Add Stock</p>
-            <img src={require("../../assests/cancel.png")} alt="close-icon" className='object-contain size-[25px] cursor-pointer' onClick={onClose} />
+    <>
+         {isOpen && (
+            <div
+            className="fixed left-[20%] top-[10vh] inset-0 bg-black opacity-20"
+            onClick={onClose}
+            ></div>
+        )}
+        <div
+        onContextMenu={(e) => e.stopPropagation()}
+        className={`fixed flex top-[13vh] flex-col gap-[20px] right-0 h-[85vh] overflow-scroll w-full border border-primary rounded-l-[15px] md:w-1/2  p-6 bg-white transform transition-transform duration-700 ease-in-out ${
+            isOpen ? "translate-x-0 z-[10]" : "translate-x-full"
+        }`}>
+            <div className='flex justify-between items-center'>
+                <p className='text-primary font-[600] text-[20px]'>Add Stock</p>
+                <img src={require("../../assests/cancel.png")} alt="close-icon" className='object-contain size-[25px] cursor-pointer' onClick={onClose} />
+            </div>
+            <div className='flex flex-col gap-[10px]'>
+                <FormLayout data={formField} />
+            </div>
+            <div className='flex justify-end items-end'>
+                <button onClick={(e)=>handleSubmit(e, formField)} className="w-[30%] bg-primary p-2 text-white rounded-lg hover:bg-primary transition text-lg" > Add Stock </button>
+            </div>
         </div>
-        <div className='flex flex-col gap-[10px]'>
-            <FormLayout data={formField} />
-        </div>
-        <div className='flex justify-end items-end'>
-            <button onClick={(e)=>handleSubmit(e, formField)} className="w-[30%] bg-primary p-2 text-white rounded-lg hover:bg-primary transition text-lg" > Add Stock </button>
-        </div>
-    </div>
+    </>
   )
 }
