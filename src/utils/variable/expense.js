@@ -102,6 +102,7 @@ export const expenseFormFields = [
     }
 ]
 
+
 export const expenseData = {
     totalAmount:"15,000",
     unPaidAmount:"12,500",
