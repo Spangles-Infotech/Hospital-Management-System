@@ -32,7 +32,7 @@ const PatientDetail = () => {
       ];
   return (
       <div className="border-primary border-2 rounded-[15px] mt-10 bg-white">
-           <div className="flex justify-between items-center p-3 px-5">
+           <div className="flex justify-between items-center p-3 px-5 h-[80px]">
              <div className="flex gap-28">
                <div className="flex gap-3 items-center w-[30%]">
                  <img className="w-8 h-8" src={PatientDetailIcon} alt="Patient Details" />
@@ -51,8 +51,7 @@ const PatientDetail = () => {
              </div>
              <div className="text-green-500 font-medium text-lg">Today</div>
            </div>
-           <div className="w-full h-[1px] bg-cyan-200 mt-4"></div>
-   
+           <div className="w-full h-[1px] bg-cyan-200"></div>
            <div className="flex gap-14 p-5 ">
              <div>
                {patientDetails.map((detail, index) => (

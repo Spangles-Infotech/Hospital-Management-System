@@ -12,7 +12,9 @@ export const Status = ({item, data}) => {
             item.type === "tag" ? 
                 <StatusTag status={data[item.path]} bgColor={bgColor} color={color} />
             :
-                data[item.path]
+            item.type === "blueTag" ?
+                <StatusTag status={data[item.path]} bgColor={bgColor} color={color} isBlue={true} />
+            :    data[item.path]
         }
     </td>
   )

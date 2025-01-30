@@ -75,8 +75,9 @@ export const FormProvider = ({children})=>{
             console.log("errors", errors)
         }
     }
+
     return (
-        <FormContext.Provider value={{formData, errors, handleChange, handleSubmit, handleReset, handleTimingChange}}>
+        <FormContext.Provider value={{formData, errors,setFormData, handleChange, handleSubmit, handleReset, handleTimingChange}}>
             {children}
         </FormContext.Provider>
     )

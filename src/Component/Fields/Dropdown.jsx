@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Dropdown = ({ value, onChange, label, options, isIndexIsValue=false, errors, name}) => {
+export const Dropdown = ({ value, onChange, label, options, isIndexIsValue=false, errors, name, isBorder}) => {
     const undefinedValue = value?.[name] === undefined || value?.[name] === ""
   return (
     <div className="flex flex-col gap-2 w-full">
@@ -14,7 +14,7 @@ export const Dropdown = ({ value, onChange, label, options, isIndexIsValue=false
         value={ !undefinedValue ? value?.[name] : "select"}
         name={name}
         onChange={onChange}
-        className={`h-[50px] border rounded-md border-[##DDDDDD] focus:ring-primary focus:border-primary px-3`}
+        className={`h-[50px] ${isBorder ? "border rounded-md border-[##DDDDDD] focus:ring-primary focus:border-primary px-3" : "focus:outline-none"}`}
       >
         {undefinedValue && <option>select</option>}
         {options.map((option, index) => (

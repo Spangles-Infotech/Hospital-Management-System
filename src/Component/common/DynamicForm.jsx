@@ -4,7 +4,6 @@ import { useForm } from '../../context/FormContext'
 
 export const DynamicForm = ({field, title, name}) => {
 
-    
     const [fields, setFields] = useState([field])
 
     const { formData, errors, handleTimingChange} = useForm()

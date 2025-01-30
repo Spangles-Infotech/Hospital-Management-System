@@ -1,84 +1,122 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import Delete from "../../../assests/Delete.png";
+import { Form } from "../../../Component/common/Form";
+import { useForm } from "../../../context/FormContext";
 
-const MedicinePrescription = () => {
-  const prescriptions = [
-    { category: "TABLE", name: "OXYWIN 100MG", batchNo: "123PK0973", expDate: "10", qty: "10", avaQty: "100", salePrice: "5390.00", discount: "04%", gst: "12%", amount: "368" },
-    { category: "TABLE", name: "OXYWIN 100MG", batchNo: "123PK0973", expDate: "10", qty: "10", avaQty: "100", salePrice: "5390.00", discount: "04%", gst: "12%", amount: "368" },
-    { category: "TABLE", name: "OXYWIN 100MG", batchNo: "123PK0973", expDate: "10", qty: "10", avaQty: "100", salePrice: "5390.00", discount: "04%", gst: "12%", amount: "368" },
-    { category: "TABLE", name: "OXYWIN 100MG", batchNo: "123PK0973", expDate: "10", qty: "10", avaQty: "100", salePrice: "5390.00", discount: "04%", gst: "12%", amount: "368" },
-    { category: "TABLE", name: "OXYWIN 100MG", batchNo: "123PK0973", expDate: "10", qty: "10", avaQty: "100", salePrice: "5390.00", discount: "04%", gst: "12%", amount: "368" },
-  ];
+const MedicinePrescription = ({tableHeader, fields, title, data, isEdit=false}) => {
+  const {formData, handleTimingChange, errors, setFormData} = useForm()
+  
+  const [row, setRow] = useState([])
+
+  const handleAddRow = ()=>{
+    setRow([...row, fields])
+  }
+
+  const handleDeleteRow = (index)=>{
+    const updatedRows = row.filter((_, i) => i !== index);
+    setFormData((prevFormData) => {
+      const updatedFormData = { ...prevFormData };
+      updatedFormData[title] = updatedFormData?.[title].filter((_,i)=> i!==index)
+      return updatedFormData;
+    });
+    setRow(updatedRows)
+  }
+
+  useEffect(()=>{
+    if(isEdit){
+      setFormData((prevFormData) => ({
+          ...prevFormData,
+          [title]: data,
+        }));
+        setRow(data.map(() => fields));
+    }else{
+      setRow([fields])
+    }
+  },[fields, isEdit])
+
+
 
   return (
-    <section className="mt-10">
-      <div className="border-2 border-primary rounded-[15px] overflow-hidden text-stone-500 bg-white">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr>
-              <th className="p-4 text-left border-b-2 border-r-2 border-primary">MEDICINE CATEGORY</th>
-              <th className="p-4 text-left border-b-2 border-r-2 border-primary">MEDICINE NAME</th>
-              <th className="p-4 text-left border-b-2 border-r-2 border-primary">BATCH NO</th>
-              <th className="p-4 text-left border-b-2 border-r-2 border-primary">EXP DATE</th>
-              <th className="p-4 text-left border-b-2 border-r-2 border-primary">QTY | AVA QTY</th>
-              <th className="p-4 text-left border-b-2 border-r-2 border-primary">SALE PRICE</th>
-              <th className="p-4 text-left border-b-2 border-r-2 border-primary">DISCOUNT</th>
-              <th className="p-4 text-left border-b-2 border-r-2 border-primary">GST</th>
-              <th className="p-4 text-left border-b-2 border-r-0 border-primary">AMOUNT</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {prescriptions.map((prescription, index) => (
-              <tr key={index} className="border-t border-b border-primary text-stone-600">
-                <td className="p-3 flex items-center gap-5 border-r border-primary ml-10">
-                  {prescription.category} <MdOutlineKeyboardArrowDown />
-                </td>
-                <td className="p-3 border-r border-primary text-center">{prescription.name}</td>
-                <td className="p-3 border-r border-primary text-center">{prescription.batchNo}</td>
-                <td className="p-3 border-r border-primary text-center">{prescription.expDate}</td>
-                <td className="p-3 flex gap-3 border-r border-primary ml-7">
-                  <span>{prescription.qty}</span> | <span>{prescription.avaQty}</span>
-                </td>
-                <td className="p-3 border-r border-primary text-center">{prescription.salePrice}</td>
-                <td className="p-3 border-b border-r border-primary text-center">
-                  <div className="flex items-center gap-3 ml-5">
-                    {prescription.discount} <MdOutlineKeyboardArrowDown />
-                  </div>
-                </td>
-                <td className="p-3 border-b border-r border-primary text-center">
-                  <div className="flex items-center gap-3 text-center">
-                    {prescription.gst} <MdOutlineKeyboardArrowDown />
-                  </div>
-                </td>
-                <td className="p-3 border-r-0 border-primary">
-                  <div className="flex items-center gap-3 ml-3">
-                    <span>{prescription.amount}</span>
-                    <img className="w-6 h-6 cursor-pointer" src={Delete} alt="Delete" />
-                  </div>
-                </td>
-              </tr>
+    <section className="mt-10 w-full">
+    <div className="border-2 border-primary rounded-[15px] overflow-hidden text-stone-500 bg-white w-full">
+      <table className="w-full table-fixed border-collapse">
+        <thead>
+          <tr>
+            {tableHeader.map((item, i) => (
+              <th
+                className={`p-2 text-center border-b-2 border-primary ${tableHeader.length - 1 === i  ? "" : "border-r "}`}
+                key={item}
+              >
+                {item}
+              </th>
             ))}
-
-
-
-<tr className="flex justify-between items-center">
- 
-  <td className="text-center p-4">
-    <button className="px-6 py-2 border-2 border-primary text-primary rounded-md ml-10">
-      Add Row
-    </button>
-  </td>
-
- 
-</tr>
-
-           
-          </tbody>
-        </table>
-      </div>
-    </section>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            row.map((items, index) => (
+              <tr className="border-t items-center border-b border-primary text-stone-600" key={index}>
+                {items.map((item, i) => (
+                  item.name === "quantity" ? 
+                    <td className={`border-r border-primary flex w-auto gap-[5px] p-2`} key={`${index}-quantity`}>
+                      <div className="w-[46%] h-full">
+                        <Form
+                          item={{ label: "", name:"quantity", "type": "text"}}
+                          formData={formData?.[title]?.[index]}
+                          handleChange={(e)=>handleTimingChange(e, title, index)}
+                          errors={errors}
+                          isBorder={false}
+                        />
+                      </div>
+                      <div className="h-[55px] w-[1%] bg-primary"></div>
+                      <div className="w-[46%]">
+                        <Form
+                          item={{ label: "", name:"availableQuantity", "type": "text"}}
+                          formData={formData?.[title]?.[index]}
+                          handleChange={(e)=>handleTimingChange(e, title, index)}
+                          errors={errors}
+                          isBorder={false}
+                        />
+                      </div>
+                    </td>
+                  :
+                  <td
+                    className={`p-2  ${items.length - 1 === i  ? "flex" : "border-r border-primary"}`}
+                    key={item.name}
+                  >
+                    <div className={`${items.length - 1 === i  ? "w-[80%]" : "w-full"} `}>
+                      <Form
+                        item={item}
+                        formData={formData?.[title]?.[index]}
+                        handleChange={(e)=>handleTimingChange(e, title, index)}
+                        errors={errors}
+                        isBorder={false}
+                      />
+                    </div>
+                    <div className="w-[20%] flex items-center justify-center">
+                        {
+                          items.length - 1 === i  &&
+                          <img src={Delete} alt="delete-icon" className="size-[30px] cursor-pointer  object-contain" onClick={()=>handleDeleteRow(index)} />
+                        }
+                    </div>
+                  </td>
+                ))}
+              </tr>
+            ))
+          }
+          <tr>
+            <td colSpan={tableHeader.length} className="text-start p-4">
+              <button className="px-6 py-2 border-2 border-primary text-primary rounded-md" onClick={handleAddRow}>
+                Add Row
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  
   );
 };
 

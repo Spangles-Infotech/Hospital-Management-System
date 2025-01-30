@@ -10,6 +10,10 @@ export const getStatusStyles = (status) => {
             bgColor = "#FEEAEC";
             color = "#E72546";
             break;
+        case "allocated ":
+            bgColor = "#00BE5F";
+            color = "#CCFFDD"
+            break;
 
         case "pending":
             bgColor = "#E7F8FD";
@@ -45,6 +49,5 @@ export const getTableCellColor = (val, data)=>{
         default:
             return "#505050"
             
-
     }
 }

@@ -32,7 +32,7 @@ const Inventory = () => {
     <section className='p-4'>
         <TableHeader title={"Inventory"} isBlue={true} buttonData={btnData}  />
         <Table tableHead={inventoryTableHeading} tableValue={inventoryTableValue}  actionData={actionData} isBlue={true}/>
-        {/* <Pagination /> */}
+        <Pagination />
     </section>
   )
 }

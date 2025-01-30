@@ -1,0 +1,141 @@
+export const inPatientTableHeadiing = [
+    {
+        name:"SI.no.",
+        path:"si.no."
+    },
+    {
+        name:"Patient Id",
+        path:"patientId"
+    },
+    {
+        name:"Patient Name",
+        path:"patientName"
+    },
+    {
+        name:"Age",
+        path:"age"
+    },
+    {
+        name:"Gender",
+        path:"gender"
+    },
+    {
+        name:"Blood Group",
+        path:"bloodGroup"
+    },
+    {
+        name:"Phone Number",
+        path:"phoneNumber"
+    },
+    {
+        name:"Room No.",
+        path:"roomNumber"
+    },
+    {
+        name:"Status",
+        path:"status",
+        type:"blueTag"
+    },
+    {
+        name:"Action",
+        path:"normal",
+    }
+]
+
+export const inPatientTableValue = [
+    {
+        id:"11",
+        patientId:"32325",
+        patientName:"Ajay",
+        age:"25",
+        gender:"Male",
+        bloodGroup:"A+",
+        phoneNumber:"1234567890",
+        roomNumber:"101",
+        status:"Pending",
+    },
+    {
+        id:"12",
+        patientId:"32325",
+        patientName:"Ajay",
+        age:"25",
+        gender:"Male",
+        bloodGroup:"A +ive",
+        phoneNumber:"1234567890",
+        roomNumber:"101",
+        status:"allocated",
+    },
+    {
+        id:"13",
+        patientId:"32325",
+        patientName:"Ajay",
+        age:"25",
+        gender:"Male",
+        bloodGroup:"A+",
+        phoneNumber:"1234567890",
+        roomNumber:"101",
+        status:"Pending",
+    },
+    {
+        id:"14",
+        patientId:"32325",
+        patientName:"Ajay",
+        age:"25",
+        gender:"Male",
+        bloodGroup:"A+",
+        phoneNumber:"1234567890",
+        roomNumber:"101",
+        status:"allocated",
+    },
+    {
+        id:"15",
+        patientId:"32325",
+        patientName:"Ajay",
+        age:"25",
+        gender:"Male",
+        bloodGroup:"A+",
+        phoneNumber:"1234567890",
+        roomNumber:"101",
+        status:"Pending",
+    },
+]
+
+export const roomAllotmentData = [
+    {
+        room:"1",
+        occupied:true
+    },
+    {
+        room:"2",
+        occupied:false
+    },
+    {
+        room:"3",
+        occupied:false
+    },
+    {
+        room:"4",
+        occupied:false
+    },
+    {
+        room:"5",
+        occupied:true
+    },
+    {
+        room:"6",
+        occupied:false
+    },
+    {
+        room:"7",
+        occupied:false
+    },
+    {
+        room:"8",
+        occupied:true
+    },
+    {
+        room:"9",
+        occupied:true
+    },
+
+]

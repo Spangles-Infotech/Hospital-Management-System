@@ -2,7 +2,7 @@ import React from 'react'
 import { Form } from './Form'
 import { useForm } from '../../context/FormContext'
 
-export const FormLayout = ({data}) => {
+export const FormLayout = ({data, isBorder=true}) => {
 
   const {formData, handleChange, errors} = useForm();
 
@@ -15,15 +15,15 @@ export const FormLayout = ({data}) => {
               <div key={i} className="flex gap-[20px] w-full">
                 {
                   it.map((ar, id)=>(
-                    <Form key={ar.label} item={ar} formData={formData} handleChange={handleChange} errors={errors}  />
+                    <Form key={ar.label} item={ar} formData={formData} handleChange={handleChange} errors={errors} isBorder={isBorder} />
                   ))
                 }
               </div>
-            :<Form key={it.label} item={it} formData={formData} handleChange={handleChange} errors={errors}  />
+            :<Form key={it.label} item={it} formData={formData} handleChange={handleChange} errors={errors} isBorder={isBorder}  />
           ))}
         </div>
       ) : (
-        <Form key={item.label} item={item} formData={formData} handleChange={handleChange} errors={errors}  />
+        <Form key={item.label} item={item} formData={formData} handleChange={handleChange} errors={errors} isBorder={isBorder}  />
       )
     )
   )
