@@ -35,7 +35,7 @@ const PrescriptionPreview = () => {
         </div>
       </div>
       <PatientDetail/>
-      <MedicinePrescription tableHeader={tableHeader} fields={fields} data={data} isEdit={true} title={"medicine"} />
+      <MedicinePrescription tableHeader={tableHeader} fields={fields} data={data} />
       <Payment_Prescription/>
 
     </section>
