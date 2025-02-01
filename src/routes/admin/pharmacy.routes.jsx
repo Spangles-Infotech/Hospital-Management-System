@@ -61,10 +61,12 @@ export default [
                 path:"purchase",
                 element:<Purchase />
             },
+
             {
                 path:"purchase/preview",
                 element:<PurchasePreview />
             },
+            
             {
                 path:"purchase/add-form",
                 element:<PurchaseForm />

@@ -43,7 +43,7 @@ const MedicinePrescription = ({tableHeader, fields, title, data, isEdit=false}) 
       <table className="w-full table-fixed border-collapse">
         <thead>
           <tr>
-            {tableHeader.map((item, i) => (
+            {tableHeader?.map((item, i) => (
               <th
                 className={`p-2 text-center border-b-2 border-primary ${tableHeader.length - 1 === i  ? "" : "border-r "}`}
                 key={item}
@@ -55,9 +55,9 @@ const MedicinePrescription = ({tableHeader, fields, title, data, isEdit=false}) 
         </thead>
         <tbody>
           {
-            row.map((items, index) => (
+            row?.map((items, index) => (
               <tr className="border-t items-center border-b border-primary text-stone-600" key={index}>
-                {items.map((item, i) => (
+                {items?.map((item, i) => (
                   item.name === "quantity" ? 
                     <td className={`border-r border-primary flex w-auto gap-[5px] p-2`} key={`${index}-quantity`}>
                       <div className="w-[46%] h-full">

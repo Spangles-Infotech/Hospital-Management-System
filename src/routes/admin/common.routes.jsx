@@ -12,7 +12,6 @@ import Doctor from "../../pages/Doctor";
 import Expense from "../../pages/Expense";
 import Inventory from "../../pages/Inventory";
 import ipBillingRoutes from "./ipBilling.routes";
-import inPatientRoutes from "./inPatient.routes";
 
 export default [
     {
@@ -59,7 +58,7 @@ export default [
                 path:"inventory",
                 element:<Inventory />
             },
-            ...inPatientRoutes,
+            
             ...ipBillingRoutes,
             ...registeredPreviewRoutes,
             ...pharmacyRoutes,

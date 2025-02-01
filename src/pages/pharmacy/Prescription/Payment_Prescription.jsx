@@ -1,11 +1,13 @@
 import React from "react";
 
 const Payment_Prescription = () => {
+
+
   return (
     <div className="mt-5">
       <div className="flex justify-between">
         <div>
-          <div className="border-primary border-2 rounded-[15px] mt-5 w-[400px]  h-[150px] p-6 bg-white">
+          <div className="border-primary border rounded-[15px] mt-5 w-[400px]  h-[150px] p-6 bg-white">
             <p className="text-lg text-stone-600">Payment Type</p>
             <div className="flex flex-col">
               <select className="w-full h-[50px] border border-stone-300 ouline-none  rounded-lg mt-3  text-stone-600">
@@ -19,24 +21,24 @@ const Payment_Prescription = () => {
           </div>
         </div>
 
-        <div className="border-primary border-2 rounded-[15px] p-5 mt-5 w-[40%] bg-white" >
-          <div className="flex justify-between p-2 -ml-3">
+        <div className="border-primary border rounded-[15px]  mt-5 w-[40%] bg-white" >
+          <div className="flex justify-between px-4 py-3">
             <div className="flex gap-3">
               <input type="checkbox" />
-              <p className="text-slate-700 font-medium">Rounded off</p>
+              <p className="text-slate-700 font-medium ">Rounded off</p>
             </div>
             <p className="text-orange-500">-0.40</p>
           </div>
-          <div className="flex justify-between mt-3">
+          <div className="flex justify-between px-4 py-2">
             <p className="text-stone-600">GST%</p>
             <p className="text-orange-500">1376.40</p>
           </div>
-          <div className="flex justify-between mt-3">
+          <div className="flex justify-between px-4 py-2">
             <p className="text-stone-600">Discount</p>
             <p className="text-red-600">-300</p>
           </div>
           <div className="w-full h-[1px] bg-primary mt-4"></div>
-          <div className="flex justify-between text-lg p-2">
+          <div className="flex justify-between text-lg px-3 py-3">
             <p className="text-stone-600 font-medium">New Amount</p>
             <p className="text-green-700 font-medium">9497.00</p>
           </div>
