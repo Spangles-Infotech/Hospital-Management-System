@@ -21,6 +21,7 @@ const Doctor = () => {
         {
             name:"tripledot",
             data:[
+                
                 {
                     name:"eye",
                     title:"View Doctor",
