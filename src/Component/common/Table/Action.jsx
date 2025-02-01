@@ -5,7 +5,7 @@ export const Action = ({actionData}) => {
   return (
     <td className='flex gap-[15px] items-center h-full px-6 py-3'>
         {
-            actionData.map((item)=>(
+            actionData?.map((item)=>(
                <ToolTip name={item.name} data={item.data}>
                   <img 
                     key={item.name} 
