@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 
-const InPatientLayout = () => {
+const PageLayout = () => {
   return (
     <section className='p-4'>
         <Outlet />
@@ -9,4 +9,4 @@ const InPatientLayout = () => {
   )
 }
 
-export default InPatientLayout
+export default PageLayout

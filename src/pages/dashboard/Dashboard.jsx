@@ -1,10 +1,10 @@
 import React from "react";
-import Appointments from "../assests/Appointments.png";
-import TotalDoctors from "../assests/TotalDoctors.png";
-import NewPaitents from "../assests/NewPaitents.png";
-import Nurses from "../assests/Nurses.png";
-import Doctors from "../Component/Doctors";
-import Appointment from "../Component/Appointment";
+import Appointments from "../../assests/Appointments.png";
+import TotalDoctors from "../../assests/TotalDoctors.png";
+import NewPaitents from "../../assests/NewPaitents.png";
+import Nurses from "../../assests/Nurses.png";
+import Doctors from "../../Component/Doctors";
+import Appointment from "../../Component/Appointment";
 
 const Dashboard = () => {
   return (

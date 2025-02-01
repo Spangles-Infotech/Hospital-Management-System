@@ -62,7 +62,7 @@ export const FormProvider = ({children})=>{
         updatedFormData[label][index][name] = value
 
         return updatedFormData
-    })
+      })
     }
     
     const handleSubmit = (e, fields)=>{

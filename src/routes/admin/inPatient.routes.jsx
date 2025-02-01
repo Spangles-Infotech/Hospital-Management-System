@@ -1,11 +1,11 @@
-import InPatientLayout from "../../pages/inPatient/InPatientLayout";
+import PageLayout from "../../layout/PageLayout";
 import InPatientList from "../../pages/inPatient/InPatientList";
 import InpatientAllocateRoom from "../../pages/inPatient/InpatientAllocateRoom";
 
 export default [
     {
         path:"in-patients",
-        element:<InPatientLayout />,
+        element:<PageLayout />,
         children:[
             {
                 index:true,

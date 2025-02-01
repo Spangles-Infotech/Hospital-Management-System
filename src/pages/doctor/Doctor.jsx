@@ -1,12 +1,12 @@
 import React from 'react'
-import { TableHeader } from '../Component/common/Table/TableHeader'
-import { Table } from '../Component/common/Table/Table'
-import { Pagination } from '../Component/common/Pagination'
-import { doctorFields, doctorPreviewField, doctorTableHeading, doctorTableValue, previewData } from '../utils/variable/doctor'
-import { useModal } from '../context/ModalContext'
-import { FormModal } from '../Component/modalContents/FormModal'
-import PreviewModal from '../Component/modalContents/PreviewModal'
-import { InactiveModal } from '../Component/modalContents/InactiveModal'
+import { TableHeader } from '../../Component/common/Table/TableHeader'
+import { Table } from '../../Component/common/Table/Table'
+import { Pagination } from '../../Component/common/Pagination'
+import { doctorFields, doctorPreviewField, doctorTableHeading, doctorTableValue, previewData } from '../../utils/variable/doctor'
+import { useModal } from '../../context/ModalContext'
+import { FormModal } from '../../Component/modalContents/FormModal'
+import PreviewModal from '../../Component/modalContents/PreviewModal'
+import { InactiveModal } from '../../Component/modalContents/InactiveModal'
 
 const Doctor = () => {
     const {openModal} = useModal()

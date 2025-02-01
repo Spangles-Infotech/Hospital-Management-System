@@ -1,11 +1,11 @@
 import React from 'react'
-import { TableHeader } from '../Component/common/Table/TableHeader'
-import { Table } from '../Component/common/Table/Table'
-import { staffTableHeading, staffTableValue, staffFields , staffPreviewField} from '../utils/variable/staff'
-import { Pagination } from '../Component/common/Pagination'
-import { useModal } from '../context/ModalContext'
-import { FormModal } from '../Component/modalContents/FormModal'
-import PreviewModal from '../Component/modalContents/PreviewModal'
+import { TableHeader } from '../../Component/common/Table/TableHeader'
+import { Table } from '../../Component/common/Table/Table'
+import { staffTableHeading, staffTableValue, staffFields , staffPreviewField} from '../../utils/variable/staff'
+import { Pagination } from '../../Component/common/Pagination'
+import { useModal } from '../../context/ModalContext'
+import { FormModal } from '../../Component/modalContents/FormModal'
+import PreviewModal from '../../Component/modalContents/PreviewModal'
 
 const Staff = () => {
 

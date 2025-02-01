@@ -1,13 +1,13 @@
 import React from 'react'
-import { TableHeader } from '../Component/common/Table/TableHeader'
-import { Table } from '../Component/common/Table/Table'
-import { useModal } from '../context/ModalContext'
-import { FormModal } from '../Component/modalContents/FormModal'
-import { editFormField, expenseData, expenseFormFields, expensePreviewField, expensePreviewValue, expenseTableHeading, expenseTableValue } from '../utils/variable/expense'
-import { Total } from '../Component/common/Table/Total'
-import { TableButton } from '../Component/common/Table/TableButton'
-import { Pagination } from '../Component/common/Pagination'
-import PreviewModal from '../Component/modalContents/PreviewModal'
+import { TableHeader } from '../../Component/common/Table/TableHeader'
+import { Table } from '../../Component/common/Table/Table'
+import { useModal } from '../../context/ModalContext'
+import { FormModal } from '../../Component/modalContents/FormModal'
+import { editFormField, expenseData, expenseFormFields, expensePreviewField, expensePreviewValue, expenseTableHeading, expenseTableValue } from '../../utils/variable/expense'
+import { Total } from '../../Component/common/Table/Total'
+import { TableButton } from '../../Component/common/Table/TableButton'
+import { Pagination } from '../../Component/common/Pagination'
+import PreviewModal from '../../Component/modalContents/PreviewModal'
 
 const Expense = () => {
 

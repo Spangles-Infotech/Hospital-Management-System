@@ -1,17 +1,19 @@
 import RegisteredOP_1 from "../../pages/registered-op/RegisteredOP_1";
 import RegisteredOP_2 from "../../pages/registered-op/RegisteredOP_2";
-import Dashboard from "../../pages/Dashboard";
-import Layout from "../../pages/Layout";
-import Patient from "../../pages/Patient";
-import Staff from "../../pages/Staff";
+import Dashboard from "../../pages/dashboard/Dashboard";
+import Layout from "../../layout/Layout";
+import Patient from "../../pages/patient/Patient";
+import Staff from "../../pages/staff/Staff";
 import Prescription from "../../pages/pharmacy/Prescription/Prescription";
 import PrescriptionPreview from "../../pages/pharmacy/Prescription/PrescriptionPreview";
 import registeredPreviewRoutes from "./registeredPreview.routes";
 import pharmacyRoutes from "./pharmacy.routes";
-import Doctor from "../../pages/Doctor";
-import Expense from "../../pages/Expense";
-import Inventory from "../../pages/Inventory";
+import Doctor from "../../pages/doctor/Doctor";
+import Expense from "../../pages/expense/Expense";
+import Inventory from "../../pages/inventory/Inventory";
 import ipBillingRoutes from "./ipBilling.routes";
+import inPatientRoutes from "./inPatient.routes";
+import settingRoutes from "./setting.routes";
 
 export default [
     {
@@ -58,7 +60,8 @@ export default [
                 path:"inventory",
                 element:<Inventory />
             },
-            
+            ...settingRoutes,
+            ...inPatientRoutes,
             ...ipBillingRoutes,
             ...registeredPreviewRoutes,
             ...pharmacyRoutes,

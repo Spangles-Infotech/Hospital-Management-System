@@ -8,8 +8,13 @@ export const useCommon = () => {
       return location.pathname.includes(path)
     }
 
+    const isCurrent = (path)=>{
+      return location.pathname === path
+    }
+
   return {
+    isCurrent,
     currentLocation,
-    isCurrentLocation
+    isCurrentLocation,
   }
 }

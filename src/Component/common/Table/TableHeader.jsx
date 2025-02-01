@@ -19,7 +19,7 @@ export const TableHeader = ({title, buttonData, isSearch=true, button, isBlue=fa
                       role="button" 
                       className="flex flex-row gap-1 items-center px-3 py-1 h-[30px] 2xl:h-[35px] border border-primary text-white transition-all duration-500 bg-primary rounded text-sm space-x-2 hover:bg-white hover:text-primary fill-white focus:ring-4 focus:ring-teal-200 cursor-pointer hover:fill-primary"
                   >
-                      <AddIcon />
+                      {item.icon ? <item.icon />  : <AddIcon /> }
                       <span>{item.name}</span>
                   </div>
               ))

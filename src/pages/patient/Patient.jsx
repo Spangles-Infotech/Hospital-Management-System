@@ -1,10 +1,10 @@
 import React from 'react'
-import { Table } from '../Component/common/Table/Table'
-import { TableHeader } from '../Component/common/Table/TableHeader'
-import { patientFields, tableHeading, tableValue } from '../utils/variable/patient'
-import { useModal } from '../context/ModalContext'
-import { FormModal } from '../Component/modalContents/FormModal'
-import { Pagination } from '../Component/common/Pagination'
+import { Table } from '../../Component/common/Table/Table'
+import { TableHeader } from '../../Component/common/Table/TableHeader'
+import { patientFields, tableHeading, tableValue } from '../../utils/variable/patient'
+import { useModal } from '../../context/ModalContext'
+import { FormModal } from '../../Component/modalContents/FormModal'
+import { Pagination } from '../../Component/common/Pagination'
 
 const Patient = () => {
 

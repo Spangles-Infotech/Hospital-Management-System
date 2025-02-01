@@ -1,10 +1,10 @@
 import React from 'react'
-import { TableHeader } from '../Component/common/Table/TableHeader'
-import { Table } from '../Component/common/Table/Table'
-import { Pagination } from '../Component/common/Pagination'
-import { useModal } from '../context/ModalContext'
-import { FormModal } from '../Component/modalContents/FormModal'
-import { inventoryFormField, inventoryTableHeading, inventoryTableValue } from '../utils/variable/inventory'
+import { TableHeader } from '../../Component/common/Table/TableHeader'
+import { Table } from '../../Component/common/Table/Table'
+import { Pagination } from '../../Component/common/Pagination'
+import { useModal } from '../../context/ModalContext'
+import { FormModal } from '../../Component/modalContents/FormModal'
+import { inventoryFormField, inventoryTableHeading, inventoryTableValue } from '../../utils/variable/inventory'
 
 const Inventory = () => {
 
