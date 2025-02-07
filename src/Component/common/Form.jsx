@@ -6,6 +6,7 @@ import { Dropdown } from '../Fields/Dropdown'
 import { FileUpload } from '../Fields/FileUpload'
 import { Input } from '../Fields/Input'
 import { DynamicForm } from './DynamicForm'
+import { Search } from '../Fields/Search'
 
 export const Form = ({item, formData, handleChange, errors, isBorder}) => {
 
@@ -13,7 +14,7 @@ export const Form = ({item, formData, handleChange, errors, isBorder}) => {
     <>
         {
             item.type?.toLowerCase() === "inputdropdown" ? (
-                <InputDropdown label={item?.label} value={formData} errors={errors} onChange={handleChange} inputName={item?.inputName} dropdownName={item?.dropdownName} options={item.options} />
+                <InputDropdown label={item?.label} value={formData} errors={errors} onChange={handleChange} inputName={item?.inputName} dropdownName={item?.dropdownName} options={item.options} align={item?.align} />
             ) : item.type?.toLowerCase() === "textarea" ?
                 <TextArea label={item?.label} value={formData} onChange={handleChange}  name={item?.name} errors={errors} isBorder={isBorder} />
             : item?.type === "select" ? (
@@ -26,6 +27,8 @@ export const Form = ({item, formData, handleChange, errors, isBorder}) => {
                 <FileUpload label={item?.label} value={formData} onChange={handleChange} name={item?.name} errors={errors} title={item?.title} isBorder={isBorder} />
             : item?.type === "dynamic" ?
                 <DynamicForm field={item.field} title={item.label} name={item.name} isBorder={isBorder} />
+            : item.type === "search"?
+                <Search  value={formData["search"]} onChange={handleChange} isForm={true}  />
             :
                 <Input label={item?.label} type={item.type} options={item.options} value={formData} onChange={handleChange} name={item?.name} errors={errors} isBorder={isBorder} />
         }

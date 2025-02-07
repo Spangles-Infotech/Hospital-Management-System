@@ -14,6 +14,7 @@ import Inventory from "../../pages/inventory/Inventory";
 import ipBillingRoutes from "./ipBilling.routes";
 import inPatientRoutes from "./inPatient.routes";
 import settingRoutes from "./setting.routes";
+import reportsRoutes from "./reports.routes";
 
 export default [
     {
@@ -60,6 +61,7 @@ export default [
                 path:"inventory",
                 element:<Inventory />
             },
+            ...reportsRoutes,
             ...settingRoutes,
             ...inPatientRoutes,
             ...ipBillingRoutes,

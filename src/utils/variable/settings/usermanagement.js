@@ -163,6 +163,13 @@ export const userListHeader = [
         path:"normal"
     }
 ]
+export const userFormField = [
+    {
+        label:"",
+        name:"newRole",
+        type:"text",
+    }
+]
 
 export const userListData = [
     {

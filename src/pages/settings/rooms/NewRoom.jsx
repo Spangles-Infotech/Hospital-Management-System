@@ -16,8 +16,8 @@ const NewRoom = () => {
   };
 
   return (
-    <section className='p-4 w-full'>
-      <TableHeader title={'New Section'} />
+    <section className='p-4 w-full bg-white'>
+      <TableHeader title={'New Section'} isSearch={false} />
       <form onSubmit={handleSubmit}>
         <div className='flex justify-between'>
           <div>

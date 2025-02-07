@@ -80,10 +80,12 @@ export const adminSidebarData = [
         name:"Settings",
         icon:"settings",
         path:"/admin/settings",
+        temp_path:"/admin/settings/designation"
     },
     {
         name:"Reports",
         icon:"reports",
         path:"/admin/reports",
+        temp_path:"/admin/reports/income?tab=doctor-fee",
     }
 ]

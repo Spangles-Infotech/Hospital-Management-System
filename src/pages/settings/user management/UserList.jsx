@@ -10,7 +10,7 @@ const UserList = () => {
   const btnData = [
     {
       name:"New User",
-      onClick:()=>{navigate("/admin/settings/new-user")}
+      onClick:()=>{navigate("/admin/settings/user-management/new-user")}
     }
   ]
   const actionData = [

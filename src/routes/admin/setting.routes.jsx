@@ -3,6 +3,7 @@ import Desgination from "../../pages/settings/desgination/Desgination";
 import DoctorList from "../../pages/settings/doctor/DoctorList";
 import NewRoom from "../../pages/settings/rooms/NewRoom";
 import RoomList from "../../pages/settings/rooms/RoomList";
+import RoomName from "../../pages/settings/rooms/RoomName";
 import NewUser from "../../pages/settings/user management/NewUser";
 import UserList from "../../pages/settings/user management/UserList";
 import UserManagement from "../../pages/settings/user management/UserManagement";
@@ -13,7 +14,7 @@ export default [
         element:<TabLayout />,
         children:[
             {
-                index:true,
+                path:"designation",
                 element:<Desgination />
             },
             {
@@ -21,11 +22,11 @@ export default [
                 element:<UserManagement />
             },
             {
-                path:"user-list",
+                path:"user-management/user-list",
                 element:<UserList />
             },
             {
-                path:"new-user",
+                path:"user-management/new-user",
                 element:<NewUser />
             },
             {
@@ -37,7 +38,11 @@ export default [
                 element:<RoomList />
             },
             {
-                path:"room-new-section",
+                path:"rooms/room",
+                element:<RoomName />
+            },
+            {
+                path:"rooms/add-room",
                 element:<NewRoom />
             },
         ]

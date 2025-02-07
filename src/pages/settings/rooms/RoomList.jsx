@@ -2,14 +2,14 @@ import React from 'react'
 import { TableHeader } from '../../../Component/common/Table/TableHeader'
 import { Table } from '../../../Component/common/Table/Table'
 import { roomlistTableHeading, roomlistTableValue } from '../../../utils/variable/settings'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const RoomList = () => {
   const navigate = useNavigate()
   const btnData=[
     {
       name:" New Section",
-      onClick : ()=>{navigate("/admin/settings/room-new-section")}
+      onClick : ()=>{navigate("/admin/settings/rooms/add-room")}
      
     }
   ]
@@ -20,18 +20,19 @@ const RoomList = () => {
       data:[
         {
           name:"List",
-          title:"List"
+          title:"List",
+          onClick: ()=>{navigate("/admin/settings/rooms/room")}
         },
-         {
-           name:"inactive",
-           title:"Inactive",
-                        }
+        {
+          name:"inactive",
+          title:"Inactive",
+          onClick: ()=>{}
+        } 
       ]
     }
   ]
   return (
-   <section className='p-4 w-[80%]'>
-
+   <section className='px-2 w-[85%]'>
     <TableHeader className=" " title={"Rooms"}  buttonData={btnData}/>
     <Table tableHead={roomlistTableHeading} tableValue={roomlistTableValue} actionData={actionData}/>
 

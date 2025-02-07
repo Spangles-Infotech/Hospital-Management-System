@@ -3,11 +3,15 @@ import { TableHeader } from '../../../Component/common/Table/TableHeader'
 import { ListIcon } from '../../../icons/ListIcon'
 import { useNavigate } from 'react-router-dom'
 import { Tab } from '../../../Component/common/Tab'
-import { roleFields } from '../../../utils/variable/settings/usermanagement'
+import { roleFields, userFormField } from '../../../utils/variable/settings/usermanagement'
+import { useModal } from '../../../context/ModalContext'
+import { FormModal } from '../../../Component/modalContents/FormModal'
+import { editFormField } from '../../../utils/variable/expense'
 
 const UserManagement = () => {
 
   const navigate = useNavigate()
+  const {openModal} = useModal()
   const [formData, setFormData] = useState({})
 
   const handleClickFullAccess = ()=>{
@@ -35,11 +39,11 @@ const UserManagement = () => {
   const buttonData = [
     {
       name:"New Role",
-      onClick : ()=>{console.log("clicking")}
+      onClick : ()=>{openModal(FormModal, {title:"New Role", formField:userFormField})}
     },
     {
       name: "User List",
-      onClick : ()=>{navigate("/admin/settings/user-list")},
+      onClick : ()=>{navigate("/admin/settings/user-management/user-list")},
       icon: ListIcon
     }
   ]

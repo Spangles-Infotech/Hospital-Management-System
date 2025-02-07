@@ -2,8 +2,9 @@ import React from 'react'
 import { FormLayout } from '../common/FormLayout'
 import { useForm } from '../../context/FormContext'
 import { useModal } from '../../context/ModalContext'
+import { IconCard } from '../common/IconCard'
 
-export const FormModal = ({title, formField}) => {
+export const FormModal = ({title, formField, data}) => {
 
     const {handleReset, handleSubmit} = useForm()
     const {closeModal} = useModal()
@@ -15,6 +16,7 @@ export const FormModal = ({title, formField}) => {
   return (
     <div className='flex flex-col gap-[20px] overflow-y-scroll min-w-[600px]'>
         <p className='text-[20px] font-[500]'>{title}</p>
+        {data && <IconCard />}
         <div className='flex flex-col gap-[10px]'>
             <FormLayout data={formField} />
         </div>
