@@ -1,0 +1,33 @@
+const express = require("express")
+const connectDB = require("./configs/db")
+const app = express()
+const {undefinedRoutes, errorHandler} = require("./middleware/errorHandler.middleware")
+const staffRouter = require("./routes/staff.route")
+const doctorRouter = require("./routes/doctor.route")
+const roomRouter = require("./routes/room.route")
+const patientRouter = require("./routes/patient.route")
+const appointmentRouter = require("./routes/appointment.route")
+const inventoryRouter = require("./routes/inventory.route")
+const expenseRouter = require("./routes/expense.route")
+const pharmacyRouter = require("./routes/pharmacy.route")
+
+connectDB()
+app.use(express.json());
+
+app.get("/", (req,res)=>{
+    return res.send("server is running")
+})
+
+app.use("/api", roomRouter)
+app.use("/api", staffRouter)
+app.use("/api", doctorRouter)
+app.use("/api", patientRouter)
+app.use("/api", appointmentRouter)
+app.use("/api", inventoryRouter)
+app.use("/api", expenseRouter)
+app.use("/api", pharmacyRouter)
+
+app.use(undefinedRoutes)
+app.use(errorHandler)
+
+module.exports = app
