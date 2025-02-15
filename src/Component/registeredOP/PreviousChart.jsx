@@ -13,9 +13,9 @@ const PreviousChart = () => {
   ];
 
   return (
-    <section className="w-[25%]">
+    <section className="w-[25%] font-poppins">
       <div className="border border-primary rounded-lg ">
-        <p className="text-primary font-medium text-lg p-2   ">Previous Chart</p>
+        <p className="text-primary font-medium text-lg p-2  ">Previous Chart</p>
         <div className="w-full h-[1px] bg-cyan-100 mt-4 "></div>
         {chartData.map((chart) => (
           <div key={chart.id}>

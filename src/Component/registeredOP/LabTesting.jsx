@@ -32,11 +32,11 @@ export const LabTesting = () => {
 
   return (
     <section className="p-3">
-      <div className="flex gap-8">
+      <div className="flex gap-8 font-poppins">
         
         <div className="w-[75%]">
           <div className="border border-primary p-5 rounded-lg shadow-lg">
-            <div className="flex">
+            <div className="flex ">
               <p className="text-DarkTeal font-medium text-lg mb-4 w-[36%]">Test Name</p>
               <p className="text-DarkTeal font-medium text-lg mb-4">Description</p>
             </div>
@@ -78,11 +78,11 @@ export const LabTesting = () => {
 
            
             <div className="overflow-x-auto">
-              <table className="w-full mt-8 border-collapse">
+              <table className="w-full mt-8 border-collapse ">
                 <thead>
-                  <tr className="text-black  text-lg">
-                    <th className="px-6 py-4 text-left border-b border-gray-300">S.No</th>
-                    <th className="px-6 py-4 text-left border-b border-gray-300 w-[200px]">Test Type</th>
+                  <tr className="text-slate-700  text-lg ">
+                    <th className="px-6 py-4 text-left border-b border-gray-300 ">S.No</th>
+                    <th className="px-6 py-4 text-left border-b border-gray-300 w-[200px] ">Test Type</th>
                     <th className="px-6 py-4 text-left border-b border-gray-300">Description</th>
                     <th className="px-6 py-4 text-center border-b border-gray-300">Action</th>
                   </tr>
@@ -114,6 +114,7 @@ export const LabTesting = () => {
                 </tbody>
               </table>
             </div>
+
           </div>
         </div>
 

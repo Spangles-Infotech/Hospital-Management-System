@@ -33,12 +33,12 @@ export const Diagnosis = () => {
   };
 
   return (
-    <section className="p-5">
+    <section className="p-5 font-poppins">
       <div className="flex gap-8">
         
         <div className="flex flex-col gap-7 w-3/4">
           <div className="border border-primary p-5 rounded-lg shadow-lg">
-            <p className="text-DarkTeal font-medium text-lg mb-4">Diagnosis</p>
+            <p className="text-DarkTeal font-medium text-lg mb-4 ">Diagnosis</p>
             <div className="flex gap-6">
               <div className="w-[530px]">
                 <input
@@ -55,7 +55,7 @@ export const Diagnosis = () => {
                   className="border border-stone-300 outline-none rounded-md py-3 px-3 w-full text-stone-600"
                 />
               </div>
-              <div className="mt-24 flex gap-5">
+              <div className="mt-24 flex gap-5 font-roboto">
                 <button
                   type="button"
                   onClick={handleAdd}
@@ -77,7 +77,7 @@ export const Diagnosis = () => {
             <div className="overflow-x-auto">
               <table className="w-full mt-8 border-collapse">
                 <thead>
-                  <tr className="  text-lg  ">
+                  <tr className="  text-lg text-slate-700   ">
                     <th className="px-6 py-4 text-left border-b border-gray-300">S.No</th>
                     <th className="px-6 py-4 text-left border-b border-gray-300 w-[200px]">Diagnosis Type</th>
                     <th className="px-6 py-4 text-left border-b border-gray-300">Description</th>

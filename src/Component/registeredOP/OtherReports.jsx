@@ -26,7 +26,7 @@ export const OtherReports = () => {
   
    
   return (
-    <section className="p-3">
+    <section className="p-3 font-poppins">
     <div className="flex gap-8">
       
       <div className="w-[75%]">
@@ -45,7 +45,7 @@ export const OtherReports = () => {
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
-                <tr className="text-black  text-lg">
+                <tr className="text-slate-700  text-lg">
                   <th className="px-6 py-4 text-left border-b border-gray-300">S.No</th>
                   <th className="px-6 py-4 text-left border-b border-gray-300 w-[200px]">Test Name</th>
                   <th className="px-6 py-4 text-left border-b border-gray-300">Consulted Doctor</th>

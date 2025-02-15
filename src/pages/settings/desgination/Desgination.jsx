@@ -6,14 +6,14 @@ const Desgination = () => {
   const { value, designation, errors,  handleChange, handleAddDesignation, handleRemoveDesignation } = useDesignation()
   return (
     <section className='flex flex-col gap-[50px] w-[80%]'>
-      <p className='font-[700] text-[18px] text-customBlack'>Add Designations</p>
-      <div className='flex flex-col gap-[25px]'>
+      <p className='font-[700] text-[18px] text-customBlack font-roboto'>Add Designations</p>
+      <div className='flex flex-col gap-[25px] '>
         <div className='flex gap-[20px] items-center'>
-          <div className='w-[450px]'>
+          <div className='w-[450px] '>
             <Input label={"New Designation"} isBorder={true} value={value}  errors={errors} onChange={(e)=>handleChange(e)} isSingle={true} />
           </div>
           <div className={`h-[98px] flex justify-end items-end ${errors.designation ? "pb-[14px]" : "" }`}>
-            <button onClick={handleAddDesignation} className="w-[150px] bg-primary border p-2 text-white rounded-lg hover:bg-white hover:border-primary hover:text-primary transition-all duration-300 ease-in-out text-lg h-[50px]" > Add </button>
+            <button onClick={handleAddDesignation} className="w-[150px] bg-primary border p-2 text-white rounded-lg hover:bg-white hover:border-primary hover:text-primary transition-all duration-300 ease-in-out text-lg h-[50px] font-poppins" > Add </button>
           </div>
         </div>
         <div className='flex gap-[10px] flex-wrap'>

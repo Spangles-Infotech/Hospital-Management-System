@@ -12,11 +12,10 @@ const Doctors = () => {
 
   return (
     <>
-      <div className='flex  mt-6 '>
+      <div className='flex mt-6 '>
         <div className="w-full border border-primary rounded-xl ">
-          <TableHeader title={"Doctor"} isSearch={false}/>
-         
-           <Table tableHead={DoctortableHeading} tableValue={DoctortableValue}/>
+          <TableHeader title={"Doctors"} isSearch={false}/>
+          <Table tableHead={DoctortableHeading} tableValue={DoctortableValue}/>
 
         </div>
       </div>

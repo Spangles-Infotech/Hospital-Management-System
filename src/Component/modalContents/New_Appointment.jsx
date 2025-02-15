@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import cancel from "../assests/cancel.png";
 import { IoIosSearch } from "react-icons/io";
 
 const New_Appointment = ({ closeModal }) => {
@@ -64,15 +63,10 @@ const New_Appointment = ({ closeModal }) => {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="w-full h-full outline outline-primary rounded-xl bg-white p-5">
+      <div className="w-full h-full  bg-white p-5">
         <div className="flex items-center justify-between p-5">
           <p className="text-stone-700 text-lg font-medium">New Appointment</p>
-          <img
-            onClick={closeModal}
-            className="w-6 h-6 cursor-pointer"
-            src={cancel}
-            alt="Cancel"
-          />
+     
         </div>
 
         <form onSubmit={handleSubmit}>

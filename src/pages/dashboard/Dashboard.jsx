@@ -5,30 +5,32 @@ import NewPaitents from "../../assests/NewPaitents.png";
 import Nurses from "../../assests/Nurses.png";
 import Doctors from "../../Component/Doctors";
 import Appointment from "../../Component/Appointment";
+import { TableHeader } from "../../Component/common/Table/TableHeader";
 
 const Dashboard = () => {
+
+  const btnData=[
+    {
+      name:"New Doctor"
+    },
+    {
+      name:"New Patient"
+    },
+    {
+      name:"Book Appointment"
+    }
+  ]
   return (
     <section className="w-full p-6 container mx-auto">
-      <div className="flex gap-5 items-center justify-end text-center">
-        <button className="px-5 bg-primary p-2 text-white rounded-xl hover:bg-primary transition">
-          + New Doctor
-        </button>
 
-        <button className="px-5 bg-primary p-2 text-white rounded-xl hover:bg-primary transition">
-          + New Patient
-        </button>
-
-        <button className="px-5 bg-primary p-2 text-white rounded-xl hover:bg-primary transition">
-          + Book Appointment
-        </button>
-      </div>
+      <TableHeader buttonData={btnData} isSearch={false}/>
 
       <div className="flex gap-6 mt-10">
         <div className="w-1/2 border border-primary rounded-xl"></div>
 
         <div className="flex flex-col gap-1 w-1/2">
           <div className="flex gap-1">
-            <div className="w-full border border-primary rounded-tl-xl p-11 flex items-center text-lg gap-7">
+            <div className="w-full border border-primary rounded-tl-xl px-11 flex items-center text-lg gap-7 ">
               <img
                 src={Appointments}
                 alt="Appointments"
@@ -36,7 +38,7 @@ const Dashboard = () => {
               />
               <div>
                 <p className="text-stone-700 font-normal">Appointments</p>
-                <div className="text-3xl text-green-700 font-semibold">79</div>
+                <div className="text-3xl text-activeGreen font-semibold">79</div>
               </div>
             </div>
             <div className="w-full border border-primary rounded-tr-xl p-11 flex items-center gap-7 text-lg">
@@ -53,7 +55,7 @@ const Dashboard = () => {
           </div>
 
           <div className="flex gap-1 ">
-            <div className="w-full border border-primary rounded-bl-xl p-11 flex items-center gap-7 text-lg">
+            <div className="w-full border border-primary rounded-bl-xl p-11 flex items-center gap-7 text-lg font-roboto">
               <img
                 src={TotalDoctors}
                 alt="Total Doctors"
@@ -61,7 +63,7 @@ const Dashboard = () => {
               />
               <div>
                 <p className="text-stone-700">Total Doctors</p>
-                <div className="text-3xl text-primary font-semibold">120</div>
+                <div className="text-3xl text-cyan-700 font-semibold">120</div>
               </div>
             </div>
             <div className="w-full border border-primary rounded-br-xl p-11 flex items-center text-lg gap-7">

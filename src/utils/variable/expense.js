@@ -8,7 +8,7 @@ export const expenseTableHeading = [
         path:"date"
     },
     {
-        name:"Catgory",
+        name:"Category",
         path:"category"
     },
     {

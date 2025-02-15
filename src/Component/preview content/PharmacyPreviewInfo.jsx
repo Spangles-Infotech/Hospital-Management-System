@@ -3,7 +3,7 @@ import { FormLayout } from '../common/FormLayout'
 
 export const PharmacyPreviewInfo = ({fields, data, isPreviewWithIcon=true, isForm=false}) => {
   return (
-    <div className= {`bg-white rounded-[15px] border-2 border-primary p-5 flex ${isForm ? "flex-col" : "flex-wrap" } gap-[15px]`}>
+    <div className= {`bg-white rounded-[15px] border border-primary p-5 flex ${isForm ? "flex-col" : "flex-wrap" } gap-[15px]`}>
         <div className={`flex justify-between items-center gap-[20px] ${!isForm ? "hidden" : "" }`}>
             <p className='text-[20px] font-[600] text-primary'>New Purchase</p>
             <div>

@@ -14,13 +14,14 @@ import Inventory from "../../pages/inventory/Inventory";
 import ipBillingRoutes from "./ipBilling.routes";
 import inPatientRoutes from "./inPatient.routes";
 import settingRoutes from "./setting.routes";
-import reportsRoutes from "./reports.routes";
+import Login from "../../pages/login/Login";
 
 export default [
     {
         path:"/admin",
         element:<Layout />,
         children:[
+           
             {
                 path:"dashboard",
                 element: <Dashboard />
@@ -61,7 +62,6 @@ export default [
                 path:"inventory",
                 element:<Inventory />
             },
-            ...reportsRoutes,
             ...settingRoutes,
             ...inPatientRoutes,
             ...ipBillingRoutes,
@@ -69,5 +69,9 @@ export default [
             ...pharmacyRoutes,
 
         ]
-    }
+    },
+    {
+        path:"/login",
+        element:<Login/>
+    },
 ]

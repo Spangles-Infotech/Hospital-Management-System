@@ -14,6 +14,14 @@ export const getStatusStyles = (status) => {
             bgColor = "#00BE5F";
             color = "#CCFFDD"
             break;
+        case "active":
+            bgColor="#D3EAFE";
+            color="#0073E5"
+            break;
+        case "consulted":
+            bgColor="#CCFFDD";
+            color="#00BE5F"
+            break;
 
         case "pending":
             bgColor = "#E7F8FD";

@@ -50,8 +50,7 @@ const NewUser = () => {
               <select
                 className="border-2 border-stone-400 w-[470px] p-3 rounded-md outline-none"
                 value={designation}
-                onChange={(e) => setDesignation(e.target.value)}
-              >
+                onChange={(e) => setDesignation(e.target.value)}>
                 <option>Doctor</option>
                 <option>Nurse</option>
                 <option>Patient</option>
