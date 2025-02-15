@@ -15,6 +15,7 @@ import ipBillingRoutes from "./ipBilling.routes";
 import inPatientRoutes from "./inPatient.routes";
 import settingRoutes from "./setting.routes";
 import Login from "../../pages/login/Login";
+import reportsRoutes from "./reports.routes";
 
 export default [
     {
@@ -67,11 +68,12 @@ export default [
             ...ipBillingRoutes,
             ...registeredPreviewRoutes,
             ...pharmacyRoutes,
+            ...reportsRoutes
 
         ]
     },
     {
-        path:"/login",
+        path:"/",
         element:<Login/>
     },
 ]
