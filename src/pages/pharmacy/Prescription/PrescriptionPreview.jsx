@@ -1,11 +1,11 @@
 import React from "react";
 import MedicinePrescription from "./MedicinePrescription";
-import Payment_Prescription from "./Payment_Prescription";
 import PatientDetail from "./PatientDetail";
 import { Print } from "../../../Component/common/Print";
+import PaymentPrescription from "./PaymentPrescription";
 
 
-const PrescriptionPreview = () => {
+const PrescriptionPreview = ({ visibleComponents = ["PaymentType",  "Total"] }) => {
 
   const tableHeader = ["MEDICINE CATEGORY", "MEDICINE NAME", "BATCH NO", "EXP DATE", "QTY | AVA QTY", "SALE PRICE", "DISCOUNT", "GST", "AMOUNT"]
   const fields = [
@@ -36,8 +36,7 @@ const PrescriptionPreview = () => {
       </div>
       <PatientDetail/>
       <MedicinePrescription tableHeader={tableHeader} fields={fields} data={data} />
-      <Payment_Prescription/>
-
+      <PaymentPrescription  visibleComponents={["PaymentType", "Total"]}/>
     </section>
   );
 };
