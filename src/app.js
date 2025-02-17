@@ -1,6 +1,8 @@
 const express = require("express")
 const connectDB = require("./configs/db")
+const cors = require("cors")
 const app = express()
+
 const {undefinedRoutes, errorHandler} = require("./middleware/errorHandler.middleware")
 const staffRouter = require("./routes/staff.route")
 const doctorRouter = require("./routes/doctor.route")
@@ -12,6 +14,12 @@ const expenseRouter = require("./routes/expense.route")
 const pharmacyRouter = require("./routes/pharmacy.route")
 
 connectDB()
+
+const corsOptions = {
+    origin: [ process.env.FRONTEND_URL_DEV_1, process.env.FRONTEND_URL_DEV_2, process.env.FRONTEND_URL_PRO_1, process.env.FRONTEND_URL_PRO_2, process.env.FRONTEND_URL_PRO_3,  process.env.FRONTEND_URL_PRO_4, ],
+    credentials: true
+};
+app.use(cors(corsOptions))
 app.use(express.json());
 
 app.get("/", (req,res)=>{
