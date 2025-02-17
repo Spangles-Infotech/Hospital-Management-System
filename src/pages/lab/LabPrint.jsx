@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import PatientDetail from "../pharmacy/Prescription/PatientDetail";
+import PaymentPrescription from "../pharmacy/Prescription/PaymentPrescription";
 
 const LabPrint = () => {
   const navigate = useNavigate();
@@ -33,8 +34,7 @@ const LabPrint = () => {
   ];
 
   const totalAmount = data.reduce((sum, item) => sum + item.amount, 0);
-  const options = ["React", "Angular", "Vue", "Svelte"];
-  const [selectedOption, setSelectedOption] = useState("");
+
 
   return (
     <div>
@@ -43,12 +43,12 @@ const LabPrint = () => {
           src={require("../../assests/left-arrow.png")}
           className="size-[25px] object-contain"
           alt="arrow-icon"
-          onClick={() => navigate("/admin/in-lab")}
+          onClick={() => navigate("/admin/labs")}
         />
         <PatientDetail />
         <div className=" mt-6 ">
           <thead>
-            <tr className=" bg-white">
+            <tr className=" bg-white font-[600] text-[13px] text-[#505050]">
               <th className="border  border-[#089BAB] rounded-tl-lg px-10 py-1 w-1/4">
                 Sl. No.
               </th>
@@ -63,7 +63,7 @@ const LabPrint = () => {
             {data.map((item) => (
               <tr
                 key={item.id}
-                className="border border-[#089BAB] rounded-bl-lg"
+                className="border border-[#089BAB] rounded-bl-lg font-[400] text-[12px] text-[#505050]"
               >
                 <td className="border border-[#089BAB] ">{item.id}</td>
                 <td className="border border-[#089BAB] ">{item.testName}</td>
@@ -73,10 +73,10 @@ const LabPrint = () => {
                 </td>
               </tr>
             ))}
-            <tr className="font-bold text-right mr-8">
+            <tr className="font-[600] text-[14px]">
               <td
                 colSpan="3"
-                className="border border-[#089BAB]  py-3 rounded-bl-lg "
+                className="border border-[#089BAB] text-right pr-10   py-3 rounded-bl-lg "
               >
                 Total
               </td>
@@ -86,48 +86,9 @@ const LabPrint = () => {
             </tr>
           </tbody>
         </div>
-        <div className="flex gap-8 mt-6">
-          <div className="flex flex-col border border-[#089BAB] rounded-[10px] w-1/3 p-6 gap-y-4 bg-white">
-            <p className="font-[500]">Payment Type</p>
-            <select
-              value={selectedOption}
-              onChange={(e) => setSelectedOption(e.target.value)}
-              className="border border-[#898989] rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#898989] focus:border-[#898989]"
-            >
-              {options.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-
-            <p className="font-[500]">Payment Type</p>
-            <input
-              type="text"
-              placeholder="Rs. 00"
-              class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#898989] focus:border-[#898989]"
-            />
-          </div>
-          <div className="flex flex-col border border-[#089BAB] rounded-[10px] w-1/3 p-6 gap-y-4 bg-white">
-          <p className="font-[500]">Discount</p>
-          <select
-              value={selectedOption}
-              onChange={(e) => setSelectedOption(e.target.value)}
-              className="border border-[#898989] rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#898989] focus:border-[#898989]"
-            >
-              {options.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="border border-[#089BAB] rounded-[10px] w-1/3">
-          {/* <img src={require("../../assests/")} alt="" /> */}
-          <br />
-          <br />
-          
-          </div>
+   
+        <div>
+          <PaymentPrescription/>
         </div>
       </div>
     </div>
