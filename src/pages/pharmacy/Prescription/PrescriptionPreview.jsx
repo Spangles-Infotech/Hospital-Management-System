@@ -36,7 +36,7 @@ const PrescriptionPreview = ({ visibleComponents = ["PaymentType",  "Total"] }) 
       </div>
       <PatientDetail/>
       <MedicinePrescription tableHeader={tableHeader} fields={fields} data={data} />
-      <PaymentPrescription  visibleComponents={["PaymentType", "Total"]}/>
+      <PaymentPrescription   visibleComponents={["PaymentType", "Total"]}/>
     </section>
   );
 };

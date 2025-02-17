@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 
 const PaymentType = () => {
-    const options = ["React", "Angular", "Vue", "Svelte"];
+    const options = ["Select Payment Method", "Cash", "Credit/Debit Card", "UPI","Net Banking"];
     const [selectedOption, setSelectedOption] = useState("");
   return (
     <div className="flex flex-col border border-[#089BAB] rounded-[10px] w-1/3 p-6 gap-y-4 h-[246px] bg-white">
