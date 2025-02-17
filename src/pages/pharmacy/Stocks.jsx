@@ -10,6 +10,7 @@ import { useFetchData } from '../../hooks/useFetchData'
 const Stocks = () => {
 
   const {openSidebarModal} = useSidebarModal()
+  // const {openM}
   const {data, isLoading, error} = useFetchData("/get-all-stock")
 
   const buttonData = [
@@ -22,14 +23,14 @@ const Stocks = () => {
   const actionData = [
     {
       name:"eye",
-      onClick : ()=>{ }
+      onClick : ()=>{}
     },
     {
       name: "editpen",
       onClick: () =>  ()=>{}
     }
   ]
-  console.log("data", data)
+  console.log("Data", data)
   return (
   <section className='m-4 bg-white rounded-[15px]'>
    <TableHeader title={"Stock"} buttonData={buttonData} />

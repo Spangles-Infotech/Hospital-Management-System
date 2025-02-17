@@ -46,7 +46,7 @@ export const getTableCellColor = (val, data)=>{
     switch (val?.toLowerCase()){
         case "time & date":
             return "#278C0B"
-        case "In stock":
+        case "in stock":
             if( Number(data) < 400){
                 return "#ED1C00"
             }else{
@@ -58,4 +58,9 @@ export const getTableCellColor = (val, data)=>{
             return "#505050"
             
     }
+}
+
+export function getDateFromISO(isoString) {
+    console.log("isoString", isoString)
+    return isoString?.split('T')[0]; // Extracts YYYY-MM-DD
 }

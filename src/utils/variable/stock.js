@@ -6,7 +6,7 @@ export const stockTableHeading = [
 
     {
         name:"Batch No.",
-        path:"batchNo"
+        path:"batchNumber"
     },
 
     {
@@ -21,7 +21,7 @@ export const stockTableHeading = [
 
     {
         name: "HSN Code",
-        path: "HSNCode"
+        path: "hsnCode"
     },
 
     {
@@ -31,12 +31,13 @@ export const stockTableHeading = [
 
     {
         name:"Expiry Date",
-        path:"expiryDate"
+        path:"expiryDate",
+        date:"true"
     },
 
     {
         name:"In Stock",
-        path:"inStock"
+        path:"totalQuantity"
     },
 
     {
@@ -49,37 +50,6 @@ export const stockTableHeading = [
         path:"normal"
     }
 ]
-
-export const stockTableValue = [
-    {
-        id:"321",
-        productCode:"SBIL2024001",
-        batchNo:"036521036",
-        productName:"Acetaminophen",
-        category:"Tablet",
-        HSNCode:"56437852",
-        stockedDate:"12-02-2025",
-        expiryDate:"12-02-2026",
-        inStock:"100",
-        salePrice:"Rs. 6.30"
-
-    },
-
-    {
-        id:"322",
-        productCode:"SBIL2024001",
-        batchNo:"036521036",
-        productName:"Cymbalta",
-        category:"Syrup",
-        HSNCode:"56437852",
-        stockedDate:"11-02-2025",
-        expiryDate:"11-02-2026",
-        inStock:"200",
-        salePrice:"Rs. 20.00"
-
-    },
-]
-
 
 export const stockFormField =[
 
