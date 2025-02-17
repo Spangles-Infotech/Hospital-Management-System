@@ -3,7 +3,7 @@ import { Action } from './Action'
 import { Status } from './Status'
 import { getTableCellColor } from '../../../utils/functions/function'
 
-export const Table = ({tableHead, tableValue, actionData, isBlue=false}) => {  
+export const Table = ({tableHead, tableValue, actionData, isLoading=false, isBlue=false}) => {  
     
   return (
     <table className={`w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-b-[15px]`}>
@@ -22,7 +22,7 @@ export const Table = ({tableHead, tableValue, actionData, isBlue=false}) => {
             className={`h-[50px] ${i !== tableValue.length - 1 && !isBlue ? "border-b border-[#D1D1D1] font-roboto" : ""} ${isBlue && "font-poppins"} ${ isBlue && (i + 1) % 2 === 0  ?  "bg-[#F6FBFF]" : "bg-white"} `}
             key={val.id}
           >
-             {tableHead.map((item, index)=>(
+            {tableHead.map((item, index)=>(
                 item.name === "Status" ?
                   <Status data={val} item={item} />
                 : item?.path === "si.no." ?

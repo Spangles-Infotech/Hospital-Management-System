@@ -4,9 +4,12 @@ import { Table } from '../../../Component/common/Table/Table'
 import { tableHeading, tableValue } from '../../../utils/variable/prescriptions'
 import { Pagination } from '../../../Component/common/Pagination'
 import { useNavigate } from 'react-router-dom'
+import { useFetchData } from '../../../hooks/useFetchData'
 
 
 const Prescription = () => {
+
+  // const {data, isLoading, setErrors} = useFetchData("/get")
 
   const navigate = useNavigate()
   const actionBtn = [
