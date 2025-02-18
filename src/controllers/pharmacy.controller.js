@@ -79,8 +79,8 @@ const getMedicineDetails = async (req, res, next) => {
         if (!batchNumber) {
             result = await Stock.find({ productName: medicineName }).distinct("batchNumber");
         } else {
-            result = await Stock.find({ productName: medicineName, batchNumber })
-                .select(["category", "expiryDate", "totalQuantity"]);
+            result = await Stock.findOne({ productName: medicineName, batchNumber })
+                .select(["category", "expiryDate", "totalQuantity",]);
         }
 
         return sendMessage(res, 200, "Data Fetched Successfully", result);
