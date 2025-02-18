@@ -62,7 +62,8 @@ const New_Appointment = ({ closeModal }) => {
   }
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center overflow-hidden">
+
       <div className="w-full h-full  bg-white p-5">
         <div className="flex items-center justify-between p-5">
           <p className="text-stone-700 text-lg font-medium">New Appointment</p>
@@ -72,7 +73,7 @@ const New_Appointment = ({ closeModal }) => {
         <form onSubmit={handleSubmit}>
          
           <div className="flex items-center gap-5 justify-between p-4">
-            <div className="flex-grow outline outline-1 outline-primary rounded-xl text-gray-500 flex items-center bg-cyan-50">
+            <div className="flex-grow outline outline-1 outline-primary rounded-xl text-gray-500 flex items-center bg-cyan-50 ">
               <input
                 type="text"
                 placeholder="Enter Patient Phone no or Patient ID..."

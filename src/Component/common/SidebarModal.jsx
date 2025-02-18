@@ -16,7 +16,7 @@ export const SidebarModal = ({isOpen, onClose, formField}) => {
         )}
         <div
         onContextMenu={(e) => e.stopPropagation()}
-        className={`fixed flex top-[13vh] flex-col gap-[20px] right-0 h-[85vh] overflow-scroll w-full border border-primary rounded-l-[15px] md:w-1/2  p-6 bg-white transform transition-transform duration-700 ease-in-out ${
+        className={`fixed flex top-[13vh] flex-col gap-[20px] right-0 h-[85vh] overflow-y-scroll w-full border border-primary rounded-l-[15px] md:w-1/2  p-6 bg-white transform transition-transform duration-700 ease-in-out ${
             isOpen ? "translate-x-0 z-[10]" : "translate-x-full"
         }`}>
             <div className='flex justify-between items-center'>

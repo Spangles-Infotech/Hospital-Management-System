@@ -2,7 +2,6 @@ import React from "react";
 import MedicinePrescription from "./MedicinePrescription";
 import PatientDetail from "./PatientDetail";
 import { Print } from "../../../Component/common/Print";
-import PaymentPrescription from "./PaymentPrescription";
 
 
 const PrescriptionPreview = ({ visibleComponents = ["PaymentType",  "Total"] }) => {
@@ -25,6 +24,18 @@ const PrescriptionPreview = ({ visibleComponents = ["PaymentType",  "Total"] }) 
     { medicineCategory: "Syrup", medicineName: "Cough Syrup", batchNumber: "5678", expiredDate: "2026-03-20", quantity: "20", availableQuantity: "15", salesPrice: "30", discount: "5%", gst: "10%", amount: "25" },
   ];
 
+  const tableHeader1=["SI. No", "Fee Name", "Amount"]
+  const fields1 =[
+    {label:"", name:"sino","type":"text"},
+    {label:"",name:"feeName","type":"text"},
+    {label:"",name:"amount","type":"text"},
+  ]
+
+  const data1 = [
+{sino:"01", feeName:"Doctor fee", amount:"300.00"},
+{sino:"02", feeName:"Lab fee", amount:"200.00"}
+  ];
+
   return (
     <section className="p-7">
       <div className="flex flex-col gap-[20px]">
@@ -35,8 +46,11 @@ const PrescriptionPreview = ({ visibleComponents = ["PaymentType",  "Total"] }) 
         </div>
       </div>
       <PatientDetail/>
+      <div className=" border border-primary mt-10 rounded-lg p-0.5"><Table tableHead={PrescriptionTableHeading} tableValue={PrescriptionTableValue}/></div>
+      
       <MedicinePrescription tableHeader={tableHeader} fields={fields} data={data} />
-      <PaymentPrescription   visibleComponents={["PaymentType", "Total"]}/>
+      <Payment_Prescription/>
+
     </section>
   );
 };

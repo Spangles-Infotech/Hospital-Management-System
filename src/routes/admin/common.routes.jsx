@@ -15,8 +15,7 @@ import ipBillingRoutes from "./ipBilling.routes";
 import inPatientRoutes from "./inPatient.routes";
 import settingRoutes from "./setting.routes";
 import Login from "../../pages/login/Login";
-import reportsRoutes from "./reports.routes"
-import labRoutes from "./lab.routes"
+
 export default [
     {
         path:"/admin",
@@ -62,8 +61,6 @@ export default [
                 path:"inventory",
                 element:<Inventory />
             },
-            ...labRoutes,
-            ...reportsRoutes,
             ...settingRoutes,
             ...inPatientRoutes,
             ...ipBillingRoutes,
