@@ -138,7 +138,7 @@ const purchase = async(req,res, next)=>{
             const medicine = await MedicineInfo.create({medicines:medicines, totalAmount:totalAmount, totalQuantity:totalQuantity})
             const paymentInfo = await PaymentInfo.create(req.body)
             const purchase = await Purchase.create({medicineInfo:medicine._id, paymentInfo:paymentInfo._id, ...req.body})
-            await Supplier.findByIdAndUpdate(supplierId, {$push:{ purchaseHistory: purchase._id }}, {new:true})
+            await Supplier.fineOne({supplierId:req.body.supplierId}, {$push:{ purchaseHistory: purchase._id }}, {new:true})
             return sendMessage(res, 201, "Purchase History Stored Successfully")
         }
         if(req.method === "GET"){

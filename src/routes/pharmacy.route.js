@@ -28,7 +28,7 @@ pharmacyRouter.get("/get-supplier-info", getSupplierBySupplierId)
 
 pharmacyRouter.get("/get-all-purchase", purchase)
 pharmacyRouter.get("/get-purchase/:purchaseId", purchase)
-pharmacyRouter.post("/add-purchase/:supplierId", purchase)
+pharmacyRouter.post("/add-purchase", purchase)
 pharmacyRouter.put("/update-purchase/:purchaseId", purchase)
 
 
