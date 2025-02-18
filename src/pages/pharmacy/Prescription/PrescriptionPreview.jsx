@@ -2,6 +2,8 @@ import React from "react";
 import MedicinePrescription from "./MedicinePrescription";
 import PatientDetail from "./PatientDetail";
 import { Print } from "../../../Component/common/Print";
+import { Table } from "../../../Component/common/Table/Table";
+import { PrescriptionTableHeading, PrescriptionTableValue } from "../../../utils/variable/prescriptions";
 
 
 const PrescriptionPreview = ({ visibleComponents = ["PaymentType",  "Total"] }) => {
@@ -49,6 +51,7 @@ const PrescriptionPreview = ({ visibleComponents = ["PaymentType",  "Total"] }) 
       <div className=" border border-primary mt-10 rounded-lg p-0.5"><Table tableHead={PrescriptionTableHeading} tableValue={PrescriptionTableValue}/></div>
       
       <MedicinePrescription tableHeader={tableHeader} fields={fields} data={data} />
+      <MedicinePrescription tableHeader={tableHeader1} fields={fields1} data={data1}/>
       <Payment_Prescription/>
 
     </section>

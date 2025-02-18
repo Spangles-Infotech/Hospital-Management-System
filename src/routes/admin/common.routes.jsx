@@ -16,6 +16,9 @@ import inPatientRoutes from "./inPatient.routes";
 import settingRoutes from "./setting.routes";
 import Login from "../../pages/login/Login";
 
+
+
+
 export default [
     {
         path:"/admin",
@@ -61,6 +64,7 @@ export default [
                 path:"inventory",
                 element:<Inventory />
             },
+            
             ...settingRoutes,
             ...inPatientRoutes,
             ...ipBillingRoutes,
