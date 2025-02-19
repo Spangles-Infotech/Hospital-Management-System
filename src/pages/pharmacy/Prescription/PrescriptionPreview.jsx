@@ -4,6 +4,7 @@ import PatientDetail from "./PatientDetail";
 import { Print } from "../../../Component/common/Print";
 import { Table } from "../../../Component/common/Table/Table";
 import { PrescriptionTableHeading, PrescriptionTableValue } from "../../../utils/variable/prescriptions";
+import Payment_Prescription from "./Payment_Prescription";
 
 
 const PrescriptionPreview = ({ visibleComponents = ["PaymentType",  "Total"] }) => {

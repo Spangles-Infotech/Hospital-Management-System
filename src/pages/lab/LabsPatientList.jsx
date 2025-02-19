@@ -1,34 +1,70 @@
-import React from 'react'
-import { TableHeader } from '../../Component/common/Table/TableHeader'
-import { Table } from '../../Component/common/Table/Table'
-import { LabTableHeadiing, LabTableValue } from '../../utils/variable/lab'
-import { Pagination } from '../../Component/common/Pagination'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { TableHeader } from "../../Component/common/Table/TableHeader";
+import { Table } from "../../Component/common/Table/Table";
+import { LabTableHeadiing, LabTableValue } from "../../utils/variable/lab";
+import { Pagination } from "../../Component/common/Pagination";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const LabsPatientList = () => {
-
-
-  const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const actionData = [
     {
-      name:"listlab",
-      onClick: ()=>{"lab-print"}
+      name: "listlab",
+      onClick: () => {
+        // Action for listlab, you can add functionality here
+        console.log("List lab clicked");
+      },
     },
     {
-      name:"cash",
-      onClick: ()=>{navigate("lab-print")}
-    }
-  ]
+      name: "cash",
+      onClick: () => {
+        setIsLoading(true); // Set loading to true before navigating
+        setTimeout(() => {
+          navigate("lab-print");
+        }, 20000); // Simulate a delay before navigating
+      },
+    },
+  ];
 
   return (
     <>
-        <TableHeader title={"Lab"} isBlue={true} isSearch={false}/>
-          <Table tableHead={LabTableHeadiing} tableValue={LabTableValue} isBlue={true} actionData={actionData}  />
-          <Pagination />  
+      <TableHeader title={"Lab"} isBlue={true} isSearch={false} />
+      {isLoading ? (
+        <SkeletonTheme baseColor="#e0e0e0" highlightColor="#cccccc">
+          <div style={{ backgroundColor: "white", padding: "20px" }}>
+            {/* Skeleton loaders with different heights */}
+          <div className="mb-3">
+  {/* Display 5 Skeleton loaders with 202px height and 4px gap between them */}
+  {[...Array(5)].map((_, index) => (
+    <Skeleton
+      key={index}
+      height={40}
+      width="100%"
+      style={{ marginBottom: "1px" }} // 4px gap between skeletons
+    />
+  ))}
+</div>
+
+            
+            {/* <Skeleton height={300} width="100%" style={{ marginBottom: "20px" }} />
+            <Skeleton height={246} width="100%" /> */}
+          </div>
+        </SkeletonTheme>
+      ) : (
+        <Table
+          tableHead={LabTableHeadiing}
+          tableValue={LabTableValue}
+          isBlue={true}
+          actionData={actionData}
+        />
+      )}
+      <Pagination />
     </>
+  );
+};
 
-  )
-}
-
-export default LabsPatientList
+export default LabsPatientList;

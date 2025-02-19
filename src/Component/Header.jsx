@@ -5,7 +5,7 @@ import profileIcon from "../assests/profile.png";
 
 const Header = () => {
   return (
-    <header className="py-5 w-full bg-white ">
+    <header className="py-5 w-full bg-white fixed z-50 ">
       <div className="flex items-center justify-between px-10 w-full">
 
         <div className="py-4">

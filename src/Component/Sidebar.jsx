@@ -53,7 +53,7 @@ export const Sidebar = () => {
     }
 
   return (
-    <aside className='flex flex-col gap-[10px] cursor-pointer font-roboto'>
+    <aside className='flex flex-col gap-[10px] cursor-pointer font-roboto fixed overflow-y-auto h-[calc(90vh-4rem)]  '>
       {
         adminSidebarData.map((item)=>(
           <div className={`mr-3 rounded-r-[10px] flex flex-col ${isMenuOpen === item.name ? "gap-3":"gap-0"} `} key={item.name}>
