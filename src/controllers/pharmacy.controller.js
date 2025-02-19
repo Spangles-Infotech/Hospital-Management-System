@@ -132,7 +132,7 @@ const getSupplierBySupplierId = async(req,res,next)=>{
 
 const purchase = async(req,res, next)=>{
     try {
-        const {medicines, netAmount, totalQuantity} = req.body
+        const {medicines, netAmount, finalAmount, totalQuantity} = req.body
         const {purchaseId, supplierId} = req.params
         if(req.method === "POST"){
             const medicine = await MedicineInfo.create({medicines:medicines, totalAmount:netAmount, totalQuantity:totalQuantity})
@@ -162,7 +162,7 @@ const purchase = async(req,res, next)=>{
         }
         if(req.method === "PUT"){
             const purchase = await Purchase.findById(purchaseId)
-            await MedicineInfo.findByIdAndUpdate(purchase.medicineInfo, {medicines:medicines, totalAmount:totalAmount, totalQuantity:totalQuantity}, {new:true})
+            await MedicineInfo.findByIdAndUpdate(purchase.medicineInfo, {medicines:medicines, totalAmount:netAmount, totalQuantity:totalQuantity}, {new:true})
             await PaymentInfo.findByIdAndUpdate(purchase.paymentInfo, req.body, {new:true})
             await Purchase.findByIdAndUpdate(purchaseId, req.body, {new:true})
             return sendMessage(res, 200, "Data Updated Successfully")
