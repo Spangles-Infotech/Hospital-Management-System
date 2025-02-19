@@ -21,7 +21,8 @@ const stocksSchema = mongoose.Schema({
         count:Number,
         duration:String
     },
-    gst:Number
+    gst:Number,
+    supplierName:String,
 })
 
 const supplierSchema = mongoose.Schema({
