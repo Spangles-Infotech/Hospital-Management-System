@@ -101,7 +101,17 @@ const supplier = async(req,res,next)=>{
         }
         if(req.method === "GET"){
             if(supplierId){
-                const supplier = await Supplier.findById(supplierId).populate("purchaseHistory");
+                const supplier = await Supplier.findById(supplierId)
+                .populate({
+                    path: "purchaseHistory",
+                    populate: [
+                      { path: "medicineInfo", select: "totalQuantity" },
+                      { path: "paymentInfo", select: "netAmount" }
+                    ]
+                  });
+                if(!supplier){
+                    return sendMessage(res, 404, "Supplier Not Found")
+                }
                 return sendMessage(res, 200, "Data Fetched Successfully", supplier)
             }
             const suppliers = await Supplier.find()
@@ -139,8 +149,6 @@ const purchase = async(req,res, next)=>{
             const paymentInfo = await PaymentInfo.create(req.body)
             const purchase = await Purchase.create({medicineInfo:medicine._id, paymentInfo:paymentInfo._id, ...req.body})
             await Supplier.updateOne({supplierId:req.body.supplierId}, {$push:{ purchaseHistory: purchase._id }}, {new:true})
-            console.log("body", req.body)
-            console.log("medicine", medicines)
             return sendMessage(res, 201, "Purchase History Stored Successfully")
         }
         if(req.method === "GET"){
