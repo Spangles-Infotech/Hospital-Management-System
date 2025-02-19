@@ -17,7 +17,7 @@ export const Table = ({tableHead, tableValue, actionData, isLoading=false, isBlu
         </tr>
       </thead>
       <tbody>
-        {tableValue.map((val, i) => (
+        {tableValue?.map((val, i) => (
           <tr
             className={`h-[50px] ${i !== tableValue.length - 1 && !isBlue ? "border-b border-[#D1D1D1] font-roboto" : ""} ${isBlue && "font-poppins"} ${ isBlue && (i + 1) % 2 === 0  ?  "bg-[#F6FBFF]" : "bg-white"} `}
             key={val.id}
@@ -32,9 +32,16 @@ export const Table = ({tableHead, tableValue, actionData, isLoading=false, isBlu
                       key={index}
                       className={`px-6 py-3 font-roboto text-left font-[400]`}
                       style={{color: getTableCellColor(item.name, val[item.path])}}
-                  >{ item.date ? getDateFromISO(val[item.path]) : val[item.path] || "-"}</td>
+                      >{
+                        (item.date 
+                        ? getDateFromISO(val?.[item.path]) 
+                        : item.isNested 
+                        ? val?.[item.path1]?.[item.path2] 
+                        : val?.[item.path]) || "-"
+                        }
+                  </td>
                 :   
-                <Action path={item.path} actionData={actionData} />
+                <Action path={item.path} id={val?._id} actionData={actionData} />
             ))}
           </tr>
         ))}

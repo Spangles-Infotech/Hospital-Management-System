@@ -1,17 +1,18 @@
 export const purchaseTableHeading = [
     {
         name:"Order No.",
-        path:"orderNo"
+        path:"orderNumber"
     },
 
     {
         name:"Invoice No.",
-        path:"invoiceNo"
+        path:"invoiceNumber"
     },
 
     {
         name:"Purchase Date",
-        path:"purchaseDate"
+        path:"purchaseDate",
+        date:true
     },
 
     {
@@ -21,12 +22,16 @@ export const purchaseTableHeading = [
 
     {
         name:"Items",
-        path:"items"
+        path1:"medicineInfo",
+        path2:"totalQuantity",
+        isNested:true
     },
-
+    
     {
         name:"Bill Amount",
-        path:"billAmount"
+        path1:"paymentInfo",
+        path2:"netAmount",
+        isNested:true
     },
 
     {
@@ -89,11 +94,10 @@ export const NewPurchaseField = [
         {
             label:"Supplier Phone Number",
             name:"supplierPhoneNumber",
-            type:"number"
+            type:"text"
         },
 
     ],
-
     [
         {
             label:"Invoice Number",
@@ -104,7 +108,7 @@ export const NewPurchaseField = [
         {
             label:"Purchase Date",
             name:"purchaseDate",
-            type:"text",
+            type:"date",
         },
 
         {

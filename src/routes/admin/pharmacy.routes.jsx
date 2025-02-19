@@ -46,12 +46,16 @@ export default [
                         element:<SupplierForm />
                     },
                     {
-                        path:"preview-supplier",
+                        path:"preview-supplier/:id",
                         element:<SupplierPreview />
                     },
                     {
-                        path:"purchase-preview",
-                        element:<SupplierPurchase />
+                        path:"purchase-preview/:id",
+                        element:<PurchasePreview />
+                    },
+                    {
+                        path:"edit-supplier-form/:id",
+                        element:<SupplierForm isEdit={true} />
                     }
                 ]
             },
@@ -61,13 +65,17 @@ export default [
             },
 
             {
-                path:"purchase/preview",
+                path:"purchase/preview/:id",
                 element:<PurchasePreview />
             },
             
             {
                 path:"purchase/add-form",
                 element:<PurchaseForm />
+            },
+            {
+                path:"purchase/edit-form/:id",
+                element:<PurchaseForm isEdit={true} />
             }
         ]
     }

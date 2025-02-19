@@ -21,30 +21,6 @@ export const supplierTableHeading = [
     }
   ]
 
-export const supplierData = [
-    {
-        id:"21414",
-        supplierId: "323252",
-        supplierName: "John Doe",
-        gstNumber: "grqrqhrh",
-        phoneNumber: "dasgasgasga",
-    },
-    {
-        id:"21415",
-        supplierId: "323252",
-        supplierName: "John Doe",
-        gstNumber: "grqrqhrh",
-        phoneNumber: "dasgasgasga",
-    },
-    {
-        id:"21416",
-        supplierId: "323252",
-        supplierName: "John Doe",
-        gstNumber: "grqrqhrh",
-        phoneNumber: "dasgasgasga",
-    },
-]
-
 export const supplierFormField = [
   [
     {
@@ -129,7 +105,7 @@ export const supplierFormField = [
   [
     {
       label:"Zip Code",
-      name: "zipCode",
+      name: "pincode",
       type:"text"
     },
     {
@@ -205,15 +181,19 @@ export const supplierPurchaseHeading = [
   },
   {
       name:"Date",
-      path:"date"
+      path:"purchaseDate"
   },
   {
     name:"No. of Items",
-    path:"numberOfItems"
+    path1:"medicineInfo",
+    path2:"totalQuantity",
+    isNested:true
   },
   {
     name:"Amount",
-    path:"amount"
+    path1:"paymentInfo",
+    path2:"netAmount",
+    isNested:true
   },
   {
     name:"Action",
@@ -259,7 +239,7 @@ export const supplierPurchasePreviewField = [
   },
   {
     label:"Delivered Date",
-    name:"deliveredDate"
+    name:"deliveryDate"
   },
   {
     label:"Supplier Name",
@@ -271,11 +251,11 @@ export const supplierPurchasePreviewField = [
   },
   {
     label:"Phone Number",
-    name:"phoneNumber"
+    name:"supplierPhoneNumber"
   },
   {
     label:"PurchasedDate",
-    name:"purchasedDate"
+    name:"purchaseDate"
   }
 ]
 

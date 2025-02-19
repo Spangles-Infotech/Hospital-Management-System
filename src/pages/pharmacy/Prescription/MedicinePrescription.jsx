@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import Delete from "../../../assests/Delete.png";
 import { Form } from "../../../Component/common/Form";
 import { useForm } from "../../../context/FormContext";
+import { useFetchData } from "../../../hooks/useFetchData";
+import { Dropdown } from "../../../Component/Fields/Dropdown";
 
-const MedicinePrescription = ({tableHeader, fields, title, data, isEdit=false}) => {
-  const {formData, handleTimingChange, errors, setFormData} = useForm()
-  
+const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false}) => {
+
+  const {formData, handleTimingChange, errors, setFormData, medicineQuery, handleSetBatchData, batchNumber, updateMedicalDetail, currentMedicalIndex} = useForm()
+
+  const {data:medicineData} = useFetchData("/get-medicine-detail",`medicineName=${medicineQuery[currentMedicalIndex]?.medicineName}&batchNumber=${medicineQuery[currentMedicalIndex]?.batchNo || ""}`)
+
   const [row, setRow] = useState([])
 
   const handleAddRow = ()=>{
@@ -23,19 +27,21 @@ const MedicinePrescription = ({tableHeader, fields, title, data, isEdit=false}) 
     setRow(updatedRows)
   }
 
-  useEffect(()=>{
-    if(isEdit){
-      setFormData((prevFormData) => ({
-          ...prevFormData,
-          [title]: data,
-        }));
-        setRow(data.map(() => fields));
-    }else{
-      setRow([fields])
+  useEffect(() => {
+    if (isEdit && count) {
+      for(let i = 1; i <= count; i++){
+        setRow((prev)=>([...prev, fields]))
+      }
     }
-  },[fields, isEdit])
-
-
+  }, [count, isEdit]);
+  
+  useEffect(()=>{
+    if(medicineData && medicineQuery[currentMedicalIndex]?.medicineName && medicineQuery[currentMedicalIndex].batchNo){
+      updateMedicalDetail(title, medicineData)
+    }else if(medicineQuery[currentMedicalIndex]?.medicineName){
+      handleSetBatchData(medicineData)
+    }
+  },[medicineData, medicineQuery])
 
   return (
     <section className="mt-10 w-full">
@@ -58,45 +64,38 @@ const MedicinePrescription = ({tableHeader, fields, title, data, isEdit=false}) 
             row?.map((items, index) => (
               <tr className="border-t items-center border-b border-primary text-stone-600" key={index}>
                 {items?.map((item, i) => (
-                  item.name === "quantity" ? 
-                    <td className={`border-r border-primary flex w-auto gap-[5px] p-2`} key={`${index}-quantity`}>
-                      <div className="w-[46%] h-full">
-                        <Form
-                          item={{ label: "", name:"quantity", "type": "text"}}
-                          formData={formData?.[title]?.[index]}
-                          handleChange={(e)=>handleTimingChange(e, title, index)}
-                          errors={errors}
-                          isBorder={false}
-                        />
-                      </div>
-                      <div className="h-[55px] w-[1%] bg-primary"></div>
-                      <div className="w-[46%]">
-                        <Form
-                          item={{ label: "", name:"availableQuantity", "type": "text"}}
-                          formData={formData?.[title]?.[index]}
-                          handleChange={(e)=>handleTimingChange(e, title, index)}
-                          errors={errors}
-                          isBorder={false}
-                        />
-                      </div>
-                    </td>
-                  :
+                  
                   <td
-                    className={`p-2  ${items.length - 1 === i  ? "flex" : "border-r border-primary"}`}
+                    className={`p-2 ${items.length - 1 === i  ? "flex" : "border-r border-primary"}`}
                     key={item.name}
                   >
                     <div className={`${items.length - 1 === i  ? "w-[80%]" : "w-full"} `}>
-                      <Form
-                        item={item}
-                        formData={formData?.[title]?.[index]}
-                        handleChange={(e)=>handleTimingChange(e, title, index)}
-                        errors={errors}
-                        isBorder={false}
-                      />
+                      {
+                        item.name === "batchNo"
+                        ?
+                          <Dropdown 
+                            label={""}
+                            value={formData?.[title]?.[index]}
+                            name={item.name}
+                            options={batchNumber?.[index] || []}
+                            onChange={(e)=>handleTimingChange(e, title, index)}
+                            errors={errors}
+                            isBorder={false}
+                            isOptions={true}
+                          />
+                        :
+                          <Form
+                            item={item}
+                            formData={formData?.[title]?.[index]}
+                            handleChange={(e)=>handleTimingChange(e, title, index)}
+                            errors={errors}
+                            isBorder={false}
+                          />
+                      }
                     </div>
                     <div className="w-[20%] flex items-center justify-center">
                         {
-                          items.length - 1 === i  &&
+                          items?.length - 1 === i &&
                           <img src={Delete} alt="delete-icon" className="size-[30px] cursor-pointer  object-contain" onClick={()=>handleDeleteRow(index)} />
                         }
                     </div>
@@ -106,11 +105,18 @@ const MedicinePrescription = ({tableHeader, fields, title, data, isEdit=false}) 
             ))
           }
           <tr>
-            <td colSpan={tableHeader.length} className="text-start p-4">
+            <td colSpan={tableHeader.length - 2} className="text-start p-4">
               <button className="px-6 py-2 border-2 border-primary text-primary rounded-md" onClick={handleAddRow}>
                 Add Row
               </button>
             </td>
+            <td>
+              <div className="flex gap-[20px] items-center">
+                <p>Total</p>
+                <p>{formData?.["totalQuantity"]}</p>
+              </div>
+            </td>
+            <td className="border-l border-primary text-center align-middle">{formData?.["netAmount"]}</td>
           </tr>
         </tbody>
       </table>
@@ -121,3 +127,27 @@ const MedicinePrescription = ({tableHeader, fields, title, data, isEdit=false}) 
 };
 
 export default MedicinePrescription;
+
+{/* item.name === "quantity" ? 
+<td className={`border-r border-primary flex w-auto gap-[5px] p-2`} key={`${index}-quantity`}>
+  <div className="w-[46%] h-full">
+    <Form
+      item={{ label: "", name:"quantity", "type": "text"}}
+      formData={formData?.[title]?.[index]}
+      handleChange={(e)=>handleTimingChange(e, title, index)}
+      errors={errors}
+      isBorder={false}
+    />
+  </div>
+  <div className="h-[55px] w-[1%] bg-primary"></div>
+  <div className="w-[46%]">
+    <Form
+      item={{ label: "", name:"availableQuantity", "type": "text"}}
+      formData={formData?.[title]?.[index]}
+      handleChange={(e)=>handleTimingChange(e, title, index)}
+      errors={errors}
+      isBorder={false}
+    />
+  </div>
+</td>
+: */}

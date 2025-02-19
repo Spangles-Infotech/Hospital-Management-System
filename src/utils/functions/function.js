@@ -62,5 +62,5 @@ export const getTableCellColor = (val, data)=>{
 
 export function getDateFromISO(isoString) {
     console.log("isoString", isoString)
-    return isoString?.split('T')[0]; // Extracts YYYY-MM-DD
+    return isoString?.split('T')[0];
 }

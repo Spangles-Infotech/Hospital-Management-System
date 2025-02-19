@@ -7,8 +7,6 @@ export const useCommon = () => {
     const currentLocation = location.pathname.split("/")[2]
 
     const isCurrentLocation = (path)=>{
-      console.log("path", path)
-      console.log("location.pathname", location.pathname )
       return location.pathname.includes(path)
     }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { TableHeader } from '../../Component/common/Table/TableHeader'
 import { Table } from '../../Component/common/Table/Table'
-import { stockFormField, stockTableHeading,stockTableValue } from '../../utils/variable/stock'
+import { stockFormField, stockTableHeading } from '../../utils/variable/stock'
 import { useSidebarModal } from '../../context/SidebarContext'
 import { useFetchData } from '../../hooks/useFetchData'
 

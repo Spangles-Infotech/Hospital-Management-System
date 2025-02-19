@@ -2,7 +2,7 @@ import React from 'react'
 import { TableHeader } from '../../../Component/common/Table/TableHeader'
 import { Table } from '../../../Component/common/Table/Table'
 import { Pagination } from '../../../Component/common/Pagination'
-import { supplierData, supplierTableHeading } from '../../../utils/variable/supplier'
+import { supplierTableHeading } from '../../../utils/variable/supplier'
 import { useNavigate } from 'react-router-dom'
 import { useFetchData } from '../../../hooks/useFetchData'
 
@@ -22,11 +22,11 @@ const SupplierList = () => {
   const actionData = [
     {
       name:"eye",
-      onClick : ()=>{navigate("preview-supplier")}
+      onClick : (id)=>{navigate(`preview-supplier/${id}`)}
     },
     {
       name: "editpen",
-      onClick: () =>  ()=>{console.log("clicking")}
+      onClick: (id)=>{navigate(`edit-supplier-form/${id}`)}
     }
   ]
   

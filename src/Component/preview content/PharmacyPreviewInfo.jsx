@@ -1,13 +1,37 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FormLayout } from '../common/FormLayout'
+import { usePurchase } from '../../hooks/usePurchase'
+import { useForm } from '../../context/FormContext'
 
 export const PharmacyPreviewInfo = ({fields, data, isPreviewWithIcon=true, isForm=false}) => {
+
+    const {handleGetSupplierInfo, supplierData} = usePurchase()
+
+    const {formData, setFormData} = useForm()
+
+    useEffect(() => {
+        if (formData?.supplierId) {
+            handleGetSupplierInfo(formData?.supplierId);
+        }
+    }, [formData?.supplierId]);
+    
+    useEffect(() => {
+        if (supplierData) {
+            setFormData((prev) => ({
+                ...prev,
+                supplierName: supplierData?.supplierName,
+                supplierPhoneNumber: supplierData?.phoneNumber,
+            }));
+        }
+    }, [supplierData]);
+    
+
   return (
     <div className= {`bg-white rounded-[15px] border border-primary p-5 flex ${isForm ? "flex-col" : "flex-wrap" } gap-[15px]`}>
         <div className={`flex justify-between items-center gap-[20px] ${!isForm ? "hidden" : "" }`}>
             <p className='text-[20px] font-[600] text-primary'>New Purchase</p>
-            <div>
-                <p className='text-[20px] font-[500] text-primary'>New Purchase</p>
+            <div className='flex gap-5'>
+                <p className='text-[20px] font-[500] text-primary'>Order Number</p>
                 <p className='text-[#EB9034] font-[600] text-[20px]'>OBIL2024015</p>
             </div>
         </div>
@@ -22,8 +46,8 @@ export const PharmacyPreviewInfo = ({fields, data, isPreviewWithIcon=true, isFor
                             <>
                                 <img src={require(`../../assests/${field?.icon}.png`)} alt={`${field.name}-icon`} className='size-[40px] object-contain' />
                                 <div className='flex flex-col gap-1'>
-                                    <p className='font-[700] h-[40px]'>{data[field.name]}</p>
-                                    <p className='text-[16px] min-h-[40px]'>{field.label === "Supplier ID" ? data["supplierId"] : field.label}</p>
+                                    <p className='font-[700] h-[30px]'>{data[field.name]}</p>
+                                    <p className='text-[16px] h-[30px]'>{field.label === "Supplier ID" ? data["supplierId"] : field.label}</p>
                                 </div>
                             </>
                         :
