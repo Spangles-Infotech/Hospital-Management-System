@@ -9,8 +9,8 @@ const Header = () => {
       <div className="flex items-center justify-between px-10 w-full">
 
         <div className="py-4">
-          <h1 className="text-3xl font-medium text-primary font-roboto">Gunam Hospital</h1>
-          {/* <p className="text-primary text-sm">Product by Spangles Infotech</p> */}
+          <h1 className="text-3xl font-medium text-primary font-roboto">Healthlink</h1>
+          <p className="text-primary text-sm">Product by Spangles Infotech</p>
         </div>
 
         <div className="flex items-center gap-5 w-[480px] mr-[260px]">

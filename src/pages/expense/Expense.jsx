@@ -18,7 +18,7 @@ const Expense = () => {
             name:"Add Expense",
             onClick:()=>{openModal(FormModal, {title:"Add Expense", formField:expenseFormFields})}
         }
-    ]
+    ]                 
 
     const actionData = [
         {

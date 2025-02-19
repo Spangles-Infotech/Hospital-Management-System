@@ -57,7 +57,6 @@ export const Sidebar = () => {
       {
         adminSidebarData.map((item)=>(
           <div className={`mr-3 rounded-r-[10px] flex flex-col ${isMenuOpen === item.name ? "gap-3":"gap-0"} `} key={item.name}>
-             
               <div className={`linkss  flex justify-between p-3 pl-6 items-center pr-[10px] transition-all duration-500 ease-in-out hover:text-white hover:bg-primary rounded-r-[10px] ${isCurrentLocation(item.path) ? "text-white bg-primary fill-white active"  : "text-[#505050] fill-custom-black font-roboto"}`}>
                 <div className='flex gap-[15px]' onClick={()=>handleSelectMenu(item.path)} >
                   {sidebarIcons[item.icon]}

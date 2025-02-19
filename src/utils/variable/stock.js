@@ -83,7 +83,7 @@ export const stockFormField =[
             label:"Category",
             name:"category",
             type:"select",
-            options:["Syrup","injection"],
+            options:["Tablet","Syrup","injection"],
         }
     ],
 
@@ -119,7 +119,7 @@ export const stockFormField =[
         },
 
         {
-            label:"Purchase Price",
+            label:"Purchase Price Per Tablet",
             type:"number",
             name:"purchasePrice"
         }
@@ -130,22 +130,33 @@ export const stockFormField =[
             label:"Unit",
             name:"unit",
             type:"select",
-            options:["box"]
+            options:["box","stripe","bottle"]
+        },
+
+        {
+            label:"Total Boxes",
+            name:"totalBoxes",
+            type:"number"
         }
     ],
 
     [
         {
-            label:"Pieces",
-            type:"text",
-            name:"pieces"
+            label:"Strips Per Box",
+            type:"number",
+            name:"stipePerBox"
+        },
+        {
+            label:"Tablet Per Strip",
+            type:"number",
+            name:"TabletPerStrip"
         }
     ],
 
     [
         {
-            label:"Opening Stock",
-            name:"openingStock",
+            label:"Total Tablets",
+            name:"totalTablets",
             type:"number"
         },
 

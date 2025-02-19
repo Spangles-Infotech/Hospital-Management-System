@@ -52,7 +52,7 @@ const RegisteredOpPreview = () => {
   };
 
   return (
-    <section className="p-6 font-poppins w-full max-w-6xl mx-auto">
+    <section className="p-5 font-poppins w-full max-w-6xl mx-auto">
       <p className="text-2xl text-stone-700 font-medium mb-4">Registered OP</p>
       <div className="flex items-center gap-6 text-center">
         <FaArrowLeftLong

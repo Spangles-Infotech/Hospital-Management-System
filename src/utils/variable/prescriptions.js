@@ -127,3 +127,60 @@ export const tableValue = [
       },    
 ]
 
+
+export const PrescriptionTableHeading=[
+  {
+    name:"S.No",
+    path:"sno"
+  },
+  {
+    name:"Medicine Name",
+    path:"medicineName"
+  },
+  {
+    name:"Dose",
+    path:"dose"
+  },
+  {
+    name:"Routine",
+    path:"routine"
+  },
+  {
+    name:"Timing",
+    path:"timing"
+  },
+  {
+    name:"Days",
+    path:"days"
+  },
+  {
+    name:"Price Per Syrup",
+    path:"pricePerSyrup"
+  }
+]
+
+export const PrescriptionTableValue=[
+  {
+    id:"14001",
+    sno:"01",
+    medicineName: "Amoxible 250",
+    dose: "01 ml",
+    routine: "Orally",
+    timing: "TDS",
+    days: "14",
+    pricePerSyrup:"Rs.10"
+    
+  }, 
+  {
+    id:"14002",
+    sno:"01",
+    medicineName: "Amoxible 250",
+    dose: "01 ml",
+    routine: "Orally",
+    timing: "TDS",
+    days: "14",
+    pricePerSyrup:"Rs.10"
+    
+  }, 
+  
+]

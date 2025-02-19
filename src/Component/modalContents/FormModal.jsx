@@ -14,7 +14,7 @@ export const FormModal = ({title, formField, data}) => {
       closeModal()
     }
   return (
-    <div className='flex flex-col gap-[20px] overflow-y-scroll min-w-[600px]'>
+    <div className='flex flex-col gap-[20px]  min-w-[600px]'>
         <p className='text-[20px] font-[500]'>{title}</p>
         {data && <IconCard />}
         <div className='flex flex-col gap-[10px]'>
