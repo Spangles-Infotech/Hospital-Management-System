@@ -6,14 +6,16 @@ const paymentInfoSchema = mongoose.Schema({
         type:Boolean,
         default:false
     },
-    gstAmount:Number,
+    totalGstAmount:Number,
     discount:Number,
     netAmount:Number,
+    grossAmount:Number,
     amountPaid:Number,
     date:{
         type:Date,
         default:Date.now
-    }
+    },
+    roundOff:Number
 })
 
 const PaymentInfo = mongoose.model('PaymentInfo', paymentInfoSchema)

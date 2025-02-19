@@ -132,13 +132,15 @@ const getSupplierBySupplierId = async(req,res,next)=>{
 
 const purchase = async(req,res, next)=>{
     try {
-        const {medicines, totalAmount, totalQuantity} = req.body
+        const {medicines, netAmount, totalQuantity} = req.body
         const {purchaseId, supplierId} = req.params
         if(req.method === "POST"){
-            const medicine = await MedicineInfo.create({medicines:medicines, totalAmount:totalAmount, totalQuantity:totalQuantity})
+            const medicine = await MedicineInfo.create({medicines:medicines, totalAmount:netAmount, totalQuantity:totalQuantity})
             const paymentInfo = await PaymentInfo.create(req.body)
             const purchase = await Purchase.create({medicineInfo:medicine._id, paymentInfo:paymentInfo._id, ...req.body})
             await Supplier.updateOne({supplierId:req.body.supplierId}, {$push:{ purchaseHistory: purchase._id }}, {new:true})
+            console.log("body", req.body)
+            console.log("medicine", medicines)
             return sendMessage(res, 201, "Purchase History Stored Successfully")
         }
         if(req.method === "GET"){
