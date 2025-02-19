@@ -3,7 +3,7 @@ const Billing = require("../models/billing.model")
 const MedicineInfo = require("../models/medicineInfo.model")
 const PaymentInfo = require("../models/paymentInfo.model")
 const { Supplier, Purchase, Stock } = require("../models/pharmacy.model")
-const { sendMessage } = require("../utils/function")
+const { sendMessage, transformPurchaseData } = require("../utils/function")
 
 
 
@@ -144,10 +144,19 @@ const purchase = async(req,res, next)=>{
             return sendMessage(res, 201, "Purchase History Stored Successfully")
         }
         if(req.method === "GET"){
-            if(purchaseId){
-                const purchase = await Purchase.findById(purchaseId).populate("medicineInfo").populate("paymentInfo")
-                return sendMessage(res ,200, "Date Fetched Successfully", purchase)
+            if (purchaseId) {
+                const purchase = await Purchase.findById(purchaseId)
+                    .populate("medicineInfo")
+                    .populate("paymentInfo");
+            
+                if (!purchase) {
+                    return sendMessage(res, 404, "Purchase not found");
+                }
+                const transformedPurchase = transformPurchaseData(purchase)
+            
+                return sendMessage(res, 200, "Data Fetched Successfully", transformedPurchase);
             }
+            
             const purchases = await Purchase.find().select(["orderNumber", "invoiceNumber", "purchaseDate", "supplierName"]).populate("medicineInfo", "totalQuantity").populate("paymentInfo", "netAmount")
             return sendMessage(res, 200, "Data fetched Succesfully", purchases)
         }
