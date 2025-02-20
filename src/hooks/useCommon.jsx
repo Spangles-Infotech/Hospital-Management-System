@@ -19,6 +19,7 @@ export const useCommon = () => {
 
   return {
     tab,
+    location,
     isCurrent,
     currentLocation,
     isCurrentLocation,

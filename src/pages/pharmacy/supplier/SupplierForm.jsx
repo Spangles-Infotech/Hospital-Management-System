@@ -29,7 +29,7 @@ const SupplierForm = ({isEdit}) => {
       </div>
       <div className="flex gap-7 items-center justify-end p-5">
           <p onClick={handleBackToSupplier} className="text-red-600 cursor-pointer text-lg"> Discard </p>
-          <Button handleClick={handleClickSave} title={btnTitle} style={{width:"20%"}} isLoading={isLoading} />
+          <Button handleClick={(e)=>handleClickSave(e,id, isEdit )} title={btnTitle} style={{width:"20%"}} isLoading={isLoading} />
       </div>
     </section>
   )

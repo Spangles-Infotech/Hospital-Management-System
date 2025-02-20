@@ -1,5 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Modal } from "../Component/common/Modal";
+import { fetch } from "../api/fetch";
 
 const ModalContext = createContext()
 
@@ -8,15 +9,28 @@ export const ModalProvider = ({children})=>{
         isOpen: false,
         content: null,
         contentProps: {},
+        name:""
     })
 
-    const openModal = (content, contentProps = {})=>{
-        setModalState({isOpen: true, content, contentProps})
+    const [data, setData] = useState([])
+
+    const openModal = (content, contentProps = {}, name)=>{
+        setModalState({isOpen: true, content, contentProps, name:name})
     }
 
     const closeModal = ()=>{
-        setModalState({ isOpen: false, content: null, contentProps: {} });
+        setModalState({ isOpen: false, content: null, contentProps: {}, name:"" });
     }
+
+    useEffect(() => {
+        if (modalState.name) {
+            const fetchData = async () => {
+                const result = await fetch.get(modalState.name);
+                setData(result.data.data); 
+            };
+            fetchData();
+        }
+    }, [modalState.name]);
 
     return (
         <ModalContext.Provider value={{ ...modalState, openModal, closeModal }}>
@@ -25,7 +39,7 @@ export const ModalProvider = ({children})=>{
                 isOpen={modalState.isOpen}
                 onClose={closeModal}
                 content={modalState.content}
-                contentProps={modalState.contentProps}
+                contentProps={{...modalState.contentProps, data}}
             />
         </ModalContext.Provider>
     );    

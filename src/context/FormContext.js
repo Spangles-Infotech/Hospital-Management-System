@@ -10,6 +10,7 @@ export const FormProvider = ({ children }) => {
   const [medicineQuery, setMedicineQuery] = useState([]);
   const [currentMedicalIndex, setCurrentMedicalIndex] = useState(0);
   const [batchNumber, setBatchNumber] = useState([]);
+  const [selectedUnit, setSelectedUnit] = useState("bottle")
 
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
@@ -19,6 +20,10 @@ export const FormProvider = ({ children }) => {
       if (name === "isRoundOff") {
         updatePaymentDetails(updatedFormData);
       }
+      if(name === "unit"){
+        setSelectedUnit(value)
+      }
+      handleAddTotalQuantity(updatedFormData)
       return updatedFormData;
     });
     setErrors((prevErr) => {
@@ -28,6 +33,15 @@ export const FormProvider = ({ children }) => {
     });
   };
 
+  // func to add total quantity to stock form
+  const handleAddTotalQuantity = (updatedFormData)=>{
+    if(updatedFormData["stripPerBox"] && updatedFormData["tabletPerStrip"]){
+      let totalBox = updatedFormData["totalBox"]
+      let totalStrip = updatedFormData["stripPerBox"] * updatedFormData["tabletPerStrip"]
+      let totalQuantity = totalBox !== undefined ? totalBox * totalStrip : totalStrip
+      updatedFormData["totalQuantity"] = totalQuantity
+    }
+  }
 
   const validateErrors = (fields) => {
     let errors = {};
@@ -186,16 +200,17 @@ export const FormProvider = ({ children }) => {
   return (
     <FormContext.Provider
       value={{
-        formData,
-        currentMedicalIndex,
         errors,
+        formData,
         batchNumber,
+        selectedUnit,
+        medicineQuery,
+        currentMedicalIndex,
         setFormData,
         setBatchNumber,
         handleChange,
         handleSubmit,
         handleReset,
-        medicineQuery,
         updateMedicalDetail,
         handleTimingChange,
         handleSetBatchData,

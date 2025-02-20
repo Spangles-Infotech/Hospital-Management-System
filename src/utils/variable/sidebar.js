@@ -1,34 +1,34 @@
 export const adminSidebarData = [
-    {
-        name:"Dashboard",
-        icon:"dashboard",
-        path:"/admin/dashboard",
-    },
-    {
-        name:"Registered OP (nurse)",
-        icon:"registeredOpNurse",
-        path:"/admin/registered-op-nurse",
-    },
-    {
-        name:"Registered OP (doctor)",
-        icon:"registeredOpDoctor",
-        path:"/admin/registered-op-doctor",
-    },
-    {
-        name:"Patients",
-        icon:"patients",
-        path:"/admin/patients",
-    },
-    {
-        name:"Doctors",
-        icon:"doctors",
-        path:"/admin/doctors",
-    },
-    {
-        name:"Staff",
-        icon:"staff",
-        path:"/admin/staff",
-    },
+    // {
+    //     name:"Dashboard",
+    //     icon:"dashboard",
+    //     path:"/admin/dashboard",
+    // },
+    // {
+    //     name:"Registered OP (nurse)",
+    //     icon:"registeredOpNurse",
+    //     path:"/admin/registered-op-nurse",
+    // },
+    // {
+    //     name:"Registered OP (doctor)",
+    //     icon:"registeredOpDoctor",
+    //     path:"/admin/registered-op-doctor",
+    // },
+    // {
+    //     name:"Patients",
+    //     icon:"patients",
+    //     path:"/admin/patients",
+    // },
+    // {
+    //     name:"Doctors",
+    //     icon:"doctors",
+    //     path:"/admin/doctors",
+    // },
+    // {
+    //     name:"Staff",
+    //     icon:"staff",
+    //     path:"/admin/staff",
+    // },
     {
         name:"Pharmacy",
         icon:"pharmacy",
@@ -56,36 +56,36 @@ export const adminSidebarData = [
             },
         ]
     },
-    {
-        name:"Expense",
-        icon:"expense",
-        path:"/admin/expense",
-    },
-    {
-        name:"Inventory",
-        icon:"inventory",
-        path:"/admin/inventory",
-    },
-    {
-        name:"In-Patients",
-        icon:"in-patients",
-        path:"/admin/in-patients",
-    },
-    {
-        name:"Labs",
-        icon:"labs",
-        path:"/admin/labs",
-    },
-    {
-        name:"Settings",
-        icon:"settings",
-        path:"/admin/settings",
-        temp_path:"/admin/settings/designation"
-    },
-    {
-        name:"Reports",
-        icon:"reports",
-        path:"/admin/reports",
-        temp_path:"/admin/reports/income?tab=doctor-fee",
-    }
+    // {
+    //     name:"Expense",
+    //     icon:"expense",
+    //     path:"/admin/expense",
+    // },
+    // {
+    //     name:"Inventory",
+    //     icon:"inventory",
+    //     path:"/admin/inventory",
+    // },
+    // {
+    //     name:"In-Patients",
+    //     icon:"in-patients",
+    //     path:"/admin/in-patients",
+    // },
+    // {
+    //     name:"Labs",
+    //     icon:"labs",
+    //     path:"/admin/labs",
+    // },
+    // {
+    //     name:"Settings",
+    //     icon:"settings",
+    //     path:"/admin/settings",
+    //     temp_path:"/admin/settings/designation"
+    // },
+    // {
+    //     name:"Reports",
+    //     icon:"reports",
+    //     path:"/admin/reports",
+    //     temp_path:"/admin/reports/income?tab=doctor-fee",
+    // }
 ]

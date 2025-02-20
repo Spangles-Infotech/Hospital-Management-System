@@ -1,36 +1,34 @@
-import React from 'react'
 import { TableHeader } from '../../Component/common/Table/TableHeader'
 import { Table } from '../../Component/common/Table/Table'
-import { stockFormField, stockTableHeading } from '../../utils/variable/stock'
+import { stockFormField, stockPreviewFields, stockTableHeading, supplierPurchasePreviewData } from '../../utils/variable/stock'
 import { useSidebarModal } from '../../context/SidebarContext'
 import { useFetchData } from '../../hooks/useFetchData'
-
-
+import { useModal } from '../../context/ModalContext'
+import PreviewModal from '../../Component/modalContents/PreviewModal'
 
 const Stocks = () => {
 
   const {openSidebarModal} = useSidebarModal()
-  // const {openM}
+  const {openModal} = useModal()
   const {data, isLoading, error} = useFetchData("/get-all-stock")
 
   const buttonData = [
     {
       name:"New Stock",
-      onClick: ()=>{openSidebarModal(stockFormField)}
+      onClick: ()=>{openSidebarModal(stockFormField, false)}
     }
   ]
 
   const actionData = [
     {
       name:"eye",
-      onClick : ()=>{}
+      onClick : (id)=>{openModal(PreviewModal, {title:"Stock", previewFields:stockPreviewFields},`/get-stock/${id}`)}
     },
     {
       name: "editpen",
-      onClick: () =>  ()=>{}
+      onClick: (id) =>{openSidebarModal(stockFormField,  true, id)}
     }
   ]
-  console.log("Data", data)
   return (
   <section className='m-4 bg-white rounded-[15px]'>
    <TableHeader title={"Stock"} buttonData={buttonData} />

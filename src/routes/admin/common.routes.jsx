@@ -15,59 +15,63 @@ import ipBillingRoutes from "./ipBilling.routes";
 import inPatientRoutes from "./inPatient.routes";
 import settingRoutes from "./setting.routes";
 import reportsRoutes from "./reports.routes";
+import Login from "../../pages/login/Login";
 
 export default [
     {
         path:"/admin",
         element:<Layout />,
         children:[
-            {
-                path:"dashboard",
-                element: <Dashboard />
-            },
-            {
-                path:"registered-op-nurse",
-                element:<RegisteredOP_1 />
-            },
-            {
-                path:"registered-op-doctor",
-                element:<RegisteredOP_2 />
-            },
-            {
-                path:"doctors",
-                element:<Doctor />
-            },
-            {
-                path:"patients",
-                element:<Patient />
-            },
-            {
-                path:"staff",
-                element:<Staff />
-            },
-            {
-                path:"pharmacy",
-                element:<Prescription />
-            },
-            {
-                path:"doctors",
-                element:<PrescriptionPreview />
-            },
-            {
-                path:"expense",
-                element:<Expense />
-            },
-            {
-                path:"inventory",
-                element:<Inventory />
-            },
-            ...reportsRoutes,
-            ...settingRoutes,
-            ...inPatientRoutes,
-            ...ipBillingRoutes,
-            ...registeredPreviewRoutes,
+            // {
+            //     path:"dashboard",
+            //     element: <Dashboard />
+            // },
+            // {
+            //     path:"registered-op-nurse",
+            //     element:<RegisteredOP_1 />
+            // },
+            // {
+            //     path:"registered-op-doctor",
+            //     element:<RegisteredOP_2 />
+            // },
+            // {
+            //     path:"doctors",
+            //     element:<Doctor />
+            // },
+            // {
+            //     path:"patients",
+            //     element:<Patient />
+            // },
+            // {
+            //     path:"staff",
+            //     element:<Staff />
+            // },
+            // {
+            //     path:"pharmacy",
+            //     element:<Prescription />
+            // },
+            // {
+            //     path:"doctors",
+            //     element:<PrescriptionPreview />
+            // },
+            // {
+            //     path:"expense",
+            //     element:<Expense />
+            // },
+            // {
+            //     path:"inventory",
+            //     element:<Inventory />
+            // },
+            // ...reportsRoutes,
+            // ...settingRoutes,
+            // ...inPatientRoutes,
+            // ...ipBillingRoutes,
+            // ...registeredPreviewRoutes,
             ...pharmacyRoutes,
-
         ]
+    },
+    {
+        path:"/",
+        element:<Login />
     }
 ]

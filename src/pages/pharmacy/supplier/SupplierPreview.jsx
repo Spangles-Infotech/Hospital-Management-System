@@ -5,6 +5,7 @@ import { supplierPreviewField, supplierPurchaseHeading } from '../../../utils/va
 import { TableHeader } from '../../../Component/common/Table/TableHeader'
 import { Table } from '../../../Component/common/Table/Table'
 import { useFetchData } from '../../../hooks/useFetchData'
+import { purchaseTableHeading } from '../../../utils/variable/purchase'
 
 const SupplierPreview = () => {
 
@@ -29,7 +30,7 @@ const SupplierPreview = () => {
       <PharmacyPreviewInfo fields={supplierPreviewField} data={data} />
       <div className='flex flex-col'>
         <TableHeader title={"Purchase History"} isSearch={false} />
-        <Table tableHead={supplierPurchaseHeading} tableValue={data["purchaseHistory"]} actionData={actionData} />
+        <Table tableHead={purchaseTableHeading} tableValue={data["purchaseHistory"]} actionData={actionData} />
       </div>
     </section>
   )

@@ -1,10 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FormLayout } from './FormLayout'
 import { useForm } from '../../context/FormContext'
+import { usePostData } from '../../hooks/usePostData'
+import { useUpdateData } from '../../hooks/useUpdateData'
+import { useFetchData } from '../../hooks/useFetchData'
 
-export const SidebarModal = ({isOpen, onClose, formField}) => {
+export const SidebarModal = ({isOpen, onClose, formField, isEdit,id}) => {
     
-    const {handleSubmit} = useForm()
+    const title = isEdit ? "Edit Stock" : "Add Stock"
+    const {handleReset, formData, setFormData} = useForm()
+    const {postData} = usePostData("/add-stocks")
+    const {updateData} = useUpdateData("/update-stocks")
+    const {data} = useFetchData(`/get-stock/${id}`)
+
+    useEffect(()=>{
+        setFormData(data)
+    },[data])
+
+    const handleSaveForm = (e)=>{
+        if(isEdit){
+            updateData(id, formData)
+        }else{
+            postData(formData)
+        }
+        onClose()
+        handleReset()
+    }
     
   return (
     <>
@@ -20,14 +41,14 @@ export const SidebarModal = ({isOpen, onClose, formField}) => {
             isOpen ? "translate-x-0 z-[10]" : "translate-x-full"
         }`}>
             <div className='flex justify-between items-center'>
-                <p className='text-primary font-[600] text-[20px]'>Add Stock</p>
+                <p className='text-primary font-[600] text-[20px]'>{title}</p>
                 <img src={require("../../assests/cancel.png")} alt="close-icon" className='object-contain size-[25px] cursor-pointer' onClick={onClose} />
             </div>
             <div className='flex flex-col gap-[10px]'>
                 <FormLayout data={formField} />
             </div>
             <div className='flex justify-end items-end'>
-                <button onClick={(e)=>handleSubmit(e, formField)} className="w-[30%] bg-primary p-2 text-white rounded-lg hover:bg-primary transition text-lg" > Add Stock </button>
+                <button onClick={(e)=>handleSaveForm(e)} className="w-[30%] bg-primary p-2 text-white rounded-lg hover:bg-primary transition text-lg" >{title}</button>
             </div>
         </div>
     </>

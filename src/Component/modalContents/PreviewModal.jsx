@@ -10,14 +10,14 @@ const PreviewModal = ({ title, previewFields, data }) => {
     <div className="w-full">
       {previewFields?.map((previewField, index) => (
         <Fragment key={index}>
-          <div className="flex items-center justify-between py-4 pt-8  border-[#DCFFFF]">
+          <div className="flex items-center justify-between pb-4   border-[#DCFFFF]">
             <div className="flex items-center gap-3">
               {/* <img
                 src={require(`../../assests/${previewField?.icon}.png`)}
                 alt="Patient Detail"
                 className="w-8 h-8"
               /> */}
-              <p className="text-slate-700 text-xl font-medium">{title}</p>
+              <p className="text-xl font-[700] text-primary">{title}</p>
             </div>
             {previewField?.head && previewField?.head.map((item) => (
               <div className="flex items-center gap-3">

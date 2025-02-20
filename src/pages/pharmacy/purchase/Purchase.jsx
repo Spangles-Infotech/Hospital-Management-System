@@ -35,7 +35,7 @@ const Purchase = () => {
   return (
   <section className='p-4'>
     <TableHeader title={"Purchase"} buttonData={btnData}/>
-    <Table tableHead={purchaseTableHeading} tableValue={data} actionData={actionData}/>
+    <Table tableHead={purchaseTableHeading} tableValue={data} isLoading={isLoading} actionData={actionData}/>
     <Pagination />
   </section>
   )
