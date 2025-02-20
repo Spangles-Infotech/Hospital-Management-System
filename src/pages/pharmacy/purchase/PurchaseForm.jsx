@@ -16,7 +16,7 @@ const PurchaseForm = ({isEdit=false}) => {
   const tableHeader =[ "MEDICINE NAME", "BATCH NO.", "MEDICINE CATEGORY",  "HSN",  "EXP DATE", "QTY", "UNIT", "PRICE", "GST", "AMOUNT"]
   const fields=[
     { label:"", name:"medicineName", "type":"text"},
-    { label: "", name:"batchNumber", "type": "select"},
+    { label: "", name:"batchNo", "type": "select"},
     {label:"", name:"medicineCategory", "type":"select", "options":["Tablet","Medicine","Syrup"] },
     { label:"", name:"hsnCode", "type":"text"},
     { label: "", name:"expDate", "type": "date"},

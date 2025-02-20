@@ -181,6 +181,7 @@ export const FormProvider = ({ children }) => {
         ...updatedRow[currentMedicalIndex],
         expDate: getDateFromISO(medicineData?.expiryDate),
         hsnCode: medicineData?.hsnCode,
+        totalAvailableQuantity:medicineData?.totalQuantity,
         medicineCategory: medicineData?.category,
       };
       updatedFormData[title] = updatedRow;
