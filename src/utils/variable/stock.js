@@ -143,7 +143,7 @@ export const stockPreviewFields = [
         name: "batchNumber",
       },
       {
-        label: "Brand Name",
+        label: "Medicine Name",
         name: "productName",
       },
       {
