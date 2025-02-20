@@ -5,6 +5,7 @@ import { useSidebarModal } from '../../context/SidebarContext'
 import { useFetchData } from '../../hooks/useFetchData'
 import { useModal } from '../../context/ModalContext'
 import PreviewModal from '../../Component/modalContents/PreviewModal'
+import { Pagination } from '../../Component/common/Pagination'
 
 const Stocks = () => {
 
@@ -33,6 +34,10 @@ const Stocks = () => {
   <section className='m-4 bg-white rounded-[15px]'>
    <TableHeader title={"Stock"} buttonData={buttonData} />
    <Table tableHead={stockTableHeading} tableValue={data} actionData={actionData} isLoading={isLoading} error={error} />  
+   {
+      data?.length > 0 &&
+      <Pagination />
+    }
   </section>
   )
 }

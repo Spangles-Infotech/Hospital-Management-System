@@ -35,7 +35,10 @@ const SupplierList = () => {
     <section className='p-4'> 
       <TableHeader title={"Suppliers List"} buttonData={btnData} />
       <Table tableHead={supplierTableHeading} tableValue={data} actionData={actionData} isLoading={isLoading} />
-      <Pagination />
+      {
+        data?.length > 0 &&
+        <Pagination />
+      }
     </section>
   )
 }
