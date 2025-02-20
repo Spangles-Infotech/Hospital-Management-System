@@ -41,7 +41,13 @@ export const Table = ({
             </td>
           </tr>
         ) : (
-          tableValue?.map((val, i) => (
+          !tableValue?.length > 0 ?
+            <tr>
+              <td colSpan={tableHead.length} className="w-full h-[50px]">
+                <p className="text-center align-middle font-[600]">No Data Found</p>
+              </td>
+            </tr>
+          :tableValue?.map((val, i) => (
             <tr
               key={val.id}
               className={`h-[50px] ${
