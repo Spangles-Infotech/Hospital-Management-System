@@ -13,7 +13,7 @@ const PurchaseForm = ({isEdit=false}) => {
   const {id} = useParams()
   const {setFormData} = useForm()
   const {handleBackToPurchase, handleSavePurchase} = usePurchase()
-  const tableHeader =[ "MEDICINE NAME", "BATCH NO.", "MEDICINE CATEGORY",  "HSN",  "EXP DATE", "QTY", "UNIT", "PRICE", "GST (in percent)", "AMOUNT"]
+  const tableHeader =[ "MEDICINE NAME", "BATCH NO.", "MEDICINE CATEGORY",  "HSN",  "EXP DATE", "QTY", "UNIT", "PRICE", "GST (percent)", "AMOUNT"]
   const fields=[
     { label:"", name:"medicineName", "type":"text"},
     { label: "", name:"batchNo", "type": "select"},
