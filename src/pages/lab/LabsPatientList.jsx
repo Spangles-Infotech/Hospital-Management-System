@@ -36,20 +36,17 @@ const LabsPatientList = () => {
       {isLoading ? (
         <SkeletonTheme baseColor="#e0e0e0" highlightColor="#cccccc">
           <div style={{ backgroundColor: "white", padding: "20px" }}>
-            {/* Skeleton loaders with different heights */}
-          <div className="mb-3">
-  {/* Display 5 Skeleton loaders with 202px height and 4px gap between them */}
-  {[...Array(5)].map((_, index) => (
-    <Skeleton
-      key={index}
-      height={40}
-      width="100%"
-      style={{ marginBottom: "1px" }} // 4px gap between skeletons
-    />
-  ))}
-</div>
+            <div className="mb-3">
+              {[...Array(5)].map((_, index) => (
+                <Skeleton
+                  key={index}
+                  height={40}
+                  width="100%"
+                  style={{ marginBottom: "1px" }} // 4px gap between skeletons
+                />
+              ))}
+            </div>
 
-            
             {/* <Skeleton height={300} width="100%" style={{ marginBottom: "20px" }} />
             <Skeleton height={246} width="100%" /> */}
           </div>
