@@ -48,8 +48,9 @@ const prescription = async(req,res,next)=>{
 const stocks = async(req,res,next)=>{
     try {
         const {stockId} = req.params
+        const {productName} = req.body
         if(req.method === "POST"){
-            await Stock.create(req.body)
+            await Stock.create({...req.body, productName:productName.trim()})
             return sendMessage(res, 200, "Stock Stored Successfully")
         }
         if(req.method === "GET"){
@@ -77,10 +78,13 @@ const getMedicineDetails = async (req, res, next) => {
         }
         let result;
         if (!batchNumber) {
-            result = await Stock.find({ productName: medicineName }).distinct("batchNumber");
+            result = await Stock.find({
+                productName: { $regex: `^${medicineName}$`, $options: 'i' }
+            }).distinct("batchNumber");
+            
         } else {
             result = await Stock.findOne({ productName: medicineName, batchNumber })
-                .select(["category", "expiryDate", "totalQuantity",]);
+                .select(["category", "expiryDate", "totalQuantity", "hsnCode"]);
         }
 
         return sendMessage(res, 200, "Data Fetched Successfully", result);
