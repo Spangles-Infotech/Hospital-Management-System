@@ -144,7 +144,7 @@ export const stockPreviewFields = [
       },
       {
         label: "Brand Name",
-        name: "ProductName",
+        name: "productName",
       },
       {
         label: "Generic Name",
