@@ -186,8 +186,8 @@ const purchase = async(req,res, next)=>{
 const getOrderNumber = async(req,res, next)=>{
     try {
         const count = await Purchase.countDocuments()
-        const orderNumber = orderNumber(count)
-        return res.json({orderNumber:orderNumber})
+        const orderId = orderNumber(count)
+        return res.json({orderId:orderId})
     } catch (error) {
         next()
     }
@@ -196,8 +196,8 @@ const getOrderNumber = async(req,res, next)=>{
 const getSupplierNumber = async(req, res, next)=>{
     try {
         const count = await Supplier.countDocuments()
-        const supplierNumber = supplierNumber(count)
-        return res.json({supplierNumber:supplierNumber})
+        const supplierId = supplierNumber(count)
+        return res.json({supplierId:supplierId})
     } catch (error) {
         next(error)
     }

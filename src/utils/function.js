@@ -25,6 +25,10 @@ const transformPurchaseData = (purchase)=>{
     }
 }
 
+const formatCount = (count) => {
+    return String(count + 1).padStart(4, "0");
+};
+
 const getYear = ()=>{
     const date  = new Date()
     const year = date.getFullYear()
@@ -32,11 +36,11 @@ const getYear = ()=>{
 }
 
 const orderNumber = (count)=>{
-    return `ORD-${getYear}-${count + 1}`
+    return `ORD-${getYear}-${formatCount(count)}`
 }
 
 const supplierNumber = (count)=>{
-    return `SUP-${count + 1}`
+    return `SUP-${formatCount(count)}`
 }
 
 module.exports = {sendMessage, transformPurchaseData, orderNumber, supplierNumber}
