@@ -3,7 +3,7 @@ const Billing = require("../models/billing.model")
 const MedicineInfo = require("../models/medicineInfo.model")
 const PaymentInfo = require("../models/paymentInfo.model")
 const { Supplier, Purchase, Stock } = require("../models/pharmacy.model")
-const { sendMessage, transformPurchaseData } = require("../utils/function")
+const { sendMessage, transformPurchaseData,  orderNumber, supplierNumber } = require("../utils/function")
 
 
 
@@ -183,5 +183,25 @@ const purchase = async(req,res, next)=>{
     }
 }
 
+const getOrderNumber = async(req,res, next)=>{
+    try {
+        const count = await Purchase.countDocuments()
+        const orderId = orderNumber(count)
+        return res.json({orderId:orderId})
+    } catch (error) {
+        next()
+    }
+}
 
-module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId}
+const getSupplierNumber = async(req, res, next)=>{
+    try {
+        const count = await Supplier.countDocuments()
+        const supplierId = supplierNumber(count)
+        return res.json({supplierId:supplierId})
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber}
