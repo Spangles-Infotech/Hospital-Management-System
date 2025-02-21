@@ -16,10 +16,12 @@ import { useCommon } from '../hooks/useCommon';
 import { adminSidebarData } from '../utils/variable/sidebar';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowIcon } from '../icons/ArrowIcon';
+import { useForm } from '../context/FormContext';
 
 export const Sidebar = () => {
 
     const {currentLocation, isCurrentLocation} = useCommon();
+    const {handleReset, setFormData} = useForm()
     
     const navigate = useNavigate()
     const [isMenuOpen, setMenuOpen] = useState("")
@@ -33,6 +35,9 @@ export const Sidebar = () => {
     }
 
     const handleSelectMenu = (path)=>{
+      console.log("resetting form")
+      handleReset()
+      setFormData({})
       navigate(path)
     }
 
@@ -70,10 +75,10 @@ export const Sidebar = () => {
                 item.components &&
                 <div className={` flex flex-col pl-[30px] gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "max-h-[240px]":"max-h-0 "} `}>
                   {item?.components.map((it)=>(
-                    <Link to={it.path} className={`flex items-center gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "visible opacity-100":"invisible opacity-0"}`} key={it.tab_path}>
+                    <div onClick={()=>handleSelectMenu(it.path)} className={`flex items-center gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "visible opacity-100":"invisible opacity-0"}`} key={it.tab_path}>
                       <p className={`size-2 rounded-full transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "bg-primary" : "bg-[#C8C8C8]"}`}></p>
                       <p className={` text-[16px] font-[400] transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "text-primary" : "text-[#505050]"} `}>{it.tab_name}</p>
-                    </Link>
+                    </div>
                   ))}
                 </div>
               }

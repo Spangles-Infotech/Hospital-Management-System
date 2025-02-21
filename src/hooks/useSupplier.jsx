@@ -3,6 +3,7 @@ import { useForm } from '../context/FormContext'
 import { usePostData } from './usePostData'
 import { supplierFormField } from '../utils/variable/supplier'
 import { useUpdateData } from './useUpdateData'
+import { fetch } from '../api/fetch'
 
 export const useSupplier = () => {
     const navigate = useNavigate()
@@ -26,6 +27,11 @@ export const useSupplier = () => {
       }
     }
 
+    const getSupplierId = async()=>{
+      const response = await fetch.get("/get-supplier-id")
+      return response.data.supplierId
+    }
+
     const handleBackToSupplier = ()=>{
         navigate("/admin/pharmacy/suppliers")
         handleReset()
@@ -34,6 +40,7 @@ export const useSupplier = () => {
   return {
     handleBackToSupplier,
     handleClickSave,
+    getSupplierId,
     isLoading,
   }
 }

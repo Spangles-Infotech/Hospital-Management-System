@@ -11,7 +11,7 @@ const SupplierForm = ({isEdit}) => {
   
   const {id} = useParams()
   const {setFormData} = useForm()
-  const {handleBackToSupplier, handleClickSave, isLoading} = useSupplier()
+  const {handleBackToSupplier, handleClickSave, getSupplierId, isLoading} = useSupplier()
   const { data } = useFetchData(`/get-supplier/${id}`);
 
   useEffect(()=>{
@@ -19,7 +19,18 @@ const SupplierForm = ({isEdit}) => {
       setFormData(data)
     }
   },[id, data])
-  const btnTitle = isEdit ? "Edit" : "Save"
+
+  useEffect(()=>{
+    if(!isEdit){
+      const fetch = async()=>{
+        const response = await getSupplierId()
+        setFormData({supplierId:response})
+      }
+      fetch()
+    }
+  },[])
+
+  const btnTitle = isEdit ? "Update" : "Save"
 
   return (
     <section className='m-4 bg-white rounded-[15px] p-4 flex flex-col gap-[20px]'>
