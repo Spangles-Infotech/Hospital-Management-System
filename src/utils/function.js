@@ -25,4 +25,18 @@ const transformPurchaseData = (purchase)=>{
     }
 }
 
-module.exports = {sendMessage, transformPurchaseData}
+const getYear = ()=>{
+    const date  = new Date()
+    const year = date.getFullYear()
+    return year
+}
+
+const orderNumber = (count)=>{
+    return `ORD-${getYear}-${count + 1}`
+}
+
+const supplierNumber = (count)=>{
+    return `SUP-${count + 1}`
+}
+
+module.exports = {sendMessage, transformPurchaseData, orderNumber, supplierNumber}

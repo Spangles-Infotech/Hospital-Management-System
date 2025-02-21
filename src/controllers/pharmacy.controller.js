@@ -3,7 +3,7 @@ const Billing = require("../models/billing.model")
 const MedicineInfo = require("../models/medicineInfo.model")
 const PaymentInfo = require("../models/paymentInfo.model")
 const { Supplier, Purchase, Stock } = require("../models/pharmacy.model")
-const { sendMessage, transformPurchaseData } = require("../utils/function")
+const { sendMessage, transformPurchaseData, orderNumber, supplierNumber } = require("../utils/function")
 
 
 
@@ -165,7 +165,6 @@ const purchase = async(req,res, next)=>{
                     return sendMessage(res, 404, "Purchase not found");
                 }
                 const transformedPurchase = transformPurchaseData(purchase)
-            
                 return sendMessage(res, 200, "Data Fetched Successfully", transformedPurchase);
             }
             
@@ -184,5 +183,25 @@ const purchase = async(req,res, next)=>{
     }
 }
 
+const getOrderNumber = async(req,res, next)=>{
+    try {
+        const count = await Purchase.countDocuments()
+        const orderNumber = orderNumber(count)
+        return res.json({orderNumber:orderNumber})
+    } catch (error) {
+        next()
+    }
+}
 
-module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId}
+const getSupplierNumber = async(req, res, next)=>{
+    try {
+        const count = await Supplier.countDocuments()
+        const supplierNumber = supplierNumber(count)
+        return res.json({supplierNumber:supplierNumber})
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber}
