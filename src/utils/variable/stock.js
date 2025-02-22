@@ -92,6 +92,7 @@ export const stockTableHeading = [
         type: "number",
         name: "purchasePrice",
       },
+      { label: "Total Strips", name: "totalStrips", type: "number" },
     ],
     [
       { label: "Total Tablets", name: "totalQuantity", type: "number" },
@@ -115,7 +116,7 @@ export const stockTableHeading = [
   ];
   
   export const unitFields = {
-    box: ["Sale Price Per Syrup", "Purchase Price Per Syrup", "Total Bottles"],
+    box: ["Sale Price Per Syrup", "Purchase Price Per Syrup", "Total Bottles", "Total Strips"],
     strip: [
       "Sale Price Per Syrup",
       "Purchase Price Per Syrup",
@@ -124,6 +125,7 @@ export const stockTableHeading = [
       "Strips Per Box",
     ],
     bottle: [
+      "Total Strips",
       "Sale Price Per Tablet",
       "Purchase Price Per Tablet",
       "Total Boxes",
@@ -199,13 +201,4 @@ export const stockTableHeading = [
     },
   ];
   
-  export const supplierPurchasePreviewData = {
-    date: "2002-07-24",
-    category: "Food",
-    subCategory: "Restaurant",
-    amount: 100,
-    balanceAmount: 100,
-    description: "Test Description",
-    status: "Paid",
-  };
   

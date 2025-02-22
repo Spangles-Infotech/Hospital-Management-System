@@ -44,14 +44,28 @@ export const FormProvider = ({ children }) => {
   }
 
   // func to add total quantity to stock form
-  const handleAddTotalQuantity = (updatedFormData)=>{
-    if(updatedFormData["stripPerBox"] && updatedFormData["tabletPerStrip"]){
-      let totalBox = updatedFormData["totalBox"]
-      let totalStrip = updatedFormData["stripPerBox"] * updatedFormData["tabletPerStrip"]
-      let totalQuantity = totalBox !== undefined ? totalBox * totalStrip : totalStrip
-      updatedFormData["totalQuantity"] = totalQuantity
+  const handleAddTotalQuantity = (updatedFormData) => {
+    if(updatedFormData["stripPerBox"] || updatedFormData["tabletPerStrip"] || updatedFormData["totalStrips"]){
+      let totalStrip = 0;
+      
+      let totalBox = updatedFormData["totalBox"];
+      let totalStrips = updatedFormData["totalStrips"];
+      let stripPerBox = updatedFormData["stripPerBox"];
+      let tabletPerStrip = updatedFormData["tabletPerStrip"];
+  
+      if (tabletPerStrip !== undefined) {
+          if (totalStrips !== undefined) {
+              totalStrip += totalStrips * tabletPerStrip;
+          }
+          if (stripPerBox !== undefined) {
+              totalStrip += stripPerBox * tabletPerStrip;
+          }
+      }
+  
+      let totalQuantity = totalBox !== undefined ? totalBox * totalStrip : totalStrip;
+      updatedFormData["totalQuantity"] = totalQuantity;
     }
-  }
+};
 
   const validateErrors = (fields) => {
     let errors = {};
