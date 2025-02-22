@@ -16,6 +16,7 @@ export const usePostData = (url, options={}) => {
       if(response.status === 201){
         handleReset()
       }
+      return response.status
     } catch (error) {
       setError(error.message)
     }finally{

@@ -151,7 +151,7 @@ export const stockTableHeading = [
         },
         {
           label: "Generic Name",
-          name: "genericName",
+          name: "productName",
         },
         {
           label: "Category",
@@ -188,6 +188,8 @@ export const stockTableHeading = [
         {
           label: "Expire Alert",
           name: "expireAlert",
+          path:"count",
+          isNested:true
         },
         {
           label: "GST",

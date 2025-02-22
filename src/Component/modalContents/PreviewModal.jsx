@@ -31,9 +31,23 @@ const PreviewModal = ({ title, previewFields, data }) => {
             ))}
           </div>
           <div className="w-full h-[1px] bg-[#DCFFFF]"></div>
-          <div className={`flex flex-wrap gap-[10px] py-4 w-[700px] ${previewField.isSingle ? "hidden" : ""}`}>
+          <div className="w-[500px] flex flex-wrap gap-[10px] py-4 ">
+            {
+              previewField.isSingle && previewField.fields.map((field)=>(
+                <div key={field.label} className="flex items-center gap-3 w-full">
+                  <p className="text-customBlack font-[600]  text-[16px] w-[50%]">
+                    {field.label}
+                  </p>
+                  <p className={`w-[50%] ${field.name === "bloodgroup" ? "text-[#00BE5F]" : "text-secondaryBlue"} text-[16px] font-[600] `}>
+                    {field.isNested ? data?.[field.name]?.[field?.path] : data[field.name]}
+                  </p>
+                </div>
+              ))
+            }
+          </div>
+          {/* <div className={`flex flex-wrap gap-[10px] py-4 w-[700px] ${previewField?.isSingle ? "hidden" : ""}`}>
               {
-                previewField.fields.map((field)=>(
+                previewField?.fields.map((field)=>(
                   <div key={field.label} className="flex items-center gap-3 w-[49%]">
                     <p className="text-customBlack font-[600]  text-[16px] w-[50%]">
                       {field.label}
@@ -44,21 +58,7 @@ const PreviewModal = ({ title, previewFields, data }) => {
                   </div>
                 ))
               }
-          </div>
-          <div className="w-[500px] flex flex-wrap gap-[10px] py-4 ">
-            {
-              previewField.isSingle && previewField.fields.map((field)=>(
-                <div key={field.label} className="flex items-center gap-3 w-full">
-                  <p className="text-customBlack font-[600]  text-[16px] w-[50%]">
-                    {field.label}
-                  </p>
-                  <p className={`w-[50%] ${field.name === "bloodgroup" ? "text-[#00BE5F]" : "text-secondaryBlue"} text-[16px] font-[600] `}>
-                    {data[field.name]}
-                  </p>
-                </div>
-              ))
-            }
-          </div>
+          </div> */}
           <BarcodePreview data={data} previewField={previewField} />
           <div className="w-full h-[1px] bg-[#DCFFFF]"></div>
           <Timing data={data} previewField={previewField} />

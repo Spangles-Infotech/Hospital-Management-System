@@ -7,7 +7,7 @@ export const useFetchData = (baseUrl, query) => {
     const [data, setData] = useState([])
     const [error, setError] = useState(null)
 
-    const url = query ? `${baseUrl}?${query}` : baseUrl;
+    const url = query ? `${baseUrl}?${query}` : baseUrl ;
 
     const fetchData = useCallback(async () => {
         setIsLoading(true);
@@ -24,10 +24,12 @@ export const useFetchData = (baseUrl, query) => {
     }, [url]);
 
     useEffect(() => {
-        fetchData();
+        if(baseUrl !== null){
+            fetchData();
+        }
     }, [fetchData]);
 
   return{
-    isLoading, data, error, refetch:fetchData
+    isLoading, data, error, fetchData
   }
 }

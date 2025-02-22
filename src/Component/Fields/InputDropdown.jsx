@@ -4,8 +4,6 @@ export const InputDropdown = ({ label, name, options, inputName, dropdownName, o
 
     const undefinedValue = value?.[name]?.[dropdownName] === undefined || value?.[name]?.[dropdownName] === ""
 
-    console.log("type", type)
-
     return (
         <div className="flex flex-col gap-3 w-full font-roboto ">
             <label className="text-[#345261] font-[500] text-[20px] mb-1">{label}</label>

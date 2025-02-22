@@ -11,12 +11,12 @@ const Stocks = () => {
 
   const {openSidebarModal} = useSidebarModal()
   const {openModal} = useModal()
-  const {data, isLoading, error} = useFetchData("/get-all-stock")
+  const {data, isLoading, error, fetchData} = useFetchData("/get-all-stock")
 
   const buttonData = [
     {
       name:"New Stock",
-      onClick: ()=>{openSidebarModal(stockFormField, false)}
+      onClick: ()=>{openSidebarModal(stockFormField, false, fetchData)}
     }
   ]
 
@@ -27,11 +27,11 @@ const Stocks = () => {
     },
     {
       name: "editpen",
-      onClick: (id) =>{openSidebarModal(stockFormField,  true, id)}
+      onClick: (id) =>{openSidebarModal(stockFormField,  true, fetchData, id)}
     }
   ]
   return (
-  <section className='m-4 bg-white rounded-[15px]'>
+  <section className='m-4'>
    <TableHeader title={"Stock"} buttonData={buttonData} />
    <Table tableHead={stockTableHeading} tableValue={data} actionData={actionData} isLoading={isLoading} error={error} />  
    {

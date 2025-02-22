@@ -18,6 +18,7 @@ export const useUpdateData = (url) => {
             setIsLoading(false)
             handleReset()
         }
+        return response.status
     } catch (error) {
         setError(error.messasge)
         console.log("error at api", error.message)
