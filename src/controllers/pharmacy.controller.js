@@ -3,7 +3,7 @@ const Billing = require("../models/billing.model")
 const MedicineInfo = require("../models/medicineInfo.model")
 const PaymentInfo = require("../models/paymentInfo.model")
 const { Supplier, Purchase, Stock } = require("../models/pharmacy.model")
-const { sendMessage, transformPurchaseData,  orderNumber, supplierNumber } = require("../utils/function")
+const { sendMessage, transformPurchaseData,  orderNumber, supplierNumber, skipPage } = require("../utils/function")
 
 
 
@@ -48,7 +48,9 @@ const prescription = async(req,res,next)=>{
 const stocks = async(req,res,next)=>{
     try {
         const {stockId} = req.params
+        const {page, limit=15} = req.query
         const {productName} = req.body
+        let query = {}
         if(req.method === "POST"){
             await Stock.create({...req.body, productName:productName.trim()})
             return sendMessage(res, 200, "Stock Stored Successfully")
@@ -58,8 +60,9 @@ const stocks = async(req,res,next)=>{
                 const stock = await Stock.findById(stockId)
                 return sendMessage(res, 200, "Data Fetched Successfully", stock)
             }
-            const stocks  = await Stock.find()
-            return sendMessage(res, 200, "Data Fetched Successfully", stocks)
+            const stocks  = await Stock.find(query).sort({_id:-1}).limit(limit).skip(skipPage(page, limit))
+            const total = await Stock.countDocuments(query)
+            return sendMessage(res, 200, "Data Fetched Successfully", stocks, total)
         }
         if(req.method === "PUT"){
             await Stock.findByIdAndUpdate(stockId, req.body, {new:true})
@@ -98,6 +101,8 @@ const getMedicineDetails = async (req, res, next) => {
 const supplier = async(req,res,next)=>{
     try {
         const {supplierId} = req.params
+        const {page, limit} = req.query
+        let query = {}
         if(req.method === "POST"){
             await Supplier.create(req.body)
             return sendMessage(res, 201, "Supplier Created Successfully")
@@ -117,8 +122,9 @@ const supplier = async(req,res,next)=>{
                 }
                 return sendMessage(res, 200, "Data Fetched Successfully", supplier)
             }
-            const suppliers = await Supplier.find()
-            return sendMessage(res, 200, "Data Fetched Successfully", suppliers)
+            const suppliers = await Supplier.find(query).sort({_id:-1}).limit(limit).skip(skipPage(page, limit))
+            const total = await Supplier.countDocuments(query)
+            return sendMessage(res, 200, "Data Fetched Successfully", suppliers, total)
         }
         if(req.method === "PUT"){
             await Supplier.findByIdAndUpdate(supplierId, req.body ,{new:true})
@@ -145,8 +151,10 @@ const getSupplierBySupplierId = async(req,res,next)=>{
 
 const purchase = async(req,res, next)=>{
     try {
-        const {medicines, netAmount, finalAmount, totalQuantity} = req.body
+        let query = {}
+        const {page, limit} = req.query
         const {purchaseId, supplierId} = req.params
+        const {medicines, netAmount, finalAmount, totalQuantity} = req.body
         if(req.method === "POST"){
             const medicine = await MedicineInfo.create({medicines:medicines, totalAmount:netAmount, totalQuantity:totalQuantity})
             const paymentInfo = await PaymentInfo.create(req.body)
@@ -164,12 +172,13 @@ const purchase = async(req,res, next)=>{
                     return sendMessage(res, 404, "Purchase not found");
                 }
                 const transformedPurchase = transformPurchaseData(purchase)
-            
+                
                 return sendMessage(res, 200, "Data Fetched Successfully", transformedPurchase);
             }
             
-            const purchases = await Purchase.find().select(["orderNumber", "invoiceNumber", "purchaseDate", "supplierName"]).populate("medicineInfo", "totalQuantity").populate("paymentInfo", "netAmount")
-            return sendMessage(res, 200, "Data fetched Succesfully", purchases)
+            const purchases = await Purchase.find(query).select(["orderNumber", "invoiceNumber", "purchaseDate", "supplierName"]).populate("medicineInfo", "totalQuantity").populate("paymentInfo", "netAmount").sort({_id:-1}).limit(limit).skip(skipPage(page, limit))
+            const total = await Purchase.countDocuments(query)
+            return sendMessage(res, 200, "Data fetched Succesfully", purchases, total)
         }
         if(req.method === "PUT"){
             const purchase = await Purchase.findById(purchaseId)
