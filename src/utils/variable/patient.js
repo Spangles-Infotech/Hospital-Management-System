@@ -39,6 +39,7 @@ export const patientFields = [
         },
         {
             label:"Patient Name / Baby of",
+            name:"patientName",
             options:["Patient Name", "Baby of"],
             inputName:"name",
             dropdownName:"nameType",
@@ -61,16 +62,19 @@ export const patientFields = [
         {
             label:"Mobile Number",
             options:["+91", "+92", "+93"],
-            inputName:"mobileNumber",
+            name:"mobileNumber",
+            inputName:"number",
             dropdownName:"countryCode",
             type:"inputdropdown"
         },
         {
             label:"Alternate Mobile Number",
             options:["+91", "+92", "+93"],
-            inputName:"alternateMobileNumber",
+            name:"alternateMobileNumber",
             dropdownName:"countryCode",
-            type:"inputdropdown"
+            type:"inputdropdown",
+            inputName:"number",
+
         },
     ],
     [

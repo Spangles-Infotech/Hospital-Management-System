@@ -11,7 +11,7 @@ const Layout = () => {
         <div className='w-[20%] pt-[135px] '>
           <Sidebar />
         </div>
-        <div className='w-[80%] bg-[#D0FAFF33] overflow-y-auto h-[calc(100vh-0.1rem)] pt-[116px] '>
+        <div className='w-[80%] bg-[#D0FAFF33] overflow-y-auto h-[calc(100vh-0.1rem)] pt-[130px] '>
           <Outlet/>
         </div>
       </div>

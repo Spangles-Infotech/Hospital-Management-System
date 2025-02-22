@@ -50,8 +50,9 @@ export const staffTableHeading = [
         },
         {
             label:"Mobile Number",
+            name:"mobileNumber",
             options:["+91", "+92", "+93"],
-            inputName:"mobileNumber",
+            inputName:"number",
             dropdownName:"countryCode",
             type:"inputdropdown"
         },
@@ -87,7 +88,8 @@ export const staffTableHeading = [
         {
             label:"Alternate Mobile Number",
             options:["+91", "+92", "+93"],
-            inputName:"alternateMobileNumber",
+            name:"alternateMobileNumber",
+            inputName:"number",
             dropdownName:"countryCode",
             type:"inputdropdown"
         },

@@ -14,12 +14,14 @@ import { LabIcon } from '../icons/LabIcon';
 import { SettingsIcon } from '../icons/SettingsIcon';
 import { useCommon } from '../hooks/useCommon';
 import { adminSidebarData } from '../utils/variable/sidebar';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ArrowIcon } from '../icons/ArrowIcon';
+import { useForm } from '../context/FormContext';
 
 export const Sidebar = () => {
 
     const {currentLocation, isCurrentLocation} = useCommon();
+    const {handleReset, setFormData} = useForm()
     
     const navigate = useNavigate()
     const [isMenuOpen, setMenuOpen] = useState("")
@@ -33,23 +35,29 @@ export const Sidebar = () => {
     }
 
     const handleSelectMenu = (path)=>{
-      navigate(path)
+      if(path === "/admin/pharmacy" ){
+        setMenuOpen("Pharmacy")
+      }else{
+        handleReset()
+        setFormData({})
+        navigate(path)
+      }
     }
 
     const sidebarIcons = {
-        "dashboard" : <DashboardIcon  />,
-        "registeredOpNurse": <RegisteredOpIcon />,
-        "registeredOpDoctor": <RegisteredOpIcon />,
-        "patients": <PatientIcon  />,
-        doctors: <DoctorIcon  />,
-        staff: <StaffIcon />,
-        pharmacy: <PharmacyIcon />,
-        expense: <ExpenseIcon />,
-        inventory: <InventoryIcon />,
-        "in-patients": <InPatientIcon  />,
-        labs:<LabIcon />,
-        settings:<SettingsIcon />,
-        reports: <ReportIcon />,
+      "dashboard" : <DashboardIcon  />,
+      "registeredOpNurse": <RegisteredOpIcon />,
+      "registeredOpDoctor": <RegisteredOpIcon />,
+      "patients": <PatientIcon  />,
+      doctors: <DoctorIcon  />,
+      staff: <StaffIcon />,
+      pharmacy: <PharmacyIcon />,
+      expense: <ExpenseIcon />,
+      inventory: <InventoryIcon />,
+      "in-patients": <InPatientIcon  />,
+      labs:<LabIcon />,
+      settings:<SettingsIcon />,
+      reports: <ReportIcon />,
     }
 
   return (
@@ -57,7 +65,7 @@ export const Sidebar = () => {
       {
         adminSidebarData.map((item)=>(
           <div className={`mr-3 rounded-r-[10px] flex flex-col ${isMenuOpen === item.name ? "gap-3":"gap-0"} `} key={item.name}>
-              <div className={`linkss  flex justify-between p-3 pl-6 items-center pr-[10px] transition-all duration-500 ease-in-out hover:text-white hover:bg-primary rounded-r-[10px] ${isCurrentLocation(item.path) ? "text-white bg-primary fill-white active"  : "text-[#505050] fill-custom-black font-roboto"}`}>
+              <div className={`linkss  flex justify-between p-3 pl-6 items-center pr-[10px] transition-all duration-500 ease-in-out rounded-r-[10px] ${isCurrentLocation(item.path) ? "text-white bg-primary fill-white active"  : "text-[#505050] fill-custom-black font-roboto hover:fill-primary hover:text-primary"}`}>
                 <div className='flex gap-[15px]' onClick={()=>handleSelectMenu(item.path)} >
                   {sidebarIcons[item.icon]}
                   <p className='font-[400] text-[18px]'>{item.name}</p>
@@ -70,10 +78,10 @@ export const Sidebar = () => {
                 item.components &&
                 <div className={` flex flex-col pl-[30px] gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "max-h-[240px]":"max-h-0 "} `}>
                   {item?.components.map((it)=>(
-                    <Link to={it.path} className={`flex items-center gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "visible opacity-100":"invisible opacity-0"}`} key={it.tab_path}>
+                    <div onClick={()=>handleSelectMenu(it.path)} className={`flex items-center gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "visible opacity-100":"invisible opacity-0"}`} key={it.tab_path}>
                       <p className={`size-2 rounded-full transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "bg-primary" : "bg-[#C8C8C8]"}`}></p>
                       <p className={` text-[16px] font-[400] transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "text-primary" : "text-[#505050]"} `}>{it.tab_name}</p>
-                    </Link>
+                    </div>
                   ))}
                 </div>
               }

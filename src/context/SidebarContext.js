@@ -5,7 +5,7 @@ const SidebarModalContext = createContext()
 
 export const SidebarModalProvider = ({children})=>{
 
-    const intitialValue = {isOpen:false, formField:[]}
+    const intitialValue = {isOpen:false, formField:[], isEdit:false, id:""}
 
     const [sidebarContent, setSidebarContent] = useState(intitialValue)
 
@@ -13,8 +13,8 @@ export const SidebarModalProvider = ({children})=>{
         setSidebarContent(intitialValue)
     }
 
-    const openSidebarModal = (data)=>{
-        setSidebarContent({isOpen:true, formField:data})
+    const openSidebarModal = (data, isEdit, id)=>{
+        setSidebarContent({isOpen:true, formField:data, isEdit:isEdit, id:id})
     }
 
     return(
@@ -23,6 +23,8 @@ export const SidebarModalProvider = ({children})=>{
             <SidebarModal 
                 formField={sidebarContent.formField}
                 isOpen = {sidebarContent.isOpen}
+                isEdit = {sidebarContent.isEdit}
+                id = {sidebarContent.id}
                 onClose={onClose}
             />
         </SidebarModalContext.Provider>

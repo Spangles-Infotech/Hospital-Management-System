@@ -32,7 +32,7 @@ export const PharmacyPreviewInfo = ({fields, data, isPreviewWithIcon=true, isFor
             <p className='text-[20px] font-[600] text-primary'>New Purchase</p>
             <div className='flex gap-5'>
                 <p className='text-[20px] font-[500] text-primary'>Order Number</p>
-                <p className='text-[#EB9034] font-[600] text-[20px]'>OBIL2024015</p>
+                <p className='text-[#EB9034] font-[600] text-[20px]'>{formData?.orderId}</p>
             </div>
         </div>
         <div className={`flex gap-[15px] flex-wrap items-center w-full ${!isForm ? "hidden" : ""}`}>

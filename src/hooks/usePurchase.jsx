@@ -40,6 +40,11 @@ export const usePurchase = () => {
     }
   };
 
+  const getOrderId = async()=>{
+    const response = await fetch.get("get-order-id")
+    return response.data.orderId
+  }
+
   const handleBackToPurchase = () => {
     navigate("/admin/pharmacy/purchase");
     handleReset();
@@ -50,5 +55,6 @@ export const usePurchase = () => {
     handleBackToPurchase,
     handleSavePurchase,
     supplierData,
+    getOrderId,
   };
 };

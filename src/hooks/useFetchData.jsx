@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { fetch } from '../api/fetch'
 
 export const useFetchData = (baseUrl, query) => {
@@ -9,33 +9,25 @@ export const useFetchData = (baseUrl, query) => {
 
     const url = query ? `${baseUrl}?${query}` : baseUrl;
 
-    useEffect(() => {
-        let isMounted = true; 
-    
-        const fetchData = async () => {
-          setIsLoading(true);
-          try {
+    const fetchData = useCallback(async () => {
+        setIsLoading(true);
+        try {
             const response = await fetch.get(url);
-            if (isMounted) {
-              setData(response.data.data);
-              setError(null);
-            }
-          } catch (err) {
-            if (isMounted) setError(err.message);
+            setData(response.data.data);
+            setError(null);
+        } catch (err) {
+            setError(err.message);
             console.error("Error fetching data:", err);
-          } finally {
-            if (isMounted) setIsLoading(false);
-          }
-        };
-    
+        } finally {
+            setIsLoading(false);
+        }
+    }, [url]);
+
+    useEffect(() => {
         fetchData();
-    
-        return () => {
-          isMounted = false;
-        };
-      }, [url]);
+    }, [fetchData]);
 
   return{
-    isLoading, data, error
+    isLoading, data, error, refetch:fetchData
   }
 }

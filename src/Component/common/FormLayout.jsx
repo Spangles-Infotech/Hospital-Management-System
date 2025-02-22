@@ -1,10 +1,11 @@
 import React from 'react'
 import { Form } from './Form'
 import { useForm } from '../../context/FormContext'
+import { unitFields } from '../../utils/variable/stock';
 
 export const FormLayout = ({data, isBorder=true, isWrap=false}) => {
 
-  const {formData, handleChange, errors} = useForm();
+  const {formData, handleChange, errors, selectedUnit} = useForm();
 
   return (
     data.map((item, index) =>
@@ -19,7 +20,8 @@ export const FormLayout = ({data, isBorder=true, isWrap=false}) => {
                   ))
                 }
               </div>
-            :<Form key={it.label} item={it} formData={formData} handleChange={handleChange} errors={errors} isBorder={isBorder}  />
+            : !unitFields[selectedUnit].includes(it.label) &&
+            <Form key={it.label} item={it} formData={formData} handleChange={handleChange} errors={errors} isBorder={isBorder}  />
           ))}
         </div>
       ) : (

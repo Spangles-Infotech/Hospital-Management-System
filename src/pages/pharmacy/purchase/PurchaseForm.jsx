@@ -12,8 +12,8 @@ const PurchaseForm = ({isEdit=false}) => {
 
   const {id} = useParams()
   const {setFormData} = useForm()
-  const {handleBackToPurchase, handleSavePurchase} = usePurchase()
-  const tableHeader =[ "MEDICINE NAME", "BATCH NO.", "MEDICINE CATEGORY",  "HSN",  "EXP DATE", "QTY", "UNIT", "PRICE", "GST", "AMOUNT"]
+  const {handleBackToPurchase, handleSavePurchase,getOrderId} = usePurchase()
+  const tableHeader =[ "MEDICINE NAME", "BATCH NO.", "MEDICINE CATEGORY",  "HSN",  "EXP DATE", "QTY", "UNIT", "PRICE", "GST (percent)", "AMOUNT"]
   const fields=[
     { label:"", name:"medicineName", "type":"text"},
     { label: "", name:"batchNo", "type": "select"},
@@ -23,7 +23,7 @@ const PurchaseForm = ({isEdit=false}) => {
     {label:"", name:"quantity", "type":"text"},
     {label:"", name:"unit", "type":"select", options:["Bottles", "Box", "Strip"]},
     {label:"", name:"price", "type":"number"},
-    {label:"", name:"gst", "type":"select", "options":[7,10, 17, 25]},
+    {label:"", name:"gst", "type":"number"},
     {labe:"", name:"amount","type":"number"}
   ]
 
@@ -35,7 +35,15 @@ const PurchaseForm = ({isEdit=false}) => {
     }
   },[data])
 
-
+  useEffect(()=>{
+    if(!isEdit){
+      const fetch = async()=>{
+        const response = await getOrderId()
+        setFormData({orderId:response})
+      }
+      fetch()
+    }
+  },[])
 
   return (
     <section className='p-6'>

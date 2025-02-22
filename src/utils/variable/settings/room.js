@@ -27,6 +27,7 @@ export const roomFormField = [
         },
         {
             label: "Room Rent",
+            name:"roomRent",
             options:["per Day", "per week", "per month"],
             inputName:"amount",
             dropdownName:"roomDuration",

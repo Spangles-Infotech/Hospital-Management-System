@@ -20,9 +20,11 @@ export const doctorFields = [
         {
             label:"Mobile Number",
             options:["+91", "+92", "+93"],
-            inputName:"mobileNumber",
+            name:"mobileNumber",
             dropdownName:"countryCode",
-            type:"inputdropdown"
+            type:"inputdropdown",
+            inputName:"number",
+
         },
         
     ],
@@ -56,9 +58,11 @@ export const doctorFields = [
         {
             label:"Alternate Mobile Number",
             options:["+91", "+92", "+93"],
-            inputName:"alternateMobileNumber",
+            name:"alternateMobileNumber",
             dropdownName:"countryCode",
-            type:"inputdropdown"
+            type:"inputdropdown",
+            inputName:"number",
+
         },
     ],
     [

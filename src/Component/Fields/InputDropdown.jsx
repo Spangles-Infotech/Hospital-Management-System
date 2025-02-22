@@ -1,8 +1,10 @@
 import React from 'react';
 
-export const InputDropdown = ({ label, options, inputName, dropdownName, onChange, errors, value, align="left"}) => {
+export const InputDropdown = ({ label, name, options, inputName, dropdownName, onChange, errors, value, type, align="left"}) => {
 
-    const undefinedValue = value[dropdownName] === undefined || value[dropdownName] === ""
+    const undefinedValue = value?.[name]?.[dropdownName] === undefined || value?.[name]?.[dropdownName] === ""
+
+    console.log("type", type)
 
     return (
         <div className="flex flex-col gap-3 w-full font-roboto ">
@@ -11,7 +13,7 @@ export const InputDropdown = ({ label, options, inputName, dropdownName, onChang
                 {
                     align === "left" &&
                     <>
-                        <select className="focus:outline-none rounded-l-md px-[10px]" onChange={onChange} name={dropdownName} value={value?.[dropdownName] || "select"}>
+                        <select className="focus:outline-none rounded-l-md px-[10px]" onChange={onChange} name={dropdownName} value={value?.[name]?.[dropdownName] || "select"}>
                             {undefinedValue && <option>select</option>} 
                             {options.map((item, index) => (
                                 <option value={item} key={index}>
@@ -23,17 +25,17 @@ export const InputDropdown = ({ label, options, inputName, dropdownName, onChang
                     </>
                 }
                 <input
-                    type="text"
+                    type={type}
                     className="w-[80%] border-none rounded-md px-2 py-1 focus:outline-none"
                     name={inputName}
                     onChange={onChange}
-                    value={value?.[inputName]  || ""}
+                    value={value?.[name]?.[inputName]  || ""}
                 />
                 {
                     align === "right" &&
                     <>
                         <div className=" h-full w-[1px] flex justify-center items-center bg-[#DDDDDD]"><span></span></div>
-                        <select className="focus:outline-none rounded-l-md px-[10px]" onChange={onChange} name={dropdownName} value={value?.[dropdownName] || "select"}>
+                        <select className="focus:outline-none rounded-l-md px-[10px]" onChange={onChange} name={dropdownName} value={value?.[name]?.[dropdownName] || "select"}>
                             {undefinedValue && <option>select</option>} 
                             {options.map((item, index) => (
                                 <option value={item} key={index}>
