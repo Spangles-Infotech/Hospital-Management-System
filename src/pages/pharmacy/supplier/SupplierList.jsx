@@ -34,7 +34,7 @@ const SupplierList = () => {
   return (
     <section className='p-4'> 
       <TableHeader title={"Suppliers List"} buttonData={btnData} />
-      <Table tableHead={supplierTableHeading} tableValue={data} actionData={actionData} />
+      <Table tableHead={supplierTableHeading} tableValue={data} actionData={actionData} isLoading={isLoading} />
       <Pagination />
     </section>
   )

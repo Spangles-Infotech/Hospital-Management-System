@@ -12,25 +12,33 @@ export const FormProvider = ({ children }) => {
   const [batchNumber, setBatchNumber] = useState([]);
   const [selectedUnit, setSelectedUnit] = useState("bottle")
 
-  const handleChange = (e) => {
+  const handleChange = (e, label) => {
     const { name, type, checked, value } = e.target;
+    if(label){
+      setFormData((prev)=>{
+        const updatedFormData = {...prev}
+        updatedFormData[label] = [{...updatedFormData[label], [name]:value}]
+        return updatedFormData
+      })
+    }else{
+      setFormData((prevFormData) => {
+        const updatedFormData = { ...prevFormData, [name]: type === "checkbox" ? checked : value };
+        if (name === "isRoundOff") {
+          updatePaymentDetails(updatedFormData);
+        }
+        if(name === "unit"){
+          setSelectedUnit(value)
+        }
+        handleAddTotalQuantity(updatedFormData)
+        return updatedFormData;
+      });
+      setErrors((prevErr) => {
+        const newErrors = { ...prevErr };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
     
-    setFormData((prevFormData) => {
-      const updatedFormData = { ...prevFormData, [name]: type === "checkbox" ? checked : value };
-      if (name === "isRoundOff") {
-        updatePaymentDetails(updatedFormData);
-      }
-      if(name === "unit"){
-        setSelectedUnit(value)
-      }
-      handleAddTotalQuantity(updatedFormData)
-      return updatedFormData;
-    });
-    setErrors((prevErr) => {
-      const newErrors = { ...prevErr };
-      delete newErrors[name];
-      return newErrors;
-    });
   };
 
   // func to handle the input and dropdown value
@@ -42,6 +50,7 @@ export const FormProvider = ({ children }) => {
       return updatedFormData
     })
   }
+
 
   // func to add total quantity to stock form
   const handleAddTotalQuantity = (updatedFormData) => {

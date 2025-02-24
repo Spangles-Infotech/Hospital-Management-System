@@ -18,7 +18,6 @@ const Purchase = () => {
     }
   ]
 
-
   const actionData = [
 
     {
@@ -26,7 +25,6 @@ const Purchase = () => {
       onClick : (id)=>navigate(`preview/${id}`)
     },
     
-
     {
       name: "editpen",
       onClick: (id) =>{navigate(`edit-form/${id}`)}
@@ -35,7 +33,7 @@ const Purchase = () => {
   return (
   <section className='p-4'>
     <TableHeader title={"Purchase"} buttonData={btnData}/>
-    <Table tableHead={purchaseTableHeading} tableValue={data} actionData={actionData}/>
+    <Table tableHead={purchaseTableHeading} tableValue={data} actionData={actionData} isLoading={isLoading}/>
     <Pagination />
   </section>
   )
