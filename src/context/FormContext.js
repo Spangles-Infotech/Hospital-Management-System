@@ -5,20 +5,23 @@ import { getDateFromISO } from "../utils/functions/function";
 const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
+
   const [formData, setFormData] = useState({});
+  const [registerOp, setRegisterOp] = useState({})
   const [errors, setErrors] = useState({});
   const [medicineQuery, setMedicineQuery] = useState([]);
   const [currentMedicalIndex, setCurrentMedicalIndex] = useState(0);
   const [batchNumber, setBatchNumber] = useState([]);
   const [selectedUnit, setSelectedUnit] = useState("bottle")
 
+  //  handleChange function
   const handleChange = (e, label) => {
     const { name, type, checked, value } = e.target;
     if(label){
-      setFormData((prev)=>{
-        const updatedFormData = {...prev}
-        updatedFormData[label] = [{...updatedFormData[label], [name]:value}]
-        return updatedFormData
+      setRegisterOp((prev)=>{
+        const updatedRegisterData = {...prev}
+        updatedRegisterData[label] = {...updatedRegisterData[label] , [name]:value}
+        return updatedRegisterData
       })
     }else{
       setFormData((prevFormData) => {
@@ -38,15 +41,47 @@ export const FormProvider = ({ children }) => {
         return newErrors;
       });
     }
-    
   };
+
+  // func to cancel the text
+  const handleRegiterOpCancel = ()=>{
+    setRegisterOp({})
+  }
+
+  // func to add the register op data in the formData
+  const handleAddToFormData = (label) => {
+    setFormData((prev) => {
+      const updatedFormData = {
+        ...prev,
+        [label]: Array.isArray(prev[label]) ? [...prev[label]] : []
+      };
+      updatedFormData[label].push({ ...registerOp[label] });
+      return updatedFormData;
+    });
+    setRegisterOp({});
+  };
+
+  // func to delete the registerOp from the formData
+  const handleDeleteRegisterOp = (label, index) => {
+    setFormData((prev) => {
+      const updatedFormData = { ...prev };
+      updatedFormData[label] = updatedFormData[label].filter( (_,i) => i !== index);
+      return updatedFormData;
+    })
+  }
+
+  // func to edit the regiterOp value
+  const handleEditRegisterOP = (label, index)=>{
+    handleDeleteRegisterOp(label, index)
+    setRegisterOp({[label]:formData[label][index]})
+  }
 
   // func to handle the input and dropdown value
   const handleInputDropDownChange = (e, label)=>{
     const {name, value} = e.target
     setFormData((prevFormData) => {
       const updatedFormData = {...prevFormData}
-      updatedFormData[label] = {... updatedFormData[label], [name]:value}
+      updatedFormData[label] = {...updatedFormData[label], [name]:value}
       return updatedFormData
     })
   }
@@ -76,6 +111,7 @@ export const FormProvider = ({ children }) => {
     }
 };
 
+  // func to validateErrors
   const validateErrors = (fields) => {
     let errors = {};
 
@@ -102,11 +138,13 @@ export const FormProvider = ({ children }) => {
     return errors;
   };
 
+  // func to reset the formData and error value
   const handleReset = () => {
     setFormData({});
     setErrors({});
   };
 
+  // func to onchange the dynamic values
   const handleTimingChange = (e, label, index) => {
     const { name, value } = e.target;
     setCurrentMedicalIndex(index);
@@ -235,18 +273,23 @@ export const FormProvider = ({ children }) => {
       value={{
         errors,
         formData,
+        registerOp,
         batchNumber,
         selectedUnit,
         medicineQuery,
         currentMedicalIndex,
         setFormData,
-        setBatchNumber,
-        handleChange,
-        handleSubmit,
         handleReset,
-        updateMedicalDetail,
+        handleSubmit,
+        handleChange,
+        setBatchNumber,
         handleTimingChange,
         handleSetBatchData,
+        updateMedicalDetail,
+        handleAddToFormData,
+        handleEditRegisterOP,
+        handleRegiterOpCancel,
+        handleDeleteRegisterOp,
         handleInputDropDownChange
       }}
     >

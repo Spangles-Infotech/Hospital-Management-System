@@ -16,7 +16,6 @@ const Doctors = () => {
         <div className="w-full border border-primary rounded-xl ">
           <TableHeader title={"Doctors"} isSearch={false}/>
           <Table tableHead={DoctortableHeading} tableValue={DoctortableValue}/>
-
         </div>
       </div>
     </>

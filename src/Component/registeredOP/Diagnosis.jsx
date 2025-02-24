@@ -2,35 +2,12 @@ import React, { useState } from "react";
 import PreviousChart from "./PreviousChart";
 import DeleteIcon from "../../assests/Delete.png";
 import EditIcon from "../../assests/editpen.png";
+import { useForm } from "../../context/FormContext";
 
 
 
 export const Diagnosis = () => {
-  const [diagnoses, setDiagnoses] = useState([
-
-  ]);
-
-  const [newDiagnosis, setNewDiagnosis] = useState({ type: "", description: "" });
-
-  const handleAdd = () => {
-    if (newDiagnosis.type && newDiagnosis.description) {
-      setDiagnoses([
-        ...diagnoses,
-        { id: diagnoses.length + 1, type: newDiagnosis.type, description: newDiagnosis.description },
-      ]);
-      setNewDiagnosis({ type: "", description: "" });
-    }
-  };
-
-  const handleCancel = () => setNewDiagnosis({ type: "", description: "" });
-
-  const handleDelete = (id) => setDiagnoses(diagnoses.filter((diag) => diag.id !== id));
-
-  const handleEdit = (id) => {
-    const diagnosisToEdit = diagnoses.find((diag) => diag.id === id);
-    setNewDiagnosis({ type: diagnosisToEdit.type, description: diagnosisToEdit.description });
-    setDiagnoses(diagnoses.filter((diag) => diag.id !== id));
-  };
+  const {handleChange, registerOp, handleRegiterOpCancel, formData, handleAddToFormData, handleEditRegisterOP, handleDeleteRegisterOp} = useForm()
 
   return (
     <section className="p-5 font-poppins">
@@ -44,13 +21,15 @@ export const Diagnosis = () => {
                 <input
                   type="text"
                   placeholder="Diagnosis Type"
-                  value={newDiagnosis.type}
-                  onChange={(e) => setNewDiagnosis({ ...newDiagnosis, type: e.target.value })}
+                  name="type"
+                  value={registerOp?.diagnosis?.type || ""}
+                  onChange={(e) =>handleChange(e, "diagnosis")}
                   className="mb-4 border border-stone-300 outline-none rounded-md py-3 px-3 w-full text-stone-600"
                 />
                 <textarea
-                  value={newDiagnosis.description}
-                  onChange={(e) => setNewDiagnosis({ ...newDiagnosis, description: e.target.value })}
+                  name="description"
+                  value={registerOp?.diagnosis?.description || ""}
+                  onChange={(e) =>handleChange(e, "diagnosis")}
                   placeholder="Type Something...."
                   className="border border-stone-300 outline-none rounded-md py-3 px-3 w-full text-stone-600"
                 />
@@ -58,14 +37,14 @@ export const Diagnosis = () => {
               <div className="mt-24 flex gap-5 font-roboto">
                 <button
                   type="button"
-                  onClick={handleAdd}
                   className="text-white bg-primary  px-10 rounded-full hover:bg-primary/90"
+                  onClick={()=>handleAddToFormData("diagnosis")}
                 >
                   Add
                 </button>
                 <button
                   type="button"
-                  onClick={handleCancel}
+                  onClick={handleRegiterOpCancel}
                   className="text-red-500 border border-stone-400  px-10 rounded-full hover:bg-stone-100"
                 >
                   Cancel
@@ -85,7 +64,7 @@ export const Diagnosis = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {diagnoses.map((diag, index) => (
+                  {formData?.diagnosis?.map((diag, index) => (
                     <tr key={diag.id} className="text-stone-400 ">
                       <td className="px-6 py-4 border-b border-gray-300">{index + 1}</td>
                       <td className="px-6 py-4 border-b border-gray-300">{diag.type}</td>
@@ -96,13 +75,13 @@ export const Diagnosis = () => {
                             className="w-6 h-6 cursor-pointer"
                             src={EditIcon}
                             alt="Edit"
-                            onClick={() => handleEdit(diag.id)}
+                            onClick={()=>handleEditRegisterOP("diagnosis", index)}
                           />
                           <img
                             className="w-6 h-6 cursor-pointer"
                             src={DeleteIcon}
                             alt="Delete"
-                            onClick={() => handleDelete(diag.id)}
+                            onClick={()=>handleDeleteRegisterOp("diagnosis", index)}
                           />
                         </div>
                       </td>
