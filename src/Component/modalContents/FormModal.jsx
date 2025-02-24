@@ -4,10 +4,24 @@ import { useForm } from '../../context/FormContext'
 import { useModal } from '../../context/ModalContext'
 import { IconCard } from '../common/IconCard'
 
-export const FormModal = ({title, formField, data}) => {
+export const FormModal = ({title, formField, data, postData,reFetch}) => {
 
-    const {handleReset, handleSubmit} = useForm()
+    const {handleReset,formData} = useForm()
     const {closeModal} = useModal()
+
+
+
+    const handleSubmitForm = async (e) => {
+      e.preventDefault(); 
+      if (!formData) return;
+  
+      let response = await postData(formData);  
+      if (response === 200 || response === 201) {
+        reFetch();
+        closeModal();  
+        handleReset();
+      }
+    };
 
     const handleDiscard = ()=>{
       handleReset()
@@ -22,7 +36,7 @@ export const FormModal = ({title, formField, data}) => {
         </div>
         <div className="flex gap-7 items-center justify-end p-5">
           <p onClick={handleDiscard} className="text-red-600 cursor-pointer text-lg w-[150px]"> Discard </p>
-          <button onClick={(e)=>handleSubmit(e, formField)} className="w-[150px] bg-primary p-2 text-white rounded-lg hover:bg-primary transition text-lg" > Save </button>
+          <button onClick={(e)=>handleSubmitForm(e, formField)} className="w-[150px] bg-primary p-2 text-white rounded-lg hover:bg-primary transition text-lg" > Save </button>
         </div>
     </div>
   )

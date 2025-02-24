@@ -13,7 +13,7 @@ export const expenseTableHeading = [
     },
     {
         name:"Sub Category",
-        path:"subCategory"
+        path:"subCateogry"
     },
     {
         name:"Total Amount",
@@ -131,11 +131,11 @@ export const expensePreviewField = [
             },
             {
                 label:"Sub Category",
-                name:"subCategory",
+                name:"subCateogry",
             },
             {
                 label:"Total Amount",
-                name:"amount",
+                name:"totalAmount",
             },
             {
                 label:"Balance Amount",

@@ -21,7 +21,7 @@ export const inventoryTableHeading = [
     },
     {
         name:"Detials",
-        path:"details"
+        path:"description"
     },
     {
         name:"Action",

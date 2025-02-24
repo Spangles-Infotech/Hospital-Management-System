@@ -8,8 +8,12 @@ import { Total } from '../../Component/common/Table/Total'
 import { TableButton } from '../../Component/common/Table/TableButton'
 import { Pagination } from '../../Component/common/Pagination'
 import PreviewModal from '../../Component/modalContents/PreviewModal'
+import { useFetchData } from '../../hooks/useFetchData'
 
 const Expense = () => {
+
+
+    const {data,isLoading,error} = useFetchData("/get-all-expense")
 
     const {openModal} = useModal()
 
@@ -22,8 +26,8 @@ const Expense = () => {
 
     const actionData = [
         {
-            name:'eye',
-            onClick:()=>{openModal(PreviewModal, {title:"Expense", previewFields:expensePreviewField ,data:expensePreviewValue})}
+            name:"eye",
+            onClick : (id)=>{openModal(PreviewModal, {title:"Stock", previewFields:expensePreviewField},`/get-expense/${id}`)}
         },
         {
             name:'editpen',
@@ -34,7 +38,7 @@ const Expense = () => {
     <section className='m-4 p-4 flex flex-col gap-[20px]'>
         <div className='flex flex-col bg-white'>
             <TableHeader title={"Expense"} buttonData={btnData} />
-            <Table tableHead={expenseTableHeading} tableValue={expenseTableValue}  actionData={actionData}/>
+            <Table tableHead={expenseTableHeading} tableValue={data}  actionData={actionData} />
         </div>
         <Total data={expenseData} />
         <TableButton />

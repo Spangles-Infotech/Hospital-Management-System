@@ -9,7 +9,6 @@ export const useUpdateData = (url) => {
   const {handleReset} = useForm()
 
   const updateData = async(id, body)=>{
-    console.log("id, body", id, url, body)
     setIsLoading(true)
     try {
         const response = await fetch.put(`${url}/${id}`, body)

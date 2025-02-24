@@ -9,10 +9,12 @@ import { Diagnosis } from "../../Component/registeredOP/Diagnosis";
 import { OtherReports } from "../../Component/registeredOP/OtherReports";
 import { OtherSevices } from "../../Component/registeredOP/OtherSevices";
 import PreviousChart from "../../Component/registeredOP/PreviousChart";
+import { useForm } from "../../context/FormContext";
 
 const RegisteredOpPreview = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Diagnosis");
+  const {handleChange} = useForm()
 
   const patientDetails = [
     { label: "Weight", value: "10Kg", subLabel: "(When born)" },
@@ -25,7 +27,11 @@ const RegisteredOpPreview = () => {
     { name: "Lab Testing", path: "lab-testing", element: <LabTesting /> },
     { name: "Prescription", path: "prescription", element: <Prescription /> },
     { name: "Other Reports", path: "other-reports", element: <OtherReports /> },
-    { name: "Other Services", path: "other-services", element: <OtherSevices /> },
+    {
+      name: "Other Services",
+      path: "other-services",
+      element: <OtherSevices />,
+    },
   ];
 
   const handleTabClick = (tab) => {
@@ -39,7 +45,7 @@ const RegisteredOpPreview = () => {
 
   const handleArrowClick = (direction) => {
     const currentIndex = tabs.findIndex((tab) => tab.name === activeTab);
-    
+
     if (direction === "next" && currentIndex < tabs.length - 1) {
       const nextTab = tabs[currentIndex + 1];
       setActiveTab(nextTab.name);
@@ -61,17 +67,33 @@ const RegisteredOpPreview = () => {
         />
         <p className="font-bold text-red-800 text-xl">Token Number:</p>
         <p className="font-bold text-red-800 text-xl">10</p>
-        <div className="border border-primary px-3 rounded-2xl flex items-center gap-3 py-1">
-          <div className="bg-primary w-6 h-6 rounded-full"></div>
-          <p className="text-primary font-medium">IP</p>
-        </div>
+
+        <label
+          htmlFor="check"
+          className="bg-white border border-primary relative w-20 h-10 rounded-full flex items-center cursor-pointer"
+          name="patientType"
+          onChange={handleChange}
+>
+          <div className="">
+            <span className="ml-3">OP</span>{" "}
+            <span className="text-right ml-4">IP</span>
+          </div>
+          <input type="checkbox" id="check" className="sr-only peer" />
+
+          <span className="w-2/5 h-4/5 bg-primary absolute rounded-full left-1 transition-all duration-300 ease-in-out peer-checked: peer-checked:translate-x-10"></span>
+        </label>
+
         <div className="border-primary border px-4 py-2 rounded-lg w-full max-w-sm">
           {patientDetails.map((detail, index) => (
             <div className="flex justify-between mb-2" key={index}>
               <div className="flex items-baseline">
-                <p className="text-slate-700 font-medium text-lg">{detail.label}</p>
+                <p className="text-slate-700 font-medium text-lg">
+                  {detail.label}
+                </p>
                 {detail.subLabel && (
-                  <p className="text-slate-700 text-sm ml-2">{detail.subLabel}</p>
+                  <p className="text-slate-700 text-sm ml-2">
+                    {detail.subLabel}
+                  </p>
                 )}
               </div>
               <p className="text-primary font-medium">{detail.value}</p>
@@ -81,7 +103,8 @@ const RegisteredOpPreview = () => {
         <div className="flex gap-8 ml-28 mt-20">
           <div
             className={`flex items-center text-primary text-xl font-medium cursor-pointer ${
-              tabs.findIndex((tab) => tab.name === activeTab) === 0 && "opacity-50 pointer-events-none"
+              tabs.findIndex((tab) => tab.name === activeTab) === 0 &&
+              "opacity-50 pointer-events-none"
             }`}
             onClick={() => handleArrowClick("previous")}
           >
@@ -90,7 +113,8 @@ const RegisteredOpPreview = () => {
           </div>
           <div
             className={`flex items-center text-primary text-xl font-medium cursor-pointer ${
-              tabs.findIndex((tab) => tab.name === activeTab) === tabs.length - 1 && "opacity-50 pointer-events-none"
+              tabs.findIndex((tab) => tab.name === activeTab) ===
+                tabs.length - 1 && "opacity-50 pointer-events-none"
             }`}
             onClick={() => handleArrowClick("next")}
           >

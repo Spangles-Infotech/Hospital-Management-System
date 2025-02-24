@@ -5,8 +5,10 @@ import { Pagination } from '../../Component/common/Pagination'
 import { useModal } from '../../context/ModalContext'
 import { FormModal } from '../../Component/modalContents/FormModal'
 import { inventoryFormField, inventoryTableHeading, inventoryTableValue } from '../../utils/variable/inventory'
+import { useFetchData } from '../../hooks/useFetchData'
 
 const Inventory = () => {
+    const {data,isLoading,error} = useFetchData("/get-all-inventory")
 
     const {openModal} = useModal()
     const btnData = [
@@ -31,7 +33,7 @@ const Inventory = () => {
   return (
     <section className='p-4'>
         <TableHeader title={"Inventory"} isBlue={true} buttonData={btnData}  />
-        <Table tableHead={inventoryTableHeading} tableValue={inventoryTableValue}  actionData={actionData} isBlue={true}/>
+        <Table tableHead={inventoryTableHeading} tableValue={data}  actionData={actionData} isBlue={true}/>
         <Pagination />
     </section>
   )
