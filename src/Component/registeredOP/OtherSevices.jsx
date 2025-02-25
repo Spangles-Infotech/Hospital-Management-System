@@ -1,39 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; 
 import PreviousChart from "./PreviousChart";
 import DeleteIcon from "../../assests/Delete.png";
 import EditIcon from "../../assests/editpen.png";
+import { useForm } from "../../context/FormContext";
 
 export const OtherSevices = () => {
-  const [services, setServices] = useState([
-    { id: 1, ServiceName: "Physiotherapy", Price: 200 },
-  ]);
-  const [newService, setNewService] = useState({ id: null, ServiceName: "", Price: "" });
+  const { handleChange, registerOp, handleRegiterOpCancel, formData, handleAddToFormData, handleEditRegisterOP, handleDeleteRegisterOp } = useForm();
+  const otherServices = formData.otherServices || []; // Ensure it's always an array
 
- 
-  const handleAddOrUpdate = () => {
-    const price = parseFloat(newService.Price);
+  const [totalAmount, setTotalAmount] = useState(0);
 
-    if (!newService.ServiceName || isNaN(price) || price <= 0) {
-      alert("Please enter a valid service name and price.");
-      return;
-    }
-
-    setServices((prev) =>
-      newService.id
-        ? prev.map((s) => (s.id === newService.id ? { ...newService, Price: price } : s))
-        : [...prev, { id: prev.length + 1, ServiceName: newService.ServiceName, Price: price }]
-    );
-
-    setNewService({ id: null, ServiceName: "", Price: "" });
-  };
-
- 
-  const handleDelete = (id) => {
-    setServices((prev) => prev.filter((s) => s.id !== id));
-  };
-
- 
-  const totalAmount = services.reduce((acc, s) => acc + s.Price, 0);
+  useEffect(() => {
+    const total = otherServices.reduce((acc, s) => acc + Number(s.fee || 0), 0);
+    setTotalAmount(total);
+  }, [otherServices]); // Recalculate when `otherServices` updates
 
   return (
     <section className="p-3 font-poppins">
@@ -49,19 +29,21 @@ export const OtherSevices = () => {
               <div className="flex gap-5 w-full">
                 <input
                   type="text"
+                  name="serviceName"
                   placeholder="Service Name"
-                  value={newService.ServiceName}
+                  value={registerOp?.otherServices?.serviceName || ""}
                   onChange={(e) =>
-                    setNewService((prev) => ({ ...prev, ServiceName: e.target.value }))
+                    handleChange(e, "otherServices")
                   }
                   className="mb-4 border border-stone-300 outline-none rounded-md p-2 flex-1 text-stone-600"
                 />
                 <input
                   type="number"
+                  name="fee"
                   placeholder="Fee (e.g., 200)"
-                  value={newService.Price}
+                  value={registerOp?.otherServices?.fee || ""}
                   onChange={(e) =>
-                    setNewService((prev) => ({ ...prev, Price: e.target.value }))
+                    handleChange(e, "otherServices")
                   }
                   className="mb-4 border border-stone-300 outline-none rounded-md p-3 flex-1 text-stone-600"
                 />
@@ -71,14 +53,20 @@ export const OtherSevices = () => {
                 <div className="flex justify-center gap-3">
                   <button
                     type="button"
-                    onClick={handleAddOrUpdate}
+                    onClick={() => {
+                      if (registerOp?.otherServices?.id) {
+                        handleEditRegisterOP("otherServices", registerOp?.otherServices?.id);
+                      } else {
+                        handleAddToFormData("otherServices");
+                      }
+                    }}
                     className="text-white bg-primary px-10 py-2 rounded-full hover:bg-primary/90"
                   >
-                    {newService.id ? "Update" : "Add"}
+                    {registerOp?.otherServices?.id ? "Update" : "Add"}
                   </button>
                   <button
                     type="button"
-                    onClick={() => setNewService({ id: null, ServiceName: "", Price: "" })}
+                    onClick={handleRegiterOpCancel}
                     className="text-red-500 border border-stone-400 py-1 px-10 rounded-full"
                   >
                     Cancel
@@ -87,7 +75,6 @@ export const OtherSevices = () => {
               </div>
             </div>
 
-            
             <div className="overflow-x-auto">
               <table className="w-full mt-8 border-collapse">
                 <thead>
@@ -99,12 +86,12 @@ export const OtherSevices = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {services.map((service, index) => (
+                  {otherServices.map((service, index) => (
                     <tr key={service.id} className="text-stone-600">
                       <td className="px-6 py-4 border-b border-gray-300">{index + 1}</td>
-                      <td className="px-6 py-4 border-b border-gray-300">{service.ServiceName}</td>
+                      <td className="px-6 py-4 border-b border-gray-300">{service.serviceName}</td>
                       <td className="px-6 py-4 border-b border-gray-300 text-center">
-                        Rs. {service.Price}
+                        Rs. {service.fee}
                       </td>
                       <td className="px-6 py-4 border-b border-gray-300 text-center">
                         <div className="flex justify-center gap-4">
@@ -112,13 +99,13 @@ export const OtherSevices = () => {
                             className="w-6 h-6 cursor-pointer"
                             src={EditIcon}
                             alt="Edit"
-                            onClick={() => setNewService(service)}
+                            onClick={() => handleEditRegisterOP("otherServices", index)}
                           />
                           <img
                             className="w-6 h-6 cursor-pointer"
                             src={DeleteIcon}
                             alt="Delete"
-                            onClick={() => handleDelete(service.id)}
+                            onClick={() => handleDeleteRegisterOp("otherServices", index)}
                           />
                         </div>
                       </td>
@@ -133,7 +120,6 @@ export const OtherSevices = () => {
         <PreviousChart />
       </div>
 
-      
       <div className="flex items-center gap-2 p-3 ml-[53%]">
         <p className="text-xl text-stone-700 font-medium">Total Amount:</p>
         <p className="text-green-600 font-medium text-xl">Rs. {totalAmount}</p>
