@@ -69,7 +69,7 @@ export const expenseFormFields = [
         {
             label:"Date",
             name:"date",
-            type:"text"
+            type:"date"
         },
         {
             label:"Category",
@@ -84,22 +84,22 @@ export const expenseFormFields = [
             type:"text",
         },
         {
-            label:"Amount",
-            name:"amount",
+            label:"Total Amount",
+            name:"totalAmount",
             type:"number",
         },
 
     ],
     {
+        label:"Paid Amount",
+        name:"paidAmount",
+        type:"number"
+    },
+    {
         label:"Description",
         name:"description",
         type:"textarea",
     },
-    {
-        label:"Status",
-        name:"status",
-        type:"radio"
-    }
 ]
 
 

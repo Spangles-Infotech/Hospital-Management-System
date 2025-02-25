@@ -13,14 +13,14 @@ import { useFetchData } from '../../hooks/useFetchData'
 const Expense = () => {
 
 
-    const {data,isLoading,error} = useFetchData("/get-all-expense")
+    const {data,isLoading,error, fetchData:refetch} = useFetchData("/get-all-expense")
 
     const {openModal} = useModal()
 
     const btnData = [
         {
             name:"Add Expense",
-            onClick:()=>{openModal(FormModal, {title:"Add Expense", formField:expenseFormFields})}
+            onClick:()=>{openModal(FormModal, {title:"Add Expense", formField:expenseFormFields, refetch:refetch, name:"/add-expense"})}
         }
     ]                 
 
@@ -31,14 +31,14 @@ const Expense = () => {
         },
         {
             name:'editpen',
-            onClick:()=>{openModal(FormModal, {title:"Enter Amount", formField:editFormField})}
+            onClick:(id)=>{openModal(FormModal, {title:"Enter Amount", formField:editFormField, refetch:refetch, isEdit:true, name:`/update-expense/${id}`})}
         },
     ]
   return (
     <section className='m-4 p-4 flex flex-col gap-[20px]'>
         <div className='flex flex-col bg-white'>
             <TableHeader title={"Expense"} buttonData={btnData} />
-            <Table tableHead={expenseTableHeading} tableValue={data}  actionData={actionData} />
+            <Table tableHead={expenseTableHeading} tableValue={data}  actionData={actionData} isLoading={isLoading} />
         </div>
         <Total data={expenseData} />
         <TableButton />
