@@ -96,3 +96,41 @@ export const inventoryFormField = [
         type:"textarea"
     }
 ]
+
+
+
+export const expensePreviewField = [
+    {
+        isSingle:true,
+        fields:[
+            {
+                label:"ItemName",
+                name:"itemName",
+            },
+            {
+                label:"Category",
+                name:"category",
+            },
+            {
+                label:"PurchasedDate",
+                name:"purchasedDate",
+            },
+            {
+                label:"TotalPrice",
+                name:"totalPrice",
+            },
+            {
+                label:"Quantity",
+                name:"quantity",
+            },
+            {
+                label:"Description",
+                name:"description",
+            },
+            {
+                label:"Status",
+                name:"status",
+            }
+        ]
+    }
+]
