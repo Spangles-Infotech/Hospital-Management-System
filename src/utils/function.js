@@ -31,7 +31,7 @@ const formatCount = (count) => {
 const getYear = new Date().getFullYear();
 
 const orderNumber = (count)=>{
-    return `ORD-${getYear}-${formatCount(count)}`
+    return `GH-${getYear}-${formatCount(count)}`
 }
 
 const supplierNumber = (count)=>{
