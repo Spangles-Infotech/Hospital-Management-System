@@ -8,6 +8,7 @@ import { Input } from '../Fields/Input'
 import { DynamicForm } from './DynamicForm'
 import { Search } from '../Fields/Search'
 import { useForm } from '../../context/FormContext'
+import { SearchDropdown } from '../Fields/SearchDropdown'
 
 export const Form = ({item, formData, handleChange, errors, isBorder}) => {
 
@@ -17,7 +18,11 @@ export const Form = ({item, formData, handleChange, errors, isBorder}) => {
         {
             item.type?.toLowerCase() === "inputdropdown" ? (
                 <InputDropdown label={item?.label} value={formData} name={item?.name} errors={errors} type={item?.inputType || "text"} onChange={(e)=>handleInputDropDownChange(e, item?.name)} inputName={item?.inputName} dropdownName={item?.dropdownName} options={item.options} align={item?.align} />
-            ) : item.type?.toLowerCase() === "textarea" ?
+            ) 
+            : item.type?.toLowerCase() === "searchdropdown" ? (
+                <SearchDropdown label={item?.label} value={formData} name={item.name} errors={errors} onChange={handleChange} options={item?.options}  />
+            )
+            : item.type?.toLowerCase() === "textarea" ?
                 <TextArea label={item?.label} value={formData} onChange={handleChange}  name={item?.name} errors={errors} isBorder={isBorder} />
             : item?.type === "select" ? (
                 <Dropdown label={item?.label} value={formData} options={item?.options} onChange={handleChange} name={item?.name} errors={errors} isBorder={isBorder} />

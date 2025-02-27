@@ -6,19 +6,17 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useFetchData } from '../../../hooks/useFetchData'
 import { useForm } from '../../../context/FormContext'
-import { useSupplier } from '../../../hooks/useSupplier'
 import { AddIcon } from '../../../icons/AddIcon'
-import { useStock } from '../../../hooks/useStock'
-import { stockFormField } from '../../../utils/variable/stock'
 import { useSidebarModal } from '../../../context/SidebarContext'
+import { useStock } from '../../../hooks/useStock'
 
 const PurchaseForm = ({isEdit=false}) => {
 
   const {id} = useParams()
-  const {supplierNameList} = useSupplier()
   const {setFormData} = useForm()
+  const {stockFormField} = useStock()
   const {openSidebarModal} = useSidebarModal()
-  const {handleBackToPurchase, handleSavePurchase,getOrderId} = usePurchase()
+  const {handleBackToPurchase, handleSavePurchase,getOrderId, NewPurchaseField} = usePurchase()
   const tableHeader =[ "MEDICINE NAME", "HSN", "MEDICINE CATEGORY", "BATCH NO.", "EXP DATE", "QTY", "UNIT","TOTAL QUANTITY", "PURCHASE RATE", "MRP", "DISCOUNT", "GST (in percent)", "AMOUNT"]
   const fields=[
     {label:"", name:"medicineName", "type":"text"},
@@ -35,51 +33,7 @@ const PurchaseForm = ({isEdit=false}) => {
     {label:"", name:"gst", "type":"number"},
     {label:"", name:"amount","type":"number"}
   ]
-
-  const NewPurchaseField = [
-
-    [
-        {
-            label:"Supplier ID",
-            name:"supplierId",
-            type:"text"
-        },
-
-        {
-            label:"Supplier Name",
-            name:"supplierName",
-            type:"select",
-            options:supplierNameList
-        },
-
-        {
-            label:"Supplier Phone Number",
-            name:"supplierPhoneNumber",
-            type:"text"
-        },
-
-    ],
-    [
-        {
-            label:"Invoice Number",
-            name:"invoiceNumber",
-            type:"text"
-        },
-
-        {
-            label:"Purchase Date",
-            name:"purchaseDate",
-            type:"date",
-        },
-
-        {
-            label:"Delivery Date",
-            name:"deliveryDate",
-            type:"date"
-        }
-    ]
-]
-
+  
   const {data, isLoading, error} = useFetchData(`/get-purchase/${id}`)
 
   useEffect(()=>{
