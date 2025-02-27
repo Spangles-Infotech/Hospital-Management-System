@@ -5,13 +5,17 @@ import { getDateFromISO } from "../utils/functions/function";
 const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
+  const ITEM_PER_PAGE = 15
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const [medicineQuery, setMedicineQuery] = useState([]);
   const [currentMedicalIndex, setCurrentMedicalIndex] = useState(0);
   const [selectedUnit, setSelectedUnit] = useState("bottle")
+  const [activePage, setActivePage] = useState(1);
+
 
   const handleChange = (e) => {
+
     const { name, type, checked, value } = e.target;
     
     setFormData((prevFormData) => {
@@ -81,6 +85,7 @@ export const FormProvider = ({ children }) => {
   const handleReset = () => {
     setFormData({});
     setErrors({});
+    setActivePage(1)
   };
 
   const handleTimingChange = (e, label, index) => {
@@ -97,8 +102,8 @@ export const FormProvider = ({ children }) => {
       updatedFormData[label][index][name] = value;
 
       // automatically update the total quantity
-      if(name === "quantity" && updatedFormData[label][index]["unit"] || name === "unit" && updatedFormData[label][index]["quantity"]){
-        const totalQuantity = updatedFormData[label][index]["quantity"] * updatedFormData[label][index]["unit"] 
+      if(name === "quantity" && updatedFormData[label][index]["unit"] && updatedFormData[label][index]["free"] || name === "unit" && updatedFormData[label][index]["quantity"] && updatedFormData[label][index]["free"]  ){
+        const totalQuantity = updatedFormData[label][index]["quantity"] * updatedFormData[label][index]["unit"] * updatedFormData[label][index]["free"] 
         updatedFormData[label][index]["availableQuantity"] = totalQuantity
       }
       // If GST or Price changes, recalculate payment details
@@ -136,10 +141,14 @@ export const FormProvider = ({ children }) => {
         const calculatedDiscountPrice = totalMedPrice - (totalMedPrice * (medDiscount / 100));
         const gstValue = calculatedDiscountPrice * (medGst / 100);
         const totalMedicinePrice = calculatedDiscountPrice + gstValue;
+        const purchasePrice = medicine.purchaseRate / medicine.unit
+        const salesPrice = medicine.mrp / medicine.unit
         
         // Updating the specific medicine amount at the given index
         if (medIndex === index) {
           updatedFormData["medicines"][index]["amount"] = Number(totalMedicinePrice.toFixed(2));
+          updatedFormData["medicines"][index]["purchasePrice"] = Number(purchasePrice.toFixed(2));
+          updatedFormData["medicines"][index]["salesPrice"] = Number(salesPrice.toFixed(2));
         }
   
         grossAmount += calculatedDiscountPrice;
@@ -205,15 +214,18 @@ export const FormProvider = ({ children }) => {
       value={{
         errors,
         formData,
+        activePage, 
         selectedUnit,
+        ITEM_PER_PAGE,
         medicineQuery,
         currentMedicalIndex,
+        handleReset,
         setFormData,
         handleChange,
         handleSubmit,
-        handleReset,
-        updateMedicalDetail,
+        setActivePage,
         handleTimingChange,
+        updateMedicalDetail,
         handleInputDropDownChange,
       }}
     >

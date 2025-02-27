@@ -5,12 +5,13 @@ import { Pagination } from '../../../Component/common/Pagination'
 import { supplierTableHeading } from '../../../utils/variable/supplier'
 import { useNavigate } from 'react-router-dom'
 import { useFetchData } from '../../../hooks/useFetchData'
+import { useForm } from '../../../context/FormContext'
+import { ITEMS_PER_PAGE } from '../../../utils/variable/dashboard'
 
 const SupplierList = () => {
-
-  const {data, isLoading, error} = useFetchData("/get-all-supplier")
-
   const navigate = useNavigate()
+  const {activePage} = useForm()
+  const {data, isLoading, error, total} = useFetchData("/get-all-supplier", `page=${activePage}&limit=${ITEMS_PER_PAGE}`)
 
   const btnData = [
     {
@@ -37,7 +38,7 @@ const SupplierList = () => {
       <Table tableHead={supplierTableHeading} tableValue={data} actionData={actionData} isLoading={isLoading} />
       {
         data?.length > 0 &&
-        <Pagination />
+        <Pagination total={total} />
       }
     </section>
   )

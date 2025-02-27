@@ -5,6 +5,7 @@ export const useFetchData = (baseUrl, query) => {
 
     const [isLoading, setIsLoading] = useState(false)
     const [data, setData] = useState([])
+    const [total, setTotal] = useState(0)
     const [error, setError] = useState(null)
 
     const url = query ? `${baseUrl}?${query}` : baseUrl ;
@@ -14,6 +15,7 @@ export const useFetchData = (baseUrl, query) => {
         try {
             const response = await fetch.get(url);
             setData(response.data.data);
+            setTotal(response.data?.total)
             setError(null);
         } catch (err) {
             setError(err.message);
@@ -30,6 +32,6 @@ export const useFetchData = (baseUrl, query) => {
     }, [fetchData]);
 
   return{
-    isLoading, data, error, fetchData
+    isLoading, data, error, total, fetchData
   }
 }

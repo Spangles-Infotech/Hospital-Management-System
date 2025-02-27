@@ -6,10 +6,11 @@ import { useStock } from '../../hooks/useStock'
 import { stockTableHeading } from '../../utils/variable/stock'
 import { useEffect } from 'react'
 import { useForm } from '../../context/FormContext'
+import { ITEMS_PER_PAGE } from '../../utils/variable/dashboard'
 
 const Stocks = () => {
-  const {setFormData} = useForm()
-  const {data, isLoading, error} = useFetchData("/get-all-stock")
+  const {setFormData, activePage} = useForm()
+  const {data, isLoading, error, total} = useFetchData("/get-all-stock", `page=${activePage}&limit=${ITEMS_PER_PAGE}`)
   const {stockActionData, stockButtonData, getProductCode} = useStock()
 
   useEffect(()=>{
@@ -26,7 +27,7 @@ const Stocks = () => {
    <Table tableHead={stockTableHeading} tableValue={data} actionData={stockActionData} isLoading={isLoading} error={error} />  
    {
       data?.length > 0 &&
-      <Pagination />
+      <Pagination total={total} />
     }
   </section>
   )
