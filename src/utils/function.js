@@ -1,10 +1,9 @@
-const sendMessage = (res, status, message, data)=>{
+const sendMessage = (res, status, message, data, total)=>{
     if(data){
-        return res.status(status).json({message:message, data:data})
+        return res.status(status).json({message:message, data:data, total:total})
     }
     return res.status(status).json({message:message})
 }
-
 const transformPurchaseData = (purchase)=>{
     return {
         supplierId: purchase.supplierId,
@@ -39,4 +38,11 @@ const supplierNumber = (count)=>{
     return `SUP-${formatCount(count)}`
 }
 
-module.exports = {sendMessage, transformPurchaseData, orderNumber, supplierNumber}
+const productNumber = (count)=>{
+    return `PRD-${formatCount(count)}`
+}
+const skipPage = (page,limit)=>{
+    return limit * (page - 1)
+}
+
+module.exports = {sendMessage, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage}

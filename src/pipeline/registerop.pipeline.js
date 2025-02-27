@@ -1,5 +1,4 @@
 const medicalReportPipeline = (appointmentId)=>{
-    console.log("appointmentId", appointmentId)
     return[ 
         { $match: { appointment: appointmentId } },
         {

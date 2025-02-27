@@ -2,27 +2,22 @@ const mongoose = require("mongoose")
 
 const stocksSchema = mongoose.Schema({
     productCode:String,
-    batchNumber:String,
     productName:String,
     genericName:String,
     category:String,
-    expiryDate:String,
     hsnCode:String,
-    unit:String,
-    totalBox:Number,
-    stripPerBox:Number,
-    tabletPerStrip:Number,
-    totalStrip:Number,
-    totalQuantity:Number,
-    salePrice:Number,
-    purchasePrice:Number,
+    pack:String,
     lowStock:Number,
     expireAlert:{
         count:Number,
         duration:String
     },
     gst:Number,
-    supplierName:String,
+    batchNumber:String,
+    expiryDate:Date,
+    totalQuantity:Number,
+    purchasePrice:Number,
+    salesPrice:Number
 })
 
 const supplierSchema = mongoose.Schema({
