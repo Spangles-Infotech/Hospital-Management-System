@@ -3,13 +3,12 @@ import Delete from "../../../assests/Delete.png";
 import { Form } from "../../../Component/common/Form";
 import { useForm } from "../../../context/FormContext";
 import { useFetchData } from "../../../hooks/useFetchData";
-import { Dropdown } from "../../../Component/Fields/Dropdown";
 
 const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false}) => {
 
-  const {formData, handleTimingChange, errors, setFormData, medicineQuery, handleSetBatchData, batchNumber, updateMedicalDetail, currentMedicalIndex} = useForm()
+  const {formData, handleTimingChange, errors, setFormData, medicineQuery, currentMedicalIndex, updateMedicalDetail} = useForm()
 
-  const {data:medicineData} = useFetchData("/get-medicine-detail",`medicineName=${medicineQuery[currentMedicalIndex]?.medicineName}&batchNumber=${medicineQuery[currentMedicalIndex]?.batchNo || ""}`)
+  const {data:medicineData} = useFetchData("/get-medicine-detail",`medicineName=${medicineQuery[currentMedicalIndex]?.medicineName}`)
 
   const [row, setRow] = useState([])
 
@@ -36,10 +35,8 @@ const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false})
   }, [count, isEdit]);
   
   useEffect(()=>{
-    if(medicineData && medicineQuery[currentMedicalIndex]?.medicineName && medicineQuery[currentMedicalIndex].batchNo){
+    if(medicineQuery[currentMedicalIndex]?.medicineName){
       updateMedicalDetail(title, medicineData)
-    }else if(medicineQuery[currentMedicalIndex]?.medicineName){
-      handleSetBatchData(medicineData)
     }
   },[medicineData, medicineQuery])
 
@@ -64,34 +61,18 @@ const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false})
             row?.map((items, index) => (
               <tr className="border-t items-center border-b border-primary text-stone-600" key={index}>
                 {items?.map((item, i) => (
-                  
                   <td
                     className={`p-2 ${items.length - 1 === i  ? "flex" : "border-r border-primary"}`}
                     key={item.name}
                   >
                     <div className={`${items.length - 1 === i  ? "w-[80%]" : "w-full"} `}>
-                      {
-                        item.name === "batchNo"
-                        ?
-                          <Dropdown 
-                            label={""}
-                            value={formData?.[title]?.[index]}
-                            name={item.name}
-                            options={batchNumber?.[index] || []}
-                            onChange={(e)=>handleTimingChange(e, title, index)}
-                            errors={errors}
-                            isBorder={false}
-                            isOptions={true}
-                          />
-                        :
-                          <Form
-                            item={item}
-                            formData={formData?.[title]?.[index]}
-                            handleChange={(e)=>handleTimingChange(e, title, index)}
-                            errors={errors}
-                            isBorder={false}
-                          />
-                      }
+                      <Form
+                        item={item}
+                        formData={formData?.[title]?.[index]}
+                        handleChange={(e)=>handleTimingChange(e, title, index)}
+                        errors={errors}
+                        isBorder={false}
+                      />
                     </div>
                     <div className="w-[20%] flex items-center justify-center">
                         {

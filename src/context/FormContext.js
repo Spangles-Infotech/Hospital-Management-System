@@ -9,7 +9,6 @@ export const FormProvider = ({ children }) => {
   const [errors, setErrors] = useState({});
   const [medicineQuery, setMedicineQuery] = useState([]);
   const [currentMedicalIndex, setCurrentMedicalIndex] = useState(0);
-  const [batchNumber, setBatchNumber] = useState([]);
   const [selectedUnit, setSelectedUnit] = useState("bottle")
 
   const handleChange = (e) => {
@@ -32,6 +31,16 @@ export const FormProvider = ({ children }) => {
       return newErrors;
     });
   };
+
+  // func to handle the input and dropdown value
+  const handleInputDropDownChange = (e, label)=>{
+    const {name, value} = e.target
+    setFormData((prevFormData) => {
+      const updatedFormData = {...prevFormData}
+      updatedFormData[label] = {...updatedFormData[label], [name]:value}
+      return updatedFormData
+    })
+  }
 
   // func to add total quantity to stock form
   const handleAddTotalQuantity = (updatedFormData)=>{
@@ -86,30 +95,20 @@ export const FormProvider = ({ children }) => {
         updatedFormData[label][index] = {};
       }
       updatedFormData[label][index][name] = value;
-      // Automatically update amount when GST is entered
-      if (name === "gst" && updatedFormData[label][index]["price"]) {
-        const price = Number(updatedFormData[label][index]["price"]);
-        const gst = Number(value);
-        const amount = price + (price * (gst / 100));
-  
-        updatedFormData[label][index]["amount"] = amount.toFixed(2);
-      }
-      // Automatically update amount when Price is entered
-      if (name === "price" && updatedFormData[label][index]["gst"]) {
-        const price = Number(value);
-        const gst = Number(updatedFormData[label][index]["gst"]);
-        const amount = price + (price * (gst / 100));
-  
-        updatedFormData[label][index]["amount"] = amount.toFixed(2);
+
+      // automatically update the total quantity
+      if(name === "quantity" && updatedFormData[label][index]["unit"] || name === "unit" && updatedFormData[label][index]["quantity"]){
+        const totalQuantity = updatedFormData[label][index]["quantity"] * updatedFormData[label][index]["unit"] 
+        updatedFormData[label][index]["availableQuantity"] = totalQuantity
       }
       // If GST or Price changes, recalculate payment details
-      if (name === "gst" || name === "price") {
-        updatePaymentDetails(updatedFormData);
+      if (name === "gst" || name === "purchaseRate" || name === "discount") {
+        updatePaymentDetails(updatedFormData, index);
       }
       return updatedFormData;
     });
   
-    if (name === "medicineName" || name === "batchNo") {
+    if (name === "medicineName") {
       setMedicineQuery((prevQuery) => {
         const updatedMedicalQuery = [...prevQuery]
         updatedMedicalQuery[index] = {... updatedMedicalQuery[index], [name]:value};
@@ -119,41 +118,52 @@ export const FormProvider = ({ children }) => {
   };
   
   // condition to add netAmount , discount, gross amount, total Quantity
-  const updatePaymentDetails = (updatedFormData) => {
+  const updatePaymentDetails = (updatedFormData, index) => {
     if (!updatedFormData["medicines"]) return;
-
+  
     let netAmount = 0;
     let totalGstAmount = 0;
     let grossAmount = 0;
-    let totalQuantity = updatedFormData["medicines"]?.length
-
-    updatedFormData["medicines"].forEach((medicine) => {
-      if (medicine.price && medicine.gst) {
-        const medPrice = Number(medicine.price);
+    let totalQuantity = updatedFormData["medicines"]?.length;
+  
+    updatedFormData["medicines"].forEach((medicine, medIndex) => {
+      if (medicine.purchaseRate && medicine.gst && medicine.discount && medicine.quantity) {
+        const medPrice = Number(medicine.purchaseRate);
         const medGst = Number(medicine.gst);
-        const gstValue = medPrice * (medGst / 100);
-
-        grossAmount += medPrice;
+        const medDiscount = Number(medicine.discount);
+        const quantity = Number(medicine.quantity);
+        const totalMedPrice = medPrice * quantity;
+        const calculatedDiscountPrice = totalMedPrice - (totalMedPrice * (medDiscount / 100));
+        const gstValue = calculatedDiscountPrice * (medGst / 100);
+        const totalMedicinePrice = calculatedDiscountPrice + gstValue;
+        
+        // Updating the specific medicine amount at the given index
+        if (medIndex === index) {
+          updatedFormData["medicines"][index]["amount"] = Number(totalMedicinePrice.toFixed(2));
+        }
+  
+        grossAmount += calculatedDiscountPrice;
         totalGstAmount += gstValue;
-        netAmount += medPrice + gstValue;
+        netAmount += totalMedicinePrice;
       }
     });
-
+  
     let finalNetAmount = Number(netAmount.toFixed(2));
     let roundOff = 0;
-
+  
     if (updatedFormData["isRoundOff"]) {
       roundOff = Number((finalNetAmount % 1).toFixed(2));
       finalNetAmount = Math.round(finalNetAmount);
     } else {
       finalNetAmount = Number(finalNetAmount.toFixed(2));
-      roundOff =  Number((finalNetAmount % 1).toFixed(2));
+      roundOff = Number((finalNetAmount % 1).toFixed(2));
     }
-
+  
     const finalAmount = finalNetAmount + roundOff;
-
+  
     setFormData((prevFormData) => ({
       ...prevFormData,
+      medicines: updatedFormData["medicines"], // Ensure the updated medicines array is stored
       roundOff,
       totalQuantity, 
       netAmount: finalNetAmount,
@@ -162,6 +172,7 @@ export const FormProvider = ({ children }) => {
       finalAmount: Number(finalAmount.toFixed(2)),
     }));
   };
+  
 
   const handleSubmit = (e, fields, func) => {
     e.preventDefault();
@@ -179,42 +190,31 @@ export const FormProvider = ({ children }) => {
       const updatedRow = [...(updatedFormData[title] || [])];
       updatedRow[currentMedicalIndex] = {
         ...updatedRow[currentMedicalIndex],
-        expDate: getDateFromISO(medicineData?.expiryDate),
         hsnCode: medicineData?.hsnCode,
-        totalAvailableQuantity:medicineData?.totalQuantity,
         medicineCategory: medicineData?.category,
+        gst:medicineData?.gst,
+        packValue:medicineData?.pack?.value
       };
       updatedFormData[title] = updatedRow;
       return updatedFormData;
     });
   };
-  
-  const handleSetBatchData = (medicineData)=>{
-    setBatchNumber((prev)=>{
-      const updatedBatchNumber = [...prev];
-      updatedBatchNumber[currentMedicalIndex] = medicineData;
-        return updatedBatchNumber;
-      })
-  }
-  
 
   return (
     <FormContext.Provider
       value={{
         errors,
         formData,
-        batchNumber,
         selectedUnit,
         medicineQuery,
         currentMedicalIndex,
         setFormData,
-        setBatchNumber,
         handleChange,
         handleSubmit,
         handleReset,
         updateMedicalDetail,
         handleTimingChange,
-        handleSetBatchData,
+        handleInputDropDownChange,
       }}
     >
       {children}

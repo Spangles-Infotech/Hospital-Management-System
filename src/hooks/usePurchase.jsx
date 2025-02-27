@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fetch } from "../api/fetch";
 import { usePostData } from "./usePostData";
 import { useForm } from "../context/FormContext";
@@ -8,21 +8,35 @@ import { useUpdateData } from "./useUpdateData";
 
 export const usePurchase = () => {
   const navigate = useNavigate();
-  const { formData, handleReset, handleSubmit } = useForm();
+  const { formData, setFormData, handleReset, handleSubmit } = useForm();
   const [supplierData, setSupplierData] = useState({});
   const { message, isLoading, error, postData } = usePostData(`/add-purchase`);
   const {message:updateMessage, updateData } = useUpdateData("/update-purchase")
 
-  const handleGetSupplierInfo = async (supplierId) => {
-    try {
-      const response = await fetch.get(
-        `get-supplier-info?supplierId=${supplierId}`
-      );
-      setSupplierData(response.data.data);
-    } catch (error) {
-      console.log("error at fetcching supplier data", error.message);
+  useEffect(()=>{
+    const handleGetSupplierInfo = async () => {
+      try {
+        const response = await fetch.get(
+          `get-supplier-info?supplierName=${formData.supplierName}`
+        );
+        setSupplierData(response.data.data);
+      } catch (error) {
+        console.log("error at fetcching supplier data", error.message);
+      }
+    };
+    handleGetSupplierInfo()
+  },[formData.supplierName])
+
+  useEffect(() => {
+    if (supplierData) {
+        setFormData((prev) => ({
+            ...prev,
+            supplierId:supplierData?.supplierId,
+            supplierName: supplierData?.supplierName,
+            supplierPhoneNumber: supplierData?.phoneNumber,
+        }));
     }
-  };
+  }, [supplierData]);
 
   const handlePostPurchaseData = (id, isEdit) => {
     if(isEdit){
@@ -51,7 +65,6 @@ export const usePurchase = () => {
   };
 
   return {
-    handleGetSupplierInfo,
     handleBackToPurchase,
     handleSavePurchase,
     supplierData,

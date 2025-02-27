@@ -55,6 +55,7 @@ export const stockFormField = [
   [{ label: "Product Code", name: "productCode", type: "text" }],
   [{ label: "Product Name", name: "productName", type: "text" }],
   [{ label: "Generic Name", name: "genericName", type: "text" }],
+  [{ label: "HSN Code", name: "hsnCode", type: "text" }],
   [
     {
       label: "Category",
@@ -63,56 +64,23 @@ export const stockFormField = [
       options: ["Tablet", "Syrup", "Injection"],
     },
   ],
-  [{ label: "HSN Code", name: "hsnCode", type: "text" }],
-  [{ label: "Batch Number", name: "batchNumber", type: "text" }],
-  [{ label: "Expiry Date", name: "expiryDate", type: "date" }],
-  [
-    {
-      label: "Unit",
-      name: "unit",
-      type: "select",
-      options: ["box", "strip", "bottle"],
-    },
-    { label: "Total Boxes", name: "totalBox", type: "number" },
-  ],
-  [
-    { label: "Sale Price Per Tablet", type: "number", name: "salePrice" },
-    {
-      label: "Purchase Price Per Tablet",
-      type: "number",
-      name: "purchasePrice",
-    },
-  ],
-  [
-    { label: "Strips Per Box", type: "number", name: "stripPerBox" },
-    { label: "Tablets Per Strip", type: "number", name: "tabletPerStrip" },
-    { label: "Sale Price Per Syrup", type: "number", name: "salePrice" },
-    {
-      label: "Purchase Price Per Syrup",
-      type: "number",
-      name: "purchasePrice",
-    },
-  ],
-  [
-    { label: "Total Tablets", name: "totalQuantity", type: "number" },
-    { label: "Total Bottles", type: "number", name: "totalQuantity" },
-    { label: "Low Stock", name: "lowStock", type: "number" },
-  ],
-  [
-    {
-      label: "Expire Alert",
-      options: ["months", "weeks", "days"],
-      inputName: "duration",
-      dropdownName: "type",
-      type: "inputdropdown",
-    },
-    { label: "Gst %", name: "gst", type: "number" },
-  ],
-  [{ label: "Supplier", name: "supplier", type: "text" }],
+  [{ label: "Pack", name: "pack", type: "text" }],
+  [{ label: "Low Stock", name: "lowStock", type: "number" }],
+  [{ label: "Gst %", name: "gst", type: "number" },],
+  [{
+    label: "Expire Alert",
+    name:"expireAlert",
+    options: ["months", "weeks", "days"],
+    inputName: "count",
+    inputType:"number",
+    dropdownName: "duration",
+    type: "inputdropdown",
+    align:"right"
+  },]
 ];
 
 export const unitFields = {
-  box: ["Sale Price Per Syrup", "Purchase Price Per Syrup", "Total Bottles"],
+  box: ["Sale Price Per Syrup", "Purchase Price Per Syrup", "Total Bottles", "Total Strips"],
   strip: [
     "Sale Price Per Syrup",
     "Purchase Price Per Syrup",
@@ -121,6 +89,7 @@ export const unitFields = {
     "Strips Per Box",
   ],
   bottle: [
+    "Total Strips",
     "Sale Price Per Tablet",
     "Purchase Price Per Tablet",
     "Total Boxes",
@@ -148,7 +117,7 @@ export const stockPreviewFields = [
       },
       {
         label: "Generic Name",
-        name: "genericName",
+        name: "productName",
       },
       {
         label: "Category",
@@ -185,6 +154,8 @@ export const stockPreviewFields = [
       {
         label: "Expire Alert",
         name: "expireAlert",
+        path:"count",
+        isNested:true
       },
       {
         label: "GST",
@@ -194,12 +165,3 @@ export const stockPreviewFields = [
   },
 ];
 
-export const supplierPurchasePreviewData = {
-  date: "2002-07-24",
-  category: "Food",
-  subCategory: "Restaurant",
-  amount: 100,
-  balanceAmount: 100,
-  description: "Test Description",
-  status: "Paid",
-};

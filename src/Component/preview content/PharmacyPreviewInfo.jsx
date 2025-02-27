@@ -1,30 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { FormLayout } from '../common/FormLayout'
-import { usePurchase } from '../../hooks/usePurchase'
 import { useForm } from '../../context/FormContext'
 
 export const PharmacyPreviewInfo = ({fields, data, isPreviewWithIcon=true, isForm=false}) => {
-
-    const {handleGetSupplierInfo, supplierData} = usePurchase()
-
-    const {formData, setFormData} = useForm()
-
-    useEffect(() => {
-        if (formData?.supplierId) {
-            handleGetSupplierInfo(formData?.supplierId);
-        }
-    }, [formData?.supplierId]);
     
-    useEffect(() => {
-        if (supplierData) {
-            setFormData((prev) => ({
-                ...prev,
-                supplierName: supplierData?.supplierName,
-                supplierPhoneNumber: supplierData?.phoneNumber,
-            }));
-        }
-    }, [supplierData]);
-    
+    const {formData} = useForm()
 
   return (
     <div className= {`bg-white rounded-[15px] border border-primary p-5 flex ${isForm ? "flex-col" : "flex-wrap" } gap-[15px]`}>

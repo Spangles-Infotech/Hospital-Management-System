@@ -5,26 +5,30 @@ import { usePostData } from '../../hooks/usePostData'
 import { useUpdateData } from '../../hooks/useUpdateData'
 import { useFetchData } from '../../hooks/useFetchData'
 
-export const SidebarModal = ({isOpen, onClose, formField, isEdit,id}) => {
+export const SidebarModal = ({isOpen, onClose, formField, isEdit,id, refetch}) => {
     
-    const title = isEdit ? "Edit Stock" : "Add Stock"
-    const {handleReset, formData, setFormData} = useForm()
     const {postData} = usePostData("/add-stocks")
+    const {data} = useFetchData( id ? `/get-stock/${id}`: null)
+    const title = isEdit ? "Edit Stock" : "Add Stock"
     const {updateData} = useUpdateData("/update-stocks")
-    const {data} = useFetchData(`/get-stock/${id}`)
+    const {handleReset, formData, setFormData} = useForm()
 
     useEffect(()=>{
         setFormData(data)
     },[data])
 
-    const handleSaveForm = (e)=>{
+    const handleSaveForm = async(e)=>{
+        let response = 0
         if(isEdit){
-            updateData(id, formData)
+            response = await updateData(id, formData)
         }else{
-            postData(formData)
+            response = await postData(formData)
         }
-        onClose()
-        handleReset()
+        if(response === 200 || response === 201){
+            refetch()
+            onClose()
+            handleReset()
+        }
     }
     
   return (
@@ -37,7 +41,7 @@ export const SidebarModal = ({isOpen, onClose, formField, isEdit,id}) => {
         )}
         <div
         onContextMenu={(e) => e.stopPropagation()}
-        className={`fixed flex top-[13vh] flex-col gap-[20px] right-0 h-[85vh] overflow-y-scroll w-full border border-primary rounded-l-[15px] md:w-1/2  p-6 bg-white transform transition-transform duration-700 ease-in-out ${
+        className={`fixed flex top-[14vh] flex-col gap-[20px] right-0 h-[85vh] overflow-y-scroll w-full border border-primary rounded-l-[15px] md:w-1/2  p-6 bg-white transform transition-transform duration-700 ease-in-out ${
             isOpen ? "translate-x-0 z-[10]" : "translate-x-full"
         }`}>
             <div className='flex justify-between items-center'>
