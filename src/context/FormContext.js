@@ -102,12 +102,12 @@ export const FormProvider = ({ children }) => {
       updatedFormData[label][index][name] = value;
 
       // automatically update the total quantity
-      if(name === "quantity" && updatedFormData[label][index]["unit"] && updatedFormData[label][index]["free"] || name === "unit" && updatedFormData[label][index]["quantity"] && updatedFormData[label][index]["free"]  ){
-        const totalQuantity = updatedFormData[label][index]["quantity"] * updatedFormData[label][index]["unit"] * updatedFormData[label][index]["free"] 
+      if(name === "quantity" && updatedFormData[label][index]["unit"] && updatedFormData[label][index]["free"] || name === "unit" && updatedFormData[label][index]["quantity"] && updatedFormData[label][index]["free"] || name === "free" && updatedFormData[label][index]["quantity"] && updatedFormData[label][index]["unit"]   ){
+        const totalQuantity = ( Number(updatedFormData[label][index]["quantity"]) + Number(updatedFormData[label][index]["free"]) ) * updatedFormData[label][index]["unit"] 
         updatedFormData[label][index]["availableQuantity"] = totalQuantity
       }
       // If GST or Price changes, recalculate payment details
-      if (name === "gst" || name === "purchaseRate" || name === "discount") {
+      if (name === "gst" || name === "purchaseRate" || name === "discount" || name === "quantity" || name === "free" || name === "unit") {
         updatePaymentDetails(updatedFormData, index);
       }
       return updatedFormData;
@@ -136,7 +136,7 @@ export const FormProvider = ({ children }) => {
         const medPrice = Number(medicine.purchaseRate);
         const medGst = Number(medicine.gst);
         const medDiscount = Number(medicine.discount);
-        const quantity = Number(medicine.quantity);
+        const quantity = ( Number(medicine.quantity) + Number(medicine.free));
         const totalMedPrice = medPrice * quantity;
         const calculatedDiscountPrice = totalMedPrice - (totalMedPrice * (medDiscount / 100));
         const gstValue = calculatedDiscountPrice * (medGst / 100);
