@@ -266,7 +266,7 @@ const insertManyStock = async (req, res, next) => {
 const category = async(req,res, next)=>{
     try {
         if (req.method === "POST"){
-            await Category.create(req.body)
+            await Category.create({category:req?.body?.medicineCategory})
             return sendMessage(res, 201, "Category Posted Successfully")
         }
         if(req.method === "GET"){
