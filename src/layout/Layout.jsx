@@ -4,7 +4,8 @@ import { Outlet } from 'react-router-dom';
 import { Sidebar } from '../Component/Sidebar';
 
 const Layout = () => {
-  const [sidebarWidth, setSidebarWidth] = useState(300); // Default sidebar width
+  const [sidebarWidth, setSidebarWidth] = useState(300);
+  const [isMenuOpen, setMenuOpen] = useState("")
   const isResizing = useRef(false);
 
   const handleMouseDown = () => {
@@ -14,12 +15,13 @@ const Layout = () => {
   const handleMouseMove = (event) => {
     if (!isResizing.current) return;
     const newWidth = event.clientX;
-    if (newWidth > 200 && newWidth < 500) {
+    if (newWidth > 70 && newWidth < 500) {
       setSidebarWidth(newWidth);
     }
   };
-
+  
   const handleMouseUp = () => {
+    setMenuOpen("")
     isResizing.current = false;
   };
 
@@ -29,7 +31,7 @@ const Layout = () => {
       <div className='flex'>
         {/* Sidebar */}
         <div className='pt-[135px] relative' style={{ width: `${sidebarWidth}px` }}>
-          <Sidebar />
+          <Sidebar sidebarWidth={sidebarWidth} setSidebarWidth={setSidebarWidth} isMenuOpen={isMenuOpen} setMenuOpen={setMenuOpen} />
           <div
             className='absolute top-0 right-0 h-full w-2 bg-gray-400 cursor-ew-resize'
             onMouseDown={handleMouseDown}

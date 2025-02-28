@@ -20,6 +20,7 @@ export const useUpdateData = (url) => {
             toast.success(response.data.message||"Data post successfully")
             handleReset()
         }
+        return response.status
     } catch (error) {
         setError(error.messasge)
         toast.error(error.messasge||"failed to update data")

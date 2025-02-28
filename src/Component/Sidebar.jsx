@@ -18,24 +18,25 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowIcon } from '../icons/ArrowIcon';
 import { useForm } from '../context/FormContext';
 
-export const Sidebar = () => {
+export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}) => {
 
     const {currentLocation, isCurrentLocation} = useCommon();
     const {handleReset, setFormData} = useForm()
     
     const navigate = useNavigate()
-    const [isMenuOpen, setMenuOpen] = useState("")
+    
 
     const handleOpenMenu = (name)=>{
       if(name === isMenuOpen){
         setMenuOpen("")
+        setSidebarWidth(300)
       }else{
         setMenuOpen(name)
       }
     }
-
+    
     const handleSelectMenu = (path)=>{
-      console.log("resetting form")
+      setSidebarWidth(300)
       handleReset()
       setFormData({})
       navigate(path)
@@ -65,7 +66,7 @@ export const Sidebar = () => {
               <div className={`linkss  flex justify-between p-3 pl-6 items-center pr-[10px] transition-all duration-500 ease-in-out hover:text-white hover:bg-primary rounded-r-[10px] ${isCurrentLocation(item.path) ? "text-white bg-primary fill-white active"  : "text-[#505050] fill-custom-black font-roboto"}`}>
                 <div className='flex gap-[15px]' onClick={()=>handleSelectMenu(item.path)} >
                   {sidebarIcons[item.icon]}
-                  <p className='font-[400] text-[18px]'>{item.name}</p>
+                  <p className={`font-[400] text-[18px] transition-all duration-500 ease-in-out ${sidebarWidth < 100 ? "opacity-0" : "opacity-100"}`}>{item.name}</p>
                 </div>
                 <div onClick={()=>handleOpenMenu(item.name)} className={`flex items-center justify-center size-[25px] object-contain transition-all duration-500 ease-in-out  ${!item.components ? "hidden" :""} ${isMenuOpen === item.name ? "rotate-[-180deg]":"rotate-y-0"} `}>
                   <ArrowIcon />

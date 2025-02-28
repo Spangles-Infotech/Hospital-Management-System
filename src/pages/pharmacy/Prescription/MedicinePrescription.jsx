@@ -8,7 +8,7 @@ const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false})
 
   const {formData, handleTimingChange, errors, setFormData, medicineQuery, currentMedicalIndex, updateMedicalDetail} = useForm()
 
-  const {data:medicineData} = useFetchData("/get-medicine-detail",`medicineName=${medicineQuery[currentMedicalIndex]?.medicineName}`)
+  const {data:medicineData} = useFetchData( medicineQuery[currentMedicalIndex]?.medicineName  ? ("/get-medicine-detail",`medicineName=${medicineQuery[currentMedicalIndex]?.medicineName}`) : null)
 
   const [row, setRow] = useState([])
 

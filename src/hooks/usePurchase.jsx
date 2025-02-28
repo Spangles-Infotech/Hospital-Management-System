@@ -19,14 +19,14 @@ export const usePurchase = () => {
     const handleGetSupplierInfo = async () => {
       try {
         const response = await fetch.get(
-          `get-supplier-info?supplierName=${formData.supplierName}`
+        formData?.supplierName ? `get-supplier-info?supplierName=${formData.supplierName}` : null
         );
         setSupplierData(response.data.data);
       } catch (error) {
       }
     };
     handleGetSupplierInfo()
-  },[formData.supplierName])
+  },[formData?.supplierName])
 
   useEffect(() => {
     if (supplierData) {

@@ -9,6 +9,7 @@ export const useStock = () => {
     const {openSidebarModal} = useSidebarModal()
     const {openModal} = useModal()
     const {data} = useFetchData("/get-all-generic-name")
+    const {data:categoryData, fetchData:refetch} = useFetchData("/get-all-category")
 
     const stockButtonData = [
         {
@@ -16,6 +17,7 @@ export const useStock = () => {
           onClick: ()=>{openSidebarModal(stockFormField, false)}
         }
     ]
+
     const stockActionData = [
         {
           name:"eye",
@@ -46,12 +48,15 @@ export const useStock = () => {
           label: "Category",
           name: "category",
           type: "select",
-          options: ["Tablet", "Syrup", "Injection"],
+          options: categoryData,
         },
       ],
       [{ label: "Pack", name: "pack", type: "text" }],
       [{ label: "Low Stock", name: "lowStock", type: "number" }],
       [{ label: "Gst %", name: "gst", type: "number" },],
+      [{label:"Total Quantity", name:"totalQuantity", type:"number"}],
+      [{label:"Purchase Price", name:"purchasePrice", type:"number"}],
+      [{label:"Sales Price", name:"salesPrice", type:"number"}],
       [{
         label: "Expire Alert",
         name:"expireAlert",
@@ -66,6 +71,6 @@ export const useStock = () => {
 
 
   return {
-    stockButtonData, stockActionData, getProductCode, stockFormField
+    stockButtonData, stockActionData, getProductCode, stockFormField, refetch
   }
 }

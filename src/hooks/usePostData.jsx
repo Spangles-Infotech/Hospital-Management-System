@@ -20,6 +20,7 @@ export const usePostData = (url, options = {}) => {
         toast.success(response.data.message || "Data posted successfully!") // Success toast
         handleReset()
       }
+      return response.status
     } catch (error) {
       setError(error.message)
       toast.error(error.message || "Failed to post data!") // Error toast

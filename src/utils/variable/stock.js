@@ -165,3 +165,11 @@ export const stockPreviewFields = [
   },
 ];
 
+export const cateegoryFormField = [
+  {
+      label:"",
+      name:"medicineCategory",
+      type:"string",
+  }
+]
+
