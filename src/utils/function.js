@@ -6,6 +6,7 @@ const sendMessage = (res, status, message, data, total)=>{
 }
 const transformPurchaseData = (purchase)=>{
     return {
+        orderNumber:purchase.orderNumber,
         supplierId: purchase.supplierId,
         purchaseDate: purchase.purchaseDate,
         supplierName: purchase.supplierName,

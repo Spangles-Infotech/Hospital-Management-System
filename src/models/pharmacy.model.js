@@ -62,8 +62,13 @@ const purchaseSchema = mongoose.Schema({
     },
 })
 
+const categorySchema = mongoose.Schema({
+    category:String
+})
+
+const Category = mongoose.model("Category", categorySchema)
 const Supplier = mongoose.model("Supplier", supplierSchema)
 const Stock = mongoose.model("Stock", stocksSchema)
 const Purchase = mongoose.model("Purchase", purchaseSchema)
 
-module.exports = {Supplier, Stock, Purchase}
+module.exports = {Supplier, Stock, Purchase, Category}

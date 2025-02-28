@@ -2,7 +2,7 @@ const Appointment = require("../models/appointment.modal")
 const Billing = require("../models/billing.model")
 const MedicineInfo = require("../models/medicineInfo.model")
 const PaymentInfo = require("../models/paymentInfo.model")
-const { Supplier, Purchase, Stock } = require("../models/pharmacy.model")
+const { Supplier, Purchase, Stock, Category } = require("../models/pharmacy.model")
 const { sendMessage, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage } = require("../utils/function")
 
 
@@ -263,5 +263,20 @@ const insertManyStock = async (req, res, next) => {
     }
 };
 
+const category = async(req,res, next)=>{
+    try {
+        if (req.method === "POST"){
+            await Category.create(req.body)
+            return sendMessage(res, 201, "Category Posted Successfully")
+        }
+        if(req.method === "GET"){
+            const category = await Category.find().distinct("category")
+            return sendMessage(res, 200, "Category fetched Successfully", category )
+        }
+    } catch (error) {
+        next(error)
+    }
+}
 
-module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock}
+
+module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, category}
