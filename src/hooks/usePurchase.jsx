@@ -23,7 +23,6 @@ export const usePurchase = () => {
         );
         setSupplierData(response.data.data);
       } catch (error) {
-        console.log("error at fetcching supplier data", error.message);
       }
     };
     handleGetSupplierInfo()

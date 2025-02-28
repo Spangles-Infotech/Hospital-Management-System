@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useForm } from '../context/FormContext'
 import { fetch } from '../api/fetch'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export const useUpdateData = (url) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -9,18 +11,18 @@ export const useUpdateData = (url) => {
   const {handleReset} = useForm()
 
   const updateData = async(id, body)=>{
-    console.log("id, body", id, url, body)
     setIsLoading(true)
     try {
         const response = await fetch.put(`${url}/${id}`, body)
         setMessage(response.data.message)
         if(response.status === 200){
             setIsLoading(false)
+            toast.success(response.data.message||"Data post successfully")
             handleReset()
         }
     } catch (error) {
         setError(error.messasge)
-        console.log("error at api", error.message)
+        toast.error(error.messasge||"failed to update data")
     } finally {
         setIsLoading(false)
     }

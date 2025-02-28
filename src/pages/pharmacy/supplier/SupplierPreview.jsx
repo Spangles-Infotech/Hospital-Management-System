@@ -15,7 +15,6 @@ const SupplierPreview = () => {
 
   const {data, isLoading, error} = useFetchData(`/get-supplier/${id}`)
 
-  console.log("data", data)
 
   const actionData = [
     {

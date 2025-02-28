@@ -19,7 +19,7 @@ const Prescription = () => {
     },
     {
       name: "editpen",
-      onClick: () =>  ()=>{console.log("clicking")}
+      onClick: () =>  ()=>{("clicking")}
     }
   ]
   return (

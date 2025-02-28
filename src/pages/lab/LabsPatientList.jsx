@@ -16,7 +16,6 @@ const LabsPatientList = () => {
       name: "listlab",
       onClick: () => {
         // Action for listlab, you can add functionality here
-        console.log("List lab clicked");
       },
     },
     {

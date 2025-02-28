@@ -16,11 +16,11 @@ const UserList = () => {
   const actionData = [
     {
       name:"eye",
-      onClick:()=>{console.log("clicking")}
+      onClick:()=>{("clicking")}
     },
     {
       name:"editpen",
-      onClick:()=>{console.log("clicking")}
+      onClick:()=>{("clicking")}
     }
   ]
   return (

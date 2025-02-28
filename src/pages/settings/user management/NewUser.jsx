@@ -26,7 +26,6 @@ const NewUser = () => {
     e.preventDefault();
     if (validateForm()) {
       const userData = { designation, name, userRole, username, password };
-      console.log("User Data:", userData);
     }
   };
 

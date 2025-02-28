@@ -8,11 +8,7 @@ const NewRoom = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({
-      section,
-      numRooms,
-      status
-    });
+    
   };
 
   return (

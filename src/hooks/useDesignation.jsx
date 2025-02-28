@@ -12,7 +12,6 @@ export const useDesignation = () => {
     }
 
     const handleAddDesignation = ()=>{
-        console.log("value",)
         if(value === ""){
             setErrors({
                 designation:"Desgination is required"
