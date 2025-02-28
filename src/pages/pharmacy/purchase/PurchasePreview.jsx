@@ -9,7 +9,7 @@ const PurchasePreview = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const {location} = useCommon()
-  const { data, isLoading, error } = useFetchData(`/get-purchase/${id}`);
+  const { data, isLoading, error } = useFetchData(id ? `/get-purchase/${id}`: null);
 
   const handleClickBack = ()=>{
     if(location.pathname.startsWith("/admin/pharmacy/supplier")){
@@ -18,8 +18,6 @@ const PurchasePreview = () => {
       navigate("/admin/pharmacy/purchase")
     }
   }
-
-  console.log("data", data)
 
   return (
     <section className="p-4">

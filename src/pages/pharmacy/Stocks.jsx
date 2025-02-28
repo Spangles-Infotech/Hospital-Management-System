@@ -23,7 +23,7 @@ const Stocks = () => {
 
   return (
   <section className='m-4 bg-white rounded-[15px]'>
-   <TableHeader title={"Stock"} buttonData={stockButtonData} />
+   <TableHeader title={"Stock"} />
    <Table tableHead={stockTableHeading} tableValue={data} actionData={stockActionData} isLoading={isLoading} error={error} />  
    {
       data?.length > 0 &&

@@ -42,7 +42,7 @@ export const stockTableHeading = [
 
   {
     name: "SalePrice",
-    path: "salePrice",
+    path: "salesPrice",
   },
 
   {

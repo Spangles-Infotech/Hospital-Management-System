@@ -35,7 +35,7 @@ const PurchaseForm = ({isEdit=false}) => {
     {label:"", name:"amount","type":"number"}
   ]
   
-  const {data, isLoading, error} = useFetchData(`/get-purchase/${id}`)
+  const {data, isLoading, error} = useFetchData( id ? `/get-purchase/${id}`: null)
 
   useEffect(()=>{
     if(id && data){
@@ -47,7 +47,7 @@ const PurchaseForm = ({isEdit=false}) => {
     if(!isEdit){
       const fetch = async()=>{
         const response = await getOrderId()
-        setFormData({orderId:response})
+        setFormData({orderNumber:response})
       }
       fetch()
     }

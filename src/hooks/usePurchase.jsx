@@ -57,7 +57,7 @@ export const usePurchase = () => {
   };
 
   const getOrderId = async()=>{
-    const response = await fetch.get("get-order-id")
+    const response = await fetch.get("/get-order-id")
     return response.data.orderId
   }
 
@@ -109,34 +109,6 @@ export const usePurchase = () => {
         }
     ]
   ]
-
-  const stockFormField = [
-    [{ label: "Product Code", name: "productCode", type: "text" }],
-    [{ label: "Product Name", name: "productName", type: "text" }],
-    // [{ label: "Generic Name", name: "genericName", type: "searchDropdown", options: }],
-    [{ label: "HSN Code", name: "hsnCode", type: "text" }],
-    [
-      {
-        label: "Category",
-        name: "category",
-        type: "select",
-        options: ["Tablet", "Syrup", "Injection"],
-      },
-    ],
-    [{ label: "Pack", name: "pack", type: "text" }],
-    [{ label: "Low Stock", name: "lowStock", type: "number" }],
-    [{ label: "Gst %", name: "gst", type: "number" },],
-    [{
-      label: "Expire Alert",
-      name:"expireAlert",
-      options: ["months", "weeks", "days"],
-      inputName: "count",
-      inputType:"number",
-      dropdownName: "duration",
-      type: "inputdropdown",
-      align:"right"
-    },]
-  ];
 
   return {
     handleBackToPurchase,
