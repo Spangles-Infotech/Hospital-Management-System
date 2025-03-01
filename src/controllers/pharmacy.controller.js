@@ -278,5 +278,14 @@ const category = async(req,res, next)=>{
     }
 }
 
+const getAllMedicineName = async(req,res,next)=>{
+    try {
+        const response = await Stock.find().distinct("productName")
+        return sendMessage(res, 200, "Medicine Name fetched Successfully", response)
+    } catch (error) {
+        next(error)
+    }
+}
 
-module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, category}
+
+module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, category, getAllMedicineName}

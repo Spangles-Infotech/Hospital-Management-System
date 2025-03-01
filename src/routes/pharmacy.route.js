@@ -1,5 +1,5 @@
 const express = require("express")
-const { prescription, supplier, purchase, stocks, getMedicineDetails, getSupplierBySupplierId, getSupplierNumber, getOrderNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, category } = require("../controllers/pharmacy.controller")
+const { prescription, supplier, purchase, stocks, getMedicineDetails, getSupplierBySupplierId, getSupplierNumber, getOrderNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, category, getAllMedicineName } = require("../controllers/pharmacy.controller")
 const pharmacyRouter = express.Router()
 
 // prescription routes
@@ -18,6 +18,7 @@ pharmacyRouter.get("/get-medicine-detail", getMedicineDetails)
 pharmacyRouter.get("/get-product-code", getProductCode)
 pharmacyRouter.get("/get-all-generic-name", getAllGenericName)
 pharmacyRouter.post("/insert-many-stock", insertManyStock)
+pharmacyRouter.get("/get-all-medicine-name", getAllMedicineName)
 
 // supplier routes
 
