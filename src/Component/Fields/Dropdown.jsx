@@ -8,7 +8,6 @@ export const Dropdown = ({ value, onChange, label, options, isIndexIsValue=false
     const undefinedValue = value?.[name] === undefined || value?.[name] === ""
     const {openModal} = useModal()
     const {refetch} = useStock()
-
   return (
     <div className="flex flex-col gap-2 w-full">
       {

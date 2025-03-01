@@ -14,12 +14,12 @@ const PurchaseForm = ({isEdit=false}) => {
 
   const {id} = useParams()
   const {setFormData} = useForm()
-  const {stockFormField} = useStock()
+  const {stockFormField, medicineNameData} = useStock()
   const {openSidebarModal} = useSidebarModal()
   const {handleBackToPurchase, handleSavePurchase,getOrderId, NewPurchaseField} = usePurchase()
   const tableHeader =[ "MEDICINE NAME", "HSN", "MEDICINE CATEGORY", "BATCH NO.", "EXP DATE", "QTY","FREE", "UNIT","TOTAL QUANTITY", "PURCHASE RATE", "MRP", "DISCOUNT", "GST (in percent)", "AMOUNT"]
   const fields=[
-    {label:"", name:"medicineName", "type":"text"},
+    {label:"", name:"medicineName", "type":"select", options:medicineNameData},
     {label:"", name:"hsnCode", "type":"text"},
     {label:"", name:"medicineCategory", "type":"select", "options":["Tablet","Medicine","Syrup"] },
     {label:"", name:"batchNo", "type": "text"},
@@ -52,7 +52,7 @@ const PurchaseForm = ({isEdit=false}) => {
       fetch()
     }
   },[])
-
+  
   return (
     <section className='p-6'>
       <PharmacyPreviewInfo fields={NewPurchaseField} isForm={true}/>

@@ -100,7 +100,7 @@ export const FormProvider = ({ children }) => {
         updatedFormData[label][index] = {};
       }
       updatedFormData[label][index][name] = value;
-
+      console.log("updatedFormData",updatedFormData)
       // automatically update the total quantity
       if(name === "quantity" && updatedFormData[label][index]["unit"] && updatedFormData[label][index]["free"] || name === "unit" && updatedFormData[label][index]["quantity"] && updatedFormData[label][index]["free"] || name === "free" && updatedFormData[label][index]["quantity"] && updatedFormData[label][index]["unit"]   ){
         const totalQuantity = ( Number(updatedFormData[label][index]["quantity"]) + Number(updatedFormData[label][index]["free"]) ) * updatedFormData[label][index]["unit"] 
@@ -112,7 +112,6 @@ export const FormProvider = ({ children }) => {
       }
       return updatedFormData;
     });
-  
     if (name === "medicineName") {
       setMedicineQuery((prevQuery) => {
         const updatedMedicalQuery = [...prevQuery]
@@ -143,14 +142,12 @@ export const FormProvider = ({ children }) => {
         const totalMedicinePrice = calculatedDiscountPrice + gstValue;
         const purchasePrice = medicine.purchaseRate / medicine.unit
         const salesPrice = medicine.mrp / medicine.unit
-        
         // Updating the specific medicine amount at the given index
         if (medIndex === index) {
           updatedFormData["medicines"][index]["amount"] = Number(totalMedicinePrice.toFixed(2));
           updatedFormData["medicines"][index]["purchasePrice"] = Number(purchasePrice.toFixed(2));
           updatedFormData["medicines"][index]["salesPrice"] = Number(salesPrice.toFixed(2));
         }
-  
         grossAmount += calculatedDiscountPrice;
         totalGstAmount += gstValue;
         netAmount += totalMedicinePrice;
@@ -159,7 +156,6 @@ export const FormProvider = ({ children }) => {
   
     let finalNetAmount = Number(netAmount.toFixed(2));
     let roundOff = 0;
-  
     if (updatedFormData["isRoundOff"]) {
       roundOff = Number((finalNetAmount % 1).toFixed(2));
       finalNetAmount = Math.round(finalNetAmount);
@@ -211,24 +207,7 @@ export const FormProvider = ({ children }) => {
 
   return (
     <FormContext.Provider
-      value={{
-        errors,
-        formData,
-        activePage, 
-        selectedUnit,
-        ITEM_PER_PAGE,
-        medicineQuery,
-        currentMedicalIndex,
-        handleReset,
-        setFormData,
-        handleChange,
-        handleSubmit,
-        setActivePage,
-        handleTimingChange,
-        updateMedicalDetail,
-        handleInputDropDownChange,
-      }}
-    >
+      value={{ errors, formData, activePage, selectedUnit, ITEM_PER_PAGE, medicineQuery, currentMedicalIndex, handleReset, setFormData, handleChange, handleSubmit, setActivePage, handleTimingChange, updateMedicalDetail, handleInputDropDownChange, }}>
       {children}
     </FormContext.Provider>
   );

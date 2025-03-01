@@ -10,6 +10,7 @@ export const useStock = () => {
     const {openModal} = useModal()
     const {data} = useFetchData("/get-all-generic-name")
     const {data:categoryData, fetchData:refetch} = useFetchData("/get-all-category")
+    const {data:medicineNameData} = useFetchData("/get-all-medicine-name")
 
     const stockButtonData = [
         {
@@ -66,11 +67,11 @@ export const useStock = () => {
         dropdownName: "duration",
         type: "inputdropdown",
         align:"right"
-      },]
+      }]
     ];
 
 
   return {
-    stockButtonData, stockActionData, getProductCode, stockFormField, refetch
+    stockButtonData, stockActionData, getProductCode, stockFormField, refetch, medicineNameData
   }
 }
