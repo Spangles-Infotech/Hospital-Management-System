@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React,{ useState } from 'react'
 import { ReportIcon } from '../icons/ReportIcon';
 import { DashboardIcon } from '../icons/DashboardIcon';
 import { RegisteredOpIcon } from '../icons/RegisteredOpIcon';
@@ -18,57 +18,53 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowIcon } from '../icons/ArrowIcon';
 import { useForm } from '../context/FormContext';
 
-export const Sidebar = () => {
+export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}) => {
 
     const {currentLocation, isCurrentLocation} = useCommon();
     const {handleReset, setFormData} = useForm()
     
     const navigate = useNavigate()
-    const [isMenuOpen, setMenuOpen] = useState("")
+    
 
     const handleOpenMenu = (name)=>{
       if(name === isMenuOpen){
         setMenuOpen("")
+        setSidebarWidth(300)
       }else{
         setMenuOpen(name)
       }
     }
-
+    
     const handleSelectMenu = (path)=>{
-      if(path === "/admin/pharmacy" ){
-        setMenuOpen("Pharmacy")
-      }else{
-        handleReset()
-        setFormData({})
-        navigate(path)
-      }
+      handleReset()
+      setFormData({})
+      navigate(path)
     }
 
     const sidebarIcons = {
-      "dashboard" : <DashboardIcon  />,
-      "registeredOpNurse": <RegisteredOpIcon />,
-      "registeredOpDoctor": <RegisteredOpIcon />,
-      "patients": <PatientIcon  />,
-      doctors: <DoctorIcon  />,
-      staff: <StaffIcon />,
-      pharmacy: <PharmacyIcon />,
-      expense: <ExpenseIcon />,
-      inventory: <InventoryIcon />,
-      "in-patients": <InPatientIcon  />,
-      labs:<LabIcon />,
-      settings:<SettingsIcon />,
-      reports: <ReportIcon />,
+        "dashboard" : <DashboardIcon  />,
+        "registeredOpNurse": <RegisteredOpIcon />,
+        "registeredOpDoctor": <RegisteredOpIcon />,
+        "patients": <PatientIcon  />,
+        doctors: <DoctorIcon  />,
+        staff: <StaffIcon />,
+        pharmacy: <PharmacyIcon />,
+        expense: <ExpenseIcon />,
+        inventory: <InventoryIcon />,
+        "in-patients": <InPatientIcon  />,
+        labs:<LabIcon />,
+        settings:<SettingsIcon />,
+        reports: <ReportIcon />,
     }
 
   return (
-    <aside className='flex flex-col gap-[10px] cursor-pointer font-roboto fixed overflow-y-auto h-[calc(90vh-4rem)] w-[20%] '>
-      {
+    <aside className='flex flex-col gap-[10px] cursor-pointer font-roboto fixed overflow-y-auto h-[calc(90vh-4rem)]' style={{width:"inherit"}}>      {
         adminSidebarData.map((item)=>(
           <div className={`mr-3 rounded-r-[10px] flex flex-col ${isMenuOpen === item.name ? "gap-3":"gap-0"} `} key={item.name}>
-              <div className={`linkss  flex justify-between p-3 pl-6 items-center pr-[10px] transition-all duration-500 ease-in-out rounded-r-[10px] ${isCurrentLocation(item.path) ? "text-white bg-primary fill-white active"  : "text-[#505050] fill-custom-black font-roboto hover:fill-primary hover:text-primary"}`}>
+              <div className={`linkss  flex justify-between p-3 pl-6 items-center pr-[10px] transition-all duration-500 ease-in-out hover:text-white hover:bg-primary rounded-r-[10px] ${isCurrentLocation(item.path) ? "text-white bg-primary fill-white active"  : "text-[#505050] fill-custom-black font-roboto"}`}>
                 <div className='flex gap-[15px]' onClick={()=>handleSelectMenu(item.path)} >
                   {sidebarIcons[item.icon]}
-                  <p className='font-[400] text-[18px]'>{item.name}</p>
+                  <p className={`font-[400] text-[18px] transition-all duration-500 ease-in-out ${sidebarWidth < 100 ? "opacity-0" : "opacity-100"}`}>{item.name}</p>
                 </div>
                 <div onClick={()=>handleOpenMenu(item.name)} className={`flex items-center justify-center size-[25px] object-contain transition-all duration-500 ease-in-out  ${!item.components ? "hidden" :""} ${isMenuOpen === item.name ? "rotate-[-180deg]":"rotate-y-0"} `}>
                   <ArrowIcon />

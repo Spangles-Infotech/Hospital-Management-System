@@ -1,30 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { FormLayout } from '../common/FormLayout'
-import { usePurchase } from '../../hooks/usePurchase'
 import { useForm } from '../../context/FormContext'
 
 export const PharmacyPreviewInfo = ({fields, data, isPreviewWithIcon=true, isForm=false}) => {
-
-    const {handleGetSupplierInfo, supplierData} = usePurchase()
-
-    const {formData, setFormData} = useForm()
-
-    useEffect(() => {
-        if (formData?.supplierId) {
-            handleGetSupplierInfo(formData?.supplierId);
-        }
-    }, [formData?.supplierId]);
     
-    useEffect(() => {
-        if (supplierData) {
-            setFormData((prev) => ({
-                ...prev,
-                supplierName: supplierData?.supplierName,
-                supplierPhoneNumber: supplierData?.phoneNumber,
-            }));
-        }
-    }, [supplierData]);
-    
+    const {formData} = useForm()
 
   return (
     <div className= {`bg-white rounded-[15px] border border-primary p-5 flex ${isForm ? "flex-col" : "flex-wrap" } gap-[15px]`}>
@@ -32,7 +12,7 @@ export const PharmacyPreviewInfo = ({fields, data, isPreviewWithIcon=true, isFor
             <p className='text-[20px] font-[600] text-primary'>New Purchase</p>
             <div className='flex gap-5'>
                 <p className='text-[20px] font-[500] text-primary'>Order Number</p>
-                <p className='text-[#EB9034] font-[600] text-[20px]'>{formData?.orderId}</p>
+                <p className='text-[#EB9034] font-[600] text-[20px]'>{formData?.orderNumber}</p>
             </div>
         </div>
         <div className={`flex gap-[15px] flex-wrap items-center w-full ${!isForm ? "hidden" : ""}`}>

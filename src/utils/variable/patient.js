@@ -5,11 +5,15 @@ export const tableHeading = [
     },
     {
       name:"Patient Name",
-      path:"patientName"
+      path1:"patientName",
+      path2:"name",
+      isNested:true
     },
     {
       name:"Phone No.",
-      path:"phoneNumber"
+      path1:"mobileNumber",
+      path2:"number",
+      isNested:true
     },
     {
       name:"Blood Group",

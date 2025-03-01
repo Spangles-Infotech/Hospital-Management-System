@@ -5,12 +5,14 @@ import { purchaseTableHeading } from '../../../utils/variable/purchase'
 import { useNavigate } from 'react-router-dom'
 import { useFetchData } from '../../../hooks/useFetchData'
 import { Pagination } from '../../../Component/common/Pagination'
+import { useForm } from '../../../context/FormContext'
+import { ITEMS_PER_PAGE } from '../../../utils/variable/dashboard'
 
 const Purchase = () => {
 
   const navigate =useNavigate()
-  const {data, isLoading, error} = useFetchData("/get-all-purchase")
-
+  const {activePage} = useForm()
+  const {data, isLoading, error, total} = useFetchData("/get-all-purchase",`page=${activePage}&limit=${ITEMS_PER_PAGE}`)
   const btnData = [
     {
       name:"New Purchase",
@@ -19,12 +21,12 @@ const Purchase = () => {
   ]
 
   const actionData = [
-
     {
       name:"eye",
       onClick : (id)=>navigate(`preview/${id}`)
     },
     
+
     {
       name: "editpen",
       onClick: (id) =>{navigate(`edit-form/${id}`)}
@@ -33,8 +35,11 @@ const Purchase = () => {
   return (
   <section className='p-4'>
     <TableHeader title={"Purchase"} buttonData={btnData}/>
-    <Table tableHead={purchaseTableHeading} tableValue={data} actionData={actionData} isLoading={isLoading}/>
-    <Pagination />
+    <Table tableHead={purchaseTableHeading} tableValue={data} isLoading={isLoading} actionData={actionData}/>
+    {
+      data?.length > 0 &&
+      <Pagination total={total} />
+    }
   </section>
   )
 }

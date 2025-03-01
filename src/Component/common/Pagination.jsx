@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useForm } from "../../context/FormContext";
+import { ITEMS_PER_PAGE } from "../../utils/variable/dashboard";
 
-export const Pagination = () => {
-
-  const [activePage, setActivePage] = useState(1);
-
-
-  const totalPages = 20;
+export const Pagination = ({ total }) => {
 
   
+  const  {activePage, setActivePage} = useForm()
+  const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
+
   const getPageNumbers = () => {
     let start = Math.max(1, activePage - 2);
     let end = Math.min(totalPages, activePage + 2);
@@ -23,19 +23,16 @@ export const Pagination = () => {
     return Array.from({ length: end - start + 1 }, (_, index) => start + index);
   };
 
-  
   const handlePageClick = (page) => {
     setActivePage(page);
   };
 
-  
   const handlePrevious = () => {
     if (activePage > 1) {
       setActivePage((prev) => prev - 1);
     }
   };
 
-  
   const handleNext = () => {
     if (activePage < totalPages) {
       setActivePage((prev) => prev + 1);
@@ -45,7 +42,6 @@ export const Pagination = () => {
   return (
     <section className="p-10">
       <div className="flex text-base gap-2 justify-center items-center">
-      
         <IoIosArrowBack
           className={`text-stone-500 cursor-pointer ${
             activePage === 1 ? "opacity-50 cursor-not-allowed" : ""
@@ -53,7 +49,6 @@ export const Pagination = () => {
           onClick={handlePrevious}
         />
 
-        
         {getPageNumbers().map((page) => (
           <p
             key={page}
@@ -68,9 +63,8 @@ export const Pagination = () => {
           </p>
         ))}
 
-        {activePage < totalPages - 2 && <p className="gap-2  text-stone-600">...</p>}
+        {activePage < totalPages - 2 && <p className="gap-2 text-stone-600">...</p>}
 
-        
         <IoIosArrowForward
           className={`text-cyan-600 cursor-pointer ${
             activePage === totalPages ? "opacity-50 cursor-not-allowed" : ""
@@ -81,4 +75,3 @@ export const Pagination = () => {
     </section>
   );
 };
-

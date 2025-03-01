@@ -4,11 +4,13 @@ import { usePostData } from './usePostData'
 import { supplierFormField } from '../utils/variable/supplier'
 import { useUpdateData } from './useUpdateData'
 import { fetch } from '../api/fetch'
+import { useFetchData } from './useFetchData'
 
 export const useSupplier = () => {
     const navigate = useNavigate()
     const {handleReset, handleSubmit, formData} = useForm()
     const {message, isLoading, error, postData} = usePostData("/add-supplier")
+    const {data:supplierNameList} = useFetchData("/get-all-supplier-name")
     const {updateData} = useUpdateData("/update-supplier")
 
     const handlePostSupplierData = (id, isEdit)=>{
@@ -39,6 +41,7 @@ export const useSupplier = () => {
     
   return {
     handleBackToSupplier,
+    supplierNameList,
     handleClickSave,
     getSupplierId,
     isLoading,

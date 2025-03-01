@@ -19,14 +19,15 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch}) => {
       if(isEdit){
         response = await updateData(formData)
         if (response === 200) {
-          refetch();
+          if (refetch) refetch();
           closeModal();  
           handleReset();
         }
       }else{
-        response = await postData(formData);  
+        response = await postData(formData); 
         if (response === 200 || response === 201) {
-          refetch();
+          console.log("first")
+          if (refetch) refetch();
           closeModal();  
           handleReset();
         }
@@ -40,7 +41,7 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch}) => {
   return (
     <div className='flex flex-col gap-[20px]  min-w-[600px]'>
         <p className='text-[20px] font-[500]'>{title}</p>
-        {data && <IconCard />}
+        {data.length > 0 && <IconCard />}
         <div className='flex flex-col gap-[10px]'>
             <FormLayout data={formField} />
         </div>

@@ -5,76 +5,36 @@ import { getDateFromISO } from "../utils/functions/function";
 const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
-
+  const ITEM_PER_PAGE = 15
   const [formData, setFormData] = useState({});
-  const [registerOp, setRegisterOp] = useState({})
   const [errors, setErrors] = useState({});
   const [medicineQuery, setMedicineQuery] = useState([]);
   const [currentMedicalIndex, setCurrentMedicalIndex] = useState(0);
-  const [batchNumber, setBatchNumber] = useState([]);
   const [selectedUnit, setSelectedUnit] = useState("bottle")
+  const [activePage, setActivePage] = useState(1);
 
-  //  handleChange function
-  const handleChange = (e, label) => {
+
+  const handleChange = (e) => {
+
     const { name, type, checked, value } = e.target;
-    if(label){
-      setRegisterOp((prev)=>{
-        const updatedRegisterData = {...prev}
-        updatedRegisterData[label] = {...updatedRegisterData[label] , [name]:value}
-        return updatedRegisterData
-      })
-    }else{
-      setFormData((prevFormData) => {
-        const updatedFormData = { ...prevFormData, [name]: type === "checkbox" ? checked : value };
-        if (name === "isRoundOff") {
-          updatePaymentDetails(updatedFormData);
-        }
-        if(name === "unit"){
-          setSelectedUnit(value)
-        }
-        handleAddTotalQuantity(updatedFormData)
-        return updatedFormData;
-      });
-      setErrors((prevErr) => {
-        const newErrors = { ...prevErr };
-        delete newErrors[name];
-        return newErrors;
-      });
-    }
-  };
-
-  // func to cancel the text
-  const handleRegiterOpCancel = ()=>{
-    setRegisterOp({})
-  }
-
-  // func to add the register op data in the formData
-  const handleAddToFormData = (label) => {
-    setFormData((prev) => {
-      const updatedFormData = {
-        ...prev,
-        [label]: Array.isArray(prev[label]) ? [...prev[label]] : []
-      };
-      updatedFormData[label].push({ ...registerOp[label] });
+    
+    setFormData((prevFormData) => {
+      const updatedFormData = { ...prevFormData, [name]: type === "checkbox" ? checked : value };
+      if (name === "isRoundOff") {
+        updatePaymentDetails(updatedFormData);
+      }
+      if(name === "unit"){
+        setSelectedUnit(value)
+      }
+      handleAddTotalQuantity(updatedFormData)
       return updatedFormData;
     });
-    setRegisterOp({});
+    setErrors((prevErr) => {
+      const newErrors = { ...prevErr };
+      delete newErrors[name];
+      return newErrors;
+    });
   };
-
-  // func to delete the registerOp from the formData
-  const handleDeleteRegisterOp = (label, index) => {
-    setFormData((prev) => {
-      const updatedFormData = { ...prev };
-      updatedFormData[label] = updatedFormData[label].filter( (_,i) => i !== index);
-      return updatedFormData;
-    })
-  }
-
-  // func to edit the regiterOp value
-  const handleEditRegisterOP = (label, index)=>{
-    handleDeleteRegisterOp(label, index)
-    setRegisterOp({[label]:formData[label][index]})
-  }
 
   // func to handle the input and dropdown value
   const handleInputDropDownChange = (e, label)=>{
@@ -86,32 +46,16 @@ export const FormProvider = ({ children }) => {
     })
   }
 
-
   // func to add total quantity to stock form
-  const handleAddTotalQuantity = (updatedFormData) => {
-    if(updatedFormData["stripPerBox"] || updatedFormData["tabletPerStrip"] || updatedFormData["totalStrips"]){
-      let totalStrip = 0;
-      
-      let totalBox = updatedFormData["totalBox"];
-      let totalStrips = updatedFormData["totalStrips"];
-      let stripPerBox = updatedFormData["stripPerBox"];
-      let tabletPerStrip = updatedFormData["tabletPerStrip"];
-  
-      if (tabletPerStrip !== undefined) {
-          if (totalStrips !== undefined) {
-              totalStrip += totalStrips * tabletPerStrip;
-          }
-          if (stripPerBox !== undefined) {
-              totalStrip += stripPerBox * tabletPerStrip;
-          }
-      }
-  
-      let totalQuantity = totalBox !== undefined ? totalBox * totalStrip : totalStrip;
-      updatedFormData["totalQuantity"] = totalQuantity;
+  const handleAddTotalQuantity = (updatedFormData)=>{
+    if(updatedFormData["stripPerBox"] && updatedFormData["tabletPerStrip"]){
+      let totalBox = updatedFormData["totalBox"]
+      let totalStrip = updatedFormData["stripPerBox"] * updatedFormData["tabletPerStrip"]
+      let totalQuantity = totalBox !== undefined ? totalBox * totalStrip : totalStrip
+      updatedFormData["totalQuantity"] = totalQuantity
     }
-};
+  }
 
-  // func to validateErrors
   const validateErrors = (fields) => {
     let errors = {};
 
@@ -138,13 +82,12 @@ export const FormProvider = ({ children }) => {
     return errors;
   };
 
-  // func to reset the formData and error value
   const handleReset = () => {
     setFormData({});
     setErrors({});
+    setActivePage(1)
   };
 
-  // func to onchange the dynamic values
   const handleTimingChange = (e, label, index) => {
     const { name, value } = e.target;
     setCurrentMedicalIndex(index);
@@ -157,30 +100,19 @@ export const FormProvider = ({ children }) => {
         updatedFormData[label][index] = {};
       }
       updatedFormData[label][index][name] = value;
-      // Automatically update amount when GST is entered
-      if (name === "gst" && updatedFormData[label][index]["price"]) {
-        const price = Number(updatedFormData[label][index]["price"]);
-        const gst = Number(value);
-        const amount = price + (price * (gst / 100));
-  
-        updatedFormData[label][index]["amount"] = amount.toFixed(2);
-      }
-      // Automatically update amount when Price is entered
-      if (name === "price" && updatedFormData[label][index]["gst"]) {
-        const price = Number(value);
-        const gst = Number(updatedFormData[label][index]["gst"]);
-        const amount = price + (price * (gst / 100));
-  
-        updatedFormData[label][index]["amount"] = amount.toFixed(2);
+      console.log("updatedFormData",updatedFormData)
+      // automatically update the total quantity
+      if(name === "quantity" && updatedFormData[label][index]["unit"] && updatedFormData[label][index]["free"] || name === "unit" && updatedFormData[label][index]["quantity"] && updatedFormData[label][index]["free"] || name === "free" && updatedFormData[label][index]["quantity"] && updatedFormData[label][index]["unit"]   ){
+        const totalQuantity = ( Number(updatedFormData[label][index]["quantity"]) + Number(updatedFormData[label][index]["free"]) ) * updatedFormData[label][index]["unit"] 
+        updatedFormData[label][index]["availableQuantity"] = totalQuantity
       }
       // If GST or Price changes, recalculate payment details
-      if (name === "gst" || name === "price") {
-        updatePaymentDetails(updatedFormData);
+      if (name === "gst" || name === "purchaseRate" || name === "discount" || name === "quantity" || name === "free" || name === "unit") {
+        updatePaymentDetails(updatedFormData, index);
       }
       return updatedFormData;
     });
-  
-    if (name === "medicineName" || name === "batchNo") {
+    if (name === "medicineName") {
       setMedicineQuery((prevQuery) => {
         const updatedMedicalQuery = [...prevQuery]
         updatedMedicalQuery[index] = {... updatedMedicalQuery[index], [name]:value};
@@ -190,41 +122,53 @@ export const FormProvider = ({ children }) => {
   };
   
   // condition to add netAmount , discount, gross amount, total Quantity
-  const updatePaymentDetails = (updatedFormData) => {
+  const updatePaymentDetails = (updatedFormData, index) => {
     if (!updatedFormData["medicines"]) return;
-
+  
     let netAmount = 0;
     let totalGstAmount = 0;
     let grossAmount = 0;
-    let totalQuantity = updatedFormData["medicines"]?.length
-
-    updatedFormData["medicines"].forEach((medicine) => {
-      if (medicine.price && medicine.gst) {
-        const medPrice = Number(medicine.price);
+    let totalQuantity = updatedFormData["medicines"]?.length;
+  
+    updatedFormData["medicines"].forEach((medicine, medIndex) => {
+      if (medicine.purchaseRate && medicine.gst && medicine.discount && medicine.quantity) {
+        const medPrice = Number(medicine.purchaseRate);
         const medGst = Number(medicine.gst);
-        const gstValue = medPrice * (medGst / 100);
-
-        grossAmount += medPrice;
+        const medDiscount = Number(medicine.discount);
+        const quantity = ( Number(medicine.quantity) + Number(medicine.free));
+        const totalMedPrice = medPrice * quantity;
+        const calculatedDiscountPrice = totalMedPrice - (totalMedPrice * (medDiscount / 100));
+        const gstValue = calculatedDiscountPrice * (medGst / 100);
+        const totalMedicinePrice = calculatedDiscountPrice + gstValue;
+        const purchasePrice = medicine.purchaseRate / medicine.unit
+        const salesPrice = medicine.mrp / medicine.unit
+        // Updating the specific medicine amount at the given index
+        if (medIndex === index) {
+          updatedFormData["medicines"][index]["amount"] = Number(totalMedicinePrice.toFixed(2));
+          updatedFormData["medicines"][index]["purchasePrice"] = Number(purchasePrice.toFixed(2));
+          updatedFormData["medicines"][index]["salesPrice"] = Number(salesPrice.toFixed(2));
+        }
+        grossAmount += calculatedDiscountPrice;
         totalGstAmount += gstValue;
-        netAmount += medPrice + gstValue;
+        netAmount += totalMedicinePrice;
       }
     });
-
+  
     let finalNetAmount = Number(netAmount.toFixed(2));
     let roundOff = 0;
-
     if (updatedFormData["isRoundOff"]) {
       roundOff = Number((finalNetAmount % 1).toFixed(2));
       finalNetAmount = Math.round(finalNetAmount);
     } else {
       finalNetAmount = Number(finalNetAmount.toFixed(2));
-      roundOff =  Number((finalNetAmount % 1).toFixed(2));
+      roundOff = Number((finalNetAmount % 1).toFixed(2));
     }
-
+  
     const finalAmount = finalNetAmount + roundOff;
-
+  
     setFormData((prevFormData) => ({
       ...prevFormData,
+      medicines: updatedFormData["medicines"], // Ensure the updated medicines array is stored
       roundOff,
       totalQuantity, 
       netAmount: finalNetAmount,
@@ -233,6 +177,7 @@ export const FormProvider = ({ children }) => {
       finalAmount: Number(finalAmount.toFixed(2)),
     }));
   };
+  
 
   const handleSubmit = (e, fields, func) => {
     e.preventDefault();
@@ -250,49 +195,19 @@ export const FormProvider = ({ children }) => {
       const updatedRow = [...(updatedFormData[title] || [])];
       updatedRow[currentMedicalIndex] = {
         ...updatedRow[currentMedicalIndex],
-        expDate: getDateFromISO(medicineData?.expiryDate),
         hsnCode: medicineData?.hsnCode,
         medicineCategory: medicineData?.category,
+        gst:medicineData?.gst,
+        packValue:medicineData?.pack?.value
       };
       updatedFormData[title] = updatedRow;
       return updatedFormData;
     });
   };
-  
-  const handleSetBatchData = (medicineData)=>{
-    setBatchNumber((prev)=>{
-      const updatedBatchNumber = [...prev];
-      updatedBatchNumber[currentMedicalIndex] = medicineData;
-        return updatedBatchNumber;
-      })
-  }
-  
 
   return (
     <FormContext.Provider
-      value={{
-        errors,
-        formData,
-        registerOp,
-        batchNumber,
-        selectedUnit,
-        medicineQuery,
-        currentMedicalIndex,
-        setFormData,
-        handleReset,
-        handleSubmit,
-        handleChange,
-        setBatchNumber,
-        handleTimingChange,
-        handleSetBatchData,
-        updateMedicalDetail,
-        handleAddToFormData,
-        handleEditRegisterOP,
-        handleRegiterOpCancel,
-        handleDeleteRegisterOp,
-        handleInputDropDownChange
-      }}
-    >
+      value={{ errors, formData, activePage, selectedUnit, ITEM_PER_PAGE, medicineQuery, currentMedicalIndex, handleReset, setFormData, handleChange, handleSubmit, setActivePage, handleTimingChange, updateMedicalDetail, handleInputDropDownChange, }}>
       {children}
     </FormContext.Provider>
   );

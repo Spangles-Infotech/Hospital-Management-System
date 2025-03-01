@@ -1,42 +1,33 @@
 import { TableHeader } from '../../Component/common/Table/TableHeader'
 import { Table } from '../../Component/common/Table/Table'
-import { stockFormField, stockPreviewFields, stockTableHeading } from '../../utils/variable/stock'
-import { useSidebarModal } from '../../context/SidebarContext'
 import { useFetchData } from '../../hooks/useFetchData'
-import { useModal } from '../../context/ModalContext'
-import PreviewModal from '../../Component/modalContents/PreviewModal'
 import { Pagination } from '../../Component/common/Pagination'
+import { useStock } from '../../hooks/useStock'
+import { stockTableHeading } from '../../utils/variable/stock'
+import { useEffect } from 'react'
+import { useForm } from '../../context/FormContext'
+import { ITEMS_PER_PAGE } from '../../utils/variable/dashboard'
 
 const Stocks = () => {
+  const {setFormData, activePage} = useForm()
+  const {data, isLoading, error, total} = useFetchData("/get-all-stock", `page=${activePage}&limit=${ITEMS_PER_PAGE}`)
+  const {stockActionData, stockButtonData, getProductCode} = useStock()
 
-  const {openSidebarModal} = useSidebarModal()
-  const {openModal} = useModal()
-  const {data, isLoading, error, fetchData} = useFetchData("/get-all-stock")
-
-  const buttonData = [
-    {
-      name:"New Stock",
-      onClick: ()=>{openSidebarModal(stockFormField, false, fetchData)}
+  useEffect(()=>{
+    const getCode = async()=>{
+      const productCode = await getProductCode()
+      setFormData({productCode:productCode})
     }
-  ]
+    getCode()
+  },[])
 
-  const actionData = [
-    {
-      name:"eye",
-      onClick : (id)=>{openModal(PreviewModal, {title:"Stock", previewFields:stockPreviewFields},`/get-stock/${id}`)}
-    },
-    {
-      name: "editpen",
-      onClick: (id) =>{openSidebarModal(stockFormField,  true, fetchData, id)}
-    }
-  ]
   return (
-  <section className='m-4'>
-   <TableHeader title={"Stock"} buttonData={buttonData} />
-   <Table tableHead={stockTableHeading} tableValue={data} actionData={actionData} isLoading={isLoading} error={error} />  
+  <section className='m-4 bg-white rounded-[15px]'>
+   <TableHeader title={"Stock"} />
+   <Table tableHead={stockTableHeading} tableValue={data} actionData={stockActionData} isLoading={isLoading} error={error} />  
    {
       data?.length > 0 &&
-      <Pagination />
+      <Pagination total={total} />
     }
   </section>
   )

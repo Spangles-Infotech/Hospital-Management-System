@@ -1,28 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fetch } from "../api/fetch";
 import { usePostData } from "./usePostData";
 import { useForm } from "../context/FormContext";
 import { NewPurchaseField } from "../utils/variable/purchase";
 import { useNavigate } from "react-router-dom";
 import { useUpdateData } from "./useUpdateData";
+import { useSupplier } from "./useSupplier";
 
 export const usePurchase = () => {
   const navigate = useNavigate();
-  const { formData, handleReset, handleSubmit } = useForm();
+  const {supplierNameList} = useSupplier()
+  const { formData, setFormData, handleReset, handleSubmit } = useForm();
   const [supplierData, setSupplierData] = useState({});
   const { message, isLoading, error, postData } = usePostData(`/add-purchase`);
   const {message:updateMessage, updateData } = useUpdateData("/update-purchase")
 
-  const handleGetSupplierInfo = async (supplierId) => {
-    try {
-      const response = await fetch.get(
-        `get-supplier-info?supplierId=${supplierId}`
-      );
-      setSupplierData(response.data.data);
-    } catch (error) {
-      console.log("error at fetcching supplier data", error.message);
+  useEffect(()=>{
+    const handleGetSupplierInfo = async () => {
+      try {
+        const response = await fetch.get(
+        formData?.supplierName ? `get-supplier-info?supplierName=${formData.supplierName}` : null
+        );
+        setSupplierData(response.data.data);
+      } catch (error) {
+      }
+    };
+    handleGetSupplierInfo()
+  },[formData?.supplierName])
+
+  useEffect(() => {
+    if (supplierData) {
+        setFormData((prev) => ({
+            ...prev,
+            supplierId:supplierData?.supplierId,
+            supplierName: supplierData?.supplierName,
+            supplierPhoneNumber: supplierData?.phoneNumber,
+        }));
     }
-  };
+  }, [supplierData]);
 
   const handlePostPurchaseData = (id, isEdit) => {
     if(isEdit){
@@ -41,7 +56,7 @@ export const usePurchase = () => {
   };
 
   const getOrderId = async()=>{
-    const response = await fetch.get("get-order-id")
+    const response = await fetch.get("/get-order-id")
     return response.data.orderId
   }
 
@@ -50,10 +65,54 @@ export const usePurchase = () => {
     handleReset();
   };
 
+  const NewPurchaseField = [
+
+    [
+        {
+            label:"Supplier ID",
+            name:"supplierId",
+            type:"text"
+        },
+
+        {
+            label:"Supplier Name",
+            name:"supplierName",
+            type:"searchDropdown",
+            options:supplierNameList
+        },
+
+        {
+            label:"Supplier Phone Number",
+            name:"supplierPhoneNumber",
+            type:"text"
+        },
+
+    ],
+    [
+        {
+            label:"Invoice Number",
+            name:"invoiceNumber",
+            type:"text"
+        },
+
+        {
+            label:"Purchase Date",
+            name:"purchaseDate",
+            type:"date",
+        },
+
+        {
+            label:"Delivery Date",
+            name:"deliveryDate",
+            type:"date"
+        }
+    ]
+  ]
+
   return {
-    handleGetSupplierInfo,
     handleBackToPurchase,
     handleSavePurchase,
+    NewPurchaseField,
     supplierData,
     getOrderId,
   };

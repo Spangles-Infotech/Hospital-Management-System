@@ -85,3 +85,5 @@ export const AppointmentstableValue =[
 
     },
 ]
+
+export const ITEMS_PER_PAGE = 15

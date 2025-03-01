@@ -1,20 +1,27 @@
+import React from 'react';
 import { RouterProvider } from "react-router-dom";
-import { routePaths } from "./routes/routePath";
-import { ModalProvider } from "./context/ModalContext";
-import { FormProvider } from "./context/FormContext";
-import { SidebarModalProvider } from "./context/SidebarContext";
-import { SkeletonTheme } from "react-loading-skeleton";
+import { routePaths } from './routes/routePath';
+import { ModalProvider } from './context/ModalContext';
+import { FormProvider } from './context/FormContext';
+import { SidebarModalProvider } from './context/SidebarContext';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import "react-loading-skeleton/dist/skeleton.css";
+import { ToastContainer } from 'react-toastify';
+
 
 function App() {
+
   return (
     <FormProvider>
       <ModalProvider>
-        <SidebarModalProvider>
+          <SidebarModalProvider>
           <SkeletonTheme baseColor="#202020" highlightColor="#444">
+
             <RouterProvider router={routePaths} />
-          </SkeletonTheme>
-        </SidebarModalProvider>
+            </SkeletonTheme>
+            <ToastContainer />
+
+          </SidebarModalProvider>
       </ModalProvider>
     </FormProvider>
   );
