@@ -3,6 +3,7 @@ const Billing = require("../models/billing.model")
 const MedicineInfo = require("../models/medicineInfo.model")
 const PaymentInfo = require("../models/paymentInfo.model")
 const { Supplier, Purchase, Stock, Category } = require("../models/pharmacy.model")
+const { getPurchaseHistoryPipeline } = require("../pipeline/pharmacy.pipeline")
 const { sendMessage, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage } = require("../utils/function")
 
 
@@ -263,6 +264,17 @@ const insertManyStock = async (req, res, next) => {
     }
 };
 
+const getPurchaseDetailsByMedicineName = async(req,res, next) => {
+    try {
+        const {medicineName} = req.params
+        const purchases = await Purchase.aggregate(getPurchaseHistoryPipeline(medicineName));
+        return sendMessage(res, 200, "data fetched successfully", purchases)
+    } catch (error) {
+        next(error)
+    }
+};
+
+
 const category = async(req,res, next)=>{
     try {
         if (req.method === "POST"){
@@ -288,4 +300,4 @@ const getAllMedicineName = async(req,res,next)=>{
 }
 
 
-module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, category, getAllMedicineName}
+module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, category, getAllMedicineName, getPurchaseDetailsByMedicineName}
