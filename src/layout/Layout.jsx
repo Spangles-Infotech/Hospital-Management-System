@@ -21,7 +21,7 @@ const Layout = () => {
   };
   
   const handleMouseUp = () => {
-    setMenuOpen("")
+    // setMenuOpen("")
     isResizing.current = false;
   };
 
