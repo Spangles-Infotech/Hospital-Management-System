@@ -51,11 +51,9 @@ export const stockTableHeading = [
   },
 ];
 
-export const stockFormField = [
-  [{ label: "Product Code", name: "productCode", type: "text" }],
-  [{ label: "Product Name", name: "productName", type: "text" }],
-  [{ label: "Generic Name", name: "genericName", type: "text" }],
-  [{ label: "HSN Code", name: "hsnCode", type: "text" }],
+export const stockEditFormField = [
+  [{ label: "Product Code", name: "productCode", type: "text" }, { label: "Product Name", name: "productName", type: "text" }],
+  [{ label: "Generic Name", name: "genericName", type: "text" }, { label: "HSN Code", name: "hsnCode", type: "text" }],
   [
     {
       label: "Category",
@@ -63,20 +61,20 @@ export const stockFormField = [
       type: "select",
       options: ["Tablet", "Syrup", "Injection"],
     },
+    {
+      label: "Expire Alert",
+      name:"expireAlert",
+      options: ["months", "weeks", "days"],
+      inputName: "count",
+      inputType:"number",
+      dropdownName: "duration",
+      type: "inputdropdown",
+      align:"right"
+    },
   ],
-  [{ label: "Pack", name: "pack", type: "text" }],
-  [{ label: "Low Stock", name: "lowStock", type: "number" }],
-  [{ label: "Gst %", name: "gst", type: "number" },],
-  [{
-    label: "Expire Alert",
-    name:"expireAlert",
-    options: ["months", "weeks", "days"],
-    inputName: "count",
-    inputType:"number",
-    dropdownName: "duration",
-    type: "inputdropdown",
-    align:"right"
-  },]
+  [{ label: "Pack", name: "pack", type: "text" }, { label: "Low Stock", name: "lowStock", type: "number" }],
+  [{ label: "Gst %", name: "gst", type: "number" },{label:"Total Quantity", name:"totalQuantity", type:"number"}],
+  [{label:"Purchase Price", name:"purchasePrice", type:"number"},{label:"Sales Price", name:"salesPrice", type:"number"}],
 ];
 
 export const unitFields = {

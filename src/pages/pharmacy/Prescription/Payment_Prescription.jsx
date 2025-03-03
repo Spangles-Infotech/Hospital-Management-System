@@ -1,22 +1,30 @@
 import React from "react";
 import { useForm } from "../../../context/FormContext";
 import { Dropdown } from "../../../Component/Fields/Dropdown";
+import { Table } from "../../../Component/common/Table/Table";
+import { historyTableHeading, historyValue } from "../../../utils/variable/purchase";
 
-const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id}) => {
+const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory=false}) => {
   
-  const {formData, handleChange} = useForm()
-
+  const {formData, handleChange, historyData} = useForm()
   const paymentOptions = ["Cash", "Credit/Debit Card", "UPI", "Net Banking"]
+  
 
   return (
     <div className="mt-5">
       <div className="flex justify-between">
         <div>
+        {
+          isHistory ?
+            <div className="w-[90%] p-2 bg-white rounded-lg">
+              <Table tableHead={historyTableHeading} tableValue={historyData} isLoading={false}/>
+            </div>
+          :
           <div className="border-primary border rounded-[15px] mt-5 w-[400px]  h-[150px] p-6 bg-white">
             <Dropdown value={formData} options={paymentOptions} onChange={handleChange} label={"Payment Type"} name={"paymentType"} isBorder={true} />
           </div>
+        } 
         </div>
-
         <div className="border-primary border rounded-[15px]  mt-5 w-[40%] bg-white" >
           <div className="flex justify-between px-4 py-3">
             <div className="flex gap-3">

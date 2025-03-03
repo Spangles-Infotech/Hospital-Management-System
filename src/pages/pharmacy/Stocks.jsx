@@ -4,22 +4,13 @@ import { useFetchData } from '../../hooks/useFetchData'
 import { Pagination } from '../../Component/common/Pagination'
 import { useStock } from '../../hooks/useStock'
 import { stockTableHeading } from '../../utils/variable/stock'
-import { useEffect } from 'react'
 import { useForm } from '../../context/FormContext'
 import { ITEMS_PER_PAGE } from '../../utils/variable/dashboard'
 
 const Stocks = () => {
-  const {setFormData, activePage} = useForm()
+  const { activePage} = useForm()
   const {data, isLoading, error, total} = useFetchData("/get-all-stock", `page=${activePage}&limit=${ITEMS_PER_PAGE}`)
-  const {stockActionData, stockButtonData, getProductCode} = useStock()
-
-  useEffect(()=>{
-    const getCode = async()=>{
-      const productCode = await getProductCode()
-      setFormData({productCode:productCode})
-    }
-    getCode()
-  },[])
+  const {stockActionData} = useStock()
 
   return (
   <section className='m-4 bg-white rounded-[15px]'>

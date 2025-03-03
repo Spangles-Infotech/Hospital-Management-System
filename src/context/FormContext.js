@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
-import { getDateFromISO } from "../utils/functions/function";
+import { fetch } from "../api/fetch";
 
 const FormContext = createContext();
 
@@ -12,7 +12,7 @@ export const FormProvider = ({ children }) => {
   const [currentMedicalIndex, setCurrentMedicalIndex] = useState(0);
   const [selectedUnit, setSelectedUnit] = useState("bottle")
   const [activePage, setActivePage] = useState(1);
-
+  const [historyData, setHistoryData] = useState([])
 
   const handleChange = (e) => {
 
@@ -100,7 +100,6 @@ export const FormProvider = ({ children }) => {
         updatedFormData[label][index] = {};
       }
       updatedFormData[label][index][name] = value;
-      console.log("updatedFormData",updatedFormData)
       // automatically update the total quantity
       if(name === "quantity" && updatedFormData[label][index]["unit"] && updatedFormData[label][index]["free"] || name === "unit" && updatedFormData[label][index]["quantity"] && updatedFormData[label][index]["free"] || name === "free" && updatedFormData[label][index]["quantity"] && updatedFormData[label][index]["unit"]   ){
         const totalQuantity = ( Number(updatedFormData[label][index]["quantity"]) + Number(updatedFormData[label][index]["free"]) ) * updatedFormData[label][index]["unit"] 
@@ -135,7 +134,7 @@ export const FormProvider = ({ children }) => {
         const medPrice = Number(medicine.purchaseRate);
         const medGst = Number(medicine.gst);
         const medDiscount = Number(medicine.discount);
-        const quantity = ( Number(medicine.quantity) + Number(medicine.free));
+        const quantity =  Number(medicine.quantity);
         const totalMedPrice = medPrice * quantity;
         const calculatedDiscountPrice = totalMedPrice - (totalMedPrice * (medDiscount / 100));
         const gstValue = calculatedDiscountPrice * (medGst / 100);
@@ -205,9 +204,18 @@ export const FormProvider = ({ children }) => {
     });
   };
 
+  const getHistoryWithMedicineName = async()=>{
+    try {
+      const response = await fetch.get(`/get-medicine-purchase-history/${formData?.medicines?.[currentMedicalIndex]?.medicineName}`)
+      setHistoryData(response.data.data)
+    } catch (error) {
+      console.log("error", error.message)
+    }
+  }
+
   return (
     <FormContext.Provider
-      value={{ errors, formData, activePage, selectedUnit, ITEM_PER_PAGE, medicineQuery, currentMedicalIndex, handleReset, setFormData, handleChange, handleSubmit, setActivePage, handleTimingChange, updateMedicalDetail, handleInputDropDownChange, }}>
+      value={{ errors, historyData, getHistoryWithMedicineName, formData, activePage, selectedUnit, ITEM_PER_PAGE, medicineQuery, currentMedicalIndex, handleReset, setFormData, handleChange, handleSubmit, setActivePage, handleTimingChange, updateMedicalDetail, handleInputDropDownChange, }}>
       {children}
     </FormContext.Provider>
   );

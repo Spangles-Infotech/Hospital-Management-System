@@ -13,15 +13,15 @@ import { useStock } from '../../../hooks/useStock'
 const PurchaseForm = ({isEdit=false}) => {
 
   const {id} = useParams()
-  const {setFormData} = useForm()
-  const {stockFormField, medicineNameData} = useStock()
+  const {setFormData, formData, currentMedicalIndex, getHistoryWithMedicineName} = useForm()
+  const {stockFormField, medicineNameData, categoryData} = useStock()
   const {openSidebarModal} = useSidebarModal()
   const {handleBackToPurchase, handleSavePurchase,getOrderId, NewPurchaseField} = usePurchase()
-  const tableHeader =[ "MEDICINE NAME", "HSN", "MEDICINE CATEGORY", "BATCH NO.", "EXP DATE", "QTY","FREE", "UNIT","TOTAL QUANTITY", "PURCHASE RATE", "MRP", "DISCOUNT", "GST (in percent)", "AMOUNT"]
+  const tableHeader =[ "MEDICINE NAME", "HSN", "MEDICINE CATEGORY", "BATCH NO.", "EXP DATE", "QTY","FREE", "UNIT","TOTAL QUANTITY", "PURCHASE RATE", "MRP", "DISCOUNT", "GST", "AMOUNT"]
   const fields=[
     {label:"", name:"medicineName", "type":"select", options:medicineNameData},
     {label:"", name:"hsnCode", "type":"text"},
-    {label:"", name:"medicineCategory", "type":"select", "options":["Tablet","Medicine","Syrup"] },
+    {label:"", name:"medicineCategory", "type":"select", "options":categoryData },
     {label:"", name:"batchNo", "type": "text"},
     {label:"", name:"expDate", "type": "date"},
     {label:"", name:"quantity", "type":"number"},
@@ -52,6 +52,11 @@ const PurchaseForm = ({isEdit=false}) => {
       fetch()
     }
   },[])
+
+  useEffect(()=>{
+    getHistoryWithMedicineName()
+  },[formData?.medicines?.[currentMedicalIndex]?.medicineName])
+
   
   return (
     <section className='p-6'>
@@ -67,7 +72,7 @@ const PurchaseForm = ({isEdit=false}) => {
         </div>
       </div>
       <MedicinePrescription tableHeader={tableHeader} fields={fields} title={"medicines"} count={data?.["medicines"]?.length} isEdit={isEdit} />
-      <Payment_Prescription handleClick={handleSavePurchase} handleDiscard={handleBackToPurchase} isEdit={isEdit} id={id} />
+      <Payment_Prescription handleClick={handleSavePurchase} handleDiscard={handleBackToPurchase} isEdit={isEdit} id={id} isHistory={true} />
     </section>
   )
 }

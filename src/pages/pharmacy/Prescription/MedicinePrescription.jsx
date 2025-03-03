@@ -40,6 +40,8 @@ const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false})
     }
   },[medicineData, medicineQuery])
 
+  const items = ["MEDICINE NAME", "HSN", "MEDICINE CATEGORY", "BATCH NO.", "EXP DATE"]
+
   return (
     <section className="mt-10 w-full">
     <div className="border-2 border-primary rounded-[15px] overflow-hidden text-stone-500 bg-white w-full">
@@ -48,7 +50,10 @@ const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false})
           <tr>
             {tableHeader?.map((item, i) => (
               <th
-                className={`p-2 text-center border-b-2 border-primary ${tableHeader.length - 1 === i  ? "" : "border-r "}`}
+                className={`p-2 text-center border-b-2 border-primary 
+                  ${items.includes(item) ? "w-[90px]" : item === "AMOUNT" ? "w-[70px]" : "w-[50px]"} 
+                  ${tableHeader.length - 1 === i ? "" : "border-r "} 
+                  overflow-hidden text-ellipsis whitespace-nowrap`}
                 key={item}
               >
                 {item}
@@ -59,13 +64,13 @@ const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false})
         <tbody>
           {
             row?.map((items, index) => (
-              <tr className="border-t items-center border-b border-primary text-stone-600" key={index}>
+              <tr className={`border-t items-center border-b border-primary text-stone-600`} key={index}>
                 {items?.map((item, i) => (
                   <td
-                    className={`p-2 ${items.length - 1 === i  ? "flex" : "border-r border-primary"}`}
+                   className={`p-2 ${items.length - 1 === i ? "flex" : "border-r border-primary"}`}
                     key={item.name}
                   >
-                    <div className={`${items.length - 1 === i  ? "w-[80%]" : "w-full"} `}>
+                    <div className={`${items.length - 1 === i  ? "w-[80%]" : item?.type === "number" ? "min-w-[50px]"  : "min-w-[90px]"}`}>
                       <Form
                         item={item}
                         formData={formData?.[title]?.[index]}
