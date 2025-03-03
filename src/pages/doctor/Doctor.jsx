@@ -7,8 +7,12 @@ import { useModal } from '../../context/ModalContext'
 import { FormModal } from '../../Component/modalContents/FormModal'
 import PreviewModal from '../../Component/modalContents/PreviewModal'
 import { InactiveModal } from '../../Component/modalContents/InactiveModal'
+import { useFetchData } from '../../hooks/useFetchData'
 
 const Doctor = () => {
+
+
+    const{data,isLoading} = useFetchData("/get-all-doctor")
     const {openModal} = useModal()
     
     const btnData = [
@@ -45,7 +49,7 @@ const Doctor = () => {
   return (
     <section className='p-4'>
         <TableHeader title={"Doctor"} buttonData={btnData} />
-        <Table tableHead={doctorTableHeading} tableValue={doctorTableValue} actionData={actionData} />
+        <Table tableHead={doctorTableHeading} tableValue={data} actionData={actionData} />
         <Pagination />
     </section>
   )

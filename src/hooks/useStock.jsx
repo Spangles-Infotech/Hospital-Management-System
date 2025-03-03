@@ -1,6 +1,6 @@
 import { useSidebarModal } from '../context/SidebarContext'
 import { useModal } from '../context/ModalContext'
-import { stockFormField, stockPreviewFields } from '../utils/variable/stock'
+import { stockEditFormField, stockPreviewFields } from '../utils/variable/stock'
 import PreviewModal from '../Component/modalContents/PreviewModal'
 import { fetch } from '../api/fetch'
 import { useFetchData } from './useFetchData'
@@ -26,7 +26,7 @@ export const useStock = () => {
         },
         {
           name: "editpen",
-          onClick: (id) =>{openSidebarModal(stockFormField,  true, id)}
+          onClick: (id) =>{openSidebarModal(stockEditFormField,  true, id)}
         }
     ]
 
@@ -40,10 +40,8 @@ export const useStock = () => {
     }
 
     const stockFormField = [
-      [{ label: "Product Code", name: "productCode", type: "text" }],
-      [{ label: "Product Name", name: "productName", type: "text" }],
-      [{ label: "Generic Name", name: "genericName", type: "searchDropdown", options:data }],
-      [{ label: "HSN Code", name: "hsnCode", type: "text" }],
+      [{ label: "Product Code", name: "productCode", type: "text" }, { label: "Product Name", name: "productName", type: "text" }],
+      [{ label: "Generic Name", name: "genericName", type: "searchDropdown", options:data }, { label: "HSN Code", name: "hsnCode", type: "text" }],
       [
         {
           label: "Category",
@@ -52,13 +50,8 @@ export const useStock = () => {
           options: categoryData,
         },
       ],
-      [{ label: "Pack", name: "pack", type: "text" }],
-      [{ label: "Low Stock", name: "lowStock", type: "number" }],
-      [{ label: "Gst %", name: "gst", type: "number" },],
-      [{label:"Total Quantity", name:"totalQuantity", type:"number"}],
-      [{label:"Purchase Price", name:"purchasePrice", type:"number"}],
-      [{label:"Sales Price", name:"salesPrice", type:"number"}],
-      [{
+      [{ label: "Pack", name: "pack", type: "text" },{ label: "Low Stock", name: "lowStock", type: "number" }],
+      [{ label: "Gst %", name: "gst", type: "number" },{
         label: "Expire Alert",
         name:"expireAlert",
         options: ["months", "weeks", "days"],
@@ -67,11 +60,11 @@ export const useStock = () => {
         dropdownName: "duration",
         type: "inputdropdown",
         align:"right"
-      }]
+      }],
     ];
 
 
   return {
-    stockButtonData, stockActionData, getProductCode, stockFormField, refetch, medicineNameData
+    stockButtonData, stockActionData, getProductCode, stockFormField, refetch, medicineNameData, categoryData
   }
 }

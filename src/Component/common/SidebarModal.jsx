@@ -9,7 +9,7 @@ import { useStock } from '../../hooks/useStock'
 export const SidebarModal = ({isOpen, onClose, formField, isEdit,id, refetch}) => {
     
     const {postData} = usePostData("/add-stocks")
-    const {stockFormField} = useStock()
+    const {stockFormField, getProductCode} = useStock()
     const {data} = useFetchData( id ? `/get-stock/${id}`: null)
     const title = isEdit ? "Edit Stock" : "Add Stock"
     const {updateData} = useUpdateData("/update-stocks")
@@ -32,6 +32,16 @@ export const SidebarModal = ({isOpen, onClose, formField, isEdit,id, refetch}) =
             handleReset()
         }
     }
+
+    useEffect(()=>{
+        if(!isEdit){
+            const getCode = async()=>{
+              const productCode = await getProductCode()
+              setFormData({productCode:productCode, expireAlert:{count:3, duration:"months"}})
+            }
+            getCode()
+        }
+    },[])
     
   return (
     <>

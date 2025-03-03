@@ -219,18 +219,18 @@ export const patientPreviewField = [
             name:"Barcode"
         },
         additionalInfo:[
-            {
-                label:"Birth Place",
-                name:"birthPlace"
-            },
-            {
-                label:"Birth Time",
-                name:"birthTime"
-            },
-            {
-                label:"Weight(when born)",
-                name:"weight"
-            }
+            // {
+            //     label:"Birth Place",
+            //     name:"birthPlace"
+            // },
+            // {
+            //     label:"Birth Time",
+            //     name:"birthTime"
+            // },
+            // {
+            //     label:"Weight(when born)",
+            //     name:"weight"
+            // }
         ]
     }
 ]
@@ -251,4 +251,3 @@ export const patientPreviewData = {
     }
 
 }
-

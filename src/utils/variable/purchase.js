@@ -118,3 +118,49 @@ export const NewPurchaseField = [
         }
     ]
 ]
+
+export const historyTableHeading = [
+    {
+        name:"Medicine Name",
+        path:"medicineName"
+    },
+    {
+        name:"Supplier Name",
+        path:"supplierName"
+    },
+    {
+        name:"Total Quantity",
+        path:"availableQuantity"
+    },
+    {
+        name:"Purchase Rate",
+        path:"purchaseRate"
+    },
+    {
+        name:"MRP",
+        path:"mrp"
+    },
+    {
+        name:"Discount",
+        path:"discount"
+    }
+]
+
+export const historyValue = [
+    {
+        medicineName:"Paracetamol",
+        supplierName:"Supplier1",
+        totalQuantity:100,
+        purchaseRate:10,
+        mrp:20,
+        discount:5
+    },
+    {
+        medicineName:"Paracetamol",
+        supplierName:"Supplier1",
+        totalQuantity:100,
+        purchaseRate:10,
+        mrp:20,
+        discount:5
+    }
+]

@@ -17,7 +17,7 @@ export const SearchDropdown = ({value, name, label, options, errors, onChange })
         </label>
         <input
             type="text"
-            placeholder="Search category..."
+            placeholder={`Search ${label}`}
             name={name}
             value={value[name]}
             onChange={onChange}
