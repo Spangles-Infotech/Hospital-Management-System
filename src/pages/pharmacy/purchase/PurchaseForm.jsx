@@ -9,6 +9,7 @@ import { useForm } from '../../../context/FormContext'
 import { AddIcon } from '../../../icons/AddIcon'
 import { useSidebarModal } from '../../../context/SidebarContext'
 import { useStock } from '../../../hooks/useStock'
+import { cateegoryFormField } from '../../../utils/variable/stock'
 
 const PurchaseForm = ({isEdit=false}) => {
 
@@ -17,11 +18,12 @@ const PurchaseForm = ({isEdit=false}) => {
   const {stockFormField, medicineNameData, categoryData} = useStock()
   const {openSidebarModal} = useSidebarModal()
   const {handleBackToPurchase, handleSavePurchase,getOrderId, NewPurchaseField} = usePurchase()
-  const tableHeader =[ "MEDICINE NAME", "HSN", "MEDICINE CATEGORY", "BATCH NO.", "EXP DATE", "QTY","FREE", "UNIT","TOTAL QUANTITY", "PURCHASE RATE", "MRP", "DISCOUNT", "GST", "AMOUNT"]
+  const tableHeader =[ "MEDICINE NAME", "HSN", "MEDICINE CATEGORY", "BATCH NO.", "EXP DATE", "QTY","FREE", "UNIT","T.QTY", "P.RATE", "MRP", "DIS%", "GST%", "AMOUNT"]
+  
   const fields=[
     {label:"", name:"medicineName", "type":"select", options:medicineNameData},
     {label:"", name:"hsnCode", "type":"text"},
-    {label:"", name:"medicineCategory", "type":"select", "options":categoryData },
+    {label:"", name:"medicineCategory", "type":"select", "options":categoryData},
     {label:"", name:"batchNo", "type": "text"},
     {label:"", name:"expDate", "type": "date"},
     {label:"", name:"quantity", "type":"number"},
@@ -41,21 +43,23 @@ const PurchaseForm = ({isEdit=false}) => {
     if(id && data){
       setFormData(data)
     }
-  },[data])
+  },[data, id])
 
   useEffect(()=>{
-    if(!isEdit){
+    if(!isEdit && !formData?.["orderNumber"] ){
       const fetch = async()=>{
         const response = await getOrderId()
-        setFormData({orderNumber:response})
+        setFormData({orderNumber:response, expireAlert:{count:3, duration:"months"}})
       }
       fetch()
     }
-  },[])
+  },[formData])
 
   useEffect(()=>{
-    getHistoryWithMedicineName()
-  },[formData?.medicines?.[currentMedicalIndex]?.medicineName])
+    if(formData?.medicines?.[currentMedicalIndex]?.medicineName){
+      getHistoryWithMedicineName()
+    }
+  },[formData])
 
   
   return (

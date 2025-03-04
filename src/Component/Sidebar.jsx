@@ -21,7 +21,7 @@ import { useForm } from '../context/FormContext';
 export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}) => {
 
     const {currentLocation, isCurrentLocation} = useCommon();
-    const {handleReset, setFormData} = useForm()
+    const {handleReset} = useForm()
     
     const navigate = useNavigate()
     
@@ -37,7 +37,6 @@ export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}
     const handleSelectMenu = (path)=>{
       setSidebarWidth(300)
       handleReset()
-      setFormData({})
       navigate(path)
     }
 

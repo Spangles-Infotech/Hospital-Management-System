@@ -16,8 +16,10 @@ export const SidebarModal = ({isOpen, onClose, formField, isEdit,id, refetch}) =
     const {handleReset, formData, setFormData} = useForm()
 
     useEffect(()=>{
-        setFormData(data)
-    },[data])
+        if(isEdit){
+            setFormData(data)
+        }
+    },[data, isEdit])
 
     const handleSaveForm = async(e)=>{
         let response = 0
@@ -27,9 +29,10 @@ export const SidebarModal = ({isOpen, onClose, formField, isEdit,id, refetch}) =
             response = await postData(formData)
         }
         if(response === 200 || response === 201){
-            refetch()
+            // if(refetch)refetch()
             onClose()
             handleReset()
+            setFormData(() => ({}));
         }
     }
 
@@ -37,11 +40,11 @@ export const SidebarModal = ({isOpen, onClose, formField, isEdit,id, refetch}) =
         if(!isEdit){
             const getCode = async()=>{
               const productCode = await getProductCode()
-              setFormData({productCode:productCode, expireAlert:{count:3, duration:"months"}})
+              setFormData((prev)=>({...prev, productCode:productCode}))
             }
             getCode()
         }
-    },[])
+    },[isEdit])
     
   return (
     <>

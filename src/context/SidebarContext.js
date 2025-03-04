@@ -5,7 +5,7 @@ const SidebarModalContext = createContext()
 
 export const SidebarModalProvider = ({children})=>{
 
-    const intitialValue = {isOpen:false, formField:[], isEdit:false, id:""}
+    const intitialValue = {isOpen:false, formField:[], isEdit:false, id:"", refetch:null}
 
     const [sidebarContent, setSidebarContent] = useState(intitialValue)
 
@@ -13,8 +13,8 @@ export const SidebarModalProvider = ({children})=>{
         setSidebarContent(intitialValue)
     }
 
-    const openSidebarModal = (data, isEdit, id)=>{
-        setSidebarContent({isOpen:true, formField:data, isEdit:isEdit, id:id})
+    const openSidebarModal = (data, isEdit, id, refetch)=>{
+        setSidebarContent({isOpen:true, formField:data, isEdit:isEdit, id:id, refetch:refetch})
     }
 
     return(
@@ -26,6 +26,7 @@ export const SidebarModalProvider = ({children})=>{
                 isEdit = {sidebarContent.isEdit}
                 id = {sidebarContent.id}
                 onClose={onClose}
+                refetch={sidebarContent.refetch}
             />
         </SidebarModalContext.Provider>
     )

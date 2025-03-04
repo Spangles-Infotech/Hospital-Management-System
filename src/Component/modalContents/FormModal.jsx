@@ -26,7 +26,6 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch}) => {
       }else{
         response = await postData(formData); 
         if (response === 200 || response === 201) {
-          console.log("first")
           if (refetch) refetch();
           closeModal();  
           handleReset();
