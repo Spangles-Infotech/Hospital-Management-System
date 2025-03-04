@@ -83,9 +83,9 @@ export const FormProvider = ({ children }) => {
   };
 
   const handleReset = () => {
-    setFormData({});
     setErrors({});
     setActivePage(1)
+    setFormData(()=>{});
   };
 
   const handleTimingChange = (e, label, index) => {

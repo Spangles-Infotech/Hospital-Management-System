@@ -96,7 +96,7 @@ export const usePurchase = () => {
         },
 
         {
-            label:"Purchase Date",
+            label:"Invoice Date",
             name:"purchaseDate",
             type:"date",
         },

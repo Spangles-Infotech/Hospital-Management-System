@@ -21,14 +21,13 @@ import { useForm } from '../context/FormContext';
 export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}) => {
 
     const {currentLocation, isCurrentLocation} = useCommon();
-    const {handleReset, setFormData} = useForm()
+    const {handleReset} = useForm()
     
     const navigate = useNavigate()
     
-
     const handleOpenMenu = (name)=>{
       if(name === isMenuOpen){
-        setMenuOpen("")
+        // setMenuOpen("")
         setSidebarWidth(300)
       }else{
         setMenuOpen(name)
@@ -37,7 +36,6 @@ export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}
     
     const handleSelectMenu = (path)=>{
       handleReset()
-      setFormData({})
       navigate(path)
     }
 
@@ -62,7 +60,7 @@ export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}
         adminSidebarData.map((item)=>(
           <div className={`mr-3 rounded-r-[10px] flex flex-col ${isMenuOpen === item.name ? "gap-3":"gap-0"} `} key={item.name}>
               <div className={`linkss  flex justify-between p-3 pl-6 items-center pr-[10px] transition-all duration-500 ease-in-out hover:text-white hover:bg-primary rounded-r-[10px] ${isCurrentLocation(item.path) ? "text-white bg-primary fill-white active"  : "text-[#505050] fill-custom-black font-roboto"}`}>
-                <div className='flex gap-[15px]' onClick={()=>handleSelectMenu(item.path)} >
+                <div className='flex gap-[15px]' onClick={()=>handleSelectMenu( item.name === "Pharmacy" ? "/admin/pharmacy/stocks" : item.path)} >
                   {sidebarIcons[item.icon]}
                   <p className={`font-[400] text-[18px] transition-all duration-500 ease-in-out ${sidebarWidth < 100 ? "opacity-0" : "opacity-100"}`}>{item.name}</p>
                 </div>

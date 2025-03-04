@@ -163,12 +163,36 @@ export const stockPreviewFields = [
   },
 ];
 
-export const cateegoryFormField = [
-  {
-      label:"",
-      name:"medicineCategory",
-      type:"string",
-  }
-]
+export const tagFormFields = {
+  "medicine":[
+    {
+        label:"",
+        name:"medicineCategory",
+        type:"string",
+    }
+  ],
+  "pack":[
+    {
+        label:"",
+        name:"packsCategory",
+        type:"string",
+    }
+  ],
+  "strength":[
+    {
+        label:"",
+        name:"strengthCategory",
+        type:"string",
+    }
+  ],
+  "gst":[
+    {
+        label:"",
+        name:"gstCategory",
+        type:"number",
+    }
+  ],
+
+}
 
 

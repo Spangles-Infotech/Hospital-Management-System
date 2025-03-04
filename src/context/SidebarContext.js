@@ -13,7 +13,7 @@ export const SidebarModalProvider = ({children})=>{
         setSidebarContent(intitialValue)
     }
 
-    const openSidebarModal = (data, isEdit, refetch, id,)=>{
+    const openSidebarModal = (data, isEdit, id, refetch)=>{
         setSidebarContent({isOpen:true, formField:data, isEdit:isEdit, id:id, refetch:refetch})
     }
 

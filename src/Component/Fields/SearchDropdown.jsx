@@ -5,7 +5,7 @@ export const SearchDropdown = ({value, name, label, options, errors, onChange })
 
   const filterByQuery = () => {
     if (!value[name]) return options;
-    return options.filter((item) =>
+    return options?.filter((item) =>
       item.toLowerCase().includes(value[name].toLowerCase())
     );
   };
@@ -19,7 +19,7 @@ export const SearchDropdown = ({value, name, label, options, errors, onChange })
             type="text"
             placeholder={`Search ${label}`}
             name={name}
-            value={value[name]}
+            value={value?.[name] || ""}
             onChange={onChange}
             onFocus={() => setShowDropdown(true)}
             onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
@@ -27,7 +27,7 @@ export const SearchDropdown = ({value, name, label, options, errors, onChange })
         />
         {showDropdown && (
             <ul className="absolute w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
-            {filterByQuery().length > 0 ? (
+            {filterByQuery()?.length > 0 ? (
                 filterByQuery().map((item, index) => (
                 <li
                     key={index}
