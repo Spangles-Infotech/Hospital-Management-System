@@ -19,6 +19,8 @@ const PreviewModal = ({ title, previewFields, data }) => {
               /> */}
               <p className="text-slate-700 text-xl font-medium">{title}</p>
             </div>
+
+            {/* heading section */}
             {previewField?.head && previewField?.head.map((item) => (
               <div className="flex items-center gap-3">
                 <p className="text-slate-700 text-[18px] font-[600]">
@@ -29,6 +31,7 @@ const PreviewModal = ({ title, previewFields, data }) => {
                 </p>
               </div>
             ))}
+
           </div>
           <div className="w-full h-[1px] bg-[#DCFFFF]"></div>
           <div className="w-[500px] flex flex-wrap gap-[10px] py-4 ">
@@ -45,7 +48,7 @@ const PreviewModal = ({ title, previewFields, data }) => {
               ))
             }
           </div>
-          {/* <div className={`flex flex-wrap gap-[10px] py-4 w-[700px] ${previewField?.isSingle ? "hidden" : ""}`}>
+          <div className={`flex flex-wrap gap-[10px] py-4 w-[700px] ${previewField?.isSingle ? "hidden" : ""}`}>
               {
                 previewField?.fields.map((field)=>(
                   <div key={field.label} className="flex items-center gap-3 w-[49%]">
@@ -58,7 +61,7 @@ const PreviewModal = ({ title, previewFields, data }) => {
                   </div>
                 ))
               }
-          </div> */}
+          </div>
           <BarcodePreview data={data} previewField={previewField} />
           <div className="w-full h-[1px] bg-[#DCFFFF]"></div>
           <Timing data={data} previewField={previewField} />

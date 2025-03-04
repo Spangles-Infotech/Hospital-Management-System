@@ -21,6 +21,7 @@ const Doctor = () => {
             onClick : ()=>{ openModal(FormModal, {title:"New Doctor", formField:doctorFields})}
         }
     ]
+
     const actionData = [
         {
             name:"tripledot",
@@ -29,7 +30,7 @@ const Doctor = () => {
                 {
                     name:"eye",
                     title:"View Doctor",
-                    onClick:()=>{ openModal(PreviewModal, {title:"Doctor Details", previewFields:doctorPreviewField , data:previewData})}
+                    onClick:(id)=>{ openModal(PreviewModal, {title:"Doctor Details", previewFields:doctorPreviewField , data:previewData}, `/get-doctor/${id}`)}
                 },
                 {
                     name:"edit",
@@ -45,11 +46,10 @@ const Doctor = () => {
         }
     ]
 
-
   return (
     <section className='p-4'>
         <TableHeader title={"Doctor"} buttonData={btnData} />
-        <Table tableHead={doctorTableHeading} tableValue={data} actionData={actionData} />
+        <Table tableHead={doctorTableHeading} tableValue={data} actionData={actionData} isLoading={isLoading} />
         <Pagination />
     </section>
   )

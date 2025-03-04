@@ -1,15 +1,31 @@
-import React from 'react'
-import { Action } from './Action'
-import { Status } from './Status'
-import { getDateFromISO, getTableCellColor } from '../../../utils/functions/function'
-import { TableSkeleton } from '../../skeletons/TableSkeleton'
+import React from "react";
+import { Action } from "./Action";
+import { Status } from "./Status";
+import {
+  getDateFromISO,
+  getTableCellColor,
+} from "../../../utils/functions/function";
+import { TableSkeleton } from "../../skeletons/TableSkeleton";
 
-export const Table = ({tableHead, tableValue, actionData, isLoading=false, isBlue=false}) => {  
-    
+export const Table = ({
+  tableHead,
+  tableValue,
+  actionData,
+  isLoading = false,
+  isBlue = false,
+}) => {
   return (
-    <table className={`w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-b-[15px]`}>
+    <table
+      className={`w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-b-[15px]`}
+    >
       <thead className="text-[18px] font-[600] text-customBlack bg-white">
-        <tr className={` h-[50px] ${isBlue ? "bg-[#DEFCFF] rounded-t-[15px]" : "bg-white border-b border-[#D1D1D1]"}`}>
+        <tr
+          className={` h-[50px] ${
+            isBlue
+              ? "bg-[#DEFCFF] rounded-t-[15px]"
+              : "bg-white border-b border-[#D1D1D1]"
+          }`}
+        >
           {tableHead?.map((item, index) => (
             <th scope="col" className={`px-6 py-3 text-left`} key={index}>
               {item.name}
@@ -24,14 +40,16 @@ export const Table = ({tableHead, tableValue, actionData, isLoading=false, isBlu
               <TableSkeleton />
             </td>
           </tr>
+        ) : !tableValue?.length > 0 ? (
+          <tr>
+            <td colSpan={tableHead.length} className="w-full h-[50px]">
+              <p className="text-center align-middle font-[600]">
+                No Data Found
+              </p>
+            </td>
+          </tr>
         ) : (
-          !tableValue?.length > 0 ?
-            <tr>
-              <td colSpan={tableHead.length} className="w-full h-[50px]">
-                <p className="text-center align-middle font-[600]">No Data Found</p>
-              </td>
-            </tr>
-          :tableValue?.map((val, i) => (
+          tableValue?.map((val, i) => (
             <tr
               key={val.id}
               className={`h-[50px] ${
@@ -62,8 +80,10 @@ export const Table = ({tableHead, tableValue, actionData, isLoading=false, isBlu
                   >
                     {(item.date
                       ? getDateFromISO(val?.[item.path])
+                      : item?.isDoubleNested 
+                      ?  val?.[item.path1]?.[item?.path2]?.[item?.path3]
                       : item.isNested
-                      ? val?.[item.path1]?.[item.path2]
+                      ? val?.[item.path1]?.[item?.path2]
                       : val?.[item.path]) || "-"}
                   </td>
                 ) : (
@@ -80,5 +100,5 @@ export const Table = ({tableHead, tableValue, actionData, isLoading=false, isBlu
         )}
       </tbody>
     </table>
-  )
-}
+  );
+};

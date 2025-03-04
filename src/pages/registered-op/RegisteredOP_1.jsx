@@ -5,11 +5,13 @@ import { Table } from '../../Component/common/Table/Table';
 import { TableHeader } from '../../Component/common/Table/TableHeader';
 import { TableHeading, TableValue } from '../../utils/variable/RegOp_nurse';
 import { useModal } from '../../context/ModalContext';
+import { useFetchData } from "../../hooks/useFetchData";
 
 
 const RegisteredOP_1 = () => {
 
   const {openModal} = useModal()
+  const {data, isLoading} = useFetchData("/get-all-registered-appointments")
   
   const btnData=[
     {
@@ -32,7 +34,7 @@ const actionData=[
   return (
     <section className="w-full p-7 font-roboto ">
       <TableHeader title={"Registered OP"} buttonData={btnData}/>
-      <Table tableHead={TableHeading} tableValue={TableValue} actionData={actionData}/>
+      <Table tableHead={TableHeading} tableValue={data} actionData={actionData} isLoading={isLoading}/>
       <Pagination />
     </section>
 

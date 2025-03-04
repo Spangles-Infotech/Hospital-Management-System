@@ -142,28 +142,41 @@ export const doctorFields = [
 
 export const doctorTableHeading = [
     {
-      name:"Doctor's ID",
-      path:"doctorId"
+        name:"Doctor's ID",
+        path1:"userId",
+        path2:"id",
+        isNested:true
     },
     {
-      name:"Doctor's Name",
-      path:"doctorName"
+        name:"Doctor's Name",
+        path1:"userId",
+        path2:"name",
+        isNested:true
     },
     {
-      name:"Phone No.",
-      path:"phoneNumber"
+        name:"Phone No.",
+        isDoubleNested:true,
+        path1:"userId",
+        path2:"mobileNumber",
+        path3:"number"
     },
     {
         name:"Gender",
-        path:"gender"
+        path2:"gender",
+        path1:"userId",
+        isNested:true
     },
     {
-      name:"Blood Group",
-      path:"bloodGroup"
+        name:"Blood Group",
+        path2:"bloodGroup",
+        path1:"userId",
+        isNested:true
     },
     {
-      name:"Designation",
-      path:"designation"
+        name:"Designation",
+        path2:"designation",
+        path1:"userId",
+        isNested:true
     },
     {
         name:"Status",
@@ -171,8 +184,8 @@ export const doctorTableHeading = [
         type:"tag"
     },
     {
-      name:"Action",
-      path:"normal"
+        name:"Action",
+        path:"normal"
     }
   ]
 
