@@ -46,7 +46,7 @@ export const patientFields = [
             name:"patientName",
             options:["Patient Name", "Baby of"],
             inputName:"name",
-            dropdownName:"nameType",
+            dropdownName:"title",
             type:"inputdropdown"
         }
     ],
@@ -234,6 +234,119 @@ export const patientPreviewField = [
         ]
     }
 ]
+
+export const editFormField = [
+    [
+        {
+            label:"Patient ID",
+            name:"patientId",
+            type:"text"
+        },
+        {
+            label:"Patient Name / Baby of",
+            name:"patientName",
+            options:["Patient Name", "Baby of"],
+            inputName:"name",
+            dropdownName:"title",
+            type:"inputdropdown"
+        }
+    ],
+    [
+        {
+            label:"Father's Name",
+            name:"fatherName",
+            type:"text"
+        },
+        {
+            label:"Mother's Name",
+            name:"motherName",
+            type:"text"
+        }
+    ],
+    [
+        {
+            label:"Mobile Number",
+            options:["+91", "+92", "+93"],
+            name:"mobileNumber",
+            inputName:"number",
+            dropdownName:"countryCode",
+            type:"inputdropdown"
+        },
+        {
+            label:"Alternate Mobile Number",
+            options:["+91", "+92", "+93"],
+            name:"alternateMobileNumber",
+            dropdownName:"countryCode",
+            type:"inputdropdown",
+            inputName:"number",
+
+        },
+    ],
+    [
+        [
+            {
+                label:"Date of Birth",
+                name:"dob",
+                type:"date"
+            },
+            {
+                label:"Age",
+                name:"age",
+                type:"text"
+            }
+        ],
+        {
+            label:"Gender",
+            name:"gender",
+            options:["Male", "Female", "Other"],
+            type:"radio"
+        }
+    ],
+    [
+        {
+            label:"Blood Group",
+            name:"bloodGroup",
+            options:["A+", "A-", "B+", "B-", "AB+", "AB-"],
+            type:"select"
+        },
+        {
+            label:"Pincode",
+            name:"pincode",
+            type:"text"
+        }
+    ],
+    [
+        {
+            label:"State",
+            name:"state",
+            options:["Maharashtra", "Gujarat", "Rajasthan"],
+            type:"select"
+        },
+        {
+            label:"District",
+            name:"district",
+            options:["Maharashtra", "Gujarat", "Rajasthan"],
+            type:"select"
+        }
+    ],
+    [
+        {
+            label:"City",
+            name:"city",
+            type:"text"
+        },
+        {
+            type:""
+        }
+    ],
+    {
+        label:"Address",
+        name:"address",
+        type:"textarea"
+    }
+
+]
+
 
 export const patientPreviewData = {
     patientId:"P001",

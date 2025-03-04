@@ -8,12 +8,22 @@ import { Pagination } from '../../Component/common/Pagination'
 import { useFetchData } from '../../hooks/useFetchData';
 import PreviewModal from '../../Component/modalContents/PreviewModal'
 import {patientPreviewField} from '../../utils/variable/patient'
+import { editFormField } from '../../utils/variable/patient'
 
 
 const Patient = () => {
 
   const { data, isLoading, error, fetchData:refetch } = useFetchData("/get-all-patient")
   const { openModal } = useModal()
+
+ 
+  const btnData = [
+    {
+      name: "New Button",
+      onClick: () => { openModal(FormModal, { title: "New Patients", formField: patientFields ,refetch:refetch,name:"/add-patient"}) }
+    }
+  ]
+
 
   const actionData = [
     {
@@ -23,17 +33,12 @@ const Patient = () => {
       },
     },
     {
-      name: "editpenblue"
+      name: "editpenblue",
+      onClick:(id)=>{openModal(FormModal,{title:"Enter patient ",formField:editFormField,refetch:refetch,isEdit:true,name:`/update-patient/${id}`})}
     }
   ]
 
-  const btnData = [
-    {
-      name: "New Button",
-      onClick: () => { openModal(FormModal, { title: "New Patients", formField: patientFields }) }
-    }
-  ]
-
+  
   return (
     <section className='p-4'>
       <TableHeader title={"Patients"} buttonData={btnData} />
