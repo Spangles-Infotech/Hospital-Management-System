@@ -2,7 +2,7 @@ const Appointment = require("../models/appointment.modal")
 const Billing = require("../models/billing.model")
 const MedicineInfo = require("../models/medicineInfo.model")
 const PaymentInfo = require("../models/paymentInfo.model")
-const { Supplier, Purchase, Stock, Category } = require("../models/pharmacy.model")
+const { Supplier, Purchase, Stock, Tag } = require("../models/pharmacy.model")
 const { getPurchaseHistoryPipeline } = require("../pipeline/pharmacy.pipeline")
 const { sendMessage, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage } = require("../utils/function")
 
@@ -163,7 +163,6 @@ const getAllSupplierName = async(req,res,next)=>{
 }
 
 //  purchase controller
-
 const purchase = async(req,res, next)=>{
     try {
         let query = {}
@@ -274,21 +273,47 @@ const getPurchaseDetailsByMedicineName = async(req,res, next) => {
     }
 };
 
-
-const category = async(req,res, next)=>{
+const tags = async (req, res, next) => {
     try {
-        if (req.method === "POST"){
-            await Category.create({category:req?.body?.medicineCategory})
-            return sendMessage(res, 201, "Category Posted Successfully")
+        const { tag } = req.query;
+        const { medicineCategory, packsCategory, gstCategory, strengthCategory } = req.body;
+
+        if (req.method === "POST") {
+            const newTag = {};
+
+            if (medicineCategory) newTag.category = [{ title: medicineCategory }];
+            if (packsCategory) newTag.packs = [{ title: packsCategory }];
+            if (gstCategory || gstCategory === 0) newTag.gst = [{ title: gstCategory }];
+            if (strengthCategory) newTag.strength = [{ title: strengthCategory }];
+
+            if (Object.keys(newTag).length > 0) {
+                await Tag.create(newTag);
+                return sendMessage(res, 201, "Data Added Successfully");
+            } else {
+                return sendMessage(res, 400, "No valid category provided");
+            }
         }
-        if(req.method === "GET"){
-            const category = await Category.find().distinct("category")
-            return sendMessage(res, 200, "Category fetched Successfully", category )
+
+        if (req.method === "GET") {
+            let field = "";
+
+            if (tag === "medicineCategory") field = "category.title";
+            if (tag === "packsCategory") field = "packs.title";
+            if (tag === "gstCategory") field = "gst.title";
+            if (tag === "strengthCategory") field = "strength.title";
+
+            if (!field) {
+                return sendMessage(res, 400, "Invalid tag parameter");
+            }
+            
+            const data = await Tag.distinct(field)
+
+            return sendMessage(res, 200, "Data fetched successfully", data);
         }
     } catch (error) {
-        next(error)
+        next(error);
     }
-}
+};
 
 const getAllMedicineName = async(req,res,next)=>{
     try {
@@ -300,4 +325,4 @@ const getAllMedicineName = async(req,res,next)=>{
 }
 
 
-module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, category, getAllMedicineName, getPurchaseDetailsByMedicineName}
+module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, tags, getAllMedicineName, getPurchaseDetailsByMedicineName}

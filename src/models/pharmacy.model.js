@@ -12,6 +12,7 @@ const stocksSchema = mongoose.Schema({
         count:Number,
         duration:String
     },
+    strength:String,
     gst:Number,
     batchNumber:String,
     expiryDate:Date,
@@ -62,13 +63,33 @@ const purchaseSchema = mongoose.Schema({
     },
 })
 
-const categorySchema = mongoose.Schema({
-    category:String
+const TagsSchema = mongoose.Schema({
+    category:[
+        {
+            title:String
+        }
+    ],
+    strength:[
+        {
+            title:String
+        }
+    ],
+    packs:[
+        {
+            title:String
+        }
+    ],
+    gst:[
+        {
+            title:Number
+        }
+    ]
 })
 
-const Category = mongoose.model("Category", categorySchema)
+
+const Tag = mongoose.model("Tag", TagsSchema)
 const Supplier = mongoose.model("Supplier", supplierSchema)
 const Stock = mongoose.model("Stock", stocksSchema)
 const Purchase = mongoose.model("Purchase", purchaseSchema)
 
-module.exports = {Supplier, Stock, Purchase, Category}
+module.exports = {Supplier, Stock, Purchase, Tag}
