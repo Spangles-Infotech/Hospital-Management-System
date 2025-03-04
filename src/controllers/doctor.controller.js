@@ -7,6 +7,7 @@ const doctor = async(req, res, next)=>{
     const {userId} = req.params
     const {id, timing, doctorFee} = req.body
     try {
+
         if(req.method === "POST"){
             const user = await User.create(req.body)
             await Doctor.create({userId: user._id, timing:timing})
@@ -20,7 +21,7 @@ const doctor = async(req, res, next)=>{
                 }
                 return sendMessage(res, 200, "Doctor Fetched Successfully", doctor)
             }
-            const doctors = await Doctor.find({isInActive:false}).populate("userId")
+            const doctors = await Doctor.find().populate("userId")
             return sendMessage(res, 200, "Doctors Fetched Successfully", doctors)
         }
         if(req.method === "PUT"){
@@ -33,7 +34,7 @@ const doctor = async(req, res, next)=>{
                 await Doctor.findOneAndUpdate({userId:userId}, {$set:{fee:doctorFee}}, {new:true})
                 return sendMessage(res, 200, "Doctor Fee Updated Successfully")
             }
-            await Doctor.findOneAndUpdate({userId:userId}, { $set: {isInActive:true}}, {new:true} )
+            await Doctor.findOneAndUpdate({userId:userId}, { $set: {status:"Inactivate"}}, {new:true} )
             return sendMessage(res, 200, "Doctor Inactivated Successfully" )
         }
         

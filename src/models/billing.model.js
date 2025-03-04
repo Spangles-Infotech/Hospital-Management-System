@@ -7,7 +7,12 @@ const feeSchema = mongoose.Schema({
 })
 
 const billingSchema = mongoose.Schema({
-    fees:[feeSchema]
+    fees:[feeSchema],
+    paymentInfo:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"PaymentInfo",
+        index:true
+    }
 })
 
 const Billing = mongoose.model("Billing", billingSchema)

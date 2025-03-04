@@ -1,8 +1,10 @@
-const MedicalReport = require("../models/medicalReport.model")
-const Appointment = require("../models/appointment.modal")
 const Vital = require("../models/vitals.model")
-const { medicalReportPipeline } = require("../pipeline/registerop.pipeline")
 const { sendMessage } = require("../utils/function")
+const Appointment = require("../models/appointment.modal")
+const MedicalReport = require("../models/medicalReport.model")
+const { prescription } = require("./pharmacy.controller")
+const PrescriptionInfo = require("../models/prescriptionInfo.model")
+// const { medicalReportPipeline } = require("../pipeline/registerop.pipeline")
 
 const registeredOp = async(req, res,next)=>{
     try {
@@ -51,4 +53,20 @@ const vitals = async(req,res, next)=>{
     }
 }
 
-module.exports = {registeredOp, vitals}
+const medicalReports = async(req,res, next)=>{
+    try {
+        const {appointmentId} = req.body
+        const isMedicalReports = await MedicalReport.findOne({appointment:appointmentId})
+        if(isMedicalReports){
+            const prescription = await PrescriptionInfo.create({ prescriptions:req?.body?.prescription, appointmentId:appointmentId, patientId:isMedicalReports.patient })
+            await MedicalReport.updateOne({appointment:appointmentId}, {$set:{diagnosis:req.body.diagnosis, otherReports:req.body.otherReports, labTests:req.body.labTests, otherServices:req.body.otherServices, prescriptionInfo:prescription._id }}, {new:true})
+            return sendMessage(res, 200, "Medical Report Updated Successfully")
+        }else{
+            return sendMessage(res, 404, "Patient's Medical Report not found")
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = {registeredOp, vitals, medicalReports}

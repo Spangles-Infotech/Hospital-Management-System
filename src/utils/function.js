@@ -4,9 +4,9 @@ const sendMessage = (res, status, message, data, total)=>{
     }
     return res.status(status).json({message:message})
 }
-
 const transformPurchaseData = (purchase)=>{
     return {
+        orderNumber:purchase.orderNumber,
         supplierId: purchase.supplierId,
         purchaseDate: purchase.purchaseDate,
         supplierName: purchase.supplierName,
@@ -32,14 +32,18 @@ const formatCount = (count) => {
 const getYear = new Date().getFullYear();
 
 const orderNumber = (count)=>{
-    return `ORD-${getYear}-${formatCount(count)}`
+    return `GH-${getYear}-${formatCount(count)}`
 }
 
 const supplierNumber = (count)=>{
     return `SUP-${formatCount(count)}`
 }
 
+const productNumber = (count)=>{
+    return `PRD-${formatCount(count)}`
+}
 const skipPage = (page,limit)=>{
     return limit * (page - 1)
 }
-module.exports = {sendMessage, transformPurchaseData,  orderNumber, supplierNumber, skipPage}
+
+module.exports = {sendMessage, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage}

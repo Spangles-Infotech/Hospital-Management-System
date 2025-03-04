@@ -6,9 +6,9 @@ const doctorSchema = mongoose.Schema({
         ref: "User"
     },
     fee:String,
-    isInActive:{
-        type:Boolean,
-        default:false
+    status:{
+        type:String,
+        default:"Active"
     },
     timing:{
         type: [

@@ -16,7 +16,7 @@ const appointmentSchema = mongoose.Schema({
         ref:"PaymentInfo",
         index:true
     },
-    opBillingInfo:{
+    BillingInfo:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Billing",
         index:true
@@ -37,7 +37,11 @@ const appointmentSchema = mongoose.Schema({
         enum:["OP", "IP"],
         default:"OP"
     },
-
+    roomInfo:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"roomInfo",
+        index:true
+    },
 })
 
 const Appointment = mongoose.model("Appointment", appointmentSchema)

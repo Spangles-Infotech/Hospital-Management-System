@@ -2,27 +2,23 @@ const mongoose = require("mongoose")
 
 const stocksSchema = mongoose.Schema({
     productCode:String,
-    batchNumber:String,
     productName:String,
     genericName:String,
     category:String,
-    expiryDate:String,
     hsnCode:String,
-    unit:String,
-    totalBox:Number,
-    stripPerBox:Number,
-    tabletPerStrip:Number,
-    totalStrip:Number,
-    totalQuantity:Number,
-    salePrice:Number,
-    purchasePrice:Number,
+    pack:String,
     lowStock:Number,
     expireAlert:{
         count:Number,
         duration:String
     },
+    strength:String,
     gst:Number,
-    supplierName:String,
+    batchNumber:String,
+    expiryDate:Date,
+    totalQuantity:Number,
+    purchasePrice:Number,
+    salesPrice:Number
 })
 
 const supplierSchema = mongoose.Schema({
@@ -67,8 +63,33 @@ const purchaseSchema = mongoose.Schema({
     },
 })
 
+const TagsSchema = mongoose.Schema({
+    category:[
+        {
+            title:String
+        }
+    ],
+    strength:[
+        {
+            title:String
+        }
+    ],
+    packs:[
+        {
+            title:String
+        }
+    ],
+    gst:[
+        {
+            title:Number
+        }
+    ]
+})
+
+
+const Tag = mongoose.model("Tag", TagsSchema)
 const Supplier = mongoose.model("Supplier", supplierSchema)
 const Stock = mongoose.model("Stock", stocksSchema)
 const Purchase = mongoose.model("Purchase", purchaseSchema)
 
-module.exports = {Supplier, Stock, Purchase}
+module.exports = {Supplier, Stock, Purchase, Tag}

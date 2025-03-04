@@ -2,8 +2,9 @@ const Appointment = require("../models/appointment.modal")
 const Billing = require("../models/billing.model")
 const MedicineInfo = require("../models/medicineInfo.model")
 const PaymentInfo = require("../models/paymentInfo.model")
-const { Supplier, Purchase, Stock } = require("../models/pharmacy.model")
-const { sendMessage, transformPurchaseData,  orderNumber, supplierNumber, skipPage } = require("../utils/function")
+const { Supplier, Purchase, Stock, Tag } = require("../models/pharmacy.model")
+const { getPurchaseHistoryPipeline } = require("../pipeline/pharmacy.pipeline")
+const { sendMessage, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage } = require("../utils/function")
 
 
 
@@ -50,7 +51,7 @@ const stocks = async(req,res,next)=>{
         const {stockId} = req.params
         const {page, limit=15} = req.query
         const {productName} = req.body
-        let query = {}
+        let query = {} 
         if(req.method === "POST"){
             await Stock.create({...req.body, productName:productName.trim()})
             return sendMessage(res, 200, "Stock Stored Successfully")
@@ -73,35 +74,37 @@ const stocks = async(req,res,next)=>{
     }
 }
 
+const getAllGenericName = async(req,res,next)=>{
+    try {
+        const genericName = await Stock.find().distinct("genericName")
+        return sendMessage(res, 200, "Data fetched Successfully", genericName)
+    } catch (error) {
+        next(error)
+    }
+}
+
 const getMedicineDetails = async (req, res, next) => {
     try {
-        const { medicineName, batchNumber } = req.query;
+        const { medicineName } = req.query;
         if (!medicineName) {
             return sendMessage(res, 400, "Medicine name is required");
         }
-        let result;
-        if (!batchNumber) {
-            result = await Stock.find({
-                productName: { $regex: `^${medicineName}$`, $options: 'i' }
-            }).distinct("batchNumber");
-        } else {
-            result = await Stock.findOne({ productName: medicineName, batchNumber })
-                .select(["category", "expiryDate", "totalQuantity", "hsnCode"]);
+        const result = await Stock.findOne({ productName: medicineName })
+        .select(["category", "gst","productCode", "totalQuantity", "hsnCode", "pack"]);
+        if (!result) {
+            return sendMessage(res, 404, "Medicine not found");
         }
-
         return sendMessage(res, 200, "Data Fetched Successfully", result);
     } catch (error) {
         next(error);
     }
 };
 
-
 // supplier controller
-
 const supplier = async(req,res,next)=>{
     try {
         const {supplierId} = req.params
-        const {page, limit} = req.query
+        const {page, limit=15} = req.query
         let query = {}
         if(req.method === "POST"){
             await Supplier.create(req.body)
@@ -139,8 +142,20 @@ const supplier = async(req,res,next)=>{
 
 const getSupplierBySupplierId = async(req,res,next)=>{
     try {
-        const {supplierId} = req.query
-        const result = await Supplier.findOne({supplierId:supplierId}).select(["supplierName", "phoneNumber", "supplierId"])
+        const {supplierName} = req.query
+        const result = await Supplier.findOne({supplierName:supplierName}).select(["supplierName", "phoneNumber", "supplierId"])
+        if(!result){
+            return sendMessage(res, 404, "No Supplier Found");
+        }
+        return sendMessage(res, 200, "Data Fetched Successfully", result);
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getAllSupplierName = async(req,res,next)=>{
+    try {
+        const result = await Supplier.find().distinct("supplierName")
         return sendMessage(res, 200, "Data Fetched Successfully", result);
     } catch (error) {
         next(error)
@@ -148,18 +163,34 @@ const getSupplierBySupplierId = async(req,res,next)=>{
 }
 
 //  purchase controller
-
 const purchase = async(req,res, next)=>{
     try {
         let query = {}
         const {page, limit} = req.query
-        const {purchaseId, supplierId} = req.params
         const {medicines, netAmount, finalAmount, totalQuantity} = req.body
+        const {purchaseId, supplierId} = req.params
         if(req.method === "POST"){
             const medicine = await MedicineInfo.create({medicines:medicines, totalAmount:netAmount, totalQuantity:totalQuantity})
             const paymentInfo = await PaymentInfo.create(req.body)
             const purchase = await Purchase.create({medicineInfo:medicine._id, paymentInfo:paymentInfo._id, ...req.body})
             await Supplier.updateOne({supplierId:req.body.supplierId}, {$push:{ purchaseHistory: purchase._id }}, {new:true})
+            await Stock.bulkWrite(
+                medicines.map(med => ({
+                    updateOne: {
+                        filter: { productName: med.medicineName },
+                        update: {
+                            $set: {
+                                totalQuantity: med.availableQuantity,
+                                purchasePrice: med.purchasePrice,
+                                salesPrice: med.salesPrice,
+                                expiryDate:med.expDate,
+                                batchNumber:med.batchNo,
+                                gst: med.gst,
+                            },
+                        },
+                    },
+                }))
+            );
             return sendMessage(res, 201, "Purchase History Stored Successfully")
         }
         if(req.method === "GET"){
@@ -172,10 +203,8 @@ const purchase = async(req,res, next)=>{
                     return sendMessage(res, 404, "Purchase not found");
                 }
                 const transformedPurchase = transformPurchaseData(purchase)
-                
                 return sendMessage(res, 200, "Data Fetched Successfully", transformedPurchase);
             }
-            
             const purchases = await Purchase.find(query).select(["orderNumber", "invoiceNumber", "purchaseDate", "supplierName"]).populate("medicineInfo", "totalQuantity").populate("paymentInfo", "netAmount").sort({_id:-1}).limit(limit).skip(skipPage(page, limit))
             const total = await Purchase.countDocuments(query)
             return sendMessage(res, 200, "Data fetched Succesfully", purchases, total)
@@ -212,5 +241,88 @@ const getSupplierNumber = async(req, res, next)=>{
     }
 }
 
+const getProductCode = async(req,res,next)=>{
+    try {
+        const count = await Stock.countDocuments()
+        const productCode = productNumber(count)
+        return res.json({productCode:productCode})
+    } catch (error) {
+        next(error)
+    }
+}
 
-module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber}
+const insertManyStock = async (req, res, next) => {
+    try {
+        if (!Array.isArray(req.body) || req.body.length === 0) {
+            return sendMessage(res, 400, "Invalid or empty data");
+        }
+        await Stock.insertMany(req.body);
+        return sendMessage(res, 201, "Data Inserted Successfully");
+    } catch (error) {
+        next(error); 
+    }
+};
+
+const getPurchaseDetailsByMedicineName = async(req,res, next) => {
+    try {
+        const {medicineName} = req.params
+        const purchases = await Purchase.aggregate(getPurchaseHistoryPipeline(medicineName));
+        return sendMessage(res, 200, "data fetched successfully", purchases)
+    } catch (error) {
+        next(error)
+    }
+};
+
+const tags = async (req, res, next) => {
+    try {
+        const { tag } = req.query;
+        const { medicineCategory, packsCategory, gstCategory, strengthCategory } = req.body;
+
+        if (req.method === "POST") {
+            const newTag = {};
+
+            if (medicineCategory) newTag.category = [{ title: medicineCategory }];
+            if (packsCategory) newTag.packs = [{ title: packsCategory }];
+            if (gstCategory || gstCategory === 0) newTag.gst = [{ title: gstCategory }];
+            if (strengthCategory) newTag.strength = [{ title: strengthCategory }];
+
+            if (Object.keys(newTag).length > 0) {
+                await Tag.create(newTag);
+                return sendMessage(res, 201, "Data Added Successfully");
+            } else {
+                return sendMessage(res, 400, "No valid category provided");
+            }
+        }
+
+        if (req.method === "GET") {
+            let field = "";
+
+            if (tag === "medicineCategory") field = "category.title";
+            if (tag === "packsCategory") field = "packs.title";
+            if (tag === "gstCategory") field = "gst.title";
+            if (tag === "strengthCategory") field = "strength.title";
+
+            if (!field) {
+                return sendMessage(res, 400, "Invalid tag parameter");
+            }
+            
+            const data = await Tag.distinct(field)
+
+            return sendMessage(res, 200, "Data fetched successfully", data);
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
+const getAllMedicineName = async(req,res,next)=>{
+    try {
+        const response = await Stock.find().distinct("productName")
+        return sendMessage(res, 200, "Medicine Name fetched Successfully", response)
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, tags, getAllMedicineName, getPurchaseDetailsByMedicineName}

@@ -34,6 +34,7 @@ app.use("/api", appointmentRouter)
 app.use("/api", inventoryRouter)
 app.use("/api", expenseRouter)
 app.use("/api", pharmacyRouter)
+app.use("/api", expenseRouter)
 
 app.use(undefinedRoutes)
 app.use(errorHandler)

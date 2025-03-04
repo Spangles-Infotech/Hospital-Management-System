@@ -21,6 +21,10 @@ const inventory = async(req,res,next)=>{
             await Inventory.findByIdAndUpdate(inventoryId, req.body)
             return sendMessage(res, 200, "Inventory Updated Successfully")
         }
+        if(req.method === "DELETE"){
+            await Inventory.findByIdAndDelete(inventoryId)
+            return sendMessage(res, 200, "Inventory Deleted Successfully")
+        }
     } catch (error) {
         next(error)
     }

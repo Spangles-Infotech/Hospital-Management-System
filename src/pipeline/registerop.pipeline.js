@@ -27,8 +27,7 @@ const medicalReportPipeline = (appointmentId)=>{
                 vital:1,
             }
         }
-
-        ]
+    ]
 
 }
 

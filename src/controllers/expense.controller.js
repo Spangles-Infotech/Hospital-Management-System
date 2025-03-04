@@ -1,10 +1,12 @@
 const Expense = require("../models/expense.model")
-const { sendMessage } = require("../utils/function")
+const expensePipeline = require("../pipeline/expense.pipeline")
+const { sendMessage, skipPage } = require("../utils/function")
 
 const expense = async(req,res,next)=>{
     try {
         const {expenseId} = req.params
-        const balanceAmount = req.body?.totalAmount -  req.body?.paidAmount
+        const {page, limit=15} = req.query
+        const balanceAmount = Number(req.body?.totalAmount) -  Number(req.body?.paidAmount)
         let paymentStatus = "Paid"
         if(balanceAmount > 0){
             paymentStatus = "Unpaid"
@@ -20,7 +22,7 @@ const expense = async(req,res,next)=>{
                 if(!expense) return sendMessage(res, 404, "Expense not Found")
                 return sendMessage(res, 200, "Expense Fetched Successfully", expense)
         }
-            const expenses = await Expense.find(expenseId)
+            const expenses = await Expense.find(expenseId).sort({_id:-1}).limit(limit).skip(skipPage(page,limit))
             return sendMessage(res, 200, "Expenses Fetched Successfully", expenses)
         }
         if(req.method === "PUT"){
@@ -41,4 +43,15 @@ const expense = async(req,res,next)=>{
     }
 }
 
-module.exports = expense
+const getExpenseDetails = async(req,res,next)=>{
+    try {
+        const data = await Expense.aggregate(expensePipeline())
+        return sendMessage(res, 200, "Expense Details Fetched Successfully", data[0])
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+
+module.exports = {expense, getExpenseDetails}

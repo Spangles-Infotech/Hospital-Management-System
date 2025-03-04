@@ -4,8 +4,8 @@ const expenseSchema = mongoose.Schema({
     date:Date,
     category:String,
     subCateogry:String,
-    totalAmount:String,
-    balanceAmount:String,
+    totalAmount:Number,
+    balanceAmount:Number,
     description:String,
     status:{
         type:String,

@@ -1,5 +1,10 @@
 const mongoose = require("mongoose")
 
+const diagnosisSchema = new mongoose.Schema({
+    type: { type: String, required: true },
+    description: { type: String }
+});
+
 const medicalReportSchema = mongoose.Schema({
     patient:{
         type:mongoose.Schema.Types.ObjectId,
@@ -23,23 +28,23 @@ const medicalReportSchema = mongoose.Schema({
         index:true
         
     },
-    diagnosis:[
-        {
-            type:String,
-            description:String
-        }
-    ],
-    tabTests:[
+    diagnosis:[diagnosisSchema],
+    labTests:[
         {
             testName:String,
             description:String
         }
     ],
-   
+    otherReports:[
+        {
+            testName:String,
+            consultedDoctor:String
+        }
+    ],
     otherServices:[
         {
             serviceName:String,
-            fee:String
+            fee:Number
         }
     ],
     vital:{
