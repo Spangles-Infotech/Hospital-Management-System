@@ -61,7 +61,7 @@ const stocks = async(req,res,next)=>{
                 const stock = await Stock.findById(stockId)
                 return sendMessage(res, 200, "Data Fetched Successfully", stock)
             }
-            const stocks  = await Stock.find(query).sort({_id:-1}).limit(limit).skip(skipPage(page, limit))
+            const stocks  = await Stock.find(query).limit(limit).skip(skipPage(page, limit))
             const total = await Stock.countDocuments(query)
             return sendMessage(res, 200, "Data Fetched Successfully", stocks, total)
         }
@@ -205,7 +205,7 @@ const purchase = async(req,res, next)=>{
                 const transformedPurchase = transformPurchaseData(purchase)
                 return sendMessage(res, 200, "Data Fetched Successfully", transformedPurchase);
             }
-            const purchases = await Purchase.find(query).select(["orderNumber", "invoiceNumber", "purchaseDate", "supplierName"]).populate("medicineInfo", "totalQuantity").populate("paymentInfo", "netAmount").sort({_id:-1}).limit(limit).skip(skipPage(page, limit))
+            const purchases = await Purchase.find(query).select(["orderNumber", "invoiceNumber", "purchaseDate", "supplierName"]).populate("medicineInfo", "totalQuantity").populate("paymentInfo", "netAmount").limit(limit).skip(skipPage(page, limit))
             const total = await Purchase.countDocuments(query)
             return sendMessage(res, 200, "Data fetched Succesfully", purchases, total)
         }
