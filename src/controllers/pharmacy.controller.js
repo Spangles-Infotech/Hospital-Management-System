@@ -205,7 +205,7 @@ const purchase = async(req,res, next)=>{
                 const transformedPurchase = transformPurchaseData(purchase)
                 return sendMessage(res, 200, "Data Fetched Successfully", transformedPurchase);
             }
-            const purchases = await Purchase.find(query).select(["orderNumber", "invoiceNumber", "purchaseDate", "supplierName"]).populate("medicineInfo", "totalQuantity").populate("paymentInfo", "netAmount").sort({_id:-1}).limit(limit).skip(skipPage(page, limit))
+            const purchases = await Purchase.find(query).select(["orderNumber", "invoiceNumber", "purchaseDate", "supplierName"]).populate("medicineInfo", "totalQuantity").populate("paymentInfo", "netAmount").limit(limit).skip(skipPage(page, limit))
             const total = await Purchase.countDocuments(query)
             return sendMessage(res, 200, "Data fetched Succesfully", purchases, total)
         }
@@ -285,7 +285,6 @@ const tags = async (req, res, next) => {
             if (packsCategory) newTag.packs = [{ title: packsCategory }];
             if (gstCategory || gstCategory === 0) newTag.gst = [{ title: gstCategory }];
             if (strengthCategory) newTag.strength = [{ title: strengthCategory }];
-
             if (Object.keys(newTag).length > 0) {
                 await Tag.create(newTag);
                 return sendMessage(res, 201, "Data Added Successfully");
