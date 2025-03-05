@@ -12,13 +12,13 @@ import { useFetchData } from '../../hooks/useFetchData'
 const Doctor = () => {
 
 
-    const{data,isLoading} = useFetchData("/get-all-doctor")
+    const{data,isLoading, fetchData:refetch} = useFetchData("/get-all-doctor")
     const {openModal} = useModal()
     
     const btnData = [
         {
             name:"New Doctor",
-            onClick : ()=>{ openModal(FormModal, {title:"New Doctor", formField:doctorFields})}
+            onClick : ()=>{ openModal(FormModal, {title:"New Doctor", formField:doctorFields, refetch:refetch, name:"/add-doctor"})}
         }
     ]
 
@@ -30,7 +30,9 @@ const Doctor = () => {
                 {
                     name:"eye",
                     title:"View Doctor",
-                    onClick:(id)=>{ openModal(PreviewModal, {title:"Doctor Details", previewFields:doctorPreviewField , data:previewData}, `/get-doctor/${id}`)}
+                    onClick:(id)=>{ 
+                        openModal(PreviewModal, {title:"Doctor Details", previewFields:doctorPreviewField , data:previewData}, `/get-doctor/${id}`)
+                    }
                 },
                 {
                     name:"edit",
@@ -49,7 +51,7 @@ const Doctor = () => {
   return (
     <section className='p-4'>
         <TableHeader title={"Doctor"} buttonData={btnData} />
-        <Table tableHead={doctorTableHeading} tableValue={data} actionData={actionData} isLoading={isLoading} />
+        <Table tableHead={doctorTableHeading} tableValue={data} actionData={actionData} isLoading={isLoading} isDoc={true} />
         <Pagination />
     </section>
   )

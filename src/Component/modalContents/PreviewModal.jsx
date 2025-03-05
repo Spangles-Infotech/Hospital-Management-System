@@ -27,7 +27,7 @@ const PreviewModal = ({ title, previewFields, data }) => {
                   {item.title}:
                 </p>
                 <p className={` text-[18px] font-[600] ${item.title === "Designation" ? "text-[#740058]" : "text-green-500"}`}>
-                  {data?.[item?.name]}
+                  {item.isNested ? data?.[item?.name1]?.[item?.name2] : data?.[item?.name]}
                 </p>
               </div>
             ))}
@@ -56,7 +56,7 @@ const PreviewModal = ({ title, previewFields, data }) => {
                       {field.label}
                     </p>
                     <p className={`w-[50%] ${field.name === "bloodgroup" ? "text-[#00BE5F]" : "text-secondaryBlue"} text-[16px] font-[600] `}>
-                      {data[field.name]}
+                      { field.isDoubleNested ? data?.[field.name1]?.[field.name2]?.[field.name3] : field.isNested ? data?.[field.name1]?.[field.name2] : data[field.name]}
                     </p>
                   </div>
                 ))

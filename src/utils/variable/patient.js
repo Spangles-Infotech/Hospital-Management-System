@@ -188,7 +188,9 @@ export const patientPreviewField = [
         fields:[
             {
                 label:"Patient Name",
-                name:"doctorName"
+                name1:"patientName",
+                name2:"title",
+                isNested:true
             },
             {
                 label:"Address",
@@ -200,7 +202,9 @@ export const patientPreviewField = [
             },
             {
                 label:"Phone Number",
-                name:"phoneNumber"
+                name1:"mobileNumber",
+                name2:"number",
+                isNested:true
             },
             {
                 label:"Gender",
@@ -211,8 +215,8 @@ export const patientPreviewField = [
                 name:"bloodGroup"
             },
             {
-                label:"Baby of",
-                name:"babyOf"
+                label:"Patient Type",
+                name:"patientType"
             }
         ],
         image:{

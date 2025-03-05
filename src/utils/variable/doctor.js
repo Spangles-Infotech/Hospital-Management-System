@@ -107,7 +107,7 @@ export const doctorFields = [
             label:"Upload Photo",
             name:"photo",
             type:"file",
-            title:"Upload Image"
+            title:"Upload Image",
         }
     ],
     {
@@ -230,46 +230,68 @@ export const doctorPreviewField = [
         head:[
             {
                 title:"Doctor Id",
-                name:"doctorId"
+                name1:"userId",
+                name2:"id",
+                isNested:true
             },
             {
                 title:"Designation",
-                name:"designation"
+                name1:"userId",
+                name2:"designation",
+                isNested:true
             },
         ],
         fields:[
-            {
+        {
             label:"Doctor Name",
-            name:"doctorName"
-            },
-            {
+            name1:"userId",
+            name2:"name",
+            isNested:true
+        },
+        {
             label:"Address",
-            name:"address"
-            },
-            {
+            name2:"address",
+            name1:"userId",
+            isNested:true
+        },
+        {
             label:"Age",
-            name:"age"
-            },
-            {
+            name1:"userId",
+            name2:"age",
+            isNested:true
+        },
+        {
             label:"Phone Number",
-            name:"phoneNumber"
-            },
-            {
+            name1:"userId",
+            name2:"mobileNumber",
+            name3:"number",
+            isDoubleNested:true
+        },
+        {
             label:"Gender",
-            name:"gender"
-            },
-            {
+            name1:"userId",
+            name2:"gender",
+            isNested:true
+        },
+        {
             label:"Alternate Mobile Number",
-            name:"alternateMobileNumber"
-            },
-            {
+            name1:"userId",
+            name2:"alternateMobileNumber",
+            name3:"number",
+            isDoubleNested:true
+        },
+        {
             label:"Blood Group",
-            name:"bloodGroup"
-            }
+            name1:"userId",
+            name2:"bloodGroup",
+            isNested:true,
+        }
         ],
        
         image:{
-            name:"doctorImage"
+            name1:"userId",
+            name2:"photo",
+            isNested:true
         }
 
     }

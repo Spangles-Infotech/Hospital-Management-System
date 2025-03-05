@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-export const ToolTip = ({ data, children, isGap=false, name }) => {
+export const ToolTip = ({ data, children, isGap=false, name, id}) => {
 
     const [showTooltip, setShowTooltip] = useState(false);
 
@@ -19,7 +19,7 @@ export const ToolTip = ({ data, children, isGap=false, name }) => {
                 {
                     data?.map((item, index)=>(
                         <>
-                            <div className='flex gap-[15px]' onClick={()=> item.onClick()}>
+                            <div className='flex gap-[15px]' onClick={()=> item.onClick(id)}>
                                 <img src={require(`../../assests/${item.name}.png`)} alt={`${item.name}Icon`} className='size-[20px] object-contain'/>
                                 <p className={`${item.name === "inactive" ? "text-[#E72546]" : "text-[#505050]"} font-[400] text-[16px]`}>{item.title}</p>
                             </div>

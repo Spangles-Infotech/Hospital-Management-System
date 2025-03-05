@@ -13,6 +13,7 @@ export const Table = ({
   actionData,
   isLoading = false,
   isBlue = false,
+  isDoc = false
 }) => {
   return (
     <table
@@ -90,7 +91,7 @@ export const Table = ({
                   <Action
                     key={index}
                     path={item.path}
-                    id={val?._id}
+                    id={ isDoc ? val?.userId?._id :val?._id}
                     actionData={actionData}
                   />
                 )
