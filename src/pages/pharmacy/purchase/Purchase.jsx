@@ -7,16 +7,20 @@ import { useFetchData } from '../../../hooks/useFetchData'
 import { Pagination } from '../../../Component/common/Pagination'
 import { useForm } from '../../../context/FormContext'
 import { ITEMS_PER_PAGE } from '../../../utils/variable/dashboard'
+import { useModal } from '../../../context/ModalContext'
 
 const Purchase = () => {
 
   const navigate =useNavigate()
-  const {activePage} = useForm()
+  const {activePage, handleReset} = useForm()
   const {data, isLoading, error, total} = useFetchData("/get-all-purchase",`page=${activePage}&limit=${ITEMS_PER_PAGE}`)
   const btnData = [
     {
       name:"New Purchase",
-      onClick: ()=> navigate("add-form")
+      onClick: ()=>{ 
+        navigate("add-form")
+        handleReset()
+      }
     }
   ]
 

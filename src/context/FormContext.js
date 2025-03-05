@@ -197,7 +197,8 @@ export const FormProvider = ({ children }) => {
         hsnCode: medicineData?.hsnCode,
         medicineCategory: medicineData?.category,
         gst:medicineData?.gst,
-        packValue:medicineData?.pack?.value
+        packValue:medicineData?.pack?.value,
+        unit:medicineData.unit
       };
       updatedFormData[title] = updatedRow;
       return updatedFormData;
