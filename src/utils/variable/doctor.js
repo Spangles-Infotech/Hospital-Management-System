@@ -1,13 +1,15 @@
+import { editFormField } from "./expense"
+
 export const doctorFields = [
     [
         {
             label:"Doctor ID",
-            name:"doctorId",
+            name:"id",
             type:"text"
         },
         {
             label:"Doctor Name",
-            name:"doctorName",
+            name:"name",
             type:"text"
         }
     ],
@@ -21,7 +23,7 @@ export const doctorFields = [
             label:"Mobile Number",
             options:["+91", "+92", "+93"],
             name:"mobileNumber",
-            dropdownName:"countryCode",
+            dropdownName:"code",
             type:"inputdropdown",
             inputName:"number",
 
@@ -128,12 +130,12 @@ export const doctorFields = [
             },
             {
                 label: "From",
-                name: "fromTime",
+                name: "startTime",
                 type: "time"
             },
             {
                 label: "To",
-                name: "toTime",
+                name: "endTime",
                 type: "time"
             }
         ]
@@ -296,6 +298,149 @@ export const doctorPreviewField = [
 
     }
 
+]
+
+
+export const editDocterPreview =  [
+    [
+        {
+            label:"Doctor ID",
+            name:"id",
+            type:"text"
+        },
+        {
+            label:"Doctor Name",
+            name:"name",
+            type:"text"
+        }
+    ],
+    [
+        {
+            label:"Father's Name",
+            name:"fatherName",
+            type:"text"
+        },
+        {
+            label:"Mobile Number",
+            options:["+91", "+92", "+93"],
+            name:"mobileNumber",
+            dropdownName:"code",
+            type:"inputdropdown",
+            inputName:"number",
+
+        },
+        
+    ],
+    [
+        [
+            {
+                label:"Date of Birth",
+                name:"dob",
+                type:"date"
+            },
+            {
+                label:"Age",
+                name:"age",
+                type:"text"
+            }
+        ],
+        {
+            label:"Gender",
+            name:"gender",
+            options:["Male", "Female", "Other"],
+            type:"radio"
+        }
+    ],
+    [
+        {
+            label:"Blood Group",
+            name:"bloodGroup",
+            options:["A+", "A-", "B+", "B-", "AB+", "AB-"],
+            type:"select"
+        },
+        {
+            label:"Alternate Mobile Number",
+            options:["+91", "+92", "+93"],
+            name:"alternateMobileNumber",
+            dropdownName:"countryCode",
+            type:"inputdropdown",
+            inputName:"number",
+
+        },
+    ],
+    [
+        {
+            label:"Pincode",
+            name:"pincode",
+            type:"text"
+        },
+        {
+            label:"State",
+            name:"state",
+            options:["Maharashtra", "Gujarat", "Rajasthan"],
+            type:"select"
+        },
+    ],
+    [
+        {
+            label:"District",
+            name:"district",
+            options:["Maharashtra", "Gujarat", "Rajasthan"],
+            type:"select"
+        },
+        {
+            label:"City",
+            name:"city",
+            type:"text"
+        },
+    ],
+    {
+        label:"Address",
+        name:"address",
+        type:"textarea"
+    },
+    [
+        {
+            label:"Designation",
+            name:"designation",
+            type:"select",
+            options:["Dermatalogiet", "Cardiologist"]
+        },
+        {
+            label:"Upload Photo",
+            name:"photo",
+            type:"file",
+            title:"Upload Image",
+        }
+    ],
+    {
+        label: "Timing",
+        name:"timing",
+        type: "dynamic",
+        field: [
+            {
+                label: "Day",
+                name: "day",
+                type: "text",
+            },
+            {
+                label: "Status",
+                name: "status",
+                type: "select",
+                options: ["Working", "Off"]
+            },
+            {
+                label: "From",
+                name: "startTime",
+                type: "time"
+            },
+            {
+                label: "To",
+                name: "endTime",
+                type: "time"
+            }
+        ]
+    }
 ]
 
 export const previewData = {

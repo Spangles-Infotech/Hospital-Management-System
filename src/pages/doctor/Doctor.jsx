@@ -2,7 +2,7 @@ import React from 'react'
 import { TableHeader } from '../../Component/common/Table/TableHeader'
 import { Table } from '../../Component/common/Table/Table'
 import { Pagination } from '../../Component/common/Pagination'
-import { doctorFields, doctorPreviewField, doctorTableHeading, doctorTableValue, previewData } from '../../utils/variable/doctor'
+import { doctorFields, doctorPreviewField, doctorTableHeading, doctorTableValue, previewData,editDocterPreview } from '../../utils/variable/doctor'
 import { useModal } from '../../context/ModalContext'
 import { FormModal } from '../../Component/modalContents/FormModal'
 import PreviewModal from '../../Component/modalContents/PreviewModal'
@@ -30,14 +30,17 @@ const Doctor = () => {
                 {
                     name:"eye",
                     title:"View Doctor",
-                    onClick:(id)=>{ 
-                        openModal(PreviewModal, {title:"Doctor Details", previewFields:doctorPreviewField , data:previewData}, `/get-doctor/${id}`)
+                    onClick: (id)=>{ 
+                        console.log("edit docter id",id)
+                        openModal(PreviewModal, {title:"Doctor Details", previewFields:doctorPreviewField},`/get-doctor/${id}`)
                     }
                 },
                 {
                     name:"edit",
                     title:"Edit",
-                    onClick:()=>{console.log("edit clicked")}
+                    onClick:(id)=>{
+                        console.log("edit docter id",id)
+                        openModal(FormModal,{title:"enter docter",formField:editDocterPreview,refetch:refetch,isEdit:true,name:`/update-doctor/${id}`,id:id,getRoute:`/get-doctor/${id}`})}
                 },
                 {
                     name:"inactive",
