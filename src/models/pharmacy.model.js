@@ -76,7 +76,8 @@ const TagsSchema = mongoose.Schema({
     ],
     packs:[
         {
-            title:String
+            title:String,
+            unit:Number
         }
     ],
     gst:[

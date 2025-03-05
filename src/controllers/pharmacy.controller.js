@@ -91,10 +91,13 @@ const getMedicineDetails = async (req, res, next) => {
         }
         const result = await Stock.findOne({ productName: medicineName })
         .select(["category", "gst","productCode", "totalQuantity", "hsnCode", "pack"]);
+        const unit = await Tag.findOne({"packs.title":result.pack}).distinct("packs.unit")
         if (!result) {
             return sendMessage(res, 404, "Medicine not found");
         }
-        return sendMessage(res, 200, "Data Fetched Successfully", result);
+        console.log("unit", unit)
+        const response = {...result.toObject(), unit:unit[0]}
+        return sendMessage(res, 200, "Data Fetched Successfully", response);
     } catch (error) {
         next(error);
     }
@@ -282,7 +285,7 @@ const tags = async (req, res, next) => {
             const newTag = {};
 
             if (medicineCategory) newTag.category = [{ title: medicineCategory }];
-            if (packsCategory) newTag.packs = [{ title: packsCategory }];
+            if (packsCategory) newTag.packs = [{ title: packsCategory }, {unit: req.body.unit}];
             if (gstCategory || gstCategory === 0) newTag.gst = [{ title: gstCategory }];
             if (strengthCategory) newTag.strength = [{ title: strengthCategory }];
             if (Object.keys(newTag).length > 0) {
