@@ -46,4 +46,12 @@ const skipPage = (page,limit)=>{
     return limit * (page - 1)
 }
 
-module.exports = {sendMessage, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage}
+const doctorNumber = (count)=>{
+    return `DOC-${formatCount(count)}`
+}
+const patientNumber = (count)=>{
+    return `PAT-${formatCount(count)}`
+}
+
+
+module.exports = {sendMessage, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage, doctorNumber, patientNumber}

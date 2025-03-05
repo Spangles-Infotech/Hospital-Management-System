@@ -30,3 +30,5 @@ const staff = async(req,res,next)=>{
         next(error)
     }
 }
+
+module.exports = staff

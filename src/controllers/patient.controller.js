@@ -1,5 +1,5 @@
 const Patient = require("../models/patient.model")
-const { sendMessage } = require("../utils/function")
+const { sendMessage, skipPage } = require("../utils/function")
 
 const patient = async(req, res, next)=>{
     const additionalInfo = {
@@ -8,7 +8,9 @@ const patient = async(req, res, next)=>{
         birthWeight: req.body.birthWeight,
     }
     const {patientId} = req.params
+    const {page, limit=15} = req.query
     const {id, mobileNumber} =  req.query
+    let query = {}
     try {
         if(req.method === "POST"){
             await Patient.create({...req.body, additionalInfo:additionalInfo})
@@ -29,7 +31,7 @@ const patient = async(req, res, next)=>{
                 }
                 return sendMessage(res, 200, "Patient fetched Successfully", patient)
             }
-            const patients = await Patient.find()
+            const patients = await Patient.find(query).sort({_id:-1}).limit(limit).skip(skipPage(page, limit))
             return sendMessage(res, 200, "Patients fetched Successfully", patients)
         }
         if(req.method === "PUT"){

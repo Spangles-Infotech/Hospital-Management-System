@@ -1,11 +1,11 @@
 const express = require("express")
-const Staff = require("../models/staff.model")
+const staff = require("../controllers/staff.controller")
 
 const staffRouter = express.Router()
 
-staffRouter.get("/get-all-staff", Staff)
-staffRouter.get("/get-staff/:userId", Staff)
-staffRouter.post("/add-staff", Staff)
-staffRouter.put("/update-staff/:userId", Staff)
+staffRouter.get("/get-all-staff", staff)
+staffRouter.get("/get-staff/:userId", staff)
+staffRouter.post("/add-staff", staff)
+staffRouter.put("/update-staff/:userId", staff)
 
 module.exports = staffRouter
