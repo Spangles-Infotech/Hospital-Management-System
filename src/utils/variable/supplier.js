@@ -254,7 +254,7 @@ export const supplierPurchasePreviewField = [
     name:"supplierPhoneNumber"
   },
   {
-    label:"PurchasedDate",
+    label:"Invoice Date",
     name:"purchaseDate"
   }
 ]
