@@ -9,13 +9,13 @@ import { useForm } from '../../../context/FormContext'
 import { AddIcon } from '../../../icons/AddIcon'
 import { useSidebarModal } from '../../../context/SidebarContext'
 import { useStock } from '../../../hooks/useStock'
-import { cateegoryFormField } from '../../../utils/variable/stock'
 
 const PurchaseForm = ({isEdit=false}) => {
 
   const {id} = useParams()
+  const {data:medicineNameData, fetchData:refetch} = useFetchData("/get-all-medicine-name")
   const {setFormData, formData, currentMedicalIndex, getHistoryWithMedicineName} = useForm()
-  const {stockFormField, medicineNameData, categoryData} = useStock()
+  const {stockFormField, categoryData} = useStock()
   const {openSidebarModal} = useSidebarModal()
   const {handleBackToPurchase, handleSavePurchase,getOrderId, NewPurchaseField} = usePurchase()
   const tableHeader =[ "MEDICINE NAME", "HSN", "MEDICINE CATEGORY", "BATCH NO.", "EXP DATE", "QTY","FREE", "UNIT","T.QTY", "P.RATE", "MRP", "DIS%", "GST%", "AMOUNT"]
@@ -36,7 +36,6 @@ const PurchaseForm = ({isEdit=false}) => {
     {label:"", name:"gst", "type":"number"},
     {label:"", name:"amount","type":"number"}
   ]
-  
   const {data, isLoading, error} = useFetchData( id ? `/get-purchase/${id}`: null)
 
   useEffect(()=>{
@@ -68,7 +67,7 @@ const PurchaseForm = ({isEdit=false}) => {
       <div className='flex justify-end mt-5'>
         <div
             role="button" 
-            onClick={()=>openSidebarModal(stockFormField, false)}
+            onClick={()=>openSidebarModal(stockFormField, false, "", refetch)}
             className="flex flex-row gap-1 items-center px-3 py-1 h-[30px] 2xl:h-[35px] border border-primary text-white transition-all duration-500 bg-primary rounded text-sm space-x-2 hover:bg-white hover:text-primary fill-white focus:ring-4 focus:ring-teal-200 cursor-pointer hover:fill-primary"
         >
             <AddIcon /> 

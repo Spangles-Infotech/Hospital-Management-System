@@ -13,7 +13,6 @@ export const useStock = () => {
     const {data:strengthData, fetchData:strengthRefetch} = useFetchData('/get-tags?tag=strengthCategory')
     const {data:packsData, fetchData:packRefetch} = useFetchData('/get-tags?tag=packsCategory')
     const {data:gstData, fetchData:gstRefetch} = useFetchData('/get-tags?tag=gstCategory')
-    const {data:medicineNameData} = useFetchData("/get-all-medicine-name")
 
     const stockButtonData = [
         {
@@ -61,6 +60,6 @@ export const useStock = () => {
 
 
   return {
-    stockButtonData, stockActionData, getProductCode, stockFormField, medicineNameData, categoryData, strengthData, packsData, gstData
+    stockButtonData, stockActionData, getProductCode, stockFormField, categoryData, strengthData, packsData, gstData
   }
 }

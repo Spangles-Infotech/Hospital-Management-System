@@ -29,10 +29,11 @@ export const SidebarModal = ({isOpen, onClose, formField, isEdit,id, refetch}) =
             response = await postData(formData)
         }
         if(response === 200 || response === 201){
-            // if(refetch)refetch()
+            if(refetch)refetch()
             onClose()
             handleReset()
             setFormData(() => ({}));
+            window.location.reload();
         }
     }
 

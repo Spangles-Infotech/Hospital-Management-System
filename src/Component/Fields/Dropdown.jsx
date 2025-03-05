@@ -17,7 +17,7 @@ export const Dropdown = ({ value, onChange, label, options, isIndexIsValue=false
           </label>
           {
             isAdd &&
-            <p onClick={()=>{openModal(FormModal, {title:title, formField:fields, name:route, refetch:refetch})}} className="text-primary cursor-pointer">{` + ${label}`}</p>
+            <p onClick={()=>{openModal(FormModal, {title:title, formField:fields, name:route, refetch:refetch, label:name})}} className="text-primary cursor-pointer">{` + ${label}`}</p>
           }
         </div>
       }
