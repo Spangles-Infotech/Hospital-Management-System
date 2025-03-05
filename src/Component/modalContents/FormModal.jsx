@@ -18,7 +18,7 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label}
     if (!formData) return;
     const response = isEdit ? await updateData(formData) : await postData(formData);
     if ([200, 201].includes(response)) {
-      refetch?.();
+      if(refetch)refetch();
       closeModal();
       if (!notToReset.includes(title)){ 
         handleReset()

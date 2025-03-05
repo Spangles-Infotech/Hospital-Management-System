@@ -19,7 +19,7 @@ export const useStock = () => {
     const stockButtonData = [
         {
           name:"New Stock",
-          onClick: ()=>{openSidebarModal(stockEditFormField, false)}
+          onClick: ()=>{openSidebarModal(stockEditFormField, false,)}
         }
     ]
     const addStockButtonData = [
@@ -27,7 +27,7 @@ export const useStock = () => {
           name:"New Stock",
           onClick: ()=>{
             handleReset()
-            openSidebarModal(stockEditFormField, false)
+            openSidebarModal(stockEditFormField, false, "", null, true)
           }
         }
     ]
@@ -55,7 +55,7 @@ export const useStock = () => {
     const stockFormField = [
       [{ label: "Product Code", name: "productCode", type: "text" }, { label: "Product Name", name: "productName", type: "text" }],
       [{ label: "Generic Name", name: "genericName", type: "searchDropdown", options:data }, { label: "HSN Code", name: "hsnCode", type: "text" }],
-      [{label: "Category",name: "category",type: "select",options: categoryData,isAdd:true, fields:tagFormFields["medicine"], title:"Add Category", route:"/add-tags", refetch:refetch},{label: "Strength",name: "strength",type: "select",options: strengthData,isAdd:true, fields:tagFormFields["strength"], title:"Add Strength", route:"/add-tags", refetch:strengthRefetch}],
+      [{label: "Category",name: "category",type: "select",options: categoryData,isAdd:true, fields:tagFormFields["medicine"], title:"Add Category", route:"/add-tags", refetch:refetch},{label: "Strength",name: "strength",type: "select",options:strengthData, isAdd:true, fields:tagFormFields["strength"], title:"Add Strength", route:"/add-tags", refetch:strengthRefetch}],
       [{ label: "Pack", name: "pack", type: "select", options: packsData, isAdd:true, fields:tagFormFields["pack"], title:"Add Packs", route:"/add-tags", refetch:packRefetch  },{ label: "Low Stock", name: "lowStock", type: "number" }],
       [{ label: "Gst", name: "gst", type: "select", options: gstData, isAdd:true, fields:tagFormFields["gst"], title:"Add GST %", route:"/add-tags", refetch:gstRefetch  },{label: "Expire Alert",name:"expireAlert", options: ["months", "weeks", "days"], inputName: "count", inputType:"number", dropdownName: "duration", type: "inputdropdown", align:"right"}],
     ];
@@ -72,6 +72,6 @@ export const useStock = () => {
 
 
   return {
-    stockButtonData, stockActionData, getProductCode, stockFormField, categoryData, strengthData, packsData, gstData, addStockButtonData
+    stockButtonData, stockActionData, getProductCode, stockFormField, categoryData, strengthData, packsData, gstData, addStockButtonData, stockEditFormField
   }
 }
