@@ -125,7 +125,7 @@ const supplier = async(req,res,next)=>{
                 }
                 return sendMessage(res, 200, "Data Fetched Successfully", supplier)
             }
-            const suppliers = await Supplier.find(query).sort({_id:-1}).limit(limit).skip(skipPage(page, limit))
+            const suppliers = await Supplier.find(query).limit(limit).skip(skipPage(page, limit))
             const total = await Supplier.countDocuments(query)
             return sendMessage(res, 200, "Data Fetched Successfully", suppliers, total)
         }
@@ -205,7 +205,7 @@ const purchase = async(req,res, next)=>{
                 const transformedPurchase = transformPurchaseData(purchase)
                 return sendMessage(res, 200, "Data Fetched Successfully", transformedPurchase);
             }
-            const purchases = await Purchase.find(query).select(["orderNumber", "invoiceNumber", "purchaseDate", "supplierName"]).populate("medicineInfo", "totalQuantity").populate("paymentInfo", "netAmount").limit(limit).skip(skipPage(page, limit))
+            const purchases = await Purchase.find(query).select(["orderNumber", "invoiceNumber", "purchaseDate", "supplierName"]).populate("medicineInfo", "totalQuantity").populate("paymentInfo", "netAmount").sort({_id:-1}).limit(limit).skip(skipPage(page, limit))
             const total = await Purchase.countDocuments(query)
             return sendMessage(res, 200, "Data fetched Succesfully", purchases, total)
         }
