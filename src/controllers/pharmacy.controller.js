@@ -90,14 +90,11 @@ const getMedicineDetails = async (req, res, next) => {
             return sendMessage(res, 400, "Medicine name is required");
         }
         const result = await Stock.findOne({ productName: medicineName })
-        .select(["category", "gst","productCode", "totalQuantity", "hsnCode", "pack"]);
-        const unit = await Tag.findOne({"packs.title":result.pack}).distinct("packs.unit")
+        .select(["category", "gst","productCode", "totalQuantity", "hsnCode", "pack", "unit"]);
         if (!result) {
             return sendMessage(res, 404, "Medicine not found");
         }
-        console.log("unit", unit)
-        const response = {...result.toObject(), unit:unit[0]}
-        return sendMessage(res, 200, "Data Fetched Successfully", response);
+        return sendMessage(res, 200, "Data Fetched Successfully", result);
     } catch (error) {
         next(error);
     }
@@ -279,13 +276,13 @@ const getPurchaseDetailsByMedicineName = async(req,res, next) => {
 const tags = async (req, res, next) => {
     try {
         const { tag } = req.query;
-        const { medicineCategory, packsCategory, gstCategory, strengthCategory } = req.body;
+        const { medicineCategory, unitsCategory, gstCategory, strengthCategory } = req.body;
 
         if (req.method === "POST") {
             const newTag = {};
 
             if (medicineCategory) newTag.category = [{ title: medicineCategory }];
-            if (packsCategory) newTag.packs = [{ title: packsCategory }, {unit: req.body.unit}];
+            if (unitsCategory) newTag.unit = [{title: unitsCategory}];
             if (gstCategory || gstCategory === 0) newTag.gst = [{ title: gstCategory }];
             if (strengthCategory) newTag.strength = [{ title: strengthCategory }];
             if (Object.keys(newTag).length > 0) {
@@ -300,13 +297,14 @@ const tags = async (req, res, next) => {
             let field = "";
 
             if (tag === "medicineCategory") field = "category.title";
-            if (tag === "packsCategory") field = "packs.title";
+            if (tag === "unitsCategory") field = "unit.title";
             if (tag === "gstCategory") field = "gst.title";
             if (tag === "strengthCategory") field = "strength.title";
 
             if (!field) {
                 return sendMessage(res, 400, "Invalid tag parameter");
             }
+            console.log("fields", field)
             
             const data = await Tag.distinct(field)
 

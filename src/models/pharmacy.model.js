@@ -6,7 +6,7 @@ const stocksSchema = mongoose.Schema({
     genericName:String,
     category:String,
     hsnCode:String,
-    pack:String,
+    unit:Number,
     lowStock:Number,
     expireAlert:{
         count:Number,
@@ -74,10 +74,9 @@ const TagsSchema = mongoose.Schema({
             title:String
         }
     ],
-    packs:[
+    unit:[
         {
-            title:String,
-            unit:Number
+            title:Number
         }
     ],
     gst:[
