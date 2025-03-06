@@ -12,6 +12,7 @@ const RegisteredOP_1 = () => {
 
   const {openModal} = useModal()
   const {data, isLoading, refetch} = useRegisteredOp()
+
   console.log("data",data)
   
   const btnData=[
@@ -24,7 +25,7 @@ const RegisteredOP_1 = () => {
 const actionData=[
   {
     name:"Action1",
-    onClick:()=>{openModal(Vitals)}
+    onClick:()=>{openModal(Vitals,{title:"Add vitals",refetch:refetch,name:"/post-vitals"})}
   },
   {
     name:"Action2",

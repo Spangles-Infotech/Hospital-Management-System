@@ -33,7 +33,7 @@ const Vitals = () => {
   };
 
   return (
-    <section className='w-full h-[900px] overflow-y-scroll z-50'>
+    <section className='w-full h-[900px]'>
       <div className="bg-white  rounded-lg">
         <div className="flex justify-between items-center p-5">
           <p className="text-lg text-stone-700 font-semibold">Vitals</p>
@@ -53,7 +53,7 @@ const Vitals = () => {
                       onChange={handleChange}
                       className={`w-full h-[50px] outline-none border border-stone-300 rounded-lg px-2 text-stone-600 pr-12 ${name === "symptoms" ? "border-b-2 border-primary" : ""}`}
                     />
-                    {unit && <p className="absolute  text-stone-600 font-medium bg-stone-300 h-full w-[80px] justify-center text-center  right-0 rounded-lg">{unit}</p>}
+                    {unit && <p className="absolute flex   text-stone-600 font-medium bg-stone-300 h-full w-[80px] justify-center text-center  right-0 rounded-lg"><span className='mt-3 '>{unit}</span></p>}
                   </div>
                 </div>
               ))}

@@ -1,36 +1,50 @@
 export const TableHeading=[
     {
         name:"Token",
-        path:"token"
+        path2:"token"
     },
     {
         name:"Patient ID",
-        path:"patientId"
+        path1:"patientId",
+        path2:"patientId",
+        isNested:true
     },
 
     {
         name:"Patient Name",
-        path:"patientName"
+        path1:"patientId",
+        path2:"patientName",
+        path3:"name",
+        isDoubleNested:true
     },
 
     {
         name:"Age",
-        path:"age"
+        path1:"patientId",
+        path2:"age",
+        isNested:true
     },
 
     {
         name:"Gender",
-        path:"gender"
+        path1:"patientId",
+        path2:"gender",
+        isNested:true
     },
 
     {
         name:"Blood Group",
-        path:"bloodGroup"
+        path1:"patientId",
+        path2:"bloodGroup",
+        isNested:true
     },
 
     {
         name:"Phone Number",
-        path:"phoneNumber"
+        path1:"patientId",
+        path2:"mobileNumber",
+        path3:"number",
+        isDoubleNested:true
     },
 
     {
