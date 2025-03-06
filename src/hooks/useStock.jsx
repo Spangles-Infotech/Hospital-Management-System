@@ -13,7 +13,7 @@ export const useStock = () => {
     const {data} = useFetchData("/get-all-generic-name")
     const {data:categoryData, fetchData:refetch} = useFetchData('/get-tags?tag=medicineCategory')
     const {data:strengthData, fetchData:strengthRefetch} = useFetchData('/get-tags?tag=strengthCategory')
-    const {data:packsData, fetchData:packRefetch} = useFetchData('/get-tags?tag=packsCategory')
+    const {data:packsData, fetchData:packRefetch} = useFetchData('/get-tags?tag=unitsCategory')
     const {data:gstData, fetchData:gstRefetch} = useFetchData('/get-tags?tag=gstCategory')
 
     const stockButtonData = [
@@ -56,7 +56,7 @@ export const useStock = () => {
       [{ label: "Product Code", name: "productCode", type: "text" }, { label: "Product Name", name: "productName", type: "text" }],
       [{ label: "Generic Name", name: "genericName", type: "searchDropdown", options:data }, { label: "HSN Code", name: "hsnCode", type: "text" }],
       [{label: "Category",name: "category",type: "select",options: categoryData,isAdd:true, fields:tagFormFields["medicine"], title:"Add Category", route:"/add-tags", refetch:refetch},{label: "Strength",name: "strength",type: "select",options:strengthData, isAdd:true, fields:tagFormFields["strength"], title:"Add Strength", route:"/add-tags", refetch:strengthRefetch}],
-      [{ label: "Pack", name: "pack", type: "select", options: packsData, isAdd:true, fields:tagFormFields["pack"], title:"Add Packs", route:"/add-tags", refetch:packRefetch  },{ label: "Low Stock", name: "lowStock", type: "number" }],
+      [{ label: "Unit", name: "unit", type: "select", options: packsData, isAdd:true, fields:tagFormFields["pack"], title:"Add unit", route:"/add-tags", refetch:packRefetch  },{ label: "Low Stock", name: "lowStock", type: "number" }],
       [{ label: "Gst", name: "gst", type: "select", options: gstData, isAdd:true, fields:tagFormFields["gst"], title:"Add GST %", route:"/add-tags", refetch:gstRefetch  },{label: "Expire Alert",name:"expireAlert", options: ["months", "weeks", "days"], inputName: "count", inputType:"number", dropdownName: "duration", type: "inputdropdown", align:"right"}],
     ];
 
@@ -65,7 +65,7 @@ export const useStock = () => {
       [{ label: "Generic Name", name: "genericName", type: "searchDropdown", options:data }, { label: "HSN Code", name: "hsnCode", type: "text" }],
       [{ label: "Batch Number", name: "batchNumber", type:"text"}, { label: "Expiry Date", name: "expiryDate", type: "date" }],
       [{label: "Category",name: "category",type: "select",options: categoryData,isAdd:true, fields:tagFormFields["medicine"], title:"Add Category", route:"/add-tags", refetch:refetch},{label: "Strength",name: "strength",type: "select",options: strengthData,isAdd:true, fields:tagFormFields["strength"], title:"Add Strength", route:"/add-tags", refetch:strengthRefetch}],
-      [{ label: "Pack", name: "pack", type: "select", options: packsData, isAdd:true, fields:tagFormFields["pack"], title:"Add Packs", route:"/add-tags", refetch:packRefetch  },{ label: "Low Stock", name: "lowStock", type: "number" }],
+      [{ label: "Unit", name: "unit", type: "select", options: packsData, isAdd:true, fields:tagFormFields["pack"], title:"Add unit", route:"/add-tags", refetch:packRefetch  },{ label: "Low Stock", name: "lowStock", type: "number" }],
       [{label:"Purchase Price", name:"purchasePrice", type:"number"},{label:"Sales Price", name:"salesPrice", type:"number"}, {label:"Total Quantity", name:"totalQuantity", type:"number"}],
       [{ label: "Gst", name: "gst", type: "select", options: gstData, isAdd:true, fields:tagFormFields["gst"], title:"Add GST %", route:"/add-tags", refetch:gstRefetch  },{label: "Expire Alert",name:"expireAlert", options: ["months", "weeks", "days"], inputName: "count", inputType:"number", dropdownName: "duration", type: "inputdropdown", align:"right"}],
     ];

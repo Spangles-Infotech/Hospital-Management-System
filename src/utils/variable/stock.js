@@ -174,15 +174,10 @@ export const tagFormFields = {
   "pack":[
     [
       {
-          label:"title",
-          name:"packsCategory",
-          type:"string",
+          label:"",
+          name:"unitsCategory",
+          type:"number",
       },
-      {
-        label:"Unit",
-        name:"unit",
-        type:"number"
-      }
     ]
   ],
   "strength":[
