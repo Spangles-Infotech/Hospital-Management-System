@@ -63,7 +63,6 @@ const stocks = async(req,res,next)=>{
                 return sendMessage(res, 200, "Data Fetched Successfully", stock)
             }
             setQuery([], search, searchItems, query, from, to, "stockDate")
-            console.log("query", query)
             const stocks  = await Stock.find(query).limit(limit).skip(skipPage(page, limit))
             const total = await Stock.countDocuments(query)
             return sendMessage(res, 200, "Data Fetched Successfully", stocks, total)
