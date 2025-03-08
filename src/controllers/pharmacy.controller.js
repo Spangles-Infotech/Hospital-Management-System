@@ -4,7 +4,7 @@ const MedicineInfo = require("../models/medicineInfo.model")
 const PaymentInfo = require("../models/paymentInfo.model")
 const { Supplier, Purchase, Stock, Tag } = require("../models/pharmacy.model")
 const { getPurchaseHistoryPipeline } = require("../pipeline/pharmacy.pipeline")
-const { sendMessage, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage } = require("../utils/function")
+const { sendMessage, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage, setQuery } = require("../utils/function")
 
 
 
@@ -49,7 +49,8 @@ const prescription = async(req,res,next)=>{
 const stocks = async(req,res,next)=>{
     try {
         const {stockId} = req.params
-        const {page, limit=15} = req.query
+        const {page, limit=15, search, from, to,} = req.query
+        const searchItems = ["productName", "productCode", "hsnCode", "category"]
         const {productName} = req.body
         let query = {} 
         if(req.method === "POST"){
@@ -61,6 +62,8 @@ const stocks = async(req,res,next)=>{
                 const stock = await Stock.findById(stockId)
                 return sendMessage(res, 200, "Data Fetched Successfully", stock)
             }
+            setQuery([], search, searchItems, query, from, to, "stockDate")
+            console.log("query", query)
             const stocks  = await Stock.find(query).limit(limit).skip(skipPage(page, limit))
             const total = await Stock.countDocuments(query)
             return sendMessage(res, 200, "Data Fetched Successfully", stocks, total)
@@ -104,7 +107,8 @@ const getMedicineDetails = async (req, res, next) => {
 const supplier = async(req,res,next)=>{
     try {
         const {supplierId} = req.params
-        const {page, limit=15} = req.query
+        const {page, limit=15, search} = req.query
+        const searchItems = ["supplierId", "supplierName", "phoneNumber", "email"]
         let query = {}
         if(req.method === "POST"){
             await Supplier.create(req.body)
@@ -125,6 +129,7 @@ const supplier = async(req,res,next)=>{
                 }
                 return sendMessage(res, 200, "Data Fetched Successfully", supplier)
             }
+            setQuery([], search, searchItems, query)
             const suppliers = await Supplier.find(query).limit(limit).skip(skipPage(page, limit))
             const total = await Supplier.countDocuments(query)
             return sendMessage(res, 200, "Data Fetched Successfully", suppliers, total)
@@ -166,9 +171,10 @@ const getAllSupplierName = async(req,res,next)=>{
 const purchase = async(req,res, next)=>{
     try {
         let query = {}
-        const {page, limit} = req.query
+        const {page, limit=15, search, from, to,} = req.query
         const {medicines, netAmount, finalAmount, totalQuantity} = req.body
         const {purchaseId, supplierId} = req.params
+        const searchItems = ["orderNumber", "invoiceNumber", "purchaseDate", "supplierName"]
         if(req.method === "POST"){
             const medicine = await MedicineInfo.create({medicines:medicines, totalAmount:netAmount, totalQuantity:totalQuantity})
             const paymentInfo = await PaymentInfo.create(req.body)
@@ -195,9 +201,7 @@ const purchase = async(req,res, next)=>{
         }
         if(req.method === "GET"){
             if (purchaseId) {
-                const purchase = await Purchase.findById(purchaseId)
-                    .populate("medicineInfo")
-                    .populate("paymentInfo");
+                const purchase = await Purchase.findById(purchaseId).populate("medicineInfo").populate("paymentInfo");
             
                 if (!purchase) {
                     return sendMessage(res, 404, "Purchase not found");
@@ -205,6 +209,7 @@ const purchase = async(req,res, next)=>{
                 const transformedPurchase = transformPurchaseData(purchase)
                 return sendMessage(res, 200, "Data Fetched Successfully", transformedPurchase);
             }
+            setQuery([], search, searchItems, query, from, to, "date")
             const purchases = await Purchase.find(query).select(["orderNumber", "invoiceNumber", "purchaseDate", "supplierName"]).populate("medicineInfo", "totalQuantity").populate("paymentInfo", "netAmount").limit(limit).skip(skipPage(page, limit))
             const total = await Purchase.countDocuments(query)
             return sendMessage(res, 200, "Data fetched Succesfully", purchases, total)
@@ -304,8 +309,6 @@ const tags = async (req, res, next) => {
             if (!field) {
                 return sendMessage(res, 400, "Invalid tag parameter");
             }
-            console.log("fields", field)
-            
             const data = await Tag.distinct(field)
 
             return sendMessage(res, 200, "Data fetched successfully", data);

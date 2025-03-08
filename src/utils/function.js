@@ -46,4 +46,47 @@ const skipPage = (page,limit)=>{
     return limit * (page - 1)
 }
 
-module.exports = {sendMessage, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage}
+const searchQuery = (search, query, searchItems) => {
+    if (search && search !== "" && search !== undefined) {
+      query.$or = searchItems.map((item) => {
+        return { [item]: new RegExp(search, "i") };
+      });
+    }
+  };
+  
+//  funtion to set the date into query
+const dateQuery = (from, to, query = {}, title) => {
+    if (from && to) { 
+        if (title) {
+            query[title] = { $gte: new Date(from), $lte: new Date(to) };
+        } else {
+            query.registerOn = { $gte: new Date(from), $lte: new Date(to) };
+        }
+    }
+    return query; 
+};
+
+
+// funtion is used to set the filter thing with query variable
+const setQuery = (menus, search, searchItems, query, from, to, title) => {
+menus?.forEach((menu) => {
+    for (const key in menu) {
+    if (
+        menu.hasOwnProperty(key) &&
+        menu[key] !== undefined &&
+        key !== "" &&
+        menu[key] !== ""
+    ) {
+        return (query[key] = menu[key]);
+    }
+    }
+});
+if (from !== "" && to !== "" && from !== undefined && to !== undefined) {
+    dateQuery(from, to, query, title);
+}
+if (search && search !== "" && search !== undefined) {
+    searchQuery(search, query, searchItems);
+}
+};
+
+module.exports = {sendMessage, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage, setQuery, dateQuery, searchQuery}

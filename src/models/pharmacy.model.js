@@ -18,7 +18,11 @@ const stocksSchema = mongoose.Schema({
     expiryDate:Date,
     totalQuantity:Number,
     purchasePrice:Number,
-    salesPrice:Number
+    salesPrice:Number,
+    stockDate:{
+        type:Date,
+        default:Date.now
+    }
 })
 
 const supplierSchema = mongoose.Schema({
@@ -51,6 +55,10 @@ const purchaseSchema = mongoose.Schema({
     supplierPhoneNumber:String,
     invoiceNumber:String,
     deliveryDate:String,
+    date:{
+        type:Date,
+        default:Date.now
+    },
     medicineInfo:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"MedicineInfo",
