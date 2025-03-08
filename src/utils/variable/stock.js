@@ -26,7 +26,8 @@ export const stockTableHeading = [
 
   {
     name: "Stocked Date",
-    path: "stockedDate",
+    path: "stockDate",
+    date:true
   },
 
   {

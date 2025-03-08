@@ -10,8 +10,8 @@ import { ITEMS_PER_PAGE } from '../../../utils/variable/dashboard'
 
 const SupplierList = () => {
   const navigate = useNavigate()
-  const {activePage} = useForm()
-  const {data, isLoading, error, total} = useFetchData("/get-all-supplier", `page=${activePage}&limit=${ITEMS_PER_PAGE}`)
+  const {activePage, tableForm} = useForm()
+  const {data, isLoading, error, total} = useFetchData("/get-all-supplier", `page=${activePage}&limit=${ITEMS_PER_PAGE}&search=${tableForm?.search || ""}`)
 
   const btnData = [
     {

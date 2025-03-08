@@ -7,6 +7,7 @@ const FormContext = createContext();
 export const FormProvider = ({ children }) => {
   const ITEM_PER_PAGE = 15
   const [formData, setFormData] = useState({});
+  const [tableForm, setTableForm] = useState({})
   const [errors, setErrors] = useState({});
   const [medicineQuery, setMedicineQuery] = useState([]);
   const [currentMedicalIndex, setCurrentMedicalIndex] = useState(0);
@@ -14,10 +15,15 @@ export const FormProvider = ({ children }) => {
   const [activePage, setActivePage] = useState(1);
   const [historyData, setHistoryData] = useState([])
 
+  const handleTableFormChange = (e)=>{
+    const {name, value} = e.target
+    setTableForm(prevState => ({...prevState, [name]: value}))
+  }
+
   const handleChange = (e) => {
 
     const { name, type, checked, value } = e.target;
-    
+
     setFormData((prevFormData) => {
       const updatedFormData = { ...prevFormData, [name]: type === "checkbox" ? checked : value };
       if (name === "isRoundOff") {
@@ -86,6 +92,7 @@ export const FormProvider = ({ children }) => {
     setErrors({});
     setActivePage(1)
     setFormData(()=>{});
+    setTableForm({})
   };
 
   const handleTimingChange = (e, label, index) => {
@@ -216,7 +223,7 @@ export const FormProvider = ({ children }) => {
 
   return (
     <FormContext.Provider
-      value={{ errors, historyData, getHistoryWithMedicineName, formData, activePage, selectedUnit, ITEM_PER_PAGE, medicineQuery, currentMedicalIndex, handleReset, setFormData, handleChange, handleSubmit, setActivePage, handleTimingChange, updateMedicalDetail, handleInputDropDownChange, }}>
+      value={{ errors, historyData, tableForm, handleTableFormChange,  getHistoryWithMedicineName, formData, activePage, selectedUnit, ITEM_PER_PAGE, medicineQuery, currentMedicalIndex, handleReset, setFormData, handleChange, handleSubmit, setActivePage, handleTimingChange, updateMedicalDetail, handleInputDropDownChange, }}>
       {children}
     </FormContext.Provider>
   );

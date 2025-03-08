@@ -12,8 +12,8 @@ import { useModal } from '../../../context/ModalContext'
 const Purchase = () => {
 
   const navigate =useNavigate()
-  const {activePage, handleReset} = useForm()
-  const {data, isLoading, error, total} = useFetchData("/get-all-purchase",`page=${activePage}&limit=${ITEMS_PER_PAGE}`)
+  const {activePage, handleReset, tableForm} = useForm()
+  const {data, isLoading, error, total} = useFetchData("/get-all-purchase",`page=${activePage}&search=${tableForm?.search || ""}&from=${tableForm?.from || ""}&to=${tableForm?.to || ""}`)
   const btnData = [
     {
       name:"New Purchase",
