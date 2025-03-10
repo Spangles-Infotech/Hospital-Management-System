@@ -8,7 +8,6 @@ const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory
   
   const {formData, handleChange, historyData} = useForm()
   const paymentOptions = ["Cash", "Credit/Debit Card", "UPI", "Net Banking"]
-  
 
   return (
     <div className="mt-5">
@@ -36,6 +35,10 @@ const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory
           <div className="flex justify-between px-4 py-2">
             <p className="text-stone-600">Gross Amount</p>
             <p className="text-red-600">{formData?.["grossAmount"]}</p>
+          </div>
+          <div className="flex justify-between px-4 py-2">
+            <p className="text-stone-600">Total Discount</p>
+            <p className="text-orange-500">{formData?.["totalDiscountAmount"]}</p>
           </div>
           <div className="flex justify-between px-4 py-2">
             <p className="text-stone-600">GST%</p>

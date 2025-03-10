@@ -7,6 +7,7 @@ const FormContext = createContext();
 export const FormProvider = ({ children }) => {
   const ITEM_PER_PAGE = 15
   const [formData, setFormData] = useState({});
+  const [tableForm, setTableForm] = useState({})
   const [errors, setErrors] = useState({});
   const [medicineQuery, setMedicineQuery] = useState([]);
   const [currentMedicalIndex, setCurrentMedicalIndex] = useState(0);
@@ -14,10 +15,15 @@ export const FormProvider = ({ children }) => {
   const [activePage, setActivePage] = useState(1);
   const [historyData, setHistoryData] = useState([])
 
+  const handleTableFormChange = (e)=>{
+    const {name, value} = e.target
+    setTableForm(prevState => ({...prevState, [name]: value}))
+  }
+
   const handleChange = (e) => {
 
     const { name, type, checked, value } = e.target;
-    
+
     setFormData((prevFormData) => {
       const updatedFormData = { ...prevFormData, [name]: type === "checkbox" ? checked : value };
       if (name === "isRoundOff") {
@@ -86,6 +92,7 @@ export const FormProvider = ({ children }) => {
     setErrors({});
     setActivePage(1)
     setFormData(()=>{});
+    setTableForm({})
   };
 
   const handleTimingChange = (e, label, index) => {
@@ -127,6 +134,7 @@ export const FormProvider = ({ children }) => {
     let netAmount = 0;
     let totalGstAmount = 0;
     let grossAmount = 0;
+    let totalDiscountAmount = 0; // Added variable to store total discount
     let totalQuantity = updatedFormData["medicines"]?.length;
   
     updatedFormData["medicines"].forEach((medicine, medIndex) => {
@@ -134,19 +142,26 @@ export const FormProvider = ({ children }) => {
         const medPrice = Number(medicine.purchaseRate);
         const medGst = Number(medicine.gst);
         const medDiscount = Number(medicine.discount);
-        const quantity =  Number(medicine.quantity);
+        const quantity = Number(medicine.quantity);
         const totalMedPrice = medPrice * quantity;
-        const calculatedDiscountPrice = totalMedPrice - (totalMedPrice * (medDiscount / 100));
+        
+        // Calculate the discount amount for this medicine
+        const discountAmount = totalMedPrice * (medDiscount / 100);
+        totalDiscountAmount += discountAmount; // Sum up discount amounts
+        
+        const calculatedDiscountPrice = totalMedPrice - discountAmount;
         const gstValue = calculatedDiscountPrice * (medGst / 100);
         const totalMedicinePrice = calculatedDiscountPrice + gstValue;
-        const purchasePrice = medicine.purchaseRate / medicine.unit
-        const salesPrice = medicine.mrp / medicine.unit
+        const purchasePrice = medicine.purchaseRate / medicine.unit;
+        const salesPrice = medicine.mrp / medicine.unit;
+        
         // Updating the specific medicine amount at the given index
         if (medIndex === index) {
           updatedFormData["medicines"][index]["amount"] = Number(totalMedicinePrice.toFixed(2));
           updatedFormData["medicines"][index]["purchasePrice"] = Number(purchasePrice.toFixed(2));
           updatedFormData["medicines"][index]["salesPrice"] = Number(salesPrice.toFixed(2));
         }
+        
         grossAmount += calculatedDiscountPrice;
         totalGstAmount += gstValue;
         netAmount += totalMedicinePrice;
@@ -164,6 +179,7 @@ export const FormProvider = ({ children }) => {
     }
   
     const finalAmount = finalNetAmount + roundOff;
+    console.log("totalDiscountAmount", totalDiscountAmount)
   
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -171,6 +187,7 @@ export const FormProvider = ({ children }) => {
       roundOff,
       totalQuantity, 
       netAmount: finalNetAmount,
+      totalDiscountAmount : Number(totalDiscountAmount.toFixed(2)),
       totalGstAmount: Number(totalGstAmount.toFixed(2)),
       grossAmount: Number(grossAmount.toFixed(2)),
       finalAmount: Number(finalAmount.toFixed(2)),
@@ -197,7 +214,8 @@ export const FormProvider = ({ children }) => {
         hsnCode: medicineData?.hsnCode,
         medicineCategory: medicineData?.category,
         gst:medicineData?.gst,
-        packValue:medicineData?.pack?.value
+        packValue:medicineData?.pack?.value,
+        unit:medicineData.unit
       };
       updatedFormData[title] = updatedRow;
       return updatedFormData;
@@ -215,7 +233,7 @@ export const FormProvider = ({ children }) => {
 
   return (
     <FormContext.Provider
-      value={{ errors, historyData, getHistoryWithMedicineName, formData, activePage, selectedUnit, ITEM_PER_PAGE, medicineQuery, currentMedicalIndex, handleReset, setFormData, handleChange, handleSubmit, setActivePage, handleTimingChange, updateMedicalDetail, handleInputDropDownChange, }}>
+      value={{ errors, historyData, tableForm, handleTableFormChange,  getHistoryWithMedicineName, formData, activePage, selectedUnit, ITEM_PER_PAGE, medicineQuery, currentMedicalIndex, handleReset, setFormData, handleChange, handleSubmit, setActivePage, handleTimingChange, updateMedicalDetail, handleInputDropDownChange, }}>
       {children}
     </FormContext.Provider>
   );

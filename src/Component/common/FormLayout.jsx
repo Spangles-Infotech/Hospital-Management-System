@@ -20,7 +20,7 @@ export const FormLayout = ({data, isBorder=true, isWrap=false}) => {
                   ))
                 }
               </div>
-            : !unitFields[selectedUnit].includes(it.label) &&
+            : 
             <Form key={it.label} item={it} formData={formData} handleChange={handleChange} errors={errors} isBorder={isBorder}  />
           ))}
         </div>
