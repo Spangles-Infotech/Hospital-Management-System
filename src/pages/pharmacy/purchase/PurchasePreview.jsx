@@ -113,6 +113,10 @@ const PurchasePreview = () => {
           <p className="text-orange-500">{data?.grossAmount}</p>
         </div>
         <div className="flex justify-between mt-3 px-4">
+          <p className="text-stone-600">Total Discount </p>
+          <p className="text-orange-500">{data?.totalDiscountAmount || "-"}</p>
+        </div>
+        <div className="flex justify-between mt-3 px-4">
           <p className="text-stone-600">GST </p>
           <p className="text-orange-500">{data?.totalGstAmount}</p>
         </div>

@@ -134,6 +134,7 @@ export const FormProvider = ({ children }) => {
     let netAmount = 0;
     let totalGstAmount = 0;
     let grossAmount = 0;
+    let totalDiscountAmount = 0; // Added variable to store total discount
     let totalQuantity = updatedFormData["medicines"]?.length;
   
     updatedFormData["medicines"].forEach((medicine, medIndex) => {
@@ -141,19 +142,26 @@ export const FormProvider = ({ children }) => {
         const medPrice = Number(medicine.purchaseRate);
         const medGst = Number(medicine.gst);
         const medDiscount = Number(medicine.discount);
-        const quantity =  Number(medicine.quantity);
+        const quantity = Number(medicine.quantity);
         const totalMedPrice = medPrice * quantity;
-        const calculatedDiscountPrice = totalMedPrice - (totalMedPrice * (medDiscount / 100));
+        
+        // Calculate the discount amount for this medicine
+        const discountAmount = totalMedPrice * (medDiscount / 100);
+        totalDiscountAmount += discountAmount; // Sum up discount amounts
+        
+        const calculatedDiscountPrice = totalMedPrice - discountAmount;
         const gstValue = calculatedDiscountPrice * (medGst / 100);
         const totalMedicinePrice = calculatedDiscountPrice + gstValue;
-        const purchasePrice = medicine.purchaseRate / medicine.unit
-        const salesPrice = medicine.mrp / medicine.unit
+        const purchasePrice = medicine.purchaseRate / medicine.unit;
+        const salesPrice = medicine.mrp / medicine.unit;
+        
         // Updating the specific medicine amount at the given index
         if (medIndex === index) {
           updatedFormData["medicines"][index]["amount"] = Number(totalMedicinePrice.toFixed(2));
           updatedFormData["medicines"][index]["purchasePrice"] = Number(purchasePrice.toFixed(2));
           updatedFormData["medicines"][index]["salesPrice"] = Number(salesPrice.toFixed(2));
         }
+        
         grossAmount += calculatedDiscountPrice;
         totalGstAmount += gstValue;
         netAmount += totalMedicinePrice;
@@ -171,6 +179,7 @@ export const FormProvider = ({ children }) => {
     }
   
     const finalAmount = finalNetAmount + roundOff;
+    console.log("totalDiscountAmount", totalDiscountAmount)
   
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -178,6 +187,7 @@ export const FormProvider = ({ children }) => {
       roundOff,
       totalQuantity, 
       netAmount: finalNetAmount,
+      totalDiscountAmount : Number(totalDiscountAmount.toFixed(2)),
       totalGstAmount: Number(totalGstAmount.toFixed(2)),
       grossAmount: Number(grossAmount.toFixed(2)),
       finalAmount: Number(finalAmount.toFixed(2)),

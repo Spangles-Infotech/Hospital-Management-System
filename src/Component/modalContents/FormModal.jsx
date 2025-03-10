@@ -7,12 +7,11 @@ import { usePostData } from '../../hooks/usePostData'
 import { useUpdateData } from '../../hooks/useUpdateData'
 
 export const FormModal = ({title, formField, data, isEdit, name, refetch, label}) => {
-
   const {closeModal} = useModal()
   const {postData} = usePostData(name)
   const {updateData} = useUpdateData(name)
   const {handleReset, formData, handleSubmit, setFormData} = useForm()
-  const notToReset = ["Add Category", "Add Packs", "Add GST %", "Add Strength"]
+  const notToReset = ["Add Category", "Add unit", "Add GST %", "Add Strength"]
 
   const handleSubmitForm = async () => {
     if (!formData) return;
@@ -23,7 +22,7 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label}
       if (!notToReset.includes(title)){ 
         handleReset()
       }else{
-        setFormData((prev)=>({...prev, [label]:""}))
+        setFormData((prev)=>({...prev, [formField[0]?.name]:""}))
       }
     }
   };

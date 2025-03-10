@@ -16,11 +16,9 @@ function App() {
       <ModalProvider>
           <SidebarModalProvider>
           <SkeletonTheme baseColor="#202020" highlightColor="#444">
-
             <RouterProvider router={routePaths} />
             </SkeletonTheme>
             <ToastContainer />
-
           </SidebarModalProvider>
       </ModalProvider>
     </FormProvider>

@@ -23,7 +23,8 @@ export const usePostData = (url, options = {}) => {
       return response.status
     } catch (error) {
       setError(error.message)
-      toast.error(error.message || "Failed to post data!")
+      console.log("error", error)
+      toast.error( error.response.data.message ||error.message || "Failed to post data!")
     } finally {
       setIsLoading(false)
     }

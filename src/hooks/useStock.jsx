@@ -5,11 +5,13 @@ import PreviewModal from '../Component/modalContents/PreviewModal'
 import { fetch } from '../api/fetch'
 import { useFetchData } from './useFetchData'
 import { useForm } from '../context/FormContext'
+import { useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 export const useStock = () => {
     const {openSidebarModal} = useSidebarModal()
     const {openModal} = useModal()
-    const {handleReset} = useForm()
+    const {handleReset, formData} = useForm()
     const {data} = useFetchData("/get-all-generic-name")
     const {data:categoryData, fetchData:refetch} = useFetchData('/get-tags?tag=medicineCategory')
     const {data:strengthData, fetchData:strengthRefetch} = useFetchData('/get-tags?tag=strengthCategory')
@@ -32,6 +34,12 @@ export const useStock = () => {
         }
     ]
 
+    // useEffect(()=>{
+    //   if(formData?.["productName"]){
+    //     isProductExits()
+    //   }
+    // },[formData])
+
     const stockActionData = [
         {
           name:"eye",
@@ -42,6 +50,8 @@ export const useStock = () => {
           onClick: (id) =>{openSidebarModal(stockEditFormField,  true, id)}
         }
     ]
+
+   
 
     const getProductCode = async()=>{
         try {
