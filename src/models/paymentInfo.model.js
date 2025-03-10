@@ -7,6 +7,7 @@ const paymentInfoSchema = mongoose.Schema({
         default:false
     },
     totalGstAmount:Number,
+    totalDiscountAmount:Number,
     discount:Number,
     netAmount:Number,
     grossAmount:Number,

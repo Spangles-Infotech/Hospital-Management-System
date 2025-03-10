@@ -54,6 +54,10 @@ const stocks = async(req,res,next)=>{
         const {productName} = req.body
         let query = {} 
         if(req.method === "POST"){
+            const stock = await Stock.findOne({productName:productName.trim()})
+            if(stock){
+                return sendMessage(res, 404, "Product already exists")
+            }
             await Stock.create({...req.body, productName:productName.trim()})
             return sendMessage(res, 200, "Stock Stored Successfully")
         }
@@ -70,6 +74,18 @@ const stocks = async(req,res,next)=>{
         if(req.method === "PUT"){
             await Stock.findByIdAndUpdate(stockId, req.body, {new:true})
             return sendMessage(res, 200, "Data Updated Successfully")
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getStockName = async(req,res, next)=>{
+    const {productName} = req.body
+    try {
+        const stock = Stock.findOne({productName:productName.trim()})
+        if(stock){
+            return sendMessage(res, 200, "Product already exists")
         }
     } catch (error) {
         next(error)
@@ -201,7 +217,7 @@ const purchase = async(req,res, next)=>{
         if(req.method === "GET"){
             if (purchaseId) {
                 const purchase = await Purchase.findById(purchaseId).populate("medicineInfo").populate("paymentInfo");
-            
+                console.log("purchase", purchase)
                 if (!purchase) {
                     return sendMessage(res, 404, "Purchase not found");
                 }
@@ -327,4 +343,4 @@ const getAllMedicineName = async(req,res,next)=>{
 }
 
 
-module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, tags, getAllMedicineName, getPurchaseDetailsByMedicineName}
+module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, tags, getAllMedicineName, getPurchaseDetailsByMedicineName, getStockName}

@@ -19,6 +19,7 @@ const transformPurchaseData = (purchase)=>{
         paymentType: purchase.paymentInfo?.paymentType,
         isRoundOff: purchase.paymentInfo?.isRoundOff,
         totalGstAmount: purchase.paymentInfo?.totalGstAmount,
+        totalDiscountAmount: purchase.paymentInfo?.totalDiscountAmount,
         netAmount: purchase.paymentInfo?.netAmount,
         grossAmount: purchase.paymentInfo?.grossAmount,
         roundOff: purchase.paymentInfo?.roundOff,
