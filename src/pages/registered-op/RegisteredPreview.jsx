@@ -8,13 +8,14 @@ import { Prescription } from "../../Component/registeredOP/Prescription";
 import { Diagnosis } from "../../Component/registeredOP/Diagnosis";
 import { OtherReports } from "../../Component/registeredOP/OtherReports";
 import { OtherSevices } from "../../Component/registeredOP/OtherSevices";
-import PreviousChart from "../../Component/registeredOP/PreviousChart";
 import { useForm } from "../../context/FormContext";
+import { usePostData } from "../../hooks/usePostData";
 
 const RegisteredOpPreview = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Diagnosis");
-  const {handleChange} = useForm()
+  const {handleChange, formData, handleReset} = useForm()
+  const {postData} = usePostData("/add-medical-reports")
 
   const patientDetails = [
     { label: "Weight", value: "10Kg", subLabel: "(When born)" },
@@ -45,7 +46,6 @@ const RegisteredOpPreview = () => {
 
   const handleArrowClick = (direction) => {
     const currentIndex = tabs.findIndex((tab) => tab.name === activeTab);
-
     if (direction === "next" && currentIndex < tabs.length - 1) {
       const nextTab = tabs[currentIndex + 1];
       setActiveTab(nextTab.name);
@@ -56,6 +56,14 @@ const RegisteredOpPreview = () => {
       navigate(previousTab.path);
     }
   };
+
+  const handleSave = async()=>{
+    const response = await postData(formData);
+    if(([200, 201].includes(response))){
+      handleReset()
+      navigate("/admin/registered-op-doctor")
+    }
+  }
 
   return (
     <section className="font-poppins w-full p-10">
@@ -141,7 +149,7 @@ const RegisteredOpPreview = () => {
           ))}
         </div>
         <div className="flex gap-6">
-          <button className="text-white bg-primary px-6 py-2 rounded-full hover:bg-primary-dark">
+          <button onClick={handleSave} className="text-white bg-primary px-6 py-2 rounded-full hover:bg-primary-dark">
             Save
           </button>
           <button className="text-red-500 border border-red-400 px-6 py-2 rounded-full hover:bg-red-100">

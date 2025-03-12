@@ -29,7 +29,7 @@ export const OtherReports = () => {
                 <tbody>
                   {otherReports.length > 0 ? (
                     otherReports.map((test, index) => (
-                      <tr key={test.id} className="text-stone-700">
+                      <tr key={index} className="text-stone-700">
                         <td className="px-6 py-4 border-b border-gray-300">{index + 1}</td>
                         <td className="px-6 py-4 border-b border-gray-300">{test.testName}</td>
                         <td className="px-6 py-4 border-b border-gray-300">{test.consultedDoctor}</td>

@@ -12,7 +12,6 @@ const RegisteredOP_1 = () => {
 
   const {openModal} = useModal()
   const {data, isLoading, refetch} = useRegisteredOp()
-
   console.log("data",data)
   
   const btnData=[

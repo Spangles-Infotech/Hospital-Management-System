@@ -7,7 +7,7 @@ import { useForm } from "../../context/FormContext";
 
 
 export const Diagnosis = () => {
-  const {handleChange, registerOp, handleRegiterOpCancel, formData, handleAddToFormData, handleEditRegisterOP, handleDeleteRegisterOp} = useForm()
+  const {handleRegisterOpChange, registerOp, handleRegiterOpCancel, formData, handleAddToFormData, handleEditRegisterOP, handleDeleteRegisterOp} = useForm()
 
   return (
     <section className="p-5 font-poppins">
@@ -23,13 +23,13 @@ export const Diagnosis = () => {
                   placeholder="Diagnosis Type"
                   name="type"
                   value={registerOp?.diagnosis?.type || ""}
-                  onChange={(e) =>handleChange(e, "diagnosis")}
+                  onChange={(e) =>handleRegisterOpChange(e, "diagnosis")}
                   className="mb-4 border border-stone-300 outline-none rounded-md py-3 px-3 w-full text-stone-600"
                 />
                 <textarea
                   name="description"
                   value={registerOp?.diagnosis?.description || ""}
-                  onChange={(e) =>handleChange(e, "diagnosis")}
+                  onChange={(e) =>handleRegisterOpChange(e, "diagnosis")}
                   placeholder="Type Something...."
                   className="border border-stone-300 outline-none rounded-md py-3 px-3 w-full text-stone-600"
                 />
@@ -65,7 +65,7 @@ export const Diagnosis = () => {
                 </thead>
                 <tbody>
                   {formData?.diagnosis?.map((diag, index) => (
-                    <tr key={diag.id} className="text-stone-400 ">
+                    <tr key={index} className="text-stone-400 ">
                       <td className="px-6 py-4 border-b border-gray-300">{index + 1}</td>
                       <td className="px-6 py-4 border-b border-gray-300">{diag.type}</td>
                       <td className="px-6 py-4 border-b border-gray-300">{diag.description}</td>

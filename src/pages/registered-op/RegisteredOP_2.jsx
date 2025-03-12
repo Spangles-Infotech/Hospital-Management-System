@@ -5,16 +5,21 @@ import { useNavigate } from "react-router-dom";
 import { Table } from "../../Component/common/Table/Table";
 import { TableHeading, TableValue } from "../../utils/variable/RegOp_doctor";
 import { useRegisteredOp } from "../../hooks/useRegisteredOp";
+import { useForm } from "../../context/FormContext";
 
 const RegisteredOP_2 = () => {
   const navigate = useNavigate();
+  const {setFormData} = useForm()
   const [searchTerm, setSearchTerm] = useState("");
   const { data, isLoading, refetch } = useRegisteredOp();
 
   const actionData = [
     {
       name: "DoctorAction",
-      onClick: () => navigate("/admin/registered-op-doctor/preview"),
+      onClick: (id) =>{ 
+        setFormData({appointmentId:id})
+        navigate("/admin/registered-op-doctor/preview")
+      }
     },
   ];
 
@@ -35,7 +40,6 @@ const RegisteredOP_2 = () => {
           />
         </div>
       </div>
-
       <Table
         tableHead={TableHeading}
         tableValue={data}
@@ -43,7 +47,6 @@ const RegisteredOP_2 = () => {
         isBlue={true}
         isLoading={isLoading}
       />
-
       <Pagination />
     </section>
   );

@@ -5,7 +5,7 @@ import EditIcon from "../../assests/editpen.png";
 import { useForm } from "../../context/FormContext";
 
 export const OtherSevices = () => {
-  const { handleChange, registerOp, handleRegiterOpCancel, formData, handleAddToFormData, handleEditRegisterOP, handleDeleteRegisterOp } = useForm();
+  const { handleRegisterOpChange, registerOp, handleRegiterOpCancel, formData, handleAddToFormData, handleEditRegisterOP, handleDeleteRegisterOp } = useForm();
   const otherServices = formData.otherServices || []; // Ensure it's always an array
 
   const [totalAmount, setTotalAmount] = useState(0);
@@ -33,7 +33,7 @@ export const OtherSevices = () => {
                   placeholder="Service Name"
                   value={registerOp?.otherServices?.serviceName || ""}
                   onChange={(e) =>
-                    handleChange(e, "otherServices")
+                    handleRegisterOpChange(e, "otherServices")
                   }
                   className="mb-4 border border-stone-300 outline-none rounded-md p-2 flex-1 text-stone-600"
                 />
@@ -43,7 +43,7 @@ export const OtherSevices = () => {
                   placeholder="Fee (e.g., 200)"
                   value={registerOp?.otherServices?.fee || ""}
                   onChange={(e) =>
-                    handleChange(e, "otherServices")
+                    handleRegisterOpChange(e, "otherServices")
                   }
                   className="mb-4 border border-stone-300 outline-none rounded-md p-3 flex-1 text-stone-600"
                 />
@@ -87,7 +87,7 @@ export const OtherSevices = () => {
                 </thead>
                 <tbody>
                   {otherServices.map((service, index) => (
-                    <tr key={service.id} className="text-stone-600">
+                    <tr key={index} className="text-stone-600">
                       <td className="px-6 py-4 border-b border-gray-300">{index + 1}</td>
                       <td className="px-6 py-4 border-b border-gray-300">{service.serviceName}</td>
                       <td className="px-6 py-4 border-b border-gray-300 text-center">

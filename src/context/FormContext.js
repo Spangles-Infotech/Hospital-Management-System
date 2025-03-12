@@ -13,11 +13,10 @@ export const FormProvider = ({ children }) => {
   const [selectedUnit, setSelectedUnit] = useState("bottle")
   const [activePage, setActivePage] = useState(1);
   const [historyData, setHistoryData] = useState([])
+  const [registerOp, setRegisterOp] = useState({})
 
   const handleChange = (e) => {
-
     const { name, type, checked, value } = e.target;
-    
     setFormData((prevFormData) => {
       const updatedFormData = { ...prevFormData, [name]: type === "checkbox" ? checked : value };
       if (name === "isRoundOff") {
@@ -35,6 +34,66 @@ export const FormProvider = ({ children }) => {
       return newErrors;
     });
   };
+
+  const handleAddToFormData = (title) => {
+    setFormData((prev) => {
+      const updatedFormData = { ...prev };
+      
+      const newEntry =
+        title === "prescription"
+          ? registerOp[title] && registerOp[title]?.medicineType === undefined
+            ? { ...registerOp[title], medicineType: "TABLET" }
+            : registerOp[title]
+          : registerOp[title];
+  
+      updatedFormData[title] = [
+        ...(Array.isArray(updatedFormData[title]) ? updatedFormData[title] : []),
+        newEntry || {}
+      ];
+  
+      return updatedFormData;
+    });
+  
+    setRegisterOp((prev) => ({ ...prev, [title]: {} }));
+  };
+  
+  
+
+  const handleRegisterOpChange = (e, type)=>{
+    const {name, value} = e.target
+    setRegisterOp((prev)=>{
+      const updatedRegisterOp = {...prev}
+      updatedRegisterOp[type] = {...updatedRegisterOp[type] , [name]:value}
+      return updatedRegisterOp
+    })
+  }
+
+  const handleEditRegisterOP = (title, index) => {
+    let removeItem = {}
+    setFormData((prev) => {
+      const updatedFormData = { ...prev };
+      removeItem = updatedFormData[title]?.[index];
+      updatedFormData[title] = updatedFormData[title]?.filter((_, i) => i !== index);
+      return updatedFormData;
+    });
+    setRegisterOp((prev) => ({
+      ...prev,
+      [title]: removeItem, 
+    }));
+  };
+
+  const handleDeleteRegisterOp = (title, index)=>{
+    setFormData((prev) => {
+      const updatedFormData = { ...prev };
+      updatedFormData[title] = updatedFormData[title]?.filter((_, i) => i !== index);
+      return updatedFormData;
+    });
+  }
+  
+
+  const handleRegiterOpCancel = ()=>{
+    setRegisterOp({})
+  }
 
   // func to handle the input and dropdown value
   const handleInputDropDownChange = (e, label)=>{
@@ -58,7 +117,6 @@ export const FormProvider = ({ children }) => {
 
   const validateErrors = (fields) => {
     let errors = {};
-
     fields.forEach((item) => {
       if (Array.isArray(item)) {
         item.forEach((ite) => {
@@ -167,7 +225,7 @@ export const FormProvider = ({ children }) => {
   
     setFormData((prevFormData) => ({
       ...prevFormData,
-      medicines: updatedFormData["medicines"], // Ensure the updated medicines array is stored
+      medicines: updatedFormData["medicines"], 
       roundOff,
       totalQuantity, 
       netAmount: finalNetAmount,
@@ -215,7 +273,7 @@ export const FormProvider = ({ children }) => {
 
   return (
     <FormContext.Provider
-      value={{ errors, historyData, getHistoryWithMedicineName, formData, activePage, selectedUnit, ITEM_PER_PAGE, medicineQuery, currentMedicalIndex, handleReset, setFormData, handleChange, handleSubmit, setActivePage, handleTimingChange, updateMedicalDetail, handleInputDropDownChange, }}>
+      value={{ errors, setRegisterOp, handleEditRegisterOP,handleDeleteRegisterOp,  handleRegiterOpCancel, handleAddToFormData, handleRegisterOpChange, historyData, getHistoryWithMedicineName, formData, activePage, selectedUnit, ITEM_PER_PAGE, medicineQuery, currentMedicalIndex, handleReset, setFormData, handleChange, handleSubmit, setActivePage, handleTimingChange, updateMedicalDetail, handleInputDropDownChange, registerOp}}>
       {children}
     </FormContext.Provider>
   );

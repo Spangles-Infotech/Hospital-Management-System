@@ -9,7 +9,6 @@ export const TableHeading=[
         path2:"patientId",
         isNested:true
     },
-
     {
         name:"Patient Name",
         path1:"patientId",
@@ -17,46 +16,42 @@ export const TableHeading=[
         path3:"name",
         isDoubleNested:true
     },
-
     {
         name:"Age",
         path1:"patientId",
         path2:"age",
         isNested:true
     },
-
+    
     {
         name:"Gender",
         path1:"patientId",
         path2:"gender",
         isNested:true
     },
-
     {
         name:"Blood Group",
         path1:"patientId",
         path2:"bloodGroup",
         isNested:true
     },
-
     {
         name:"Phone Number",
         path1:"patientId",
         path2:"mobileNumber",
         path3:"number",
         isDoubleNested:true
-    },
 
+    },
     {
         name:"Status",
-        path:"status",
-        type:"activeTag"
+        path:"status"
     },
 
     {
         name:"Action",
         path:"normal"
-    },
+    }
 ]
 
 

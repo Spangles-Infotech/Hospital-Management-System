@@ -206,38 +206,56 @@ export const staffPreviewField = [
     icon: "staffIcon",
     head: [
       {
-        title: "Staff If",
-        name: "doctorId",
+        title: "Staff ID",
+        name1: "userId",
+        name2: "id",
+        isNested:true
       },
     ],
     fields: [
       {
-        label: "Doctor Name",
-        name: "doctorName",
+        label: "Staff Name",
+        name1: "userId",
+        name2: "name",
+        isNested:true
       },
       {
         label: "Address",
-        name: "address",
+        name1: "userId",
+        name2: "address",
+        isNested:true
       },
       {
         label: "Age",
-        name: "age",
+        name1: "userId",
+        name2: "age",
+        isNested:true
       },
       {
         label: "Phone Number",
-        name: "phoneNumber",
+        name1: "userId",
+        name2: "mobileNumber",
+        name3: "number",
+        isDoubleNested:true
       },
       {
         label: "Gender",
-        name: "gender",
+        name1: "userId",
+        name2: "gender",
+        isNested:true
       },
       {
         label: "Alternate Mobile Number",
-        name: "alternateMobileNumber",
+        name1: "userId",
+        name2: "alternateMobileNumber",
+        name3: "number",
+        isDoubleNested:true
       },
       {
         label: "Blood Group",
-        name: "bloodGroup",
+        name1: "userId",
+        name2: "bloodGroup",
+        isNested:true
       },
     ],
     image: {

@@ -7,7 +7,7 @@ import { useForm } from "../../context/FormContext";
 
 export const LabTesting = () => {
   const {
-    handleChange,
+    handleRegisterOpChange,
     registerOp,
     handleRegiterOpCancel,
     formData,
@@ -34,14 +34,14 @@ export const LabTesting = () => {
                   name="testName"
                   placeholder="Enter test name..."
                   value={registerOp?.labTests?.testName || ""}
-                  onChange={(e) => handleChange(e, "labTests")}
+                  onChange={(e) => handleRegisterOpChange(e, "labTests")}
                   className="mb-4 border border-stone-300 outline-none rounded-md p-3 flex-1 text-stone-600"
                 />
                 <input
                   type="text"
                   name="description"
                   value={registerOp?.labTests?.description || ""}
-                  onChange={(e) => handleChange(e, "labTests")}
+                  onChange={(e) => handleRegisterOpChange(e, "labTests")}
                   placeholder="Type Something..."
                   className="mb-4 border border-stone-300 outline-none rounded-md p-3 flex-1 text-stone-600"
                 />
