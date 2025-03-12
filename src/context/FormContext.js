@@ -8,6 +8,7 @@ export const FormProvider = ({ children }) => {
   const ITEM_PER_PAGE = 15
   const [formData, setFormData] = useState({});
   const [tableForm, setTableForm] = useState({})
+  const [registerOp ,setRegisterOp] = useState({})
   const [errors, setErrors] = useState({});
   const [medicineQuery, setMedicineQuery] = useState([]);
   const [currentMedicalIndex, setCurrentMedicalIndex] = useState(0);
@@ -286,7 +287,7 @@ export const FormProvider = ({ children }) => {
 
   return (
     <FormContext.Provider
-      value={{ errors, historyData, getHistoryWithMedicineName, formData, activePage, selectedUnit, ITEM_PER_PAGE, medicineQuery, currentMedicalIndex, handleReset, setFormData, handleChange, handleSubmit, setActivePage, handleTimingChange, updateMedicalDetail, handleInputDropDownChange, }}>
+      value={{handleAddToFormData, handleRegisterOpChange, handleDeleteRegisterOp, registerOp, handleRegiterOpCancel, errors, historyData, getHistoryWithMedicineName, formData, activePage, selectedUnit, ITEM_PER_PAGE, medicineQuery, currentMedicalIndex, handleReset, setFormData, handleChange, handleSubmit, setActivePage, handleTimingChange, updateMedicalDetail, handleInputDropDownChange, }}>
       {children}
     </FormContext.Provider>
   );
