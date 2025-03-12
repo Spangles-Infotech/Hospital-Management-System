@@ -12,7 +12,6 @@ const RegisteredOP_1 = () => {
 
   const {openModal} = useModal()
   const {data, isLoading, refetch} = useRegisteredOp()
-  console.log("data",data)
   
   const btnData=[
     {
@@ -34,8 +33,8 @@ const actionData=[
   
   return (
     <section className="w-full p-7 font-roboto ">
-      <TableHeader title={"Registered OP"} buttonData={btnData}/>
-      <Table tableHead={TableHeading} tableValue={data} actionData={actionData} isLoading={isLoading}/>
+      <TableHeader title={"Registered OP"} buttonData={btnData} isDate={false}/>
+      <Table tableHead={TableHeading} tableValue={data} actionData={actionData} isLoading={isLoading} />
       <Pagination />
     </section>
 

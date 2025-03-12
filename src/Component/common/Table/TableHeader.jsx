@@ -4,7 +4,7 @@ import { AddIcon } from "../../../icons/AddIcon";
 import { Date } from "../../Fields/Date";
 import { useForm } from "../../../context/FormContext";
 
-export const TableHeader = ({title, buttonData, isSearch=true, button, isBlue=false, isDate=true}) => {
+export const TableHeader = ({title, buttonData, isSearch=true, button, isBlue=false, isDate=false}) => {
   
   const {tableForm, handleTableFormChange} = useForm();
 
@@ -16,9 +16,9 @@ export const TableHeader = ({title, buttonData, isSearch=true, button, isBlue=fa
       <div className="flex items-center gap-[20px] cursor-pointer">
         <div className={`flex gap-[10px] ${!isDate ? "hidden" : ""}`}>
           <Date title={"From"} value={tableForm} onChange={handleTableFormChange} name={"from"}  />
-          <Date title={"To"} value={tableForm} onChange={handleTableFormChange} name={"to"} startDate={tableForm["from"]} />
+          <Date title={"To"} value={tableForm} onChange={handleTableFormChange} name={"to"} startDate={tableForm?.["from"] || ""} />
         </div>
-        <Search isBlue={isBlue} isSearch={isSearch} value={tableForm["search"]} onChange={handleTableFormChange}  />
+        <Search isBlue={isBlue} isSearch={isSearch} value={tableForm?.["search"] || ""} onChange={handleTableFormChange}  />
         <div className="flex gap-[15px]">
           {
               buttonData?.map((item)=>(

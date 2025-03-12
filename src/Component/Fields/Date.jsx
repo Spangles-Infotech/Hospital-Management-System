@@ -11,7 +11,7 @@ export const Date = ({title, value,name, startDate="", onChange}) => {
             name={name}
             className={`text-customBlackColorFont2 transition-all duration-500 text-[14px]`}
             onChange={onChange}
-            value={value[name]}
+            value={value?.[name] || ""}
             min={updateDate(startDate)}
             />
     </div>
