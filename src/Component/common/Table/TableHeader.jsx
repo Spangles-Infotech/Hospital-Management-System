@@ -1,15 +1,24 @@
 import React from "react";
 import { Search } from "../../Fields/Search";
 import { AddIcon } from "../../../icons/AddIcon";
+import { Date } from "../../Fields/Date";
+import { useForm } from "../../../context/FormContext";
 
-export const TableHeader = ({title, buttonData, isSearch=true, button, isBlue=false}) => {
+export const TableHeader = ({title, buttonData, isSearch=true, button, isBlue=false, isDate=true}) => {
+  
+  const {tableForm, handleTableFormChange} = useForm();
+
   return (
     <div className={`flex flex-wrap items-center justify-between h-[80px] rounded-xl px-5 ${isBlue ? "" : " bg-white "}`}>
       <div className="inline-flex space-x-3">
         <h1 className={`${isBlue ? "text-customBlack font-[500] text-[24px] font-poppins" : " text-primary font-[600] text-[20px] font-roboto"}`}>{title}</h1>
       </div>
       <div className="flex items-center gap-[20px] cursor-pointer">
-        { isSearch && <Search isBlue={isBlue} />}
+        <div className={`flex gap-[10px] ${!isDate ? "hidden" : ""}`}>
+          <Date title={"From"} value={tableForm} onChange={handleTableFormChange} name={"from"}  />
+          <Date title={"To"} value={tableForm} onChange={handleTableFormChange} name={"to"} startDate={tableForm["from"]} />
+        </div>
+        <Search isBlue={isBlue} isSearch={isSearch} value={tableForm["search"]} onChange={handleTableFormChange}  />
         <div className="flex gap-[15px]">
           {
               buttonData?.map((item)=>(

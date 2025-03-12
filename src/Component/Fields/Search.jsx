@@ -1,10 +1,10 @@
 import React from 'react'
 import { SearchIcon } from '../../icons/SearchIcon'
-export const Search = ({isBlue, value, onChange, isForm=false}) => {
+export const Search = ({isBlue, value, onChange, isForm=false, isSearch}) => {
 
   return (
     
-    <div className={`${isForm ? "h-[98px]": "h-[35px] "}`}>
+    <div className={`${!isSearch ? "hidden" :isForm ? "h-[98px]": "h-[35px] "}`}>
         <div className={`relative h-full ${isForm ? "flex justify-end items-end" : ""}`}>
             <div className={`absolute flex items-center ps-2 pointer-events-none ${isBlue ? "text-primary inset-y-0 start-0" : isForm ? "text-white bottom-[17%] left-[5%] " : "text-customBlack  inset-y-0 start-0" }`}>
               <SearchIcon />

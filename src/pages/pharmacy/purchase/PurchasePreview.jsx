@@ -4,12 +4,15 @@ import { supplierPurchasePreviewField } from "../../../utils/variable/supplier";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFetchData } from "../../../hooks/useFetchData";
 import { useCommon } from "../../../hooks/useCommon";
+import { getDateFromISO } from "../../../utils/functions/function";
 const PurchasePreview = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
   const {location} = useCommon()
   const { data, isLoading, error } = useFetchData(id ? `/get-purchase/${id}`: null);
+  const tableHeader =[ "MEDICINE NAME", "HSN", "MEDICINE CATEGORY", "BATCH NO.", "EXP DATE", "QTY","FREE", "UNIT","T.QTY", "P.RATE", "MRP", "DIS%", "GST%", "AMOUNT"]
+
 
   const handleClickBack = ()=>{
     if(location.pathname.startsWith("/admin/pharmacy/supplier")){
@@ -37,18 +40,7 @@ const PurchasePreview = () => {
         <table className="w-full border-collapse  ">
           <thead>
             <tr className="text-left">
-              {[
-                "MEDICINE CATEGORY",
-                "MEDICINE NAME",
-                "HSN",
-                "BATCH No.",
-                "EXP DATE",
-                "QTY",
-                "AVA. QTY",
-                "PRICE",
-                "GST",
-                "AMOUNT",
-              ].map((header, index) => (
+              {tableHeader.map((header, index) => (
                 <th key={index} className="px-4 py-4 border border-primary">
                   {header}
                 </th>
@@ -62,28 +54,40 @@ const PurchasePreview = () => {
                 className="border rounded-[15px] border-primary text-center"
               >
                 <td className="px-4 py-3 border border-primary ">
-                  {medicine?.medicineCategory}
-                </td>
-                <td className="px-4 py-3 border border-primary">
                   {medicine?.medicineName}
                 </td>
                 <td className="px-4 py-3 border border-primary">
-                  {medicine?.hsnCode || "-"}
+                  {medicine?.hsnCode}
+                </td>
+                <td className="px-4 py-3 border border-primary">
+                  {medicine?.medicineCategory || "-"}
                 </td>
                 <td className="px-4 py-3 border border-primary">
                   {medicine?.batchNo}
                 </td>
                 <td className="px-4 py-3 border border-primary">
-                  {medicine?.expDate}
+                  {getDateFromISO(medicine?.expDate)}
                 </td>
                 <td className="px-4 py-3 border border-primary">
                   {medicine?.quantity}
                 </td>
                 <td className="px-4 py-3 border border-primary">
+                  {medicine?.free}
+                </td>
+                <td className="px-4 py-3 border border-primary">
                   {medicine?.unit}
                 </td>
                 <td className="px-4 py-3 border border-primary">
-                  {medicine?.price?.toFixed(2)}
+                  {medicine?.availableQuantity}
+                </td>
+                <td className="px-4 py-3 border border-primary">
+                  {medicine?.purchaseRate?.toFixed(2)}
+                </td>
+                <td className="px-4 py-3 border border-primary">
+                  {medicine?.mrp?.toFixed(2)}
+                </td>
+                <td className="px-4 py-3 border border-primary">
+                  {medicine?.discount}%
                 </td>
                 <td className="px-4 py-3 border border-primary">
                   {medicine?.gst}%
@@ -107,6 +111,10 @@ const PurchasePreview = () => {
         <div className="flex justify-between mt-3 px-4">
           <p className="text-stone-600">Gross Amount</p>
           <p className="text-orange-500">{data?.grossAmount}</p>
+        </div>
+        <div className="flex justify-between mt-3 px-4">
+          <p className="text-stone-600">Total Discount </p>
+          <p className="text-orange-500">{data?.totalDiscountAmount || "-"}</p>
         </div>
         <div className="flex justify-between mt-3 px-4">
           <p className="text-stone-600">GST </p>

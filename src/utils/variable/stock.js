@@ -26,7 +26,8 @@ export const stockTableHeading = [
 
   {
     name: "Stocked Date",
-    path: "stockedDate",
+    path: "stockDate",
+    date:true
   },
 
   {
@@ -172,11 +173,13 @@ export const tagFormFields = {
     }
   ],
   "pack":[
-    {
-        label:"",
-        name:"packsCategory",
-        type:"string",
-    }
+    [
+      {
+          label:"",
+          name:"unitsCategory",
+          type:"number",
+      },
+    ]
   ],
   "strength":[
     {

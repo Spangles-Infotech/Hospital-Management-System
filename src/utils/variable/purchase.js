@@ -10,7 +10,7 @@ export const purchaseTableHeading = [
     },
 
     {
-        name:"Purchase Date",
+        name:"Invoice Date",
         path:"purchaseDate",
         date:true
     },

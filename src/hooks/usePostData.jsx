@@ -17,13 +17,14 @@ export const usePostData = (url, options = {}) => {
       setMessage(response.data.message)
 
       if (response.status === 201) {
-        toast.success(response.data.message || "Data posted successfully!") // Success toast
-        handleReset()
+        toast.success(response.data.message || "Data posted successfully!") 
+        // handleReset()
       }
       return response.status
     } catch (error) {
       setError(error.message)
-      toast.error(error.message || "Failed to post data!") // Error toast
+      console.log("error", error)
+      toast.error( error.response.data.message ||error.message || "Failed to post data!")
     } finally {
       setIsLoading(false)
     }

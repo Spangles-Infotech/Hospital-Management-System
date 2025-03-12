@@ -63,3 +63,15 @@ export const getTableCellColor = (val, data)=>{
 export function getDateFromISO(isoString) {
     return isoString?.split('T')[0];
 }
+
+export const updateDate = (startDate) => {
+    if (startDate) {
+      const dateObj = new Date(startDate);
+      if (!isNaN(dateObj)) {
+        const nextDate = new Date(dateObj);
+        nextDate.setDate(dateObj.getDate() + 1);
+        return nextDate.toISOString().split("T")[0];
+      }
+    }
+    return "";
+  }
