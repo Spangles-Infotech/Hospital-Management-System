@@ -5,6 +5,7 @@ const pharmacyRouter = express.Router()
 // prescription routes
 
 pharmacyRouter.get("/get-prescription/:appointmentId", prescription)
+pharmacyRouter.get("/get-all-prescription", prescription)
 pharmacyRouter.post("/post-prescription/:appointmentId", prescription)
 pharmacyRouter.put("/update-prescription/:appointmentId", prescription)
 

@@ -3,14 +3,14 @@ const Billing = require("../models/billing.model")
 const MedicineInfo = require("../models/medicineInfo.model")
 const PaymentInfo = require("../models/paymentInfo.model")
 const { Supplier, Purchase, Stock, Tag } = require("../models/pharmacy.model")
-const { getPurchaseHistoryPipeline } = require("../pipeline/pharmacy.pipeline")
+const PrescriptionInfo = require("../models/prescriptionInfo.model")
+const { getPurchaseHistoryPipeline, getAllPrescriptionPipeline } = require("../pipeline/pharmacy.pipeline")
 const { sendMessage, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage } = require("../utils/function")
 
 
 
 
 // prescription controller 
-
 const prescription = async(req,res,next)=>{
     try {
         const {medicines,totalAmount, totalQuantity, bills} = req.body
@@ -28,6 +28,8 @@ const prescription = async(req,res,next)=>{
                 const prescription = await Appointment.findById(appointmentId).populate("patientId").populate("medicineInfo").populate("paymentInfo").populate("opBillingInfo")
                 return sendMessage(res, 200, "Data Fetched Successfully", prescription)
             }
+            const prescriptions = await PrescriptionInfo.aggregate(getAllPrescriptionPipeline)
+            return sendMessage(res, 200, "Data Fetch Successfully", prescriptions)
         }
         if(req.method === "PUT"){
             const appointment = await Appointment.findById(appointmentId)

@@ -34,4 +34,52 @@ const getPurchaseHistoryPipeline = (medicineName)=>{
         { $limit: 5 } // Get the last 5 purchase records
     ])
 }
-module.exports = {getPurchaseHistoryPipeline}
+
+const getAllPrescriptionPipeline = [
+    {
+      '$lookup': {
+        'from': 'patients', 
+        'localField': 'patientId', 
+        'foreignField': '_id', 
+        'as': 'patientDetails'
+      }
+    }, {
+      '$unwind': {
+        'path': '$patientDetails', 
+        'preserveNullAndEmptyArrays': true
+      }
+    }, {
+      '$lookup': {
+        'from': 'appointments', 
+        'localField': 'appointmentId', 
+        'foreignField': '_id', 
+        'as': 'appointmentDetails'
+      }
+    }, {
+      '$unwind': {
+        'path': '$appointmentDetails', 
+        'preserveNullAndEmptyArrays': true
+      }
+    }, {
+      '$addFields': {
+        'patientName': '$patientDetails.patientName.name', 
+        'patientId': '$patientDetails.patientId', 
+        'doctorName': '$appointmentDetails.doctorName', 
+        'phoneNumber': '$patientDetails.mobileNumber.number', 
+        'noOfMedicine': {
+          '$size': '$prescriptions'
+        }
+      }
+    }, {
+      '$project': {
+        '_id': 1, 
+        'date': 1, 
+        'patientId': 1, 
+        'patientName': 1, 
+        'doctorName': 1, 
+        'phoneNumber': 1, 
+        'noOfMedicine': 1
+      }
+    }
+  ]
+module.exports = {getPurchaseHistoryPipeline, getAllPrescriptionPipeline}

@@ -22,7 +22,6 @@ const prescriprionSchema = mongoose.Schema({
             days:String,
             medicineType:{
                 type:String,
-                enum:["tablet", "syrup", "injection" ]
             }
         }
     ],
