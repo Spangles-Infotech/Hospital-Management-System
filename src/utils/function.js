@@ -1,3 +1,5 @@
+const Patient = require("../models/patient.model")
+
 const sendMessage = (res, status, message, data, total)=>{
     if(data){
         return res.status(status).json({message:message, data:data, total:total})
@@ -22,6 +24,30 @@ const transformPurchaseData = (purchase)=>{
         netAmount: purchase.paymentInfo?.netAmount,
         grossAmount: purchase.paymentInfo?.grossAmount,
         roundOff: purchase.paymentInfo?.roundOff,
+    }
+}
+
+const transformRegisteredOpData = (data)=>{
+    return {
+        id:data._id,
+        PatientId: data.patient.patientId,
+        PatientName: data.patient.patientName,
+        address: data.patient.address,
+        age:data.patient.age,
+        phoneNumber:data.patient.mobileNumber.number,
+        gender:data?.patient?.gender,
+        bloodGroup:data?.patient?.bloodGroup,
+        temperature:data.vital?.temperature.value,
+        pulse:data.vital?.pulseRate,
+        height:data.vital?.height.value,
+        weight:data.vital?.weight.value,
+        bloodPressure:data.vital?.bloodPressure,
+        symptoms:data?.vital?.symptoms,
+        diagnosis:data.diagnosis,
+        labTests:data?.labTests,
+        prescription:data?.prescriptionInfo.prescriptions,
+        otherServices:data?.otherServices,
+        otherReports:data?.otherReports,
     }
 }
 
@@ -54,4 +80,4 @@ const patientNumber = (count)=>{
 }
 
 
-module.exports = {sendMessage, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage, doctorNumber, patientNumber}
+module.exports = {sendMessage, transformRegisteredOpData, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage, doctorNumber, patientNumber}
