@@ -1,7 +1,6 @@
 import React from 'react'
 import { Form } from './Form'
 import { useForm } from '../../context/FormContext'
-import { unitFields } from '../../utils/variable/stock';
 
 export const FormLayout = ({data, isBorder=true, isWrap=false}) => {
 

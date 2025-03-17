@@ -13,7 +13,9 @@ export const inventoryTableHeading = [
     },
     {
         name:"Purchased Date",
-        path:"purchasedDate"
+        path:"purchasedDate",
+        date:true
+
     },
     {
         name:"Quantity",
