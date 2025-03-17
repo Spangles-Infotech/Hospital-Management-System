@@ -18,7 +18,7 @@ const RegisteredOP_2 = () => {
       name: "DoctorAction",
       onClick: (id) =>{ 
         setFormData({appointmentId:id})
-        navigate("/admin/registered-op-doctor/preview")
+        navigate(`/admin/registered-op-doctor/preview/${id}`)
       }
     },
   ];

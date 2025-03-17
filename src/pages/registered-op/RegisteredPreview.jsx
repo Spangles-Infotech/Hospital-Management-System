@@ -1,97 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import PatientDetail from "../pharmacy/Prescription/PatientDetail";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
-import { LabTesting } from "../../Component/registeredOP/LabTesting";
-import { Prescription } from "../../Component/registeredOP/Prescription";
-import { Diagnosis } from "../../Component/registeredOP/Diagnosis";
-import { OtherReports } from "../../Component/registeredOP/OtherReports";
-import { OtherSevices } from "../../Component/registeredOP/OtherSevices";
+import { useRegisteredOp } from "../../hooks/useRegisteredOp";
 import { useForm } from "../../context/FormContext";
-import { usePostData } from "../../hooks/usePostData";
 
 const RegisteredOpPreview = () => {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("Diagnosis");
-  const {handleChange, formData, handleReset} = useForm()
-  const {postData} = usePostData("/add-medical-reports")
 
+  const {id} = useParams()
+  const {formData} = useForm()
+  const {tabs, activeTab, handleBackClick, handleArrowClick, handleTabClick, getMedicalData, handleSaveReports, handleChange} = useRegisteredOp()
   const patientDetails = [
     { label: "Weight", value: "10Kg", subLabel: "(When born)" },
     { label: "Birth Time", value: "11:30 AM" },
     { label: "Birth Place", value: "Padma Hospital, Thiruvattar" },
   ];
 
-  const tabs = [
-    { name: "Diagnosis", path: "", element: <Diagnosis /> },
-    { name: "Lab Testing", path: "lab-testing", element: <LabTesting /> },
-    { name: "Prescription", path: "prescription", element: <Prescription /> },
-    { name: "Other Reports", path: "other-reports", element: <OtherReports /> },
-    {
-      name: "Other Services",
-      path: "other-services",
-      element: <OtherSevices />,
-    },
-  ];
-
-  const handleTabClick = (tab) => {
-    setActiveTab(tab.name);
-    navigate(tab.path);
-  };
-
-  const handleBackClick = () => {
-    navigate("/admin/registered-op-doctor");
-  };
-
-  const handleArrowClick = (direction) => {
-    const currentIndex = tabs.findIndex((tab) => tab.name === activeTab);
-    if (direction === "next" && currentIndex < tabs.length - 1) {
-      const nextTab = tabs[currentIndex + 1];
-      setActiveTab(nextTab.name);
-      navigate(nextTab.path);
-    } else if (direction === "previous" && currentIndex > 0) {
-      const previousTab = tabs[currentIndex - 1];
-      setActiveTab(previousTab.name);
-      navigate(previousTab.path);
+  useEffect(()=>{
+    if(id){
+      getMedicalData(id)
     }
-  };
-
-  const handleSave = async()=>{
-    const response = await postData(formData);
-    if(([200, 201].includes(response))){
-      handleReset()
-      navigate("/admin/registered-op-doctor")
-    }
-  }
+  },[id])
 
   return (
     <section className="font-poppins w-full p-10">
       <p className="text-2xl text-stone-700 font-medium mb-4">Registered OP</p>
-      <div className="flex items-center gap-6 text-center">
-        <FaArrowLeftLong
-          onClick={handleBackClick}
-          className="text-2xl text-stone-600 cursor-pointer"
-        />
-        <p className="font-bold text-red-800 text-xl">Token Number:</p>
-        <p className="font-bold text-red-800 text-xl">10</p>
+      <div className="flex items-center justify-between text-center">
+        <div className="flex gap-[25px] items-center">
+          <FaArrowLeftLong
+            onClick={handleBackClick}
+            className="text-2xl text-stone-600 cursor-pointer"
+          />
+          <div className="flex gap-[20px] items-center">
+              <p className="font-bold text-red-800 text-xl">Token Number: {formData?.tokenNumber || "1"}</p>
+              <label
+                htmlFor="check"
+                className="bg-white border border-primary relative w-20 h-10 rounded-full flex items-center cursor-pointer"
+                name="patientType"
+                onChange={handleChange}
+      >
+                <div className="">
+                  <span className="ml-3">OP</span>{" "}
+                  <span className="text-right ml-4">IP</span>
+                </div>
+                <input type="checkbox" id="check" className="sr-only peer" />
 
-        <label
-          htmlFor="check"
-          className="bg-white border border-primary relative w-20 h-10 rounded-full flex items-center cursor-pointer"
-          name="patientType"
-          onChange={handleChange}
->
-          <div className="">
-            <span className="ml-3">OP</span>{" "}
-            <span className="text-right ml-4">IP</span>
+                <span className="w-2/5 h-4/5 bg-primary absolute rounded-full left-1 transition-all duration-300 ease-in-out peer-checked: peer-checked:translate-x-10"></span>
+              </label>
           </div>
-          <input type="checkbox" id="check" className="sr-only peer" />
-
-          <span className="w-2/5 h-4/5 bg-primary absolute rounded-full left-1 transition-all duration-300 ease-in-out peer-checked: peer-checked:translate-x-10"></span>
-        </label>
-
-        <div className="border-primary border px-4 py-2 rounded-lg w-full max-w-sm">
+        </div>
+        {/* <div className="border-primary border px-4 py-2 rounded-lg w-full max-w-sm">
           {patientDetails.map((detail, index) => (
             <div className="flex justify-between mb-2" key={index}>
               <div className="flex items-baseline">
@@ -107,7 +66,7 @@ const RegisteredOpPreview = () => {
               <p className="text-primary font-medium">{detail.value}</p>
             </div>
           ))}
-        </div>
+        </div> */}
         <div className="flex gap-8 ml-28 mt-20">
           <div
             className={`flex items-center text-primary text-xl font-medium cursor-pointer ${
@@ -149,7 +108,7 @@ const RegisteredOpPreview = () => {
           ))}
         </div>
         <div className="flex gap-6">
-          <button onClick={handleSave} className="text-white bg-primary px-6 py-2 rounded-full hover:bg-primary-dark">
+          <button onClick={handleSaveReports} className="text-white bg-primary px-6 py-2 rounded-full hover:bg-primary-dark">
             Save
           </button>
           <button className="text-red-500 border border-red-400 px-6 py-2 rounded-full hover:bg-red-100">

@@ -7,7 +7,7 @@ import RegisteredOpPreview from "../../pages/registered-op/RegisteredPreview";
 
 export default [
     {
-        path:"registered-op-doctor/preview",
+        path:"registered-op-doctor/preview/:id",
         element:<RegisteredOpPreview />,
         children:[
             {
