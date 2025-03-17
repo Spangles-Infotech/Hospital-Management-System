@@ -1,33 +1,20 @@
 import React from 'react'
 import { TableHeader } from '../../../Component/common/Table/TableHeader'
 import { Table } from '../../../Component/common/Table/Table'
-import { tableHeading, tableValue } from '../../../utils/variable/prescriptions'
+import { tableHeading } from '../../../utils/variable/prescriptions'
 import { Pagination } from '../../../Component/common/Pagination'
-import { useNavigate } from 'react-router-dom'
-import { useFetchData } from '../../../hooks/useFetchData'
-
+import { usePrescription } from '../../../hooks/usePrescription'
 
 const Prescription = () => {
 
-  // const {data, isLoading, setErrors} = useFetchData("/get")
-
-  const navigate = useNavigate()
-  const actionBtn = [
-    {
-      name:"eye",
-      onClick : ()=>{navigate("preview")}
-    },
-    {
-      name: "editpen",
-      onClick: () =>  ()=>{console.log("clicking")}
-    }
-  ]
+  const {data, isLoading, actionBtn} = usePrescription()
+  
   return (
-   <section className='p-4'>
-    <TableHeader title={"Prescriptions"} />
-    <Table tableHead={tableHeading} tableValue={tableValue} actionData={actionBtn} />
-    <Pagination/>
-   </section>
+    <section className='p-4'>
+      <TableHeader title={"Prescriptions"} />
+      <Table tableHead={tableHeading} tableValue={data} actionData={actionBtn} isLoading={isLoading}/>
+      <Pagination/>
+    </section>
   )
 }
 

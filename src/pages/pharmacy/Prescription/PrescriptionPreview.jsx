@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MedicinePrescription from "./MedicinePrescription";
 import PatientDetail from "./PatientDetail";
 import { Print } from "../../../Component/common/Print";
 import { Table } from "../../../Component/common/Table/Table";
 import { PrescriptionTableHeading, PrescriptionTableValue } from "../../../utils/variable/prescriptions";
 import Payment_Prescription from "./Payment_Prescription";
+import { useParams } from "react-router-dom";
+import { usePrescription } from "../../../hooks/usePrescription";
 
 
 const PrescriptionPreview = ({ visibleComponents = ["PaymentType",  "Total"] }) => {
+
+  const {id} = useParams()
+  const {formData, getPrescriptionDetail} = usePrescription()
+
+  useEffect(()=>{
+    if(id){
+      getPrescriptionDetail(id)
+    }
+  },[id])
+
+  console.log("formData?.[prescription]", formData?.["prescriptions"])
 
   const tableHeader = ["MEDICINE CATEGORY", "MEDICINE NAME", "BATCH NO", "EXP DATE", "QTY | AVA QTY", "SALE PRICE", "DISCOUNT", "GST", "AMOUNT"]
   const fields = [
@@ -35,8 +48,8 @@ const PrescriptionPreview = ({ visibleComponents = ["PaymentType",  "Total"] }) 
   ]
 
   const data1 = [
-{sino:"01", feeName:"Doctor fee", amount:"300.00"},
-{sino:"02", feeName:"Lab fee", amount:"200.00"}
+    {sino:"01", feeName:"Doctor fee", amount:"300.00"},
+    {sino:"02", feeName:"Lab fee", amount:"200.00"}
   ];
 
   return (
@@ -49,7 +62,7 @@ const PrescriptionPreview = ({ visibleComponents = ["PaymentType",  "Total"] }) 
         </div>
       </div>
       <PatientDetail/>
-      <div className=" border border-primary mt-10 rounded-lg p-0.5"><Table tableHead={PrescriptionTableHeading} tableValue={PrescriptionTableValue}/></div>
+      <div className=" border border-primary mt-10 rounded-lg p-0.5"><Table tableHead={PrescriptionTableHeading} tableValue={formData?.["prescriptions"]}/></div>
       <MedicinePrescription tableHeader={tableHeader} fields={fields} data={data} />
       <MedicinePrescription tableHeader={tableHeader1} fields={fields1} data={data1}/>
       <Payment_Prescription/>

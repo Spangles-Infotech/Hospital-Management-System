@@ -1,11 +1,12 @@
 export const tableHeading = [
   {
     name: "SI. No.",
-    path: "SIno",
+    path: "si.no.",
   },
   {
     name: "Date",
     path: "date",
+    date:true
   },
   {
     name: "Patient ID",
@@ -18,7 +19,7 @@ export const tableHeading = [
 
   {
     name: "Phone No.",
-    path: "phoneNo",
+    path: "phoneNumber",
   },
 
   {
@@ -27,7 +28,7 @@ export const tableHeading = [
   },
   {
     name: "No. of. Medicine",
-    path: "NoOfMedicine",
+    path: "noOfMedicine",
   },
 
   {
@@ -131,11 +132,11 @@ export const tableValue = [
 export const PrescriptionTableHeading=[
   {
     name:"S.No",
-    path:"sno"
+    path:"si.no."
   },
   {
     name:"Medicine Name",
-    path:"medicineName"
+    path:"MedicineName"
   },
   {
     name:"Dose",
@@ -152,10 +153,6 @@ export const PrescriptionTableHeading=[
   {
     name:"Days",
     path:"days"
-  },
-  {
-    name:"Price Per Syrup",
-    path:"pricePerSyrup"
   }
 ]
 

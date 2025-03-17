@@ -27,6 +27,10 @@ export default [
                         path:"preview",
                         element:<PrescriptionPreview />
                     },
+                    {
+                        path:"edit-prescription/:id",
+                        element:<PrescriptionPreview />
+                    },
                 ]
             },
             {
