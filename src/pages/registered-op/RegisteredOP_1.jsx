@@ -16,7 +16,7 @@ const RegisteredOP_1 = () => {
   const btnData=[
     {
       name:"New Appointment",
-      onClick:()=>{openModal(New_Appointment)}
+      onClick:()=>{openModal(New_Appointment, {title:"Add Appointments", refetch:refetch, name:"/register-appointment"})}
     }
   ]
 

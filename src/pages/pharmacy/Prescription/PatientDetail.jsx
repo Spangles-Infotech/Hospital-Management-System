@@ -15,7 +15,7 @@ const InfoRow = ({ label, value, valueClass = "", formData }) => (
 const PatientDetail = () => {
 
   const {formData} = useForm();
-  console.log("formDAta", formData?.["patientName"])
+  console.log("formDAta", formData)
   const patientDetails = [
     { label: "Patient Name", value: "patientName", valueClass: "text-primary" },
     { label: "Age", value: "age", valueClass: "text-primary" },

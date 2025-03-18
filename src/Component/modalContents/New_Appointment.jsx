@@ -1,13 +1,77 @@
 import React, { Fragment, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { FormLayout } from "../common/FormLayout";
-import { useRegisteredOp } from "../../hooks/useRegisteredOp";
+import { useFetchData } from "../../hooks/useFetchData";
 import { useForm } from "../../context/FormContext";
+import { usePostData } from "../../hooks/usePostData";
+import { useModal } from "../../context/ModalContext";
 
-const New_Appointment = () => {
+const New_Appointment = ({refetch}) => {
 
-  const {formData} = useForm()
-  const {appointmentFormFields, selectedPatient, handleSetSearch, patientData, setSearch, search, handleClickPatient, handleSubmitForm, handleDiscard} = useRegisteredOp()
+  const {closeModal} = useModal()
+  const [search, setSearch] = useState("")
+  const {setFormData, formData, handleReset} = useForm()
+  const {postData} = usePostData("/register-appointment")
+  const [selectedPatient, setSelectedPatient] = useState({})
+  const {data:patientData} = useFetchData( "/get-patient-info", `search=${search}`)
+  const {data:doctorName} = useFetchData("/get-all-doctor?isName=true")
+  
+  const handleSetSearch = (e)=>{
+    if(selectedPatient){
+        setSelectedPatient({})
+    }
+    setSearch(e)
+  }
+
+  const handleClickPatient = (patient)=>{
+    setFormData((prev)=>({...prev, patientId:patient._id}))
+    setSelectedPatient(patient)
+    setSearch("")
+  }
+
+  const appointmentFormFields = [
+    [
+        {
+            label:"Doctor",
+            name:"doctorName",
+            type:"select",
+            options:doctorName
+        },
+        {
+            label:"Doctor Fee",
+            name:"doctorFee",
+            type:"number"
+        },
+    ],
+    [
+        {
+            label:"Appointment Date",
+            name:"appointmentDate",
+            type:"date"
+        },
+        {
+            label:"Payment Method",
+            name:"paymentMethod",
+            type:"select",
+            options:["Cash", "UPI", "Credit/Debit Cards"]
+        }
+    ]
+  ]
+
+  const handleDiscard = ()=>{
+    handleReset()
+    closeModal()
+  }
+
+  const handleSubmitForm = async()=>{
+    if(!formData) return;
+    const respone = await postData(formData)
+    if(respone === 201){
+        closeModal()
+        handleReset()
+        refetch()
+    }
+}
 
   return (
     <div className="flex items-center justify-center overflow-hidden w-[700px]">
