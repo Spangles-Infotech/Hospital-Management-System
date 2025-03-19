@@ -1,5 +1,5 @@
 const Patient = require("../models/patient.model")
-const { sendMessage, skipPage } = require("../utils/function")
+const { sendMessage, skipPage, setQuery } = require("../utils/function")
 
 const patient = async(req, res, next)=>{
     const additionalInfo = {
@@ -43,4 +43,19 @@ const patient = async(req, res, next)=>{
     }
 }
 
-module.exports = patient
+const getPatientInfo = async(req, res, next)=>{
+    try {
+        const {search} = req.query
+        const searchItems = ["mobileNumber.number", "patientId"]
+        let query = {}
+        if(search){
+            setQuery([], search, searchItems, query)
+            const patient = await Patient.find(query).select(["_id", "patientId",  "mobileNumber", "patientName"]).limit(4)
+            return sendMessage(res, 200, "Data fetched successfully", patient)
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = {patient, getPatientInfo}

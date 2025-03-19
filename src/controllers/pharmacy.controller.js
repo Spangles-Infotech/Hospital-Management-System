@@ -4,13 +4,11 @@ const MedicineInfo = require("../models/medicineInfo.model")
 const PaymentInfo = require("../models/paymentInfo.model")
 const { Supplier, Purchase, Stock, Tag } = require("../models/pharmacy.model")
 const PrescriptionInfo = require("../models/prescriptionInfo.model")
-const { getPurchaseHistoryPipeline, getAllPrescriptionPipeline } = require("../pipeline/pharmacy.pipeline")
-const { sendMessage, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage } = require("../utils/function")
-
-
-
+const { getPurchaseHistoryPipeline, getPrescriptionById, getAllPrescriptionPipeline } = require("../pipeline/pharmacy.pipeline")
+const { sendMessage, transformPurchaseData, orderNumber, supplierNumber, productNumber, skipPage, setQuery } = require("../utils/function")
 
 // prescription controller 
+
 const prescription = async(req,res,next)=>{
     try {
         const {medicines,totalAmount, totalQuantity, bills} = req.body
@@ -25,8 +23,8 @@ const prescription = async(req,res,next)=>{
         }
         if(req.method === "GET"){
             if(appointmentId){
-                const prescription = await Appointment.findById(appointmentId).populate("patientId").populate("medicineInfo").populate("paymentInfo").populate("opBillingInfo")
-                return sendMessage(res, 200, "Data Fetched Successfully", prescription)
+                const prescription = await Appointment.aggregate(getPrescriptionById(appointmentId))
+                return sendMessage(res, 200, "Data Fetched Successfully", prescription[0])
             }
             const prescriptions = await PrescriptionInfo.aggregate(getAllPrescriptionPipeline)
             return sendMessage(res, 200, "Data Fetch Successfully", prescriptions)
@@ -51,10 +49,15 @@ const prescription = async(req,res,next)=>{
 const stocks = async(req,res,next)=>{
     try {
         const {stockId} = req.params
-        const {page, limit=15} = req.query
+        const {page, limit=15, search, from, to,} = req.query
+        const searchItems = ["productName", "productCode", "hsnCode", "category"]
         const {productName} = req.body
         let query = {} 
         if(req.method === "POST"){
+            const stock = await Stock.findOne({productName:productName.trim()})
+            if(stock){
+                return sendMessage(res, 404, "Product already exists")
+            }
             await Stock.create({...req.body, productName:productName.trim()})
             return sendMessage(res, 200, "Stock Stored Successfully")
         }
@@ -63,13 +66,26 @@ const stocks = async(req,res,next)=>{
                 const stock = await Stock.findById(stockId)
                 return sendMessage(res, 200, "Data Fetched Successfully", stock)
             }
-            const stocks  = await Stock.find(query).sort({_id:-1}).limit(limit).skip(skipPage(page, limit))
+            setQuery([], search, searchItems, query, from, to, "stockDate")
+            const stocks  = await Stock.find(query).limit(limit).skip(skipPage(page, limit))
             const total = await Stock.countDocuments(query)
             return sendMessage(res, 200, "Data Fetched Successfully", stocks, total)
         }
         if(req.method === "PUT"){
             await Stock.findByIdAndUpdate(stockId, req.body, {new:true})
             return sendMessage(res, 200, "Data Updated Successfully")
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getStockName = async(req,res, next)=>{
+    const {productName} = req.body
+    try {
+        const stock = Stock.findOne({productName:productName.trim()})
+        if(stock){
+            return sendMessage(res, 200, "Product already exists")
         }
     } catch (error) {
         next(error)
@@ -92,7 +108,7 @@ const getMedicineDetails = async (req, res, next) => {
             return sendMessage(res, 400, "Medicine name is required");
         }
         const result = await Stock.findOne({ productName: medicineName })
-        .select(["category", "gst","productCode", "totalQuantity", "hsnCode", "pack"]);
+        .select(["category", "gst","productCode", "totalQuantity", "hsnCode", "pack", "unit"]);
         if (!result) {
             return sendMessage(res, 404, "Medicine not found");
         }
@@ -106,7 +122,8 @@ const getMedicineDetails = async (req, res, next) => {
 const supplier = async(req,res,next)=>{
     try {
         const {supplierId} = req.params
-        const {page, limit=15} = req.query
+        const {page, limit=15, search} = req.query
+        const searchItems = ["supplierId", "supplierName", "phoneNumber", "email"]
         let query = {}
         if(req.method === "POST"){
             await Supplier.create(req.body)
@@ -127,7 +144,8 @@ const supplier = async(req,res,next)=>{
                 }
                 return sendMessage(res, 200, "Data Fetched Successfully", supplier)
             }
-            const suppliers = await Supplier.find(query).sort({_id:-1}).limit(limit).skip(skipPage(page, limit))
+            setQuery([], search, searchItems, query)
+            const suppliers = await Supplier.find(query).limit(limit).skip(skipPage(page, limit))
             const total = await Supplier.countDocuments(query)
             return sendMessage(res, 200, "Data Fetched Successfully", suppliers, total)
         }
@@ -168,9 +186,10 @@ const getAllSupplierName = async(req,res,next)=>{
 const purchase = async(req,res, next)=>{
     try {
         let query = {}
-        const {page, limit} = req.query
+        const {page, limit=15, search, from, to,} = req.query
         const {medicines, netAmount, finalAmount, totalQuantity} = req.body
         const {purchaseId, supplierId} = req.params
+        const searchItems = ["orderNumber", "invoiceNumber", "purchaseDate", "supplierName"]
         if(req.method === "POST"){
             const medicine = await MedicineInfo.create({medicines:medicines, totalAmount:netAmount, totalQuantity:totalQuantity})
             const paymentInfo = await PaymentInfo.create(req.body)
@@ -197,17 +216,15 @@ const purchase = async(req,res, next)=>{
         }
         if(req.method === "GET"){
             if (purchaseId) {
-                const purchase = await Purchase.findById(purchaseId)
-                    .populate("medicineInfo")
-                    .populate("paymentInfo");
-            
+                const purchase = await Purchase.findById(purchaseId).populate("medicineInfo").populate("paymentInfo");
                 if (!purchase) {
                     return sendMessage(res, 404, "Purchase not found");
                 }
                 const transformedPurchase = transformPurchaseData(purchase)
                 return sendMessage(res, 200, "Data Fetched Successfully", transformedPurchase);
             }
-            const purchases = await Purchase.find(query).select(["orderNumber", "invoiceNumber", "purchaseDate", "supplierName"]).populate("medicineInfo", "totalQuantity").populate("paymentInfo", "netAmount").sort({_id:-1}).limit(limit).skip(skipPage(page, limit))
+            setQuery([], search, searchItems, query, from, to, "date")
+            const purchases = await Purchase.find(query).select(["orderNumber", "invoiceNumber", "purchaseDate", "supplierName"]).populate("medicineInfo", "totalQuantity").populate("paymentInfo", "netAmount").limit(limit).skip(skipPage(page, limit))
             const total = await Purchase.countDocuments(query)
             return sendMessage(res, 200, "Data fetched Succesfully", purchases, total)
         }
@@ -278,16 +295,15 @@ const getPurchaseDetailsByMedicineName = async(req,res, next) => {
 const tags = async (req, res, next) => {
     try {
         const { tag } = req.query;
-        const { medicineCategory, packsCategory, gstCategory, strengthCategory } = req.body;
+        const { medicineCategory, unitsCategory, gstCategory, strengthCategory } = req.body;
 
         if (req.method === "POST") {
             const newTag = {};
 
             if (medicineCategory) newTag.category = [{ title: medicineCategory }];
-            if (packsCategory) newTag.packs = [{ title: packsCategory }];
+            if (unitsCategory) newTag.unit = [{title: unitsCategory}];
             if (gstCategory || gstCategory === 0) newTag.gst = [{ title: gstCategory }];
             if (strengthCategory) newTag.strength = [{ title: strengthCategory }];
-
             if (Object.keys(newTag).length > 0) {
                 await Tag.create(newTag);
                 return sendMessage(res, 201, "Data Added Successfully");
@@ -300,14 +316,13 @@ const tags = async (req, res, next) => {
             let field = "";
 
             if (tag === "medicineCategory") field = "category.title";
-            if (tag === "packsCategory") field = "packs.title";
+            if (tag === "unitsCategory") field = "unit.title";
             if (tag === "gstCategory") field = "gst.title";
             if (tag === "strengthCategory") field = "strength.title";
 
             if (!field) {
                 return sendMessage(res, 400, "Invalid tag parameter");
             }
-            
             const data = await Tag.distinct(field)
 
             return sendMessage(res, 200, "Data fetched successfully", data);
@@ -327,4 +342,4 @@ const getAllMedicineName = async(req,res,next)=>{
 }
 
 
-module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, tags, getAllMedicineName, getPurchaseDetailsByMedicineName}
+module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, tags, getAllMedicineName, getPurchaseDetailsByMedicineName, getStockName}

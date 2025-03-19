@@ -5,7 +5,7 @@ const { sendMessage, skipPage } = require("../utils/function")
 const doctor = async(req, res, next)=>{
 
     const {userId} = req.params
-    const {page, limit=15} = req.query
+    const {page, limit=15, isName} = req.query
     const {id, timing, doctorFee} = req.body
     let query = {}
     try {
@@ -21,6 +21,11 @@ const doctor = async(req, res, next)=>{
                     return sendMessage(res, 404, "No Doctor Found")
                 }
                 return sendMessage(res, 200, "Doctor Fetched Successfully", doctor)
+            }
+            if(isName){
+                const distinctUserIds = await Doctor.distinct("userId"); 
+                const doctors = await User.find({ _id: { $in: distinctUserIds } }).distinct("name"); 
+                return sendMessage(res, 200, "Doctors Fetched Successfully", doctors);
             }
             const doctors = await Doctor.find(query).populate("userId").sort({_id:-1}).limit(limit).skip(skipPage(page, limit))
             return sendMessage(res, 200, "Doctors Fetched Successfully", doctors)
@@ -44,4 +49,17 @@ const doctor = async(req, res, next)=>{
     }
 }
 
-module.exports = doctor
+const getDoctorFee = async (req, res, next) => {
+    try {
+        const { name } = req.params;
+        const user = await User.findOne({ name }).select("_id");
+        if (!user) return sendMessage(res, 404, "Doctor not found");
+        const fees = await Doctor.findOne({ userId: user._id }).distinct("fee");
+        return sendMessage(res, 200, "Doctor Fee Fetched Successfully", fees);
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+module.exports = {doctor, getDoctorFee}

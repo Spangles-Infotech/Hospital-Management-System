@@ -30,15 +30,18 @@ const blockSchema = mongoose.Schema({
 
 const Block = mongoose.model("Block", blockSchema)
 
-
 const roomInfoSchema = mongoose.Schema({
     roomNo:String,
     blockNo:String,
     dischargeDate:Date,
     admittedDate:Date,
-    totalDays:Number
+    totalDays:Number,
+    status:{
+        type:String,
+        enum:["Pending", "Allocated"],
+    }
 })
 
-const roomInfo = mongoose.model("roomInfo", roomInfoSchema)
+const RoomInfo = mongoose.model("roomInfo", roomInfoSchema)
 
-module.exports = { Room , Block, roomInfo}
+module.exports = { Room , Block, RoomInfo}

@@ -2,9 +2,8 @@ const Vital = require("../models/vitals.model")
 const { sendMessage, transformRegisteredOpData } = require("../utils/function")
 const Appointment = require("../models/appointment.modal")
 const MedicalReport = require("../models/medicalReport.model")
-const { prescription } = require("./pharmacy.controller")
 const PrescriptionInfo = require("../models/prescriptionInfo.model")
-// const { medicalReportPipeline } = require("../pipeline/registerop.pipeline")
+const { RoomInfo } = require("../models/rooms.model")
 
 const registeredOp = async(req, res,next)=>{
     try {
@@ -16,13 +15,13 @@ const registeredOp = async(req, res,next)=>{
        if(req.method === "GET"){
         if(appointmentId){
             const registeredOp = await MedicalReport.findOne({appointment:appointmentId}).populate("appointment").populate("patient").populate("vital").populate("prescriptionInfo")
-            const transformedData = transformRegisteredOpData(registeredOp)
             if(!registeredOp){
                 return sendMessage(res,"404", "Appointment Not Found")
             }
+            const transformedData = transformRegisteredOpData(registeredOp)
             return sendMessage(res, 200, "Registered Op fetched Successfully", transformedData)
         }
-        const registeredOps = await Appointment.find().populate("patientId")
+        const registeredOps = await Appointment.find({patientType:"OP"}).populate("patientId")
         return sendMessage(res, 200, "Registered Ops fetched Successfully", registeredOps)
        }
        if(req.method === "PUT"){
@@ -56,11 +55,16 @@ const vitals = async(req,res, next)=>{
 
 const medicalReports = async(req,res, next)=>{
     try {
-        const {appointmentId} = req.body
+        const {appointmentId, patientType} = req.body
         const isMedicalReports = await MedicalReport.findOne({appointment:appointmentId})
         if(isMedicalReports){
+            if(patientType === "IP"){
+                const room = await RoomInfo.create({status:"Pending"})
+                await MedicalReport.updateOne({appointment:appointmentId}, {$set:{roomInfo:room._id}})
+            }
             const prescription = await PrescriptionInfo.create({ prescriptions:req?.body?.prescription, appointmentId:appointmentId, patientId:isMedicalReports.patient })
             await MedicalReport.updateOne({appointment:appointmentId}, {$set:{diagnosis:req.body.diagnosis, otherReports:req.body.otherReports, labTests:req.body.labTests, otherServices:req.body.otherServices, prescriptionInfo:prescription._id }}, {new:true})
+            await Appointment.findByIdAndUpdate(appointmentId, {patientType:patientType, status:"consulted"})
             return sendMessage(res, 200, "Medical Report Updated Successfully")
         }else{
             return sendMessage(res, 404, "Patient's Medical Report not found")
