@@ -13,7 +13,7 @@ import { useStock } from '../../../hooks/useStock'
 const PurchaseForm = ({isEdit=false}) => {
 
   const {id} = useParams()
-  const {data:medicineNameData, fetchData:refetch} = useFetchData("/get-all-medicine-name")
+  const {medicineNameData, medicineRefetch:refetch} = useStock()
   const {setFormData, formData, currentMedicalIndex, getHistoryWithMedicineName} = useForm()
   const {stockFormField, categoryData} = useStock()
   const {openSidebarModal} = useSidebarModal()
