@@ -77,6 +77,11 @@ export const adminSidebarData = [
         path:"/admin/labs",
     },
     {
+        name:"IP Billing",
+        icon:"ipbilling",
+        path:"/admin/ip-billing",
+    },
+    {
         name:"Settings",
         icon:"settings",
         path:"/admin/settings",

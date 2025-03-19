@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const fetch = axios.create({
-    // baseURL:"https://hospital-backend-ke9i.onrender.com/api",
+    baseURL:"https://hospital-backend-ke9i.onrender.com/api",
     // baseURL:"https://anakuzhi-asan.onrender.com/api",
-    baseURL:"http://localhost:3500/api",
+    // baseURL:"http://localhost:3500/api",
 })

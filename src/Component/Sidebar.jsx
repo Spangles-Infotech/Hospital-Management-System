@@ -17,6 +17,7 @@ import { adminSidebarData } from '../utils/variable/sidebar';
 import { useNavigate } from 'react-router-dom';
 import { ArrowIcon } from '../icons/ArrowIcon';
 import { useForm } from '../context/FormContext';
+import {IpBillingIcon} from '../icons/IpBillingIcon'
 
 export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}) => {
 
@@ -53,6 +54,8 @@ export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}
         labs:<LabIcon />,
         settings:<SettingsIcon />,
         reports: <ReportIcon />,
+        ipbilling:<IpBillingIcon/>,
+
     }
 
   return (
