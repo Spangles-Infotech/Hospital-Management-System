@@ -29,7 +29,9 @@ const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false})
   useEffect(() => {
     if (isEdit && count) {
       for(let i = 1; i <= count; i++){
-        setRow((prev)=>([...prev, fields]))
+        if(row <= count){
+          setRow((prev)=>([...prev, fields]))
+        }
       }
     }
   }, [count, isEdit]);
