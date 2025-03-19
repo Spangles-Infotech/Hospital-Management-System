@@ -53,7 +53,6 @@ export const useStock = () => {
         }
     ]
 
-   
 
     const getProductCode = async()=>{
         try {
