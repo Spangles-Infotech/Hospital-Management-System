@@ -26,7 +26,7 @@ export const SearchDropdown = ({value, name, label, options, errors, onChange })
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 h-[50px]"
         />
         {showDropdown && (
-            <ul className="absolute w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+            <ul className="absolute w-full  bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto mt-[102px]">
             {filterByQuery()?.length > 0 ? (
                 filterByQuery().map((item, index) => (
                 <li
