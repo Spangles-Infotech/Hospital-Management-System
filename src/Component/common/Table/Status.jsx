@@ -3,9 +3,6 @@ import { StatusTag } from '../StatusTag'
 import { getStatusStyles } from '../../../utils/functions/function'
 
 export const Status = ({item, data}) => {
-    console.log("data", data.isInActive)
-
-
     const {bgColor, color} = getStatusStyles(data?.[item.path] || "fail")
     const isNormal = item.type === "normal"
   return (

@@ -96,60 +96,13 @@ export const TableValue=[
 ]
 
 
-export const vitalsField=[
+export const vitalsField = [
+    [{ label: "Temperature", name: "temperature", options: ["F","C","K"],inputName:"value", inputType:"text", dropdownName:"type", type: "inputdropdown", align:"right" }],
+    [{ label: "Pulse Rate", name: "pulseRate", type:"number" }],
+    [{ label: "Blood Pressure", name: "bloodPressure", type:"number"}],
     [
-        {
-            label:"Temperature",
-            name:"temperature",
-            type:"text"
-        }
+      { label: "Height", name: "height", options: ["cm","m","in","ft"],inputName:"value",dropdownName:"type", inputType:"number", type: "inputdropdown", align:"right"},
+      { label: "Weight", name: "weight", options: ["kg","g","lb"],inputName:"value",dropdownName:"type",inputType:"number",  type: "inputdropdown", align:"right" }
     ],
-    [
-        {
-            label:"Blood Pressure",
-            name:"bloodPressure",
-            type:"text"
-        }
-    ],
-    [
-        {
-            label:"Height",
-            name:"height",
-            type:"text"
-        },
-        {
-            label:"Weight",
-            name:"weight",
-            type:"text"
-        }
-    ],
-    [
-       {
-            label:"Symptoms",
-            name:"symptoms",
-            type:"text"
-       }
-    ],
-
-    [
-        {
-            label:"Test Name",
-            name:"testName",
-            type:"text"
-        },
-
-        {
-            label:"Consulted Doctor",
-            name:"consultedDoctor",
-            type:"text"
-        },
-
-        {
-            label:"Upload Document",
-            name:"photo",
-            type:"file",
-            title:"Upload Image"
-        }
-    ]
-
-]
+    [{ label: "Symptoms", name: "symptoms", type: "text" }]
+  ];

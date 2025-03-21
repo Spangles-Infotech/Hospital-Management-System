@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 import { fetch } from "../api/fetch";
 

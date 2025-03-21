@@ -5,12 +5,13 @@ import { Outlet, useParams } from "react-router-dom";
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
 import { useRegisteredOp } from "../../hooks/useRegisteredOp";
 import { useForm } from "../../context/FormContext";
+import { PatientTypeToggle } from "../../Component/common/PatientTypeToggle";
 
 const RegisteredOpPreview = () => {
 
   const {id} = useParams()
-  const {formData} = useForm()
-  const {tabs, activeTab, handleBackClick, handleArrowClick, handleTabClick, getMedicalData, handleSaveReports, handleChange} = useRegisteredOp()
+  const {formData, handleChange} = useForm()
+  const {tabs, activeTab, handleBackClick, handleArrowClick, handleTabClick, getMedicalData, handleSaveReports} = useRegisteredOp()
   const patientDetails = [
     { label: "Weight", value: "10Kg", subLabel: "(When born)" },
     { label: "Birth Time", value: "11:30 AM" },
@@ -32,23 +33,12 @@ const RegisteredOpPreview = () => {
             onClick={handleBackClick}
             className="text-2xl text-stone-600 cursor-pointer"
           />
-          <div className="flex gap-[20px] items-center">
-              <p className="font-bold text-red-800 text-xl">Token Number: {formData?.tokenNumber || "1"}</p>
-              <label
-                htmlFor="check"
-                className="bg-white border border-primary relative w-20 h-10 rounded-full flex items-center cursor-pointer"
-                name="patientType"
-                onChange={handleChange}
-      >
-                <div className="">
-                  <span className="ml-3">OP</span>{" "}
-                  <span className="text-right ml-4">IP</span>
-                </div>
-                <input type="checkbox" id="check" className="sr-only peer" />
-
-                <span className="w-2/5 h-4/5 bg-primary absolute rounded-full left-1 transition-all duration-300 ease-in-out peer-checked: peer-checked:translate-x-10"></span>
-              </label>
-          </div>
+         <div className="flex gap-[20px] items-center">
+          <p className="font-bold text-red-800 text-xl">
+            Token Number: {formData?.tokenNumber || "1"}
+          </p>
+          <PatientTypeToggle />
+        </div>
         </div>
         {/* <div className="border-primary border px-4 py-2 rounded-lg w-full max-w-sm">
           {patientDetails.map((detail, index) => (

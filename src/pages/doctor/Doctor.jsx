@@ -31,7 +31,6 @@ const Doctor = () => {
                     name:"eye",
                     title:"View Doctor",
                     onClick: (id)=>{ 
-                        console.log("edit docter id",id)
                         openModal(PreviewModal, {title:"Doctor Details", previewFields:doctorPreviewField},`/get-doctor/${id}`)
                     }
                 },
@@ -39,7 +38,6 @@ const Doctor = () => {
                     name:"edit",
                     title:"Edit",
                     onClick:(id)=>{
-                        console.log("edit docter id",id)
                         openModal(FormModal,{title:"enter docter",formField:editDocterPreview,refetch:refetch,isEdit:true,name:`/update-doctor/${id}`,id:id,getRoute:`/get-doctor/${id}`})}
                 },
                 {

@@ -6,7 +6,7 @@ import { useForm } from "../../context/FormContext";
 
 export const OtherSevices = () => {
   const { handleRegisterOpChange, registerOp, handleRegiterOpCancel, formData, handleAddToFormData, handleEditRegisterOP, handleDeleteRegisterOp } = useForm();
-  const otherServices = formData.otherServices || []; // Ensure it's always an array
+  const otherServices = formData?.otherServices || []; // Ensure it's always an array
 
   const [totalAmount, setTotalAmount] = useState(0);
 

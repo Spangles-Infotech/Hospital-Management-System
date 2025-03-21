@@ -1,15 +1,16 @@
 // RegisteredOP_1 Component
 import New_Appointment from "../../Component/modalContents/New_Appointment";
-import Vitals from '../../Component/modalContents/Vitals';
 import { Pagination } from '../../Component/common/Pagination';
 import { Table } from '../../Component/common/Table/Table';
 import { TableHeader } from '../../Component/common/Table/TableHeader';
-import { TableHeading } from '../../utils/variable/RegOp_nurse';
+import { TableHeading, vitalsField } from '../../utils/variable/RegOp_nurse';
 import { useModal } from '../../context/ModalContext';
 import { useRegisteredOp } from "../../hooks/useRegisteredOp";
-import { usePostData } from "../../hooks/usePostData";
+import { FormModal } from "../../Component/modalContents/FormModal";
+import { useForm } from "../../context/FormContext";
 
 const RegisteredOP_1 = () => {
+  const {setFormData} = useForm()
   const { openModal } = useModal();
   const { data, isLoading, refetch } = useRegisteredOp();
 
@@ -17,7 +18,6 @@ const RegisteredOP_1 = () => {
     {
       name: "New Appointment",
       onClick: () => {
-        console.log("Opening New Appointment Modal");
         openModal(New_Appointment, { title: "Add Appointments", refetch: refetch, name: "/register-appointment" });
       }
     }
@@ -26,9 +26,9 @@ const RegisteredOP_1 = () => {
   const actionData = [
     {
       name: "Action1",
-      onClick: () => {
-        console.log("Opening Vitals Modal");
-        openModal(Vitals, { title: "Add vitals", refetch: refetch, name: "/post-vitals" });
+      onClick: (id) => {
+        setFormData({appointmentId:id.id, patientId:id.patientId})
+        openModal(FormModal, { title: "Add vitals", formField: vitalsField, refetch: refetch, name: "/post-vitals" });
       }
     },
     { name: "Action2" }
@@ -37,7 +37,7 @@ const RegisteredOP_1 = () => {
   return (
     <section className="w-full p-7 font-roboto">
       <TableHeader title={"Registered OP"} buttonData={btnData} isDate={false} />
-      <Table tableHead={TableHeading} tableValue={data} actionData={actionData} isLoading={isLoading} />
+      <Table tableHead={TableHeading} tableValue={data} actionData={actionData} isLoading={isLoading} isPat={true} />
       <Pagination />
     </section>
   );

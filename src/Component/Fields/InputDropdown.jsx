@@ -13,7 +13,7 @@ export const InputDropdown = ({ label, name, options, inputName, dropdownName, o
                     <>
                         <select className="focus:outline-none rounded-l-md px-[10px]" onChange={onChange} name={dropdownName} value={value?.[name]?.[dropdownName] || "select"}>
                             {undefinedValue && <option>select</option>} 
-                            {options.map((item, index) => (
+                            {options?.map((item, index) => (
                                 <option value={item} key={index}>
                                     {item}
                                 </option>
@@ -35,7 +35,7 @@ export const InputDropdown = ({ label, name, options, inputName, dropdownName, o
                         <div className=" h-full w-[1px] flex justify-center items-center bg-[#DDDDDD]"><span></span></div>
                         <select className="focus:outline-none rounded-l-md px-[10px]" onChange={onChange} name={dropdownName} value={value?.[name]?.[dropdownName] || "select"}>
                             {undefinedValue && <option>select</option>} 
-                            {options.map((item, index) => (
+                            {options?.length > 0 && options?.map((item, index) => (
                                 <option value={item} key={index}>
                                     {item}
                                 </option>
