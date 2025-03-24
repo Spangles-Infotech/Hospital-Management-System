@@ -37,14 +37,14 @@ const registeredOp = async(req, res,next)=>{
 
 const vitals = async(req,res, next)=>{
     try {
-        const { appointmentId, patientId } = req.body
+        const { appointmentId, patientId, otherReports } = req.body
         if(req.method === "POST"){
             const vital = await Vital.create(req.body)
             const isMedicalReports = await MedicalReport.findOne({appointmentId:appointmentId})
             if(isMedicalReports){
-                await MedicalReport.updateOne({appointment:appointmentId}, {$set:{vital:vital._id}}, {new:true})
+                await MedicalReport.updateOne({appointment:appointmentId}, {$set:{vital:vital._id, otherReports:otherReports}}, {new:true})
             }else{
-                await MedicalReport.create({appointment:appointmentId, patient:patientId, vital:vital._id})
+                await MedicalReport.create({appointment:appointmentId, patient:patientId, vital:vital._id, otherServices:otherServices})
             }
             return sendMessage(res,"201", "Vitals Registered Successfully")
         }
@@ -60,10 +60,10 @@ const medicalReports = async(req,res, next)=>{
         if(isMedicalReports){
             if(patientType === "IP"){
                 const room = await RoomInfo.create({status:"Pending"})
-                await MedicalReport.updateOne({appointment:appointmentId}, {$set:{roomInfo:room._id}})
+                await Appointment.findByIdAndUpdate(appointmentId, {roomInfo:room._id}, {new:true})
             }
             const prescription = await PrescriptionInfo.create({ prescriptions:req?.body?.prescription, appointmentId:appointmentId, patientId:isMedicalReports.patient })
-            await MedicalReport.updateOne({appointment:appointmentId}, {$set:{diagnosis:req.body.diagnosis, otherReports:req.body.otherReports, labTests:req.body.labTests, otherServices:req.body.otherServices, prescriptionInfo:prescription._id }}, {new:true})
+            await MedicalReport.updateOne({appointment:appointmentId}, {$set:{diagnosis:req.body.diagnosis, labTests:req.body.labTests, otherServices:req.body.otherServices, prescriptionInfo:prescription._id }}, {new:true})
             await Appointment.findByIdAndUpdate(appointmentId, {patientType:patientType, status:"consulted"})
             return sendMessage(res, 200, "Medical Report Updated Successfully")
         }else{

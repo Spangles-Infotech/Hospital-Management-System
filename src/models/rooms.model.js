@@ -34,7 +34,10 @@ const roomInfoSchema = mongoose.Schema({
     roomNo:String,
     blockNo:String,
     dischargeDate:Date,
-    admittedDate:Date,
+    admittedDate:{
+        type:Date,
+        default:Date.now
+    },
     totalDays:Number,
     status:{
         type:String,
