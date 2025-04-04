@@ -19,7 +19,7 @@ const Stocks = () => {
    {
       data?.length > 0 &&
       <Pagination total={total} />
-    }
+   }
   </section>
   )
 }

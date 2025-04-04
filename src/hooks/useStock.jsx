@@ -36,7 +36,7 @@ export const useStock = () => {
         }
     ]
 
-    // useEffect(()=>{
+    // useEffect(() => {
     //   if(formData?.["productName"]){
     //     isProductExits()
     //   }

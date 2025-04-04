@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import notificationIcon from "../assests/notification.png";
 import profileIcon from "../assests/profile.png";
+import { HiMenuAlt1 } from "react-icons/hi";
+import { IoClose } from "react-icons/io5";
 
 const Header = () => {
+
   return (
     <header className="py-5 w-full bg-white fixed z-50 ">
       <div className="flex items-center justify-between px-10 w-full">
-
+         
         <div className="py-4">
           <h1 className="text-3xl font-medium text-primary font-roboto">Gunam Hospital</h1>
           {/* <p className="text-primary text-sm">Product by Spangles Infotech</p> */}
