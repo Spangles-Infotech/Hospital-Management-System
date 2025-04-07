@@ -1,5 +1,5 @@
 const express = require("express")
-const ipPatient = require("../controllers/ipBilling.controller")
+const {ipPatient, ipBilling} = require("../controllers/ipBilling.controller")
 
 const ipRouter = express.Router()
 
@@ -9,5 +9,8 @@ ipRouter.get("/get-ip-patient/:appointmentId", ipPatient)
 ipRouter.put("/discharge-room/:roomId", ipPatient)
 ipRouter.put("/change-room/:blockId", ipPatient)
 
+// ip-billling routes
+
+ipRouter.get("/get-all-ip-billing", ipBilling)
 
 module.exports = ipRouter

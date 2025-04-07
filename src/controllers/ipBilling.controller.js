@@ -1,6 +1,6 @@
 const Appointment = require("../models/appointment.modal")
 const { RoomInfo, Room } = require("../models/rooms.model")
-const { billingPipeline, getInpatientById } = require("../pipeline/billing.pipeline")
+const { billingPipeline, getInpatientById, ipBillingPipeline } = require("../pipeline/billing.pipeline")
 const { sendMessage } = require("../utils/function")
 
 const ipPatient = async(req,res,next)=>{
@@ -32,9 +32,9 @@ const ipPatient = async(req,res,next)=>{
         }
         if(req.method === "PUT"){
             if(roomId){
-                const roomInfo = await  RoomInfo.findOne({roomNo:roomId})
+                const roomInfo = await RoomInfo.findById(roomId)
                 if(!roomInfo){
-                    return sendMessage(res, 404, "Room not found")
+                    return sendMessage(res, 200, "Room not found")
                 }
                 const admittedDate = new Date(roomInfo.admittedDate)
                 const dischargeDate = new Date()
@@ -42,9 +42,9 @@ const ipPatient = async(req,res,next)=>{
                 const timeDiff = dischargeDate - admittedDate
                 const totalDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24))
     
-                await RoomInfo.updateOne({roomNo:roomId}, {$set:{status:"Discharged", dischargeDate:dischargeDate, totalDays:totalDays}})
-                await Room.findByIdAndUpdate(roomId, {roomStatus:"Vacant"})
-                res.status(200).json({ message: "Room discharged and updated successfully" });
+                await RoomInfo.findByIdAndUpdate(roomId, {status:"Discharged", dischargeDate:dischargeDate, totalDays:totalDays}, {new:true})
+                await Room.updateOne({roomNo:roomInfo.roomNo}, {$set:{roomStatus:"Vacant"}})
+                return sendMessage(res, 200, "Room discharged and updated successfully" )
             }
             if(blockId){
                 const roomInfo = await RoomInfo.findById(blockId)
@@ -52,6 +52,10 @@ const ipPatient = async(req,res,next)=>{
                     return sendMessage(res, 404, "Room not found")
                 }
                 const oldRoomNo = roomInfo.roomNo
+
+                if(oldRoomNo === req.body.roomNo){
+                    return sendMessage(res, 400, "Room number cannot be same")
+                }
 
                 await Room.updateOne({roomNo:oldRoomNo},{$set:{roomStatus:"Vacant"}})
 
@@ -68,14 +72,15 @@ const ipPatient = async(req,res,next)=>{
     }
 }
 
-// const ipBilling = async(req,res,next)=>{
-//     try {
-//         if(req.method === "GET"){
-//             const data = await  Appointment
-//         }
-//     } catch (error) {
-//         next(error)
-//     }
-// }
+const ipBilling = async(req,res,next)=>{
+    try {
+        if(req.method === "GET"){
+            const data = await  Appointment.aggregate(ipBillingPipeline)
+            return sendMessage(res, 200, "Data fetched Successfully", data)
+        }
+    } catch (error) {
+        next(error)
+    }
+}
 
-module.exports = ipPatient
+module.exports = {ipPatient, ipBilling}

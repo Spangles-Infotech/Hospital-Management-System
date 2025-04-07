@@ -114,6 +114,7 @@ const getInpatientById = (appointmentId)=>{
           symptoms: "$vital.symptoms",
           blockNo:"$roomDetails.blockNo",
           roomNo:"$roomDetails.roomNo",
+          roomInfoId:"$roomDetails._id",
           'status': '$roomDetails.status'
 
         }
@@ -168,22 +169,30 @@ const ipBillingPipeline = [
     }
   },
   {
-    '$match':{
-      "roomRentDetails._id" : "$roomDetails.roomNo"
+    $addFields: {
+      roomRentDetails: {
+        $filter: {
+          input: "$roomRentDetails",
+          as: "rentDetail",
+          cond: {
+            $eq: ["$$rentDetail.roomNo", "$roomDetails.roomNo"]
+          }
+        }
+      }
     }
   },
   {
-    '$unwind': {
-      'path': "$roomRentDetails",
-      'preserveNullAndEmptyArrays': true
+    $unwind: {
+      path: "$roomRentDetails",
+      preserveNullAndEmptyArrays: false
     }
   },
   {
-    '$addFields': {
-      'totalRent': {
-        '$multiply': [
-          { '$toDouble': "$roomRentDetails.rent" },
-          "$roomDetails.totalDays"
+    $addFields: {
+      totalRent: {
+        $multiply: [
+          { $toDouble: "$roomRentDetails.rent" },
+          { $toDouble: "$roomDetails.totalDays" }
         ]
       }
     }
@@ -200,12 +209,13 @@ const ipBillingPipeline = [
       'section': '$roomDetails.blockNo', 
       'status': '$roomDetails.status',
       'noOfDays': "$roomDetails.totalDays",
-      'from':"$roomDetials.admittedDate",
+      'from':"$roomDetails.admittedDate",
       'to':"$roomDetails.dischargeDate",
       'status':"$roomDetails.paymentStatus",
-      "amount":"totalRent"
+      "amount":"$totalRent",
+      "rent":"$roomRentDetails.rent",
     }
   }
 ]
 
-module.exports = { billingPipeline, getInpatientById}
+module.exports = { billingPipeline, getInpatientById, ipBillingPipeline}
