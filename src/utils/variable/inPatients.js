@@ -5,47 +5,32 @@ export const inPatientTableHeadiing = [
     },
     {
         name:"Patient Id",
-        path1:"patientId",
-        path2:"patientId",
-        isNested:true
+        path:"patientId",
     },
     {
         name:"Patient Name",
-        path1:"patientId",
-        path2:"patientName",
-        path3:"name",
-        isDoubleNested:true
+        path:"patientName",
     },
     {
         name:"Age",
-        path1:"patientId",
-        path2:"age",
-        isNested:true
+        path:"age",
     },
     {
         name:"Gender",
-        path1:"patientId",
-        path2:"gender",
-        isNested:true
+        path:"gender",
     },
     {
         name:"Blood Group",
-        path1:"patientId",
-        path2:"bloodGroup",
-        isNested:true
+        path:"bloodGroup",
     },
     {
         name:"Phone Number",
-        path1:"patientId",
-        path2:"mobileNumber",
-        path3:"number",
-        isDoubleNested:true
+        path:"phoneNumber",
 
     },
     {
         name:"Room No.",
-        path1:"patientId",
-        path2:"roomNumber"
+        path:"roomNumber"
     },
     {
         name:"Status",

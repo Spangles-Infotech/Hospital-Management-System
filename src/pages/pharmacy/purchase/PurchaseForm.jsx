@@ -13,9 +13,8 @@ import { useStock } from '../../../hooks/useStock'
 const PurchaseForm = ({isEdit=false}) => {
 
   const {id} = useParams()
-  const {data:medicineNameData, fetchData:refetch} = useFetchData("/get-all-medicine-name")
   const {setFormData, formData, currentMedicalIndex, getHistoryWithMedicineName} = useForm()
-  const {stockFormField, categoryData} = useStock()
+  const {stockFormField, categoryData, medicineNameData, medicineNamerefetch, } = useStock()
   const {openSidebarModal} = useSidebarModal()
   const {handleBackToPurchase, handleSavePurchase,getOrderId, NewPurchaseField} = usePurchase()
   const tableHeader =[ "MEDICINE NAME", "HSN", "MEDICINE CATEGORY", "BATCH NO.", "EXP DATE", "QTY","FREE", "UNIT","T.QTY", "P.RATE", "MRP", "DIS%", "GST%", "AMOUNT"]
@@ -67,7 +66,7 @@ const PurchaseForm = ({isEdit=false}) => {
       <div className='flex justify-end mt-5'>
         <div
             role="button" 
-            onClick={()=>openSidebarModal(stockFormField, false, "", refetch)}
+            onClick={()=>openSidebarModal(stockFormField, false, "", medicineNamerefetch)}
             className="flex flex-row gap-1 items-center px-3 py-1 h-[30px] 2xl:h-[35px] border border-primary text-white transition-all duration-500 bg-primary rounded text-sm space-x-2 hover:bg-white hover:text-primary fill-white focus:ring-4 focus:ring-teal-200 cursor-pointer hover:fill-primary"
         >
             <AddIcon /> 

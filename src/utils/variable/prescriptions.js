@@ -155,6 +155,29 @@ export const PrescriptionTableHeading=[
     path:"days"
   }
 ]
+export const medicineDetailTableHeading=[
+  {
+    name:"Medicine Name",
+    path:"productName"
+  },
+  {
+    name:"Batch No.",
+    path:"batchNumber"
+  },
+  {
+    name:"Exp Date",
+    path:"expiryDate",
+    date:true
+  },
+  {
+    name:"Available Quanity",
+    path:"totalQuantity"
+  },
+  {
+    name:"Sales Price",
+    path:"salePrice"
+  }
+]
 
 export const PrescriptionTableValue=[
   {

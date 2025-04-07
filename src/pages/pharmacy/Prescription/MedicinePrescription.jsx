@@ -4,11 +4,10 @@ import { Form } from "../../../Component/common/Form";
 import { useForm } from "../../../context/FormContext";
 import { useFetchData } from "../../../hooks/useFetchData";
 
-const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false}) => {
+const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false, isPres=false}) => {
 
   const {formData, handleTimingChange, errors, setFormData, medicineQuery, currentMedicalIndex, updateMedicalDetail} = useForm()
-
-  const {data:medicineData} = useFetchData( "/get-medicine-detail",`medicineName=${medicineQuery[currentMedicalIndex]?.medicineName}`)
+  const {data:medicineData} = useFetchData( "/get-medicine-detail",`medicineName=${medicineQuery[currentMedicalIndex]?.medicineName || ""}&batchNumber=${ isPres ? medicineQuery[currentMedicalIndex]?.batchNumber ?? ""  : ""}`)
 
   const [row, setRow] = useState([])
 
@@ -99,10 +98,10 @@ const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false})
             <td>
               <div className="flex gap-[20px] items-center">
                 <p>Total</p>
-                <p>{formData?.["totalQuantity"]}</p>
+                <p>{title === "bills" ? formData?.["totalBillQuantity"] :formData?.["totalQuantity"]}</p>
               </div>
             </td>
-            <td className="border-l border-primary text-center align-middle">{formData?.["netAmount"]}</td>
+            <td className="border-l border-primary text-center align-middle">{ title === "bills" ? formData?.["totalBillAmount"] :formData?.["totalMedicineAmount"]}</td>
           </tr>
         </tbody>
       </table>

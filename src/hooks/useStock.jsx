@@ -13,6 +13,7 @@ export const useStock = () => {
     const {openModal} = useModal()
     const {handleReset, formData} = useForm()
     const {data} = useFetchData("/get-all-generic-name")
+    const {data:medicineNameData, fetchData:medicineNamerefetch} = useFetchData("/get-all-medicine-name")
     const {data:categoryData, fetchData:refetch} = useFetchData('/get-tags?tag=medicineCategory')
     const {data:strengthData, fetchData:strengthRefetch} = useFetchData('/get-tags?tag=strengthCategory')
     const {data:packsData, fetchData:packRefetch} = useFetchData('/get-tags?tag=unitsCategory')
@@ -82,6 +83,6 @@ export const useStock = () => {
 
 
   return {
-    stockButtonData, stockActionData, getProductCode, stockFormField, categoryData, strengthData, packsData, gstData, addStockButtonData, stockEditFormField
+    stockButtonData, medicineNameData, medicineNamerefetch, stockActionData, getProductCode, stockFormField, categoryData, strengthData, packsData, gstData, addStockButtonData, stockEditFormField
   }
 }

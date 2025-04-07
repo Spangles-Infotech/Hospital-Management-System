@@ -3,36 +3,40 @@ import MedicinePrescription from "./MedicinePrescription";
 import PatientDetail from "./PatientDetail";
 import { Print } from "../../../Component/common/Print";
 import { Table } from "../../../Component/common/Table/Table";
-import { PrescriptionTableHeading, PrescriptionTableValue } from "../../../utils/variable/prescriptions";
+import { PrescriptionTableHeading, medicineDetailTableHeading } from "../../../utils/variable/prescriptions";
 import Payment_Prescription from "./Payment_Prescription";
 import { useParams } from "react-router-dom";
 import { usePrescription } from "../../../hooks/usePrescription";
-
+import { useStock } from "../../../hooks/useStock";
+import { useFetchData } from "../../../hooks/useFetchData";
+import { useForm } from "../../../context/FormContext";
 
 const PrescriptionPreview = ({ visibleComponents = ["PaymentType",  "Total"] }) => {
 
   const {id} = useParams()
-  const {formData, getPrescriptionDetail} = usePrescription()
-
+  const {currentMedicalIndex, medicineQuery, setFormData} = useForm()
+  const {formData, getPrescriptionDetail, handlePostPrescriptionData, handleBackToPrescription} = usePrescription()
+  const {categoryData, medicineNameData, medicineNamerefetch, } = useStock()
+  const {data:medicineData, isLoading} = useFetchData("/get-all-stock", `search=${medicineQuery[currentMedicalIndex]?.medicineName || ""}`)
   useEffect(()=>{
     if(id){
       getPrescriptionDetail(id)
+      setFormData({appointmentId:id})
     }
   },[id])
 
-  console.log("formData?.[prescription]", formData?.["prescriptions"])
-
-  const tableHeader = ["MEDICINE CATEGORY", "MEDICINE NAME", "BATCH NO", "EXP DATE", "QTY | AVA QTY", "SALE PRICE", "DISCOUNT", "GST", "AMOUNT"]
+  const tableHeader = ["MEDICINE NAME", "MEDICINE CATEGORY", "BATCH NO", "EXP DATE", "QTY", "AVA QTY", "SALE PRICE", "DISCOUNT", "GST", "AMOUNT"]
   const fields = [
-    { label:"", name:"medicineCategory", "type":"select", "options":["Tablet", "Medicine", "Syrup"]},
-    { label:"", name:"medicineName", "type":"text"},
+    { label:"", name:"medicineName", "type":"select", options:medicineNameData},
+    { label:"", name:"medicineCategory", "type":"select", "options":categoryData},
     { label: "", name:"batchNumber", "type": "text"},
-    { label: "", name:"expiredDate", "type": "text"},
-    { label: "", name:"quantity", "type": "text"},
-    { label: "", name:"salesPrice", "type": "text"},
-    { label: "", name:"discount", "type": "select", "options": ["5%", "10%", "15%", "20%"]},
-    { label: "", name:"gst", "type": "select", "options": ["5%", "10%", "15%", "20%"]},
-    { label: "", name:"amount", "type": "text"},
+    { label: "", name:"expiryDate", "type": "date"},
+    { label: "", name:"quantity", "type": "number"},
+    { label: "", name:"totalQuantity", "type": "number"},
+    { label: "", name:"salePrice", "type": "number"},
+    { label: "", name:"discount", "type": "number"},
+    { label: "", name:"gst", "type": "number"},
+    { label: "", name:"amount", "type": "number"},
   ]
 
   const data = [
@@ -44,7 +48,7 @@ const PrescriptionPreview = ({ visibleComponents = ["PaymentType",  "Total"] }) 
   const fields1 =[
     {label:"", name:"sino","type":"text"},
     {label:"",name:"feeName","type":"text"},
-    {label:"",name:"amount","type":"text"},
+    {label:"",name:"amount","type":"number"},
   ]
 
   const data1 = [
@@ -63,11 +67,18 @@ const PrescriptionPreview = ({ visibleComponents = ["PaymentType",  "Total"] }) 
       </div>
       <PatientDetail/>
       <div className=" border border-primary mt-10 rounded-lg p-0.5"><Table tableHead={PrescriptionTableHeading} tableValue={formData?.["prescriptions"]}/></div>
-      <MedicinePrescription tableHeader={tableHeader} fields={fields} data={data} />
-      <MedicinePrescription tableHeader={tableHeader1} fields={fields1} data={data1}/>
-      <Payment_Prescription/>
+      <MedicinePrescription tableHeader={tableHeader} fields={fields} data={data} isPres={true} title={"medicines"} />
+      {
+        medicineQuery[currentMedicalIndex]?.medicineName && medicineData?.length > 0 &&
+        <div className="mt-[50px]">
+          <Table tableHead={medicineDetailTableHeading} tableValue={medicineData} />
+        </div>
+      }
+      <MedicinePrescription tableHeader={tableHeader1} fields={fields1} data={data1} title={"bills"}/>
+      <Payment_Prescription id={id} handleClick={handlePostPrescriptionData}  handleDiscard={handleBackToPrescription}/>
     </section>
   );
 };
 
 export default PrescriptionPreview;
+

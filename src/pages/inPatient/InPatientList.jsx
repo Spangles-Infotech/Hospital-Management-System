@@ -19,7 +19,7 @@ const InPatientList = () => {
     },
     {
       name:"bed",
-      onClick: ()=>{navigate("allocate-room")}
+      onClick: (id)=>{navigate(`allocate-room/${id}`)}
     }
   ]
   

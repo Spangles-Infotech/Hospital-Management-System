@@ -12,7 +12,7 @@ export default [
                 element:<InPatientList />
             },
             {
-                path:"allocate-room",
+                path:"allocate-room/:id",
                 element:<InpatientAllocateRoom />
             }
         ]

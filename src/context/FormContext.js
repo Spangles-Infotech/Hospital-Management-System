@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { fetch } from "../api/fetch";
+import { getDateFromISO } from "../utils/functions/function";
 
 const FormContext = createContext();
 
@@ -14,6 +15,7 @@ export const FormProvider = ({ children }) => {
   const [selectedUnit, setSelectedUnit] = useState("bottle")
   const [activePage, setActivePage] = useState(1);
   const [historyData, setHistoryData] = useState([])
+  const itemsToUpdatePayment = ["gst", "purchaseRate", "discount", "quantity", "free", "unit", "salePrice"]
 
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
@@ -148,6 +150,7 @@ export const FormProvider = ({ children }) => {
     setTableForm({})
   };
 
+
   const handleTimingChange = (e, label, index) => {
     const { name, value } = e.target;
     setCurrentMedicalIndex(index);
@@ -165,13 +168,16 @@ export const FormProvider = ({ children }) => {
         const totalQuantity = ( Number(updatedFormData[label][index]["quantity"]) + Number(updatedFormData[label][index]["free"]) ) * updatedFormData[label][index]["unit"] 
         updatedFormData[label][index]["availableQuantity"] = totalQuantity
       }
+      if(name === "amount"){
+        updatePaymentDetails(updatedFormData, index, "bills");
+      }
       // If GST or Price changes, recalculate payment details
-      if (name === "gst" || name === "purchaseRate" || name === "discount" || name === "quantity" || name === "free" || name === "unit") {
+      if (itemsToUpdatePayment.includes(name)) {
         updatePaymentDetails(updatedFormData, index);
       }
       return updatedFormData;
     });
-    if (name === "medicineName") {
+    if (name === "medicineName" || name === "batchNumber") {
       setMedicineQuery((prevQuery) => {
         const updatedMedicalQuery = [...prevQuery]
         updatedMedicalQuery[index] = {... updatedMedicalQuery[index], [name]:value};
@@ -179,48 +185,58 @@ export const FormProvider = ({ children }) => {
       });
     }
   };
-  
+
   // condition to add netAmount , discount, gross amount, total Quantity
-  const updatePaymentDetails = (updatedFormData, index) => {
-    if (!updatedFormData["medicines"]) return;
-  
+  const updatePaymentDetails = (updatedFormData, index, cat) => {
+    
     let netAmount = 0;
     let totalGstAmount = 0;
     let grossAmount = 0;
-    let totalDiscountAmount = 0; // Added variable to store total discount
-    let totalQuantity = updatedFormData["medicines"]?.length;
-  
-    updatedFormData["medicines"].forEach((medicine, medIndex) => {
-      if (medicine.purchaseRate && medicine.gst && medicine.discount && medicine.quantity) {
-        const medPrice = Number(medicine.purchaseRate);
-        const medGst = Number(medicine.gst);
-        const medDiscount = Number(medicine.discount);
-        const quantity = Number(medicine.quantity);
-        const totalMedPrice = medPrice * quantity;
-        
-        // Calculate the discount amount for this medicine
-        const discountAmount = totalMedPrice * (medDiscount / 100);
-        totalDiscountAmount += discountAmount; // Sum up discount amounts
-        
-        const calculatedDiscountPrice = totalMedPrice - discountAmount;
-        const gstValue = calculatedDiscountPrice * (medGst / 100);
-        const totalMedicinePrice = calculatedDiscountPrice + gstValue;
-        const purchasePrice = medicine.purchaseRate / medicine.unit;
-        const salesPrice = medicine.mrp / medicine.unit;
-        
-        // Updating the specific medicine amount at the given index
-        if (medIndex === index) {
-          updatedFormData["medicines"][index]["amount"] = Number(totalMedicinePrice.toFixed(2));
-          updatedFormData["medicines"][index]["purchasePrice"] = Number(purchasePrice.toFixed(2));
-          updatedFormData["medicines"][index]["salesPrice"] = Number(salesPrice.toFixed(2));
+    let totalMedicineAmount = 0;
+    let totalDiscountAmount = 0;
+    let totalBillAmount = 0;
+    let totalBillQuantity = updatedFormData["bills"]?.length || 0;
+    let totalQuantity = updatedFormData["medicines"]?.length || 0;
+    
+    if (cat === "bills") {
+      updatedFormData["bills"]?.forEach((bill) => {
+        const billAmount = Number(bill.amount) || 0;
+        totalBillAmount += billAmount;
+      });
+    } else {
+      updatedFormData["medicines"].forEach((medicine, medIndex) => {
+        if (medicine.gst && medicine.discount && medicine.quantity) {
+          const medPrice = Number(medicine.purchaseRate);
+          const medGst = Number(medicine.gst);
+          const medDiscount = Number(medicine.discount);
+          const quantity = Number(medicine.quantity);
+          const sellingPrice = Number(medicine.salePrice);
+          const totalMedPrice = sellingPrice ? sellingPrice * quantity : medPrice * quantity;
+
+          // Calculate the discount amount for this medicine
+          const discountAmount = totalMedPrice * (medDiscount / 100);
+          totalDiscountAmount += discountAmount;
+          const calculatedDiscountPrice = totalMedPrice - discountAmount;
+          const gstValue = calculatedDiscountPrice * (medGst / 100);
+          const totalMedicinePrice = calculatedDiscountPrice + gstValue;
+          const purchasePrice = medicine.purchaseRate / medicine.unit;
+          const salesPrice = medicine.mrp / medicine.unit;
+
+          // Updating the specific medicine amount at the given index
+          if (medIndex === index) {
+            updatedFormData["medicines"][index]["amount"] = Number(totalMedicinePrice.toFixed(2));
+            updatedFormData["medicines"][index]["purchasePrice"] = Number(purchasePrice.toFixed(2));
+            updatedFormData["medicines"][index]["salesPrice"] = Number(salesPrice.toFixed(2));
+          }
+
+          grossAmount += calculatedDiscountPrice;
+          totalMedicineAmount += Number(totalMedicinePrice.toFixed(2));
+          totalGstAmount += gstValue;
+          netAmount += totalMedicinePrice;
         }
-        
-        grossAmount += calculatedDiscountPrice;
-        totalGstAmount += gstValue;
-        netAmount += totalMedicinePrice;
-      }
-    });
-  
+      });
+    }
+
     let finalNetAmount = Number(netAmount.toFixed(2));
     let roundOff = 0;
     if (updatedFormData["isRoundOff"]) {
@@ -230,22 +246,41 @@ export const FormProvider = ({ children }) => {
       finalNetAmount = Number(finalNetAmount.toFixed(2));
       roundOff = Number((finalNetAmount % 1).toFixed(2));
     }
-  
-    const finalAmount = finalNetAmount + roundOff;
-    console.log("totalDiscountAmount", totalDiscountAmount)
-  
+
+    let finalAmount = finalNetAmount + roundOff;
+
+    if(totalBillAmount > 0){
+      finalNetAmount = Number(updatedFormData["netAmount"])
+      grossAmount = Number(updatedFormData["grossAmount"])
+      totalMedicineAmount = Number(updatedFormData["totalMedicineAmount"])
+      totalDiscountAmount = Number(updatedFormData["totalDiscountAmount"])
+      totalGstAmount = Number(updatedFormData["totalGstAmount"])
+      finalNetAmount += totalBillAmount;
+      grossAmount += totalBillAmount;
+    }else{
+      totalBillAmount =  Number(updatedFormData["totalBillAmount"])
+      finalNetAmount += totalBillAmount;
+      grossAmount += totalBillAmount;
+    }
+
+
     setFormData((prevFormData) => ({
       ...prevFormData,
       medicines: updatedFormData["medicines"], 
       roundOff,
       totalQuantity, 
+      totalBillAmount: totalBillAmount === 0 ? Number(updatedFormData["totalBillAmount"]) : totalBillAmount,
+      totalBillQuantity,
+      totalMedicineAmount,
       netAmount: finalNetAmount,
-      totalDiscountAmount : Number(totalDiscountAmount.toFixed(2)),
+      totalDiscountAmount: Number(totalDiscountAmount.toFixed(2)),
       totalGstAmount: Number(totalGstAmount.toFixed(2)),
       grossAmount: Number(grossAmount.toFixed(2)),
       finalAmount: Number(finalAmount.toFixed(2)),
     }));
-  };
+};
+
+
   
 
   const handleSubmit = (e, fields, func) => {
@@ -268,7 +303,11 @@ export const FormProvider = ({ children }) => {
         medicineCategory: medicineData?.category,
         gst:medicineData?.gst,
         packValue:medicineData?.pack?.value,
-        unit:medicineData.unit
+        unit:medicineData?.unit,
+        discount:medicineData?.discount,
+        totalQuantity:medicineData?.totalQuantity,
+        salePrice:medicineData?.salePrice,
+        expiryDate: getDateFromISO(medicineData?.expiryDate)
       };
       updatedFormData[title] = updatedRow;
       return updatedFormData;

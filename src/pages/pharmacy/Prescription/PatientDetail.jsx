@@ -11,10 +11,10 @@ const InfoRow = ({ label, value, valueClass = "", formData }) => (
   </div>
 );
 
-
 const PatientDetail = () => {
 
   const {formData} = useForm();
+  console.log("formData", formData)
   const patientDetails = [
     { label: "Patient Name", value: "patientName", valueClass: "text-primary" },
     { label: "Age", value: "age", valueClass: "text-primary" },
