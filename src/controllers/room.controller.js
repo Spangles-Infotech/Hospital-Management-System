@@ -5,10 +5,11 @@ const { sendMessage } = require("../utils/function")
 
 const room = async(req,res, next)=>{
     const { blockId, roomId } = req.params
+    const {blockId:id}  =  req.body 
     try {
         if(req.method === "POST"){
             const room = await Room.create(req.body)
-            await Block.findByIdAndUpdate(blockId, {$push:{rooms:room._id}},{new:true})
+            await Block.findByIdAndUpdate(id, {$push:{rooms:room._id}},{new:true})
             return sendMessage(res, 201, "Room Created Successfully")
         }
         if(req.method === "GET"){
@@ -28,17 +29,17 @@ const room = async(req,res, next)=>{
     }
 }
 
-const block = async(res, req, next)=>{
+const block = async(req, res, next)=>{
     try {
-        const {blockId} = req.params
+        const {blockId, blockName} = req.params
         
         if(req.method === "POST"){
             await Block.create(req.body)
             return sendMessage(res, 201, "Block Created Successfully")
         }
         if(req.method === "GET"){
-            if(blockId){
-                const rooms = await Block.findById(blockId).populate("rooms")
+            if(blockName){
+                const rooms = await Block.find({section:blockName}).populate("rooms")
                 return sendMessage(res, 200, "Rooms Fetch Sucessfully", rooms)
             }
             const blocks = await Block.find({})

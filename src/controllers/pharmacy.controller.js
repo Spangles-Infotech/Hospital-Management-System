@@ -11,14 +11,14 @@ const { sendMessage, transformPurchaseData, orderNumber, supplierNumber, product
 
 const prescription = async(req,res,next)=>{
     try {
-        const {medicines,totalAmount, totalQuantity, bills} = req.body
+        const {medicines,totalAmount, totalQuantity, bills, appointmentId:id} = req.body
         const {appointmentId} = req.params
 
         if(req.method === "POST"){
             const medicine = await MedicineInfo.create({medicines:medicines, totalAmount:totalAmount, totalQuantity:totalQuantity})
             const fee = await Billing.create(bills)
             const paymentInfo = await PaymentInfo.create(req.body)
-            await Appointment.findByIdAndUpdate(appointmentId, {medicineInfo:medicine._id, opBillingInfo:fee._id, paymentInfo:paymentInfo._id}, {new:true})
+            await Appointment.findByIdAndUpdate(id, {medicineInfo:medicine._id, opBillingInfo:fee._id, paymentInfo:paymentInfo._id}, {new:true})
             return sendMessage(res, 201, "Medicine and Bills Information  Created")
         }
         if(req.method === "GET"){
@@ -103,11 +103,16 @@ const getAllGenericName = async(req,res,next)=>{
 
 const getMedicineDetails = async (req, res, next) => {
     try {
-        const { medicineName } = req.query;
+        const { medicineName, batchNumber } = req.query;
+        let result = [];
+        if(batchNumber !== ""){
+            result = await Stock.findOne({batchNumber:batchNumber, productName: medicineName }).select(["totalQuantity", "expiryDate", "salePrice"])
+            return sendMessage(res, 200, "Data Fetched Successfully", result);
+        }
         if (!medicineName) {
             return sendMessage(res, 400, "Medicine name is required");
         }
-        const result = await Stock.findOne({ productName: medicineName })
+        result = await Stock.findOne({ productName: medicineName })
         .select(["category", "gst","productCode", "totalQuantity", "hsnCode", "pack", "unit"]);
         if (!result) {
             return sendMessage(res, 404, "Medicine not found");

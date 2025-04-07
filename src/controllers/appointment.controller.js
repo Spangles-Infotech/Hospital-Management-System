@@ -44,7 +44,7 @@ const vitals = async(req,res, next)=>{
             if(isMedicalReports){
                 await MedicalReport.updateOne({appointment:appointmentId}, {$set:{vital:vital._id, otherReports:otherReports}}, {new:true})
             }else{
-                await MedicalReport.create({appointment:appointmentId, patient:patientId, vital:vital._id, otherServices:otherServices})
+                await MedicalReport.create({appointment:appointmentId, patient:patientId, vital:vital._id, otherReports:otherReports})
             }
             return sendMessage(res,"201", "Vitals Registered Successfully")
         }

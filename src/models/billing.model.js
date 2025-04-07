@@ -8,6 +8,8 @@ const feeSchema = mongoose.Schema({
 
 const billingSchema = mongoose.Schema({
     fees:[feeSchema],
+    totalBillQuantity:Number,
+    totalBillAmount:Number,
     paymentInfo:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"PaymentInfo",

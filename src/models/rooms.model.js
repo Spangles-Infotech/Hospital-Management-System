@@ -7,6 +7,11 @@ const roomSchema = mongoose.Schema({
         type:String,
         enum:["Active", "Inactive"],
         default:"Active"
+    },
+    roomStatus:{
+        type:String,
+        enum:["Occupied", "Vacant"],
+        default:"Vacant"
     }
 })
 
@@ -36,12 +41,16 @@ const roomInfoSchema = mongoose.Schema({
     dischargeDate:Date,
     admittedDate:{
         type:Date,
-        default:Date.now
     },
     totalDays:Number,
     status:{
         type:String,
-        enum:["Pending", "Allocated"],
+        enum:["Pending", "Allocated", "Discharged"],
+    },
+    paymentStatus:{
+        type:String,
+        enum:["Paid", "Unpaid", "Partially Paid"],
+        default:"Unpaid"
     }
 })
 
