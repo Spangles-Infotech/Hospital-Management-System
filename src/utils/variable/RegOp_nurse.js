@@ -104,5 +104,29 @@ export const vitalsField = [
       { label: "Height", name: "height", options: ["cm","m","in","ft"],inputName:"value",dropdownName:"type", inputType:"number", type: "inputdropdown", align:"right"},
       { label: "Weight", name: "weight", options: ["kg","g","lb"],inputName:"value",dropdownName:"type",inputType:"number",  type: "inputdropdown", align:"right" }
     ],
-    [{ label: "Symptoms", name: "symptoms", type: "text" }]
+    [{ label: "Symptoms", name: "symptoms", type: "text" }],
+    {
+        label:"Other Reports",
+        name:"testing",
+        type:"dynamic",
+        field:[
+            {
+                label:"Test Name",
+                name:"testName",
+                type:"text",
+            },
+            {
+                label:"Consulted Doctor",
+                name:"consultedDoctor",
+                type:"text",
+            },
+            {
+                label:"Upload Document",
+                name:"uploadfile",
+                type:"file",
+                title:"Upload file",
+            }
+        ]
+    }
   ];
+
