@@ -5,10 +5,12 @@ import { useModal } from '../../context/ModalContext'
 import { IconCard } from '../common/IconCard'
 import { usePostData } from '../../hooks/usePostData'
 import { useUpdateData } from '../../hooks/useUpdateData'
+// import { usePatch } from '../../hooks/usePatch'
 
-export const FormModal = ({title, formField, data, isEdit, name, refetch, label}) => {
+export const FormModal = ({title, formField, data, isEdit, name, refetch, label,isPatch}) => {
   const {closeModal} = useModal()
   const {postData} = usePostData(name)
+  // const {patchData} = usePatch(name)
   const {updateData} = useUpdateData(name)
   const {handleReset, formData, handleSubmit, setFormData} = useForm()
   const notToReset = ["Add Category", "Add unit", "Add GST %", "Add Strength"]
@@ -16,6 +18,7 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label}
   const handleSubmitForm = async () => {
     if (!formData) return;
     const response = isEdit ? await updateData(formData) : await postData(formData);
+    // const patchData 
     if ([200, 201].includes(response)) {
       if(refetch)refetch();
       closeModal();

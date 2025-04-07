@@ -2,27 +2,44 @@
 export const doctorTableHeading = [
     {
       name:"Doctor's ID",
-      path:"doctorId"
+      path1:"userId",
+      path2:"id",
+      isNested:true
+
+
     },
     {
       name:"Doctor's Name",
-      path:"doctorName"
+      path1:"userId",
+      path2:"name",
+      isNested:true
+
+      
     },
    
     {
         name:"Gender",
-        path:"gender"
+        path1:"userId",
+        path2:"gender",
+        isNested:true
+
     },
    
     {
       name:"Designation",
-      path:"designation"
+      path1:"userId",
+      path2:"designation",
+      isNested:true
+
     },
 
     {
-        name:"Fee",
-        path:"fee"
-      },
+      name:"Fee",
+      path1:"userId",
+      path2:"fee",
+      isNested:true
+
+    },
 
     {
         name:"Status",
@@ -70,7 +87,7 @@ export const doctorTableValue = [
 export const doctorFeeFormField = [
     {
         label:"Enter Fee",
-        name:"enterFee",
+        name:"fee",
         type:"text"
     }
 ]
