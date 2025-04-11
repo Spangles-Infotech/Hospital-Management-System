@@ -4,6 +4,11 @@ const designationSchema = mongoose.Schema({
     title:String
 })
 
-const Designation = mongoose.model("Designation", designationSchema)
+const roleSchema = mongoose.Schema({
+    title:String
+})
 
-module.exports = {Designation}
+const Designation = mongoose.model("Designation", designationSchema)
+const Role = mongoose.model("Role", roleSchema)
+
+module.exports = {Designation, Role}

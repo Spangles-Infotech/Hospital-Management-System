@@ -36,7 +36,13 @@ const doctor = async(req, res, next)=>{
             return sendMessage(res, 200, "Doctor updated Successfully" )
         }
         if(req.method === "PATCH"){
+            console.log("patching")
             if(doctorFee){
+                const doct = await Doctor.findOne({userId:userId})
+                console.log("doct", doct)
+                if(!doct){
+                    return sendMessage(res, 400, "Doctor Not Fount")
+                }
                 await Doctor.findOneAndUpdate({userId:userId}, {$set:{fee:doctorFee}}, {new:true})
                 return sendMessage(res, 200, "Doctor Fee Updated Successfully")
             }
@@ -48,6 +54,7 @@ const doctor = async(req, res, next)=>{
         next(error)
     }
 }
+
 
 const getDoctorFee = async (req, res, next) => {
     try {

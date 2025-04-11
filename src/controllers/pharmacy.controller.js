@@ -41,16 +41,14 @@ const prescription = async(req,res,next)=>{
         next(error)
     }
 }
-
-
 // stock controller
 
 
 const stocks = async(req,res,next)=>{
     try {
         const {stockId} = req.params
-        const {page, limit=15, search, from, to,} = req.query
-        const searchItems = ["productName", "productCode", "hsnCode", "category"]
+        const {page=1, limit=15, search, from, to, isLowStock, IsExpiryDate} = req.query
+        const searchItems = ["productName", "productCode", "hsnCode", "category",]
         const {productName} = req.body
         let query = {} 
         if(req.method === "POST"){
@@ -62,6 +60,25 @@ const stocks = async(req,res,next)=>{
             return sendMessage(res, 200, "Stock Stored Successfully")
         }
         if(req.method === "GET"){
+            if(IsExpiryDate){
+                const stocks = await Stock.aggregate([
+                    { $sort: {expiryDate: 1}},
+                    { $skip: skipPage(page, limit) },
+                    { $limit: limit }
+                ])
+               const total = await Stock.countDocuments(query)
+               
+               return sendMessage(res, 200, "Data Fetched Successfully", stocks, total);
+            }
+            if(isLowStock){
+                const stocks = await Stock.aggregate([
+                    { $sort: { totalQuantity: 1 }},
+                    { $skip: skipPage(page, limit) },
+                    { $limit: limit }
+                ]);
+                const total = await Stock.countDocuments(query)
+                return sendMessage(res, 200, "Data Fetched Successfully", stocks, total);
+            }
             if(stockId){
                 const stock = await Stock.findById(stockId)
                 return sendMessage(res, 200, "Data Fetched Successfully", stock)

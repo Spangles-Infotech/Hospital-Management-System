@@ -7,7 +7,7 @@ const userAccessSchema = mongoose.Schema({
     },
     permission:{
         type:Map,
-        of:Map,
+        of: mongoose.Schema.Types.Mixed,
         default:{}
     }
 })

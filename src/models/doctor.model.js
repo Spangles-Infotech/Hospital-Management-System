@@ -5,7 +5,7 @@ const doctorSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    fee:String,
+    fee:Number,
     status:{
         type:String,
         default:"Active"

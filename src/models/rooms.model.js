@@ -46,6 +46,7 @@ const roomInfoSchema = mongoose.Schema({
     status:{
         type:String,
         enum:["Pending", "Allocated", "Discharged"],
+        default:"Pending"
     },
     paymentStatus:{
         type:String,

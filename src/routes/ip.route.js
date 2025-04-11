@@ -12,5 +12,7 @@ ipRouter.put("/change-room/:blockId", ipPatient)
 // ip-billling routes
 
 ipRouter.get("/get-all-ip-billing", ipBilling)
+ipRouter.get("/get-ip-patient-billing/:appointmentId", ipBilling)
+ipRouter.post("/create-ip-bill", ipBilling)
 
 module.exports = ipRouter
