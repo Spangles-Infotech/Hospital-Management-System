@@ -1,54 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TableHeader } from '../../../Component/common/Table/TableHeader'
 import { Table } from '../../../Component/common/Table/Table'
-import { roomFormField, roomTableHeading, roomTableValue } from '../../../utils/variable/settings/room'
-import { useModal } from '../../../context/ModalContext'
-import { FormModal } from '../../../Component/modalContents/FormModal'
-import { InactiveModal } from '../../../Component/modalContents/InactiveModal'
+import { roomTableHeading } from '../../../utils/variable/settings/room'
+import { useParams } from 'react-router-dom'
+import { useOthers } from '../../../hooks/useOthers'
 
 const RoomName = () => {
 
-    const {openModal} = useModal()
-    const field = [
-        {
-            label:"Section",
-            name:"section",
-        },
-        {
-            label:"No. of Rooms",
-            name:"noOfRooms",
-        }
-    ]
-    const data = {
-        section: "Floor no. 01",
-        noOfRooms: 10,
-    }
-    const actionData = [
-        {
-          name:"tripledot",
-          data:[
-            {
-              name:"edit",
-              title:"Edit Rent",
-              onClick: ()=>{}
-            },
-            {
-              name:"inactive",
-              title:"Inactive",
-              onClick: ()=>{openModal(InactiveModal, {title:"Floor no. 01", btnTitle:"Room",field: field, data:data})}
-            } 
-          ]
-        }
-      ]
+    const {name} = useParams()
+    const {getFloorBySection, rooms, roomActionData, handleAddRoom} = useOthers()
+
+    useEffect(()=>{
+      getFloorBySection(name)
+    },[name])
       
-    const handleAddRoom = ()=>{
-        openModal(FormModal, {title:"New Room", formField:roomFormField})
-    }
   return (
     <section className=' w-[85%] flex flex-col gap-[15px]'>
         <div className='px-2 bg-white'>
-            <TableHeader title={"Floor no. 01"}  />
-            <Table tableHead={roomTableHeading} tableValue={roomTableValue} actionData={actionData}  />
+            <TableHeader title={name}  />
+            <Table tableHead={roomTableHeading} tableValue={rooms} actionData={roomActionData}  />
         </div>
         <button 
             onClick={handleAddRoom}

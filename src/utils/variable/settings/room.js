@@ -1,11 +1,11 @@
 export const roomTableHeading = [
     {
         name:"Room No.",
-        path:"roomNumber"
+        path:"roomNo"
     },
     {
-        name:"RoomRent",
-        path:"roomRent"
+        name:"Room Rent",
+        path:"rent"
     },
     {
         name:"Status",

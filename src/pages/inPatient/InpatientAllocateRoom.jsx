@@ -25,8 +25,6 @@ const InpatientAllocateRoom = () => {
     }
   },[formData , data])
 
-  console.log("formData", formData)
-
 
   useEffect(()=>{
     getInPatientById(id)
@@ -37,6 +35,8 @@ const InpatientAllocateRoom = () => {
     setFormData( prev =>({...prev, blockNo:tab}))
     setActiveTab(tab)
   }
+
+  console.log("room", formData)
 
   const items = ["Available", "Filled Rooms"]
 
@@ -76,7 +76,7 @@ const InpatientAllocateRoom = () => {
                               handleChange({ target: { name: "roomNo", value: item?.roomNo } });
                             }
                           }}
-                          className={`h-[50px] w-[120px] flex items-center justify-center border rounded-[15px] ${formData?.roomNo === item?.roomNo ? "bg-[#00BE5F] text-white" : ""}  ${item.roomStatus.toLowerCase() === "occupied" ?  "text-[#FF1111] border-[#FF1111] cursor-not-allowed" : "cursor-pointer  text-[#00BE5F] border-[#00BE5F]"}`} 
+                          className={`h-[50px] w-[120px] flex items-center justify-center border rounded-[15px] ${formData?.roomNo === item?.roomNo && item.roomStatus.toLowerCase() === "occupied"  ? "bg-[#00BE5F] text-white" : ""}  ${item.roomStatus.toLowerCase() === "occupied" ?  "text-[#FF1111] border-[#FF1111] cursor-not-allowed" : "cursor-pointer  text-[#00BE5F] border-[#00BE5F]"}`} 
                         >
                           <p className={`font-[600] font-poppins text-[20px]`}>Room {item.roomNo}</p>
                         </div>
@@ -86,11 +86,11 @@ const InpatientAllocateRoom = () => {
               <div className="flex gap-7 items-center justify-end p-5">
                 <button  className="text-red-600 cursor-pointer text-lg h-[50px] border border-[#D9D9D9] rounded-full w-[150px] transition-all duration-500 ease-in-out hover:bg-red-600 hover:border-red-600 hover:text-[#D9D9D9]" > Discard </button>
                 <button 
-                  onClick={()=>handleDischarge(rooms[0]._id)}
+                  onClick={()=>handleDischarge(formData?.roomInfoId)}
                   className="w-[150px] border border-primary bg-white p-2 text-primary rounded-full transition-all duration-500 ease-in-out hover:bg-primary hover:text-white text-lg" 
                 >
                  Discharge </button>
-                <button className="w-[150px] bg-primary p-2 text-white rounded-full hover:bg-primary transition text-lg" onClick={()=>handleAllocateRoom()} >{formData?.status === "Allocated" && formData?.roomNo ?  "Shift Room" : "Book Room" }</button>
+                <button className="w-[150px] bg-primary p-2 text-white rounded-full hover:bg-primary transition text-lg" onClick={()=>handleAllocateRoom(formData?.roomInfoId, formData?.status === "Allocated")} >{formData?.status === "Allocated" && formData?.roomNo ?  "Shift Room" : "Book Room" }</button>
               </div>
             </div>
             <div className='w-[30%] flex flex-col gap-[20px]'>

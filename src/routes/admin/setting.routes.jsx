@@ -38,7 +38,7 @@ export default [
                 element:<RoomList />
             },
             {
-                path:"rooms/room",
+                path:"rooms/room/:name",
                 element:<RoomName />
             },
             {

@@ -4,7 +4,7 @@ import { Dropdown } from "../../../Component/Fields/Dropdown";
 import { Table } from "../../../Component/common/Table/Table";
 import { historyTableHeading, historyValue } from "../../../utils/variable/purchase";
 
-const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory=false}) => {
+const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory=false, isDiscount=false}) => {
   
   const {formData, handleChange, historyData} = useForm()
   const paymentOptions = ["Cash", "Credit/Debit Card", "UPI", "Net Banking"]
@@ -23,6 +23,24 @@ const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory
             <Dropdown value={formData} options={paymentOptions} onChange={handleChange} label={"Payment Type"} name={"paymentType"} isBorder={true} />
           </div>
         } 
+        </div>
+        <div className={`${!isDiscount ? "hidden": ""}`}>
+          <div className="border-primary border rounded-[15px] mt-5 w-[350px]   p-6 h-[170px] bg-white">
+            <p className="text-lg text-stone-600 font-medium">Discount</p>
+            <div className="flex flex-col">
+              <select
+                value={formData?.discount}
+                onChange={handleChange}
+                name="discount"
+                className="w-full  border border-stone-400 ouline-none  rounded-lg mt-3  text-stone-600 px-4 py-2"
+              >
+                <option value="discount">Discount</option>
+                <option value="10">10%</option>
+                <option value="25">25%</option>
+                <option value="15">15%</option>
+              </select>
+            </div>
+          </div>
         </div>
         <div className="border-primary border rounded-[15px]  mt-5 w-[40%] bg-white" >
           <div className="flex justify-between px-4 py-3">

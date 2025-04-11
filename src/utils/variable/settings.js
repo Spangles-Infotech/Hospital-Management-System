@@ -8,7 +8,7 @@ export const roomlistTableHeading=[
 
     {
         name:"No.of Rooms",
-        path:"rooms"
+        path:"noOfRooms"
     },
 
     {

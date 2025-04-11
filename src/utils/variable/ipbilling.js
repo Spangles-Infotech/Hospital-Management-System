@@ -1,7 +1,7 @@
 export const ipbillingTableHeading =[
     {
-       name:"SI.No.",
-       path:"sino" 
+       name:"Bill. No.",
+       path:"billNumber" 
     },
 
     {
@@ -23,17 +23,40 @@ export const ipbillingTableHeading =[
         name:"Gender",
         path:"gender"
     },
-
-    {
-        name:"Blood Group",
-        path:"bloodGroup"
-    },
-
     {
         name:"Phone Number",
         path:"phoneNumber"
     },
-
+    {
+        name:"Section",
+        path:"section"
+    },
+    {
+        name:"Room No.",
+        path:"roomNumber"
+    },
+    {
+        name:"No. of Days",
+        path:"noOfDays"
+    },
+    {
+        name:"From",
+        path:"from",
+        date:true
+    },
+    {
+        name:"To",
+        path:"to",
+        date:true
+    },
+    {
+        name:"Amount",
+        path:"amount"
+    },
+    {
+        name:"Credit",
+        path:"credit"
+    },
     {
         name:"Status",
         path:"status",

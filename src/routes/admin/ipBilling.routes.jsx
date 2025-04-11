@@ -12,7 +12,7 @@ export default [
                 element:<IpBillingList />
             },
             {
-                path:"form",
+                path:"form/:id",
                 element:<IpBillingForm />
             }
         ]

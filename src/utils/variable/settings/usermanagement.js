@@ -166,10 +166,12 @@ export const userListHeader = [
 export const userFormField = [
     {
         label:"",
-        name:"newRole",
+        name:"title",
         type:"text",
     }
 ]
+
+
 
 export const userListData = [
     {

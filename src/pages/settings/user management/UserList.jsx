@@ -1,11 +1,14 @@
 import React from 'react'
 import { TableHeader } from '../../../Component/common/Table/TableHeader'
 import { Table } from '../../../Component/common/Table/Table'
-import { userListData, userListHeader } from '../../../utils/variable/settings/usermanagement'
+import { userListHeader } from '../../../utils/variable/settings/usermanagement'
 import { useNavigate } from 'react-router-dom'
+import { useOthers } from '../../../hooks/useOthers'
+import { Pagination } from '../../../Component/common/Pagination'
 
 const UserList = () => {
   
+  const {userList} = useOthers()
   const navigate = useNavigate()
   const btnData = [
     {
@@ -26,7 +29,11 @@ const UserList = () => {
   return (
     <section className='w-[80%] p-2 bg-white '>
       <TableHeader title={"User list"} buttonData={btnData}  />
-      <Table tableHead={userListHeader} tableValue={userListData} actionData={actionData} />
+      <Table tableHead={userListHeader} tableValue={userList} actionData={actionData} />
+      {
+        userList?.length > 0 &&
+        <Pagination total={10} />
+      }
     </section>
   )
 }

@@ -69,15 +69,19 @@ const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false, 
                    className={`p-2 ${items.length - 1 === i ? "flex" : "border-r border-primary"}`}
                     key={item.name}
                   >
-                    <div className={`${items.length - 1 === i  ? "w-[80%]" : item?.type === "number" ? "min-w-[50px]"  : "min-w-[90px]"}`}>
-                      <Form
-                        item={item}
-                        formData={formData?.[title]?.[index]}
-                        handleChange={(e)=>handleTimingChange(e, title, index)}
-                        errors={errors}
-                        isBorder={false}
-                      />
-                    </div>
+                    {
+                      item.name === "sino" ?
+                          <p>{index + 1}</p>
+                       : <div className={`${items.length - 1 === i  ? "w-[80%]" : item?.type === "number" ? "min-w-[50px]"  : "min-w-[90px]"}`}>
+                          <Form
+                            item={item}
+                            formData={formData?.[title]?.[index]}
+                            handleChange={(e)=>handleTimingChange(e, title, index)}
+                            errors={errors}
+                            isBorder={false}
+                          />
+                        </div>
+                    }
                     <div className="w-[20%] flex items-center justify-center">
                         {
                           items?.length - 1 === i &&

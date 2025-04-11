@@ -35,10 +35,7 @@ export const doctorTableHeading = [
 
     {
       name:"Fee",
-      path1:"userId",
-      path2:"fee",
-      isNested:true
-
+      path:"fee",
     },
 
     {
@@ -87,7 +84,7 @@ export const doctorTableValue = [
 export const doctorFeeFormField = [
     {
         label:"Enter Fee",
-        name:"fee",
-        type:"text"
+        name:"doctorFee",
+        type:"number"
     }
 ]

@@ -7,7 +7,7 @@ export const FormLayout = ({data, isBorder=true, isWrap=false}) => {
   const {formData, handleChange, errors, selectedUnit} = useForm();
 
   return (
-    data.map((item, index) =>
+    data?.map((item, index) =>
       Array.isArray(item) ? (
         <div key={index} className={`flex gap-[20px] w-full ${isWrap ? "flex-wrap w-[200px]" : ""}`}>
           {item.map((it, i) => (

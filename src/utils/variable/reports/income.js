@@ -6,11 +6,15 @@ export const incomeTableHead = {
         },
         {
             name:"Doctor's ID",
-            path:"doctorId"
+            path1:"userId",
+            path2:"id",
+            isNested:true
         },
         {
             name:"Doctor's Name",
-            path:"doctorName"
+            path1:"userId",
+            path2:"name",
+            isNested:true
         },
         {
             name:"Patient's ID",
@@ -25,7 +29,7 @@ export const incomeTableHead = {
             path:"fee",
         },
     ],
-    laboratory : [
+    "laboratory" : [
         {
             name:"Date",
             path:"date"
@@ -47,10 +51,11 @@ export const incomeTableHead = {
             path:"amount",
         },
     ],
-    pharmacy : [
+    "pharmacy" : [
         {
             name:"Date",
-            path:"date"
+            path:"date",
+            date:true
         },
         {
             name:"Pres. No.",
@@ -87,12 +92,18 @@ export const incomeTableHead = {
             path:"billNumber"
         },
         {
-            name:"Patient's ID",
-            path:"patientId"
+            name:"Patient ID",
+            path1:"patientId",
+            path2:"patientId",
+            isNested:true
         },
+    
         {
-            name:"Patient's Name",
-            path:"patientName"
+            name:"Patient Name",
+            path1:"patientId",
+            path2:"patientName",
+            path3:"name",
+            isDoubleNested:true
         },
         {
             name:"Payment Mode",
@@ -397,5 +408,13 @@ export const incomeTableValue = {
             amount:1000,
         },
     ]
+}
+
+export const incomeNames = {
+    "doctor-fee": "/get-all-doctor",
+    "pharmacy":"/get-all-prescription",
+    "out-patients":"/get-all-registered-appointments",
+    "in-patients":"/get-all-in-patients"
+
 }
 

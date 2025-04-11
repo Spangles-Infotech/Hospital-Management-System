@@ -1,10 +1,11 @@
 import { TabLayout } from "../../layout/TabLayout";
+import Income from "../../pages/reports/Income";
 import InPatient from "../../pages/reports/inpatient/InPatient";
+import InPatitents from "../../pages/reports/InPatitents";
 import Pharmacy from "../../pages/reports/pharmacy/Pharmacy";
-import Rooms from "../../pages/reports/rooms/Rooms";
 import Reports from "../../pages/reports/Reports";
 import  {incomeFilterFields, incomeTableHead,  incomeTableValue } from "../../utils/variable/reports/income"
-import { reportOutPatientTableHead, reportOutPatientTableValue, reportOutPatientFilterFields  } from "../../utils/variable/reports/outpatient";
+import { reportOutPatientTableHead, reportOutPatientFilterFields  } from "../../utils/variable/reports/outpatient";
 
 
 
@@ -15,19 +16,15 @@ export default [
         children:[
             {
                 path:"income",
-                element:<Reports tableHead={incomeTableHead} tableValue={incomeTableValue} filterFields={incomeFilterFields} isIncome={true} />
+                element:<Income />
             },
             {
                 path:"out-patient",
-                element:<Reports tableHead={reportOutPatientTableHead} tableValue={reportOutPatientTableValue} filterFields={reportOutPatientFilterFields}  />
+                element:<Reports tableHead={reportOutPatientTableHead} filterFields={reportOutPatientFilterFields} name={"/get-all-registered-appointments"} />
             },
             {
                 path:"in-patient",
-                element:<InPatient />
-            },
-            {
-                path:"rooms",
-                element:<Rooms />
+                element:<InPatitents />
             },
             {
                 path:"pharmacy",

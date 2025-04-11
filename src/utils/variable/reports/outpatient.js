@@ -5,28 +5,46 @@ export const reportOutPatientTableHead = [
     },
     {
         name:"Patient ID",
-        path:"patientId"
+        path1:"patientId",
+        path2:"patientId",
+        isNested:true
     },
+
     {
         name:"Patient Name",
-        path:"patientName"
+        path1:"patientId",
+        path2:"patientName",
+        path3:"name",
+        isDoubleNested:true
     },
+
     {
-        name:"Age",
-        path:"age"
+        name:"Phone No.",
+        path1:"patientId",
+        path2:"mobileNumber",
+        path3:"number",
+        isDoubleNested:true
     },
+
     {
         name:"Blood Group",
-        path:"bloodGroup"
+        path1:"patientId",
+        path2:"bloodGroup",
+        isNested:true
     },
+    
     {
         name:"Gender",
-        path:"gender"
+        path1:"patientId",
+        path2:"gender",
+        isNested:true
+
     },
+
     {
-        name:"Doctor's Name",
-        label:"doctorName"
-    }
+        name:"Doctor Name",
+        path:"doctorName"
+    },
 ]
 
 export const reportOutPatientTableValue = [
@@ -65,12 +83,12 @@ export const reportOutPatientTableValue = [
 export const reportOutPatientFilterFields = [
     {
         label:"Date From",
-        name:"From",
+        name:"from",
         type:"date"
     },
     {
         label:"Date To",
-        name:"To",
+        name:"to",
         type:"date"
     },
     {
@@ -106,5 +124,41 @@ export const reportOutPatientFilterFields = [
     {
         name:"search",
         type:"search"
+    }
+]
+
+
+export const reportInPatientTableHead = [
+    {
+        name:"Date",
+        path:"date"
+    },
+    {
+        name:"Patient ID",
+        path:"patientId"
+    },
+    {
+        name:"Patient Name",
+        path:"patientName"
+    },
+    {
+        name:"Age",
+        path:"age"
+    },
+    {
+        name:"Blood Group",
+        path:"bloodGroup"
+    },
+    {
+        name:"Gender",
+        path:"gender"
+    },
+    {
+        name:"Room No.",
+        path:"roomNumber"
+    },
+    {
+        name:"Doctor's Name",
+        label:"doctorName"
     }
 ]

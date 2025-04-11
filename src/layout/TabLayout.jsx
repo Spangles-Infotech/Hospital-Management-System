@@ -33,7 +33,7 @@ export const TabLayout = ({isSettings=true}) => {
     const reportsTab = [
         {
             name:"Income",
-            path:"/admin/reports/income",
+            path:"/admin/reports/income?tab=doctor-fee",
             tempPath:"/admin/reports/income",
         },
         {
@@ -47,13 +47,8 @@ export const TabLayout = ({isSettings=true}) => {
             tempPath:"/admin/reports/in-patient",
         },
         {
-            name:"Rooms",
-            path:"/admin/reports/rooms",
-            tempPath:"/admin/reports/rooms",
-        },
-        {
             name:"Pharmacy",
-            path:"/admin/reports/pharmacy",
+            path:"/admin/reports/pharmacy?tab=expiry-date",
             tempPath:"/admin/reports/pharmacy",
         }
     ]

@@ -2,8 +2,8 @@
 import { useState } from 'react';
 import { useForm } from '../context/FormContext';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
+import { fetch } from '../api/fetch';
 
 export const usePatch = (url) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -11,10 +11,10 @@ export const usePatch = (url) => {
   const [error, setError] = useState(null);
   const { handleReset } = useForm();
 
-  const PatchData = async (body) => {
+  const patchData = async (body) => {
     setIsLoading(true);
     try {
-      const response = await axios.patch(url, body); 
+      const response = await fetch.patch(url, body); 
       setMessage(response.data.message);
 
       if (response.status === 201 || response.status === 200) {
@@ -32,7 +32,7 @@ export const usePatch = (url) => {
   };
 
   return {
-    PatchData,
+    patchData,
     isLoading,
     message,
     error,

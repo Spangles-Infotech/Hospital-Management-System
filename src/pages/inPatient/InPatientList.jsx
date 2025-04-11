@@ -2,15 +2,14 @@ import React from 'react'
 import { TableHeader } from '../../Component/common/Table/TableHeader'
 import { Table } from '../../Component/common/Table/Table'
 import { Pagination } from '../../Component/common/Pagination'
-import { inPatientTableHeadiing, inPatientTableValue } from '../../utils/variable/inPatients'
+import { inPatientTableHeadiing } from '../../utils/variable/inPatients'
 import { useNavigate } from 'react-router-dom'
 import { useFetchData } from '../../hooks/useFetchData'
 
 const InPatientList = () => {
 
-  const {data,isLoading}= useFetchData("/get-all-ip-patient")
-
   const navigate = useNavigate()
+  const {data,isLoading}= useFetchData("/get-all-ip-patient")
 
   const actionData = [
     {
