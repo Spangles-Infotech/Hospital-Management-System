@@ -16,7 +16,7 @@ const pharmacyRouter = require("./routes/pharmacy.route")
 connectDB()
 
 const corsOptions = {
-    origin: [ process.env.FRONTEND_URL_DEV_1, process.env.FRONTEND_URL_DEV_2, process.env.FRONTEND_URL_PRO_1, process.env.FRONTEND_URL_PRO_2, process.env.FRONTEND_URL_PRO_3,  process.env.FRONTEND_URL_PRO_4, ],
+    origin: [ process.env.FRONTEND_URL_DEV_1, process.env.FRONTEND_URL_DEV_2, process.env.FRONTEND_URL_PRO_1, process.env.FRONTEND_URL_PRO_2, process.env.FRONTEND_URL_PRO_3,  process.env.FRONTEND_URL_PRO_4,process.env.FRONTEND_URL_PRO_5 ],
     credentials: true
 };
 app.use(cors(corsOptions))
