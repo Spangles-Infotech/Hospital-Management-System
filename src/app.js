@@ -17,11 +17,36 @@ const otherRouter = require("./routes/other.route")
 
 connectDB()
 
+// const corsOptions = {
+//     origin: [ process.env.FRONTEND_URL_DEV_1, process.env.FRONTEND_URL_DEV_2, process.env.FRONTEND_URL_PRO_1, process.env.FRONTEND_URL_PRO_2, process.env.FRONTEND_URL_PRO_3,  process.env.FRONTEND_URL_PRO_4, ],
+//     credentials: true
+// };
+// app.use(cors(corsOptions))
+// app.use(express.json());
+
 const corsOptions = {
-    origin: [ process.env.FRONTEND_URL_DEV_1, process.env.FRONTEND_URL_DEV_2, process.env.FRONTEND_URL_PRO_1, process.env.FRONTEND_URL_PRO_2, process.env.FRONTEND_URL_PRO_3,  process.env.FRONTEND_URL_PRO_4, ],
-    credentials: true
+    origin: function(origin, callback) {
+        const allowedOrigins = [
+            process.env.FRONTEND_URL_DEV_1,
+            process.env.FRONTEND_URL_DEV_2,
+            process.env.FRONTEND_URL_PRO_1,
+            process.env.FRONTEND_URL_PRO_2,
+            process.env.FRONTEND_URL_PRO_3,
+            process.env.FRONTEND_URL_PRO_4
+        ].filter(Boolean);
+        
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 };
-app.use(cors(corsOptions))
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get("/", (req,res)=>{
