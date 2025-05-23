@@ -8,17 +8,23 @@ import { FormModal } from '../../Component/modalContents/FormModal'
 import PreviewModal from '../../Component/modalContents/PreviewModal'
 import { InactiveModal } from '../../Component/modalContents/InactiveModal'
 import { useFetchData } from '../../hooks/useFetchData'
+import DesignationModal from '../../Component/modalContents/DesignationModal'
 
 const Doctor = () => {
 
 
     const{data,isLoading, fetchData:refetch} = useFetchData("/get-all-doctor")
+    console.log(data,"qoctor data")
     const {openModal} = useModal()
     
     const btnData = [
         {
             name:"New Doctor",
             onClick : ()=>{ openModal(FormModal, {title:"New Doctor", formField:doctorFields, refetch:refetch, name:"/add-doctor"})}
+        },
+        {
+            name:"Add Designations",
+            onClick : ()=>{ openModal(DesignationModal, {title:"Manage Designations"})}
         }
     ]
 

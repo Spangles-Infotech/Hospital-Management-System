@@ -68,6 +68,11 @@ export const staffFields = [
       type: "text",
     },
     {
+      label: "Husband's Name",
+      name: "husbandName",
+      type: "text",
+    },
+    {
       label: "Mobile Number",
       name: "mobileNumber",
       options: ["+91", "+92", "+93"],
@@ -83,11 +88,11 @@ export const staffFields = [
         name: "dob",
         type: "date",
       },
-      {
-        label: "Age",
-        name: "age",
-        type: "text",
-      },
+      // {
+      //   label: "Age",
+      //   name: "age",
+      //   type: "text",
+      // },
     ],
     {
       label: "Gender",
@@ -95,12 +100,33 @@ export const staffFields = [
       options: ["Male", "Female", "Other"],
       type: "radio",
     },
+  ],[
+    {
+      label: "Martial Status",
+      name: "martial_status",
+      options: ["Single", "Married", "Other"],
+      type: "radio",
+    },
+    {
+      label: "Qualification",
+      name: "qualification",
+      type: "text",
+    },
   ],
   [
     {
       label: "Blood Group",
       name: "bloodGroup",
-      options: ["A+", "A-", "B+", "B-", "AB+", "AB-"],
+      options: [
+        "A+",
+        "A-",
+        "B+",
+        "B-",
+        "AB+",
+        "AB-",
+        "O+",
+        "O-"
+      ],
       type: "select",
     },
     {
@@ -121,7 +147,36 @@ export const staffFields = [
     {
       label: "State",
       name: "state",
-      options: ["Maharashtra", "Gujarat", "Rajasthan"],
+      options: [
+        "Andhra Pradesh",
+        "Arunachal Pradesh",
+        "Assam",
+        "Bihar",
+        "Chhattisgarh",
+        "Goa",
+        "Gujarat",
+        "Haryana",
+        "Himachal Pradesh",
+        "Jharkhand",
+        "Karnataka",
+        "Kerala",
+        "Madhya Pradesh",
+        "Maharashtra",
+        "Manipur",
+        "Meghalaya",
+        "Mizoram",
+        "Nagaland",
+        "Odisha",
+        "Punjab",
+        "Rajasthan",
+        "Sikkim",
+        "Tamil Nadu",
+        "Telangana",
+        "Tripura",
+        "Uttar Pradesh",
+        "Uttarakhand",
+        "West Bengal"
+      ],
       type: "select",
     },
   ],
@@ -129,7 +184,36 @@ export const staffFields = [
     {
       label: "District",
       name: "district",
-      options: ["Maharashtra", "Gujarat", "Rajasthan"],
+      options: [
+        "Andhra Pradesh",
+        "Arunachal Pradesh",
+        "Assam",
+        "Bihar",
+        "Chhattisgarh",
+        "Goa",
+        "Gujarat",
+        "Haryana",
+        "Himachal Pradesh",
+        "Jharkhand",
+        "Karnataka",
+        "Kerala",
+        "Madhya Pradesh",
+        "Maharashtra",
+        "Manipur",
+        "Meghalaya",
+        "Mizoram",
+        "Nagaland",
+        "Odisha",
+        "Punjab",
+        "Rajasthan",
+        "Sikkim",
+        "Tamil Nadu",
+        "Telangana",
+        "Tripura",
+        "Uttar Pradesh",
+        "Uttarakhand",
+        "West Bengal"
+      ],
       type: "select",
     },
     {
@@ -168,6 +252,40 @@ export const staffFields = [
       name: "relivingDate",
       type: "date",
     },
+    {
+      label: "Timing",
+      name:"timing",
+      type: "dynamic",
+      field: [
+          // {
+          //     label: "Day",
+          //     name: "day",
+          //     type: "text",
+          // },
+          {
+              label:"Day",
+              name:"day",
+              options:['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+              type:"select"
+          },
+          {
+              label: "Status",
+              name: "status",
+              type: "select",
+              options: ["Working", "Off"]
+          },
+          {
+              label: "From",
+              name: "startTime",
+              type: "time"
+          },
+          {
+              label: "To",
+              name: "endTime",
+              type: "time"
+          }
+      ]
+  }
   ],
 ];
 

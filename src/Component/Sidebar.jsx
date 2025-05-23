@@ -18,18 +18,24 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowIcon } from '../icons/ArrowIcon';
 import { useForm } from '../context/FormContext';
 import {IpBillingIcon} from '../icons/IpBillingIcon'
+import { useModal } from '../context/ModalContext';
 
 export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}) => {
 
     const {currentLocation, isCurrentLocation} = useCommon();
+    const {openModal , closeModal} = useModal()
+
     const {handleReset} = useForm()
+    const [isCollapsed, setIsCollapsed] = useState(false)
     
     const navigate = useNavigate()
     
     const handleOpenMenu = (name)=>{
       if(name === isMenuOpen){
         // setMenuOpen("")
-        setSidebarWidth(300)
+        // setSidebarWidth(300)
+        setMenuOpen("")
+
       }else{
         setMenuOpen(name)
       }
@@ -37,7 +43,13 @@ export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}
     
     const handleSelectMenu = (path)=>{
       handleReset()
+      closeModal()
       navigate(path)
+    }
+
+    const toggleSidebar = ()=>{
+      setIsCollapsed(!isCollapsed)
+      setSidebarWidth(isCollapsed? 300 : 80)
     }
 
     const sidebarIcons = {
@@ -59,7 +71,10 @@ export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}
     }
 
   return (
-    <aside className='flex flex-col gap-[10px] cursor-pointer font-roboto fixed overflow-y-auto h-[calc(90vh-4rem)]' style={{width:"inherit"}}>      {
+    <aside className='flex flex-col gap-[10px] cursor-pointer font-roboto fixed overflow-y-auto h-[calc(90vh-4rem)] relative' style={{width:"inherit"}}> 
+    <div className='absolute -right-3 top-3 bg-primary text-white rounded-full  p-2 cursor-pointer z-10  ' onClick={toggleSidebar}>
+      {isCollapsed? <ArrowIcon size={16} /> : <ArrowIcon size={16} />}
+      </div>     {
         adminSidebarData.map((item)=>(
           <div className={`mr-3 rounded-r-[10px] flex flex-col ${isMenuOpen === item.name ? "gap-3":"gap-0"} `} key={item.name}>
               <div className={`linkss  flex justify-between p-3 pl-6 items-center pr-[10px] transition-all duration-500 ease-in-out hover:text-white hover:bg-primary rounded-r-[10px] ${isCurrentLocation(item.path) ? "text-white bg-primary fill-white active"  : "text-[#505050] fill-custom-black font-roboto"}`}>

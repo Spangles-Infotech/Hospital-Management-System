@@ -17,6 +17,7 @@ export const Table = ({
   isPat = false,
   isRoom  = false
 }) => {
+  console.log("tableValue", tableValue);
   return (
     <table
       className={`w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 rounded-b-[15px]`}
@@ -53,8 +54,9 @@ export const Table = ({
           </tr>
         ) : (
           tableValue?.map((val, i) => (
+            console.log("val", val),
             <tr
-              key={val.id}
+              key={val._id}
               className={`h-[50px] ${
                 i !== tableValue.length - 1 && !isBlue
                   ? "border-b border-[#D1D1D1] font-roboto"
@@ -93,7 +95,19 @@ export const Table = ({
                   <Action
                     key={index}
                     path={item.path}
-                    id={ isRoom? val?.section  : isDoc ?  val?.userId?._id : isPat ? { id: val?._id, patientId: val?.patientId?._id }  : val?._id}
+                    // id={ isRoom? val?.section  : isDoc ?  val?.userId?._id : isPat ? { id: val?._id, patientId: val?.patientId?._id }  : val?._id}
+                    id={
+                      isRoom
+                        ? val?.section || "-"
+                        : isDoc
+                        ? typeof val?.userId === "object"
+                          ? val.userId?._id || "-"
+                          : val.userId || "-"
+                        : isPat
+                        ? { id: val?._id || "-", patientId: val?.patientId?._id || "-" }
+                        : val?._id || "-"
+                    }
+                    
                     actionData={actionData}
                   />
                 )

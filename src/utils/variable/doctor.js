@@ -2,11 +2,11 @@ import { editFormField } from "./expense"
 
 export const doctorFields = [
     [
-        {
-            label:"Doctor ID",
-            name:"id",
-            type:"text"
-        },
+        // {
+        //     label:"Doctor ID",
+        //     name:"id",
+        //     type:"text"
+        // },
         {
             label:"Doctor Name",
             name:"name",
@@ -15,8 +15,8 @@ export const doctorFields = [
     ],
     [
         {
-            label:"Father's Name",
-            name:"fatherName",
+            label:"Qualification",
+            name:"qualification",
             type:"text"
         },
         {
@@ -37,11 +37,11 @@ export const doctorFields = [
                 name:"dob",
                 type:"date"
             },
-            {
-                label:"Age",
-                name:"age",
-                type:"text"
-            }
+            // {
+            //     label:"Age",
+            //     name:"age",
+            //     type:"text"
+            // }
         ],
         {
             label:"Gender",
@@ -52,9 +52,26 @@ export const doctorFields = [
     ],
     [
         {
+            label:"Martial Status",
+            name:"martialStatus",
+            type:"radio",
+            options:["Married", "Unmarried","Other"]
+        }
+    ],
+    [
+        {
             label:"Blood Group",
             name:"bloodGroup",
-            options:["A+", "A-", "B+", "B-", "AB+", "AB-"],
+            options: [
+                "A+",
+                "A-",
+                "B+",
+                "B-",
+                "AB+",
+                "AB-",
+                "O+",
+                "O-"
+              ],
             type:"select"
         },
         {
@@ -76,7 +93,36 @@ export const doctorFields = [
         {
             label:"State",
             name:"state",
-            options:["Maharashtra", "Gujarat", "Rajasthan"],
+            options: [
+                "Andhra Pradesh",
+                "Arunachal Pradesh",
+                "Assam",
+                "Bihar",
+                "Chhattisgarh",
+                "Goa",
+                "Gujarat",
+                "Haryana",
+                "Himachal Pradesh",
+                "Jharkhand",
+                "Karnataka",
+                "Kerala",
+                "Madhya Pradesh",
+                "Maharashtra",
+                "Manipur",
+                "Meghalaya",
+                "Mizoram",
+                "Nagaland",
+                "Odisha",
+                "Punjab",
+                "Rajasthan",
+                "Sikkim",
+                "Tamil Nadu",
+                "Telangana",
+                "Tripura",
+                "Uttar Pradesh",
+                "Uttarakhand",
+                "West Bengal"
+              ],
             type:"select"
         },
     ],
@@ -84,7 +130,36 @@ export const doctorFields = [
         {
             label:"District",
             name:"district",
-            options:["Maharashtra", "Gujarat", "Rajasthan"],
+            options: [
+                "Andhra Pradesh",
+                "Arunachal Pradesh",
+                "Assam",
+                "Bihar",
+                "Chhattisgarh",
+                "Goa",
+                "Gujarat",
+                "Haryana",
+                "Himachal Pradesh",
+                "Jharkhand",
+                "Karnataka",
+                "Kerala",
+                "Madhya Pradesh",
+                "Maharashtra",
+                "Manipur",
+                "Meghalaya",
+                "Mizoram",
+                "Nagaland",
+                "Odisha",
+                "Punjab",
+                "Rajasthan",
+                "Sikkim",
+                "Tamil Nadu",
+                "Telangana",
+                "Tripura",
+                "Uttar Pradesh",
+                "Uttarakhand",
+                "West Bengal"
+              ],
             type:"select"
         },
         {
@@ -103,7 +178,9 @@ export const doctorFields = [
             label:"Designation",
             name:"designation",
             type:"select",
-            options:["Dermatalogiet", "Cardiologist"]
+            options:[],
+            useHook: "useDesignations",
+            optionsKey: "designations"
         },
         {
             label:"Upload Photo",
@@ -117,10 +194,16 @@ export const doctorFields = [
         name:"timing",
         type: "dynamic",
         field: [
+            // {
+            //     label: "Day",
+            //     name: "day",
+            //     type: "text",
+            // },
             {
-                label: "Day",
-                name: "day",
-                type: "text",
+                label:"Day",
+                name:"day",
+                options:['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+                type:"select"
             },
             {
                 label: "Status",
@@ -146,7 +229,7 @@ export const doctorTableHeading = [
     {
         name:"Doctor's ID",
         path1:"userId",
-        path2:"id",
+        path2:"doctorId",
         isNested:true
     },
     {
@@ -351,6 +434,7 @@ export const editDocterPreview =  [
             type:"radio"
         }
     ],
+
     [
         {
             label:"Blood Group",
@@ -404,7 +488,9 @@ export const editDocterPreview =  [
             label:"Designation",
             name:"designation",
             type:"select",
-            options:["Dermatalogiet", "Cardiologist"]
+            options:[],
+            useHook: "useDesignations",
+            optionsKey: "designations"
         },
         {
             label:"Upload Photo",

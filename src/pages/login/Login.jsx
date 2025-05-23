@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Loginbg from "../../assests/Loginbg.png"; 
 import { useNavigate } from "react-router-dom";
-import poster from "../../assests/poster.png"
+import poster from "../../assests/poster.png";
+import axios from "axios";
 
 const Login = () => {
 
@@ -10,11 +11,37 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
  
-  const handleLogin = (e) => {
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Username:", username);
-    console.log("Password:", password);
-   
+    setError("");
+    setLoading(true);
+
+    try {
+      // const response = await axios.post("http:localhost:3500/api/auth/login", {
+        const response = await axios.post("http://localhost:3500/api/auth/login",{
+        userName: username,
+        password: password
+      });
+
+      const { token, userId } = response.data;
+      
+      // Store token and userId in localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", userId);
+      
+      // Set authorization header for future requests
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      
+      // Navigate to dashboard
+      navigate("/admin/dashboard");
+    } catch (error) {
+      setError(error.response?.data?.message || "Login failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,12 +74,15 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
 
+          {error && (
+            <p className="text-red-500 text-sm mt-2">{error}</p>
+          )}
           <button
-          onClick={()=>navigate("/admin/dashboard")}
             type="submit"
-            className="bg-slate-900 text-white text-xl p-3 font-medium  font-roboto rounded-lg mt-8"
+            className="bg-slate-900 text-white text-xl p-3 font-medium font-roboto rounded-lg mt-8 disabled:opacity-50"
+            disabled={loading}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>

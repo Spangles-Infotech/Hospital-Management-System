@@ -5,7 +5,7 @@ import { useModal } from "../../context/ModalContext";
 export const Dropdown = ({ value, onChange, label, options, isIndexIsValue=false, errors, name, isBorder, isOption=false, isAdd=false, title, fields, route, refetch }) => {
 
     const undefinedValue = value?.[name] === undefined || value?.[name] === ""
-    const {openModal} = useModal()
+    const {openModal , closeModal} = useModal()
     
   return (
     <div className="flex flex-col gap-2 w-full">

@@ -3,7 +3,6 @@ import { usePostData } from './usePostData'
 import { useFetchData } from './useFetchData'
 import { useDeleteData } from './useDeleteData'
 import { useForm } from '../context/FormContext'
-import { useNavigate } from 'react-router-dom'
 import { fetch } from '../api/fetch'
 import { useModal } from '../context/ModalContext'
 import { FormModal } from '../Component/modalContents/FormModal'
@@ -13,8 +12,6 @@ import { roleFields, userFormField } from '../utils/variable/settings/usermanage
 import { ListIcon } from '../icons/ListIcon'
 
 export const useOthers = () => {
-
-    const navigate = useNavigate()
     const {openModal} = useModal()
     const [nameList, setNameList] = useState([])
     const {data:tabData, fetchData:tabRefetch} = useFetchData("/get-all-roles")
@@ -55,9 +52,11 @@ export const useOthers = () => {
         AddAccess(formData)
     }
 
-    const handleAddBlock = ()=>{
-        addBlock(formData)
-        navigate("/admin/settings/rooms")
+    const handleAddBlock = async ()=>{
+        const response = await addBlock(formData)
+        if (response.status === 200 || response.status === 201) {
+            roomRefetch()
+        }
     }
 
     const getFloorBySection = async(section)=>{
@@ -70,16 +69,23 @@ export const useOthers = () => {
     }
 
     const handlePostDesignation = async()=>{
-        const status = await postDesignation(formData)
-        if(status === 201){
-            refetch()
+        try {
+            const status = await postDesignation(formData)
+            if(status === 201){
+                refetch()
+                setFormData({})
+            }
+        } catch (error) {
+            console.error('Error posting designation:', error)
         }
     }
 
     const blockBtnData=[
         {
           name:" New Section",
-          onClick : ()=>{navigate("/admin/settings/rooms/add-room")}
+          onClick : ()=>{
+            openModal(FormModal, {title:"Add Room", formField:roomFormField, refetch:roomRefetch})
+          }
         }
       ]
     
@@ -90,7 +96,9 @@ export const useOthers = () => {
             {
               name:"List",
               title:"List",
-              onClick: (id)=>{navigate(`/admin/settings/rooms/room/${id}`)}
+              onClick: (id)=>{
+                openModal(FormModal, {title:"Room Details", formField:roomFormField, refetch:roomRefetch, id:id})
+              }
             },
             {
               name:"inactive",
@@ -141,7 +149,7 @@ export const useOthers = () => {
         },
         {
           name: "User List",
-          onClick : ()=>{navigate("/admin/settings/user-management/user-list")},
+          onClick : ()=>{openModal(FormModal, {title:"User List", formField:userFormField, refetch:userRefetch})},
           icon: ListIcon
         }
     ]

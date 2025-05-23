@@ -19,7 +19,7 @@ const Patient = () => {
  
   const btnData = [
     {
-      name: "New Button",
+      name: "New Patient",
       onClick: () => { openModal(FormModal, { title: "New Patients", formField: patientFields ,refetch:refetch,name:"/add-patient"}) }
     }
   ]
