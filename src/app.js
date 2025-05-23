@@ -14,6 +14,10 @@ const expenseRouter = require("./routes/expense.route")
 const pharmacyRouter = require("./routes/pharmacy.route")
 const ipRouter = require("./routes/ip.route")
 const otherRouter = require("./routes/other.route")
+const authRouter = require("./routes/auth.route")
+const designationRouter = require("./routes/designation.route")
+
+
 
 connectDB()
 
@@ -49,6 +53,10 @@ app.use("/api", pharmacyRouter)
 app.use("/api", expenseRouter)
 app.use("/api", ipRouter)
 app.use('/api', otherRouter)
+app.use('/api/auth', authRouter)
+app.use('/api', designationRouter)
+
+
 app.use(undefinedRoutes)
 app.use(errorHandler)
 

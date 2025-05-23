@@ -1,28 +1,32 @@
-const Staff = require("../models/staff.model")
-const User = require("../models/user.model")
+const User = require("../models/staffUser.model")
 const { sendMessage } = require("../utils/function")
 
 const staff = async(req,res, next)=>{
-    
-    const {joiningDate, relivingDate} = req.body
     const {userId} = req.params
     try {
         if(req.method === "POST"){
-            const user = await User.create(req.body)
-            await Staff.create({userId:user._id, joiningDate:joiningDate, relivingDate:relivingDate })
+            const lastStaff = await User.findOne({}, {}, { sort: { id: -1 } });
+            
+            let nextId = "GST001";
+            if (lastStaff && lastStaff.id) {
+                const currentNumber = parseInt(lastStaff.id.slice(3));
+                const formattedNumber = (currentNumber + 1).toString().padStart(3, "0");
+                nextId = `GST${formattedNumber}`;
+            }
+            
+            await User.create({ ...req.body, id: nextId })
             return sendMessage(res, 201, "Staff Created Successfully")
         }
         if(req.method === "GET"){
             if(userId){
-                const staff = await Staff.findOne({userId:userId}).populate("userId")
+                const staff = await User.findById(userId)
                 return sendMessage(res, 200, "Staff fetched Successfully", staff)
             }
-            const staffs = await Staff.find().populate("userId")
+            const staffs = await User.find()
             return sendMessage(res, 200, "Staffs fetched Successfully", staffs)
         }
         if(req.method === "PUT"){
             await User.findByIdAndUpdate(userId, req.body, {new:true})
-            await Staff.updateOne({userId:userId}, {$set:{joiningDate:joiningDate, relivingDate:relivingDate}}, {new:true})
             return sendMessage(res, 200, "Staff Updated Successfully")
         }
     } catch (error) {

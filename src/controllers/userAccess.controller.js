@@ -1,4 +1,4 @@
-const User = require("../models/user.model")
+const User = require("../models/doctorUser.model")
 const UserAccess = require("../models/userAccess.model")
 const { sendMessage } = require("../utils/function")
 
