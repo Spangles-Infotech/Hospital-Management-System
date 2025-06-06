@@ -6,6 +6,8 @@ const handleLogin = async (req, res) => {
     try {
         const { userName, password } = req.body;
 
+        console.log(userName, password,"check");
+
         // Find user by username
         const user = await User.findOne({ userName });
         if (!user) {
