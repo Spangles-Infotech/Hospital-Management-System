@@ -7,6 +7,7 @@ import { useForm } from "../../../context/FormContext";
 export const TableHeader = ({title, buttonData, isSearch=true, button, isBlue=false, isDate=false}) => {
   
   const {tableForm, handleTableFormChange} = useForm();
+  // console.log(tableForm,"handleTableFormChange")
 
   return (
     <div className={`flex flex-wrap items-center justify-between h-[80px] rounded-xl px-5 ${isBlue ? "" : " bg-white "}`}>
