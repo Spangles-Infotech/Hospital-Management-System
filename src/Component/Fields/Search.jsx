@@ -79,13 +79,13 @@ export const Search = ({isBlue, value, onChange, isForm=false, isSearch}) => {
                 value={globalStr}
                 autoComplete="off"
             />
-            <button 
+            {/* <button 
                 type="button" 
                 onClick={handleSubmit}
                 className="text-white absolute end-0 bottom-0.5 bg-primary hover:bg-primary-focus focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm px-4 py-2"
             >
                 Search
-            </button>
+            </button> */}
         </div>
     </div>
   )

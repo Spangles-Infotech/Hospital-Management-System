@@ -35,6 +35,39 @@ export const expenseTableHeading = [
     }
 ]
 
+export const expenseTableHeadingPrint = [
+    {
+        name:"SI.no.",
+        path:"si.no."
+    },
+    {
+        name:"Date",
+        path:"date",
+        date:true
+    },
+    {
+        name:"Category",
+        path:"category"
+    },
+    {
+        name:"Sub Category",
+        path:"subCateogry"
+    },
+    {
+        name:"Total Amount",
+        path:"totalAmount"
+    },
+    {
+        name:"Balance Amount",
+        path:"balanceAmount"
+    },
+    {
+        name:"Status",
+        path:"status",
+        type:"normal"
+    }
+]
+
 export const expenseTableValue = [
     {
         id:"12",

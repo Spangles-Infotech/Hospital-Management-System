@@ -2,6 +2,7 @@ import React from 'react'
 import { ToolTip } from '../ToolTip'
 
 export const Action = ({actionData, id}) => {
+  console.log(id,"id")
   return (
     <td className='flex gap-[15px] items-center h-full px-6 py-3'>
         {

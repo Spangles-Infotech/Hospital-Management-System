@@ -13,7 +13,7 @@ const Header = () => {
           {/* <p className="text-primary text-sm">Product by Spangles Infotech</p> */}
         </div>
 
-        <div className="flex items-center gap-5 w-[480px] mr-[260px]">
+        {/* <div className="flex items-center gap-5 w-[480px] mr-[260px]">
           <div className="w-full p-2.5 outline outline-1 outline-primary rounded-xl text-gray-500 flex items-center gap-4 text-lg bg-cyan-50">
             <IoIosSearch className="text-gray-600 text-2xl" />
             <input 
@@ -22,7 +22,7 @@ const Header = () => {
               className="w-full bg-transparent outline-none text-gray-600 placeholder-gray-400" 
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="flex gap-10 items-center mr-[50px]">
           <div className="w-[50px] h-[50px] flex items-center justify-center rounded-full border border-stone-300">

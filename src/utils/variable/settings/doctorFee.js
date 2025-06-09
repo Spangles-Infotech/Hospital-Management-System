@@ -3,7 +3,7 @@ export const doctorTableHeading = [
     {
       name:"Doctor's ID",
       path1:"userId",
-      path2:"id",
+      path2:"doctorId",
       isNested:true
 
 
