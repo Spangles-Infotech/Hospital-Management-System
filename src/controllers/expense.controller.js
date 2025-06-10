@@ -5,7 +5,8 @@ const { sendMessage, skipPage } = require("../utils/function")
 const expense = async(req,res,next)=>{
     try {
         const {expenseId} = req.params
-        const {page, limit=15} = req.query
+        const {page, limit=15,search} = req.query
+        console.log(search,"search")
         const balanceAmount = Number(req.body?.totalAmount) -  Number(req.body?.paidAmount)
         let paymentStatus = "Paid"
         if(balanceAmount > 0){
@@ -17,13 +18,32 @@ const expense = async(req,res,next)=>{
             return sendMessage(res, 201, "Expense Recorded Successfully")
         }
         if(req.method === "GET"){
-            if(expenseId){
-                const expense = await Expense.findById(expenseId)
-                if(!expense) return sendMessage(res, 404, "Expense not Found")
-                return sendMessage(res, 200, "Expense Fetched Successfully", expense)
-        }
-            const expenses = await Expense.find(expenseId).sort({_id:-1}).limit(limit).skip(skipPage(page,limit))
-            return sendMessage(res, 200, "Expenses Fetched Successfully", expenses)
+    // Get by ID
+    if (expenseId) {
+        const expense = await Expense.findById(expenseId);
+        if (!expense) return sendMessage(res, 404, "Expense not Found");
+        return sendMessage(res, 200, "Expense Fetched Successfully", expense);
+    }
+
+    // Build dynamic search filter
+    const searchFilter = {};
+    if (search) {
+        const searchRegex = new RegExp(search, "i"); // case-insensitive regex
+
+        // This matches if any of these fields contain the search term
+        searchFilter.$or = [
+            { category: searchRegex },
+            { subCateogry: searchRegex },
+            { status: searchRegex },
+            { totalAmount: isNaN(Number(search)) ? undefined : Number(search) }
+        ].filter(Boolean); // removes undefined if totalAmount isn't a number
+    }
+
+    const expenses = await Expense.find(searchFilter)
+        .skip((page - 1) * limit)
+        .limit(Number(limit));
+
+    return sendMessage(res, 200, "Expenses Fetched Successfully", expenses);
         }
         if(req.method === "PUT"){
             await Expense.findByIdAndUpdate(expenseId, {...req.body, balanceAmount:balanceAmount, status:paymentStatus }, {new: true})
