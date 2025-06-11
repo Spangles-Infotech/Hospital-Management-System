@@ -54,6 +54,7 @@ const doctor = async(req, res, next)=>{
             await Doctor.create({
               doctorId: nextId,
               timing: req.body.timing || [],
+              userId: user._id, // Add this line to save the userId
             });
           
             return sendMessage(res, 201, "Doctor Created Successfully");
@@ -213,81 +214,42 @@ const doctor = async(req, res, next)=>{
         }
 
         if(req.method === "PATCH"){
-            // try {
-            //     if (!userId) {
-            //         return sendMessage(res, 400, "User ID is required");
-            //     }
-
-            //     if (doctorFee) {
-            //         const doctor = await Doctor.findOne({userId: userId});
-            //         if (!doctor) {
-            //             return sendMessage(res, 404, "Doctor not found");
-            //         }
-
-            //         const updatedDoctor = await Doctor.findOneAndUpdate(
-            //             {userId: userId},
-            //             {$set: {fee: doctorFee}},
-            //             {new: true}
-            //         );
-
-            //         return sendMessage(res, 200, "Doctor Fee Updated Successfully");
-            //     }
-
-            //     const inactivatedDoctor = await Doctor.findOneAndUpdate(
-            //         {userId: userId},
-            //         {$set: {status: "Inactivate"}},
-            //         {new: true}
-            //     );
-
-            //     if (!inactivatedDoctor) {
-            //         return sendMessage(res, 404, "Doctor not found");
-            //     }
-
-            //     return sendMessage(res, 200, "Doctor Inactivated Successfully");
-            // } catch (error) {
-            //     return sendMessage(res, 500, "Error updating doctor status", error.message);
-            // }
-
             try {
-              // const { userId } = req.params;  // This must be the ObjectId string!
-              // const { doctorFee } = req.body;
-          
-              if (!userId) {
-                return sendMessage(res, 400, "User ID is required");
-              }
-          
-              // Validate ObjectId
-              if (!mongoose.Types.ObjectId.isValid(userId)) {
-                return sendMessage(res, 400, "Invalid userId format");
-              }
-          
-              const doctor = await Doctor.findOne({ userId: userId });
-              if (!doctor) {
-                return sendMessage(res, 404, "Doctor not found");
-              }
-          
-              if (doctorFee) {
-                const updatedDoctor = await Doctor.findOneAndUpdate(
-                  { userId },
-                  { $set: { fee: doctorFee } },
-                  { new: true }
+                const { userId } = req.params; // This is the _id of the User document
+                const { doctorFee } = req.body;
+
+                if (!userId) {
+                    return sendMessage(res, 400, "User ID is required");
+                }
+
+                // 1. Find the User document by its _id
+                const user = await User.findById(userId);
+                if (!user) {
+                    return sendMessage(res, 404, "User (Doctor) not found");
+                }
+
+                // 2. Get the doctorId from the User document
+                const doctorIdFromUser = user.doctorId;
+                if (!doctorIdFromUser) {
+                    return sendMessage(res, 404, "Doctor ID not found for this user");
+                }
+
+                // 3. Use this doctorId to find and update the Doctor document
+                const doctor = await Doctor.findOneAndUpdate(
+                    { doctorId: doctorIdFromUser }, // Use doctorId from User document
+                    { fee: doctorFee },
+                    { new: true }
                 );
-                return sendMessage(res, 200, "Doctor Fee Updated Successfully", updatedDoctor);
-              }
-          
-              const inactivatedDoctor = await Doctor.findOneAndUpdate(
-                { userId },
-                { $set: { status: "Inactivate" } },
-                { new: true }
-              );
-          
-              return sendMessage(res, 200, "Doctor Inactivated Successfully", inactivatedDoctor);
+
+                if (!doctor) {
+                    return sendMessage(res, 404, "Doctor fee record not found");
+                }
+
+                return sendMessage(res, 200, "Doctor fee updated successfully", doctor);
             } catch (error) {
-              return sendMessage(res, 500, "Error updating doctor", error.message);
+                console.error("Error updating doctor fee:", error);
+                return sendMessage(res, 500, "Error updating doctor fee", error.message);
             }
-        }
-        if(req.method === "DELETE") {
-            return sendMessage(res, 405, "Method not allowed");
         }
     } catch (error) {
         next(error)

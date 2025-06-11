@@ -39,6 +39,22 @@ const expense = async(req,res,next)=>{
         ].filter(Boolean); // removes undefined if totalAmount isn't a number
     }
 
+    const { startDate, endDate, status } = req.query;
+
+    if (startDate || endDate) {
+        searchFilter.date = {};
+        if (startDate) {
+            searchFilter.date.$gte = new Date(startDate);
+        }
+        if (endDate) {
+            searchFilter.date.$lte = new Date(endDate);
+        }
+    }
+
+    if (status) {
+        searchFilter.status = status;
+    }
+
     const expenses = await Expense.find(searchFilter)
         .skip((page - 1) * limit)
         .limit(Number(limit));
