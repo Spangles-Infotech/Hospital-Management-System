@@ -71,9 +71,9 @@ export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}
     }
 
   return (
-    <aside className='flex flex-col gap-[10px] cursor-pointer font-roboto fixed overflow-y-auto h-[calc(90vh-4rem)] relative' style={{width:"inherit"}}> 
-    <div className='absolute -right-3 top-3 bg-primary text-white rounded-full  p-2 cursor-pointer z-10  ' onClick={toggleSidebar}>
-      {isCollapsed? <ArrowIcon size={16} /> : <ArrowIcon size={16} />}
+    <aside className='flex flex-col  my-element  border-r-4 gap-[10px] cursor-pointer font-roboto fixed overflow-y-auto h-[calc(90vh-4rem)] relative' style={{width:"inherit"}}> 
+    <div className='absolute -right-2 top-12 bg-primary text-white rounded-full  p-2 cursor-pointer z-10  ' onClick={toggleSidebar}>
+      {isCollapsed? <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/></svg> : <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z"/></svg>}
       </div>     {
         adminSidebarData.map((item)=>(
           <div onClick={()=>handleSelectMenu( item.name === "Pharmacy" ? "/admin/pharmacy/stocks" : item.path)} className={`mr-3 rounded-r-[10px]  flex flex-col ${isMenuOpen === item.name ? "gap-3":"gap-0"} `} key={item.name}>

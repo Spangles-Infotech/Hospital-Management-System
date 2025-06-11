@@ -7,4 +7,8 @@
     -ms-overflow-style: none; /* Hides scrollbar for Internet Explorer */
     scrollbar-width: none; /* Hides scrollbar for Firefox */
   }
+
+  .my-element {
+    border: 12px solid rgb(8, 155, 171); 
+  }
   

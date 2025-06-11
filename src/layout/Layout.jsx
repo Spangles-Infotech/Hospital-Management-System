@@ -30,10 +30,10 @@ const Layout = () => {
       <Header />
       <div className='flex'>
         {/* Sidebar */}
-        <div className='pt-[135px] relative' style={{ width: `${sidebarWidth}px` }}>
+        <div className='pt-[135px] bg-re relative' style={{ width: `${sidebarWidth}px` }}>
           <Sidebar sidebarWidth={sidebarWidth} setSidebarWidth={setSidebarWidth} isMenuOpen={isMenuOpen} setMenuOpen={setMenuOpen} />
           <div
-            className='absolute top-0 right-0 h-full w-2 bg-gray-400 cursor-ew-resize'
+            className='absolute top-0 right-0  w-2 bg-gray-400 cursor-ew-resize'
             onMouseDown={handleMouseDown}
           ></div>
         </div>

@@ -13,6 +13,7 @@ import PrintPreviewModal from '../../Component/PrintPreviewModal'
 import jsPDF from 'jspdf'
 import { applyPlugin } from 'jspdf-autotable'
 import { useSelector } from 'react-redux'
+import { useState } from 'react'
 
 
 
@@ -38,13 +39,20 @@ const Expense = () => {
     };
 
     const globalStr  = useSelector((state) => state.globalString.value);
-console.log(globalStr,"globalStr")
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [status, setStatus] = useState('');
 
+    const queryParams = new URLSearchParams();
+    if (globalStr) queryParams.append('search', globalStr);
+    if (startDate) queryParams.append('startDate', startDate);
+    if (endDate) queryParams.append('endDate', endDate);
+    if (status) queryParams.append('status', status);
 
-    
+    const queryString = queryParams.toString();
     
     // const {data,isLoading,error, fetchData:refetch} = useFetchData("/get-all-expense")
-  const { data, isLoading, error, fetchData:refetch } = useFetchData(`/get-all-expense${globalStr ? `?search=${globalStr}` : ""}`)
+  const { data, isLoading, error, fetchData:refetch } = useFetchData(`/get-all-expense${queryString ? `?${queryString}` : ""}`)
     // const {data,isLoading,error, fetchData:refetch} = useFetchData("/get-all-expense")
 
     const {openModal ,closeModal } = useModal()
@@ -77,6 +85,41 @@ console.log(globalStr,"globalStr")
     ]
   return (
     <section className='m-4 p-4 flex flex-col gap-[20px]'>
+        <h1>Expense Filter</h1>
+        <div className='flex gap-4 mb-4'>
+            <label className='flex justify-center items-center '>startDate</label>
+            <input
+                type='date'
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className='p-2 border border-gray-300 rounded'
+            />
+            <label className='flex justify-center items-center ' >endDate</label>
+
+            <input
+                type='date'
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className='p-2 border border-gray-300 rounded'
+            />
+            <label className='flex justify-center items-center ' >status</label>
+
+            <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                className='p-2 border border-gray-300 rounded'
+            >
+                <option value="">All Status</option>
+                <option value="Paid">Paid</option>
+                <option value="Unpaid">Unpaid</option>
+            </select>
+            {/* <button
+                onClick={refetch}
+                className='px-4 py-2 bg-blue-500 text-white rounded'
+            >
+                Apply Filters
+            </button> */}
+        </div>
         <div className='flex flex-col bg-white'>
             <TableHeader title={"Expense"} buttonData={btnData} />
             <Table tableHead={expenseTableHeading} tableValue={data}  actionData={actionData} isLoading={isLoading} />

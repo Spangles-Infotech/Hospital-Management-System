@@ -109,6 +109,7 @@ export const Table = ({
                     }
                     
                     actionData={actionData}
+                    item={val}
                   />
                 )
               )}

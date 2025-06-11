@@ -13,7 +13,7 @@ const DoctorList = () => {
   const actionData = [
     {
       name:"editpenblue",
-      onClick : (id)=>{openModal(FormModal, {title:"", formField:doctorFeeFormField, refetch:refetch, data:data,name:`/update-doctor-fee/${id}`,id:id, getRoute:`/update-doctor-fee/${id}`, isPatch:true})}
+      onClick : (id, item)=>{openModal(FormModal, {title:"", formField:doctorFeeFormField, refetch:refetch, data:item,name:`/update-doctor-fee/${item.userId._id}`,id:item.userId._id, getRoute:`/update-doctor-fee/${item.userId._id}`, isPatch:true})}
       
     }
   ]
