@@ -9,7 +9,7 @@ import { ITEMS_PER_PAGE } from '../../utils/variable/dashboard'
 
 const Stocks = () => {
   const { activePage, tableForm} = useForm()
-  const {data, isLoading, error, total} = useFetchData("/get-all-stock", `page=${activePage}&limit=${ITEMS_PER_PAGE}&search=${tableForm?.search || ""}&from=${tableForm?.from || ""}&to=${tableForm?.to || ""}`)
+  const {data, isLoading, error, total} = useFetchData("/get-all-stock", `page=${activePage}&limit=3&search=${tableForm?.search || ""}&from=${tableForm?.from || ""}&to=${tableForm?.to || ""}`)
   const {stockActionData, addStockButtonData} = useStock()
 
   return (

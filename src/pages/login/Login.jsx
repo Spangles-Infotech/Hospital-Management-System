@@ -21,10 +21,10 @@ const Login = () => {
 
     try {
       // const response = await axios.post("http:localhost:3500/api/auth/login", {
-      // const response = await axios.post("https://hospital-management-system-eexc.onrender.com/api/auth/login", {
+      const response = await axios.post("https://hospital-management-system-eexc.onrender.com/api/auth/login", {
 
 
-        const response = await axios.post("http://localhost:3500/api/auth/login",{
+        // const response = await axios.post("http://localhost:3500/api/auth/login",{
         userName: username,
         password: password
       });
