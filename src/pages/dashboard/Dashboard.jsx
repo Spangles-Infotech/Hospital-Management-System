@@ -6,12 +6,21 @@ import Nurses from "../../assests/Nurses.png";
 import Doctors from "../../Component/Doctors";
 import Appointment from "../../Component/Appointment";
 import { TableHeader } from "../../Component/common/Table/TableHeader";
+import { useModal } from "../../context/ModalContext";
+import { doctorFields } from "../../utils/variable/doctor";
+import { FormModal } from "../../Component/modalContents/FormModal";
+import { useFetchData } from "../../hooks/useFetchData";
 
 const Dashboard = () => {
+  const {openModal} = useModal()
+  const{data,isLoading, fetchData:fetchData} = useFetchData("/get-all-doctor")
+
+
 
   const btnData=[
     {
-      name:"New Doctor"
+      name:"New Doctor",
+      onClick : ()=>{ openModal(FormModal, {title:"New Doctor", formField:doctorFields, refetch:fetchData, name:"/add-doctor"})}
     },
     {
       name:"New Patient"

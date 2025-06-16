@@ -22,53 +22,21 @@ export const Pagination = ({ total }) => {
 
 
   const getPageNumbers = () => {
-    const pageNumbers = [];
-    const maxPagesToShow = 5; // Maximum number of page numbers to display directly
+    let start = Math.max(1, activePage - 2);
+    let end = Math.min(totalPages, activePage + 2);
 
-    // Always include the first page
-    pageNumbers.push(1);
-
-    // Calculate start and end for the middle range
-    let start = Math.max(2, activePage - Math.floor(maxPagesToShow / 2) + 1);
-    let end = Math.min(totalPages - 1, activePage + Math.floor(maxPagesToShow / 2) - 1);
-
-    // Adjust start/end if they overlap with 1 or totalPages
-    if (start <= 1) {
-      start = 2;
-      end = Math.min(totalPages - 1, start + maxPagesToShow - 3); // -3 for 1, ..., totalPages
+    if (end - start < 4 && start > 1) {
+      start = Math.max(1, end - 4);
     }
-    if (end >= totalPages) {
-      end = totalPages - 1;
-      start = Math.max(2, end - maxPagesToShow + 3); // +3 for 1, ..., totalPages
+    if (end - start < 4 && end < totalPages) {
+      end = Math.min(totalPages, start + 4);
     }
 
-    // Add ellipsis if there's a gap after the first page
-    if (start > 2) {
-      pageNumbers.push('...');
-    }
-
-    // Add middle pages
-    for (let i = start; i <= end; i++) {
-      pageNumbers.push(i);
-    }
-
-    // Add ellipsis if there's a gap before the last page
-    if (end < totalPages - 1) {
-      pageNumbers.push('...');
-    }
-
-    // Always include the last page (if not already included and totalPages > 1)
-    if (totalPages > 1 && !pageNumbers.includes(totalPages)) {
-      pageNumbers.push(totalPages);
-    }
-
-    return pageNumbers;
+    return Array.from({ length: end - start + 1 }, (_, index) => start + index);
   };
 
   const handlePageClick = (page) => {
-    if (page !== '...') {
-      setActivePage(page);
-    }
+    setActivePage(page);
   };
 
   const handlePrevious = () => {
@@ -93,22 +61,21 @@ export const Pagination = ({ total }) => {
           onClick={handlePrevious}
         />
 
-        {getPageNumbers().map((page, index) => (
+        {getPageNumbers().map((page) => (
           <p
-            key={index} // Use index as key for '...' to avoid duplicate key warnings
+            key={page}
             onClick={() => handlePageClick(page)}
             className={`w-7 h-7 rounded-full text-center flex items-center justify-center cursor-pointer ${
               activePage === page
                 ? "bg-cyan-600 text-white"
                 : "bg-transparent text-stone-600 "
-            } ${page === '...' ? 'cursor-default' : ''}`}
+            }`}
           >
             {page}
           </p>
         ))}
 
-        {/* This line is now redundant as '...' is handled within getPageNumbers */}
-        {/* {activePage < totalPages - 2 && <p className="gap-2 text-stone-600">...</p>} */}
+        {activePage < totalPages - 2 && <p className="gap-2 text-stone-600">...</p>}
 
         <IoIosArrowForward
           className={`text-cyan-600 cursor-pointer ${

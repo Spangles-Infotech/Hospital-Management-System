@@ -2,14 +2,18 @@ import React from "react";
 import { IoIosSearch } from "react-icons/io";
 import notificationIcon from "../assests/notification.png";
 import profileIcon from "../assests/profile.png";
+import logoIcon from "../assests/Gunam.png";
+
+
 
 const Header = () => {
   return (
     <header className="py-5 w-full bg-white fixed z-50 ">
       <div className="flex items-center justify-between px-10 w-full">
 
-        <div className="py-4">
-          <h1 className="text-3xl font-medium text-primary font-roboto">Gunam Hospital</h1>
+        <div className="py-4 flex gap-4">
+          <img src={logoIcon} alt="Logo" className="w-12 h-12" />
+          <h1 className="text-3xl flex justify-center items-center font-medium text-primary font-roboto">Gunam Hospital</h1>
           {/* <p className="text-primary text-sm">Product by Spangles Infotech</p> */}
         </div>
 

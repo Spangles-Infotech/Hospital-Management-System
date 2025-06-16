@@ -71,16 +71,28 @@ export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}
     }
 
   return (
-    <aside className='flex flex-col  my-element  border-r-4 gap-[10px] cursor-pointer font-roboto fixed overflow-y-auto h-[calc(90vh-4rem)] relative' style={{width:"inherit"}}> 
-    <div className='absolute -right-2 top-12 bg-primary text-white rounded-full  p-2 cursor-pointer z-10  ' onClick={toggleSidebar}>
-      {isCollapsed? <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/></svg> : <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z"/></svg>}
-      </div>     {
+    <div className="relative">
+      <div className='absolute right-0 border-white border-2 -top-5 bg-primary text-white rounded-full p-1 cursor-pointer' style={{ zIndex: 101100 }} onClick={toggleSidebar}>
+        {isCollapsed? <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="white"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/></svg> : <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="2418pxpx" fill="white"><path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z"/></svg>}
+      </div>
+      <aside className='flex flex-col absolute  my-element  border-r-4 gap-[10px] cursor-pointer font-roboto fixed overflow-y-auto h-[calc(90vh-4rem)] relative' style={{width:"inherit"}}> 
+      {/* <div className='relative -right-2 top-1 bg-primary text-white rounded-full  p-2 cursor-pointer   ' style={{zIndex:101100}} onClick={toggleSidebar}>
+        {isCollapsed? <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/></svg> : <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z"/></svg>}
+        </div>      */}
+        {/* The original div is commented out and moved above */}
+        {
         adminSidebarData.map((item)=>(
-          <div onClick={()=>handleSelectMenu( item.name === "Pharmacy" ? "/admin/pharmacy/stocks" : item.path)} className={`mr-3 rounded-r-[10px]  flex flex-col ${isMenuOpen === item.name ? "gap-3":"gap-0"} `} key={item.name}>
-              <div className={`linkss  flex justify-between p-3 pl-6 items-center pr-[10px] transition-all duration-500 ease-in-out hover:text-white hover:bg-primary rounded-r-[10px] ${isCurrentLocation(item.path) ? "text-white bg-primary fill-white active"  : "text-[#505050] fill-custom-black font-roboto"}`}>
-                <div className='flex gap-[15px]' z-5 onClick={()=>handleSelectMenu( item.name === "Pharmacy" ? "/admin/pharmacy/stocks" : item.path)} >
+          <div onClick={()=>handleSelectMenu( item.name === "Pharmacy" ? "/admin/pharmacy/stocks" : item.path)} className={`mr-3 rounded-r-[10px]   flex flex-col ${isMenuOpen === item.name ? "gap-3":"gap-0"} `} key={item.name}>
+              <div className={`linkss  flex justify-between p-3 pl-6 items-center pr-[10px] transition-all duration-500 ease-in-out  hover:text-white hover:bg-primary rounded-r-[10px] ${isCurrentLocation(item.path) ? "text-white bg-primary fill-white active"  : "text-[#505050] fill-custom-black font-roboto"}`}>
+                <div className='flex  gap-[15px]' z-5 onClick={()=>handleSelectMenu( item.name === "Pharmacy" ? "/admin/pharmacy/stocks" : item.path)} >
                   {sidebarIcons[item.icon]}
-                  <p className={`font-[400] text-[18px] transition-all duration-500 ease-in-out ${sidebarWidth < 100 ? "opacity-0" : "opacity-100"}`}>{item.name}</p>
+                {!isCollapsed &&
+                  
+                (
+
+                  <p  className={`font-[400] text-[18px] transition-all duration-500 ease-in-out ${sidebarWidth < 100 ? "opacity-0" : "opacity-100"}`}>{item.name}</p>
+                ) 
+                } 
                 </div>
                 <div onClick={()=>handleOpenMenu(item.name)} className={`flex items-center justify-center size-[25px] object-contain transition-all duration-500 ease-in-out  ${!item.components ? "hidden" :""} ${isMenuOpen === item.name ? "rotate-[-180deg]":"rotate-y-0"} `}>
                   <ArrowIcon />
@@ -101,5 +113,6 @@ export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}
         )) 
       }
     </aside>
+    </div>
   )
 }
