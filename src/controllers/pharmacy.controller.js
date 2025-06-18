@@ -47,7 +47,7 @@ const prescription = async(req,res,next)=>{
 const stocks = async(req,res,next)=>{
     try {
         const {stockId} = req.params
-        const {page=1, limit=15, search, from, to, isLowStock, IsExpiryDate} = req.query
+        const {page=1, limit=15, search, from, to, isLowStock, IsExpiryDate, category} = req.query
         const searchItems = ["productName", "productCode", "hsnCode", "category",]
         const {productName} = req.body
         let query = {} 
@@ -84,6 +84,9 @@ const stocks = async(req,res,next)=>{
                 return sendMessage(res, 200, "Data Fetched Successfully", stock)
             }
             setQuery([], search, searchItems, query, from, to, "stockDate")
+            if(category){
+                query.category = category
+            }
             const stocks  = await Stock.find(query).limit(limit).skip(skipPage(page, limit))
             const total = await Stock.countDocuments(query)
             return sendMessage(res, 200, "Data Fetched Successfully", stocks, total)

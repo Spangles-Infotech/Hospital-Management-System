@@ -16,6 +16,7 @@ const stocksSchema = mongoose.Schema({
     gst:Number,
     batchNumber:String,
     expiryDate:Date,
+    stockedDate:Date,
     totalQuantity:Number,
     purchasePrice:Number,
     salesPrice:Number
