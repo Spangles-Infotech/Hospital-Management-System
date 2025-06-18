@@ -82,9 +82,9 @@ export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}
         {/* The original div is commented out and moved above */}
         {
         adminSidebarData.map((item)=>(
-          <div onClick={()=>handleSelectMenu( item.name === "Pharmacy" ? "/admin/pharmacy/stocks" : item.path)} className={`mr-3 rounded-r-[10px]   flex flex-col ${isMenuOpen === item.name ? "gap-3":"gap-0"} `} key={item.name}>
+          <div className={`mr-3 rounded-r-[10px]   flex flex-col ${isMenuOpen === item.name ? "gap-3":"gap-0"} `} key={item.name}>
               <div className={`linkss  flex justify-between p-3 pl-6 items-center pr-[10px] transition-all duration-500 ease-in-out  hover:text-white hover:bg-primary rounded-r-[10px] ${isCurrentLocation(item.path) ? "text-white bg-primary fill-white active"  : "text-[#505050] fill-custom-black font-roboto"}`}>
-                <div className='flex  gap-[15px]' z-5 onClick={()=>handleSelectMenu( item.name === "Pharmacy" ? "/admin/pharmacy/stocks" : item.path)} >
+                <div className='flex  gap-[15px]' z-5 onClick={()=> item.components ? handleOpenMenu(item.name) : handleSelectMenu(item.path)} >
                   {sidebarIcons[item.icon]}
                 {!isCollapsed &&
                   
@@ -101,7 +101,7 @@ export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}
               {
                 item.components &&
                 <div className={` flex flex-col pl-[30px] gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "max-h-[240px]":"max-h-0 "} `}>
-                  {item?.components.map((it)=>(
+                  {item?.components.map((it)=>( 
                     <div onClick={()=>handleSelectMenu(it.path)} className={`flex  items-center gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "visible opacity-100":"invisible opacity-0"}`} key={it.tab_path}>
                       <p className={`size-2 rounded-full transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "bg-primary" : "bg-[#C8C8C8]"}`}></p>
                       <p className={` text-[16px] font-[400] transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "text-primary" : "text-[#505050]"} `}>{it.tab_name}</p>

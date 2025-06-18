@@ -10,10 +10,20 @@ import { useModal } from "../../context/ModalContext";
 import { doctorFields } from "../../utils/variable/doctor";
 import { FormModal } from "../../Component/modalContents/FormModal";
 import { useFetchData } from "../../hooks/useFetchData";
+import { patientFields } from "../../utils/variable/patient";
+import New_Appointment from "../../Component/modalContents/New_Appointment";
+import { useRegisteredOp } from "../../hooks/useRegisteredOp";
 
 const Dashboard = () => {
   const {openModal} = useModal()
   const{data,isLoading, fetchData:fetchData} = useFetchData("/get-all-doctor")
+  // const{fetchData: fetchPatients} = useFetchData("/get-all-doctor")
+  const {   fetchData:fetchPatients } = useFetchData(`/get-all-patient`)
+
+  const {  refetch:fetchAppointment } = useRegisteredOp();
+
+
+
 
 
 
@@ -23,10 +33,16 @@ const Dashboard = () => {
       onClick : ()=>{ openModal(FormModal, {title:"New Doctor", formField:doctorFields, refetch:fetchData, name:"/add-doctor"})}
     },
     {
-      name:"New Patient"
+      name:"New Patient",
+      onClick: () => { openModal(FormModal, { title: "New Patients", formField: patientFields, refetch:fetchPatients, name:"/add-patient"}) }
+
+      
     },
     {
-      name:"Book Appointment"
+      name:"Book Appointment",
+      onClick: () => {
+        openModal(New_Appointment, { title: "Add Appointments", refetch: fetchAppointment, name: "/register-appointment" });
+      }
     }
   ]
   return (

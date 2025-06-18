@@ -74,7 +74,7 @@ export const useStock = () => {
     const stockEditFormField = [
       [{ label: "Product Code", name: "productCode", type: "text" }, { label: "Product Name", name: "productName", type: "text" }],
       [{ label: "Generic Name", name: "genericName", type: "searchDropdown", options:data }, { label: "HSN Code", name: "hsnCode", type: "text" }],
-      [{ label: "Batch Number", name: "batchNumber", type:"text"}, { label: "Expiry Date", name: "expiryDate", type: "date" }],
+      [{ label: "Batch Number", name: "batchNumber", type:"text"}, { label: "Expiry Date", name: "expiryDate", type: "date" },{ label: "stocked Date", name: "stockedDate", type: "date" }],
       [{label: "Category",name: "category",type: "select",options: categoryData,isAdd:true, fields:tagFormFields["medicine"], title:"Add Category", route:"/add-tags", refetch:refetch},{label: "Strength",name: "strength",type: "select",options: strengthData,isAdd:true, fields:tagFormFields["strength"], title:"Add Strength", route:"/add-tags", refetch:strengthRefetch}],
       [{ label: "Unit", name: "unit", type: "select", options: packsData, isAdd:true, fields:tagFormFields["pack"], title:"Add unit", route:"/add-tags", refetch:packRefetch  },{ label: "Low Stock", name: "lowStock", type: "number" }],
       [{label:"Purchase Price", name:"purchasePrice", type:"number"},{label:"Sales Price", name:"salesPrice", type:"number"}, {label:"Total Quantity", name:"totalQuantity", type:"number"}],

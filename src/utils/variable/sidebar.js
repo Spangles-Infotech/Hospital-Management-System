@@ -54,6 +54,11 @@ export const adminSidebarData = [
                 path: "/admin/pharmacy/purchase",
                 tab_path: "/admin/pharmacy/purchase",
             },
+            {
+                tab_name: "Purchase Table",
+                path: "/admin/pharmacy/purchaseTable",
+                tab_path: "/admin/pharmacy/purchaseTable",
+            },
         ]
     },
     {

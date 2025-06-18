@@ -81,7 +81,14 @@ const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory
           className="w-[20%] bg-primary p-2 text-white rounded-lg hover:bg-primary transition text-lg"
           onClick={(e)=>handleClick(e, id, isEdit)}
         >
-          {isEdit ? "Edit & Print" : "Save & Print"}
+          {isEdit ? "Edit " : "Save "}
+        </button>
+        <button
+          type="submit"
+          className="w-[20%] bg-primary p-2 text-white rounded-lg hover:bg-primary transition text-lg"
+          onClick={(e)=>handleClick(e, id, isEdit)}
+        >
+         print
         </button>
       </div>
     </div>

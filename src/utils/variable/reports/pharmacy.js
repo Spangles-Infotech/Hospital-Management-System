@@ -39,6 +39,11 @@ export const pharmacyHeading = [
         path: "expiryDate",
         date: "true",
       },
+      // {
+      //   name: "Stocked Date",
+      //   path: "stockedDate",
+      //   date: "true",
+      // },
     
       {
         name: "In Stock",

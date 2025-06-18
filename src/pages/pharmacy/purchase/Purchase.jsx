@@ -8,6 +8,7 @@ import { Pagination } from '../../../Component/common/Pagination'
 import { useForm } from '../../../context/FormContext'
 import { ITEMS_PER_PAGE } from '../../../utils/variable/dashboard'
 import { useModal } from '../../../context/ModalContext'
+import { AddIcon } from '../../../icons/AddIcon'
 
 const Purchase = () => {
 
@@ -38,6 +39,19 @@ const Purchase = () => {
   ]
   return (
   <section className='p-4'>
+            {
+              btnData?.map((item)=>(
+                  <div
+                      key={item.name}
+                      onClick={() => item.onClick && item.onClick()}
+                      role="button" 
+                      className="flex flex-row gap-1 items-center px-3 py-1 h-[30px] 2xl:h-[35px] border border-primary text-white transition-all duration-500 bg-primary rounded text-sm space-x-2 hover:bg-white hover:text-primary fill-white focus:ring-4 focus:ring-teal-200 cursor-pointer hover:fill-primary"
+                  >
+                      {item.icon ? <item.icon />  : <AddIcon /> }
+                      <span>{item.name}</span>
+                  </div>
+              ))
+          }
     <TableHeader title={"Purchase"} buttonData={btnData}/>
     <Table tableHead={purchaseTableHeading} tableValue={data} isLoading={isLoading} actionData={actionData}/>
     {

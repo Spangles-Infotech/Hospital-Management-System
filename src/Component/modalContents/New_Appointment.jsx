@@ -93,9 +93,9 @@ const New_Appointment = ({refetch}) => {
                 <IoIosSearch className="text-2xl text-white" />
               </div>
             </div>
-            <button className="w-[20%] bg-primary p-2 text-white rounded-lg hover:bg-primary transition text-lg">
+            {/* <button className="w-[20%] bg-primary p-2 text-white rounded-lg hover:bg-primary transition text-lg">
               + New Patient
-            </button>
+            </button> */}
           </div>
           <div className={`flex flex-col gap-[10px] ${ !patientData.length > 0 ? "hidden" : ""}`}>
                 {

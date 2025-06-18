@@ -5,6 +5,7 @@ import Stocks from "../../pages/pharmacy/Stocks";
 import Purchase from "../../pages/pharmacy/purchase/Purchase";
 import PurchaseForm from "../../pages/pharmacy/purchase/PurchaseForm";
 import PurchasePreview from "../../pages/pharmacy/purchase/PurchasePreview";
+import PurchaseTable from "../../pages/pharmacy/purchase/PurchaseTable";
 import SupplierForm from "../../pages/pharmacy/supplier/SupplierForm";
 import SupplierList from "../../pages/pharmacy/supplier/SupplierList";
 import SupplierPreview from "../../pages/pharmacy/supplier/SupplierPreview";
@@ -65,7 +66,11 @@ export default [
             },
             {
                 path:"purchase",
-                element:<Purchase />
+                element:<PurchaseForm />
+            },
+            {
+                path:"purchaseTable",
+                element:<PurchaseTable />
             },
 
             {
@@ -75,6 +80,10 @@ export default [
             
             {
                 path:"purchase/add-form",
+                element:<PurchaseForm />
+            },
+            {
+                path:"purchaseTable/add-form",
                 element:<PurchaseForm />
             },
             {
