@@ -13,8 +13,34 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
   const {postData} = usePostData(name)
   const {patchData} = usePatch(name)
   const {updateData} = useUpdateData(name)
-  const {handleReset, formData, handleSubmit, setFormData} = useForm()
+  const {handleReset, formData, handleSubmit, setFormData, handleTableFormChange} = useForm()
   const notToReset = ["Add Category", "Add unit", "Add GST %", "Add Strength"]
+
+  const calculateAge = (dob) => {
+    const today = new Date();
+    const birthDate = new Date(dob);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+  };
+
+  const handleFieldChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    if (name === "dob") {
+      const age = calculateAge(value);
+      setFormData((prev) => ({
+        ...prev,
+        age: age.toString(),
+      }));
+    }
+  };
 
   const handleSubmitForm = async () => {
     if (!formData) return;
@@ -35,7 +61,7 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
         <p className='text-[20px] font-[500]'>{title}</p>
         {data.length > 0 && <IconCard />}
         <div className='flex flex-col gap-[10px]'>
-            <FormLayout data={formField} />
+            <FormLayout data={formField} handleFieldChange={handleFieldChange} />
         </div>
         <div className="flex gap-7 items-center justify-end p-5">
           <p onClick={() => { handleReset(); closeModal(); }}  className="text-red-600 cursor-pointer text-lg w-[150px]"> Discard </p>

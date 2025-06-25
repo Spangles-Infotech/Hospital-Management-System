@@ -82,23 +82,25 @@ export const patientFields = [
         },
     ],
     [
-        [
+        [ 
             {
                 label:"Date of Birth",
                 name:"dob",
-                type:"date"
+                type:"date",
+                onChange: "calculateAge"
             },
             {
                 label:"Age",
                 name:"age",
-                type:"text"
+                type:"text",
+                isAgeField: true
             }
         ],
         {
             label:"Gender",
             name:"gender",
             options:["Male", "Female", "Other"],
-            type:"radio"
+            type:"select"
         }
     ],
     [

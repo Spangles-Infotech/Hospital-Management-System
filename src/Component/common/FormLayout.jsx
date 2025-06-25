@@ -2,7 +2,7 @@ import React from 'react'
 import { Form } from './Form'
 import { useForm } from '../../context/FormContext'
 
-export const FormLayout = ({data, isBorder=true, isWrap=false}) => {
+export const FormLayout = ({data, isBorder=true, isWrap=false, handleFieldChange}) => {
 
   const {formData, handleChange, errors, selectedUnit} = useForm();
 
@@ -14,17 +14,17 @@ export const FormLayout = ({data, isBorder=true, isWrap=false}) => {
             Array.isArray(it) ?
               <div key={i} className={`flex gap-[20px] w-full ${isWrap ? "flex-wrap w-[200px]" : ""}`}>
                 {
-                  it.map((ar, id)=>(
-                    <Form key={ar.label} item={ar} formData={formData} handleChange={handleChange} errors={errors} isBorder={isBorder} />
+                  it.map((ar, id)=>( 
+                    <Form key={ar.label} item={ar} formData={formData} handleChange={handleFieldChange || handleChange} errors={errors} isBorder={isBorder} />
                   ))
                 }
               </div>
             : 
-            <Form key={it.label} item={it} formData={formData} handleChange={handleChange} errors={errors} isBorder={isBorder}  />
+            <Form key={it.label} item={it} formData={formData} handleChange={handleFieldChange || handleChange} errors={errors} isBorder={isBorder}  />
           ))}
         </div>
       ) : (
-        <Form key={item.label} item={item} formData={formData} handleChange={handleChange} errors={errors} isBorder={isBorder}  />
+        <Form key={item.label} item={item} formData={formData} handleChange={handleFieldChange || handleChange} errors={errors} isBorder={isBorder}  />
       )
     )
   )

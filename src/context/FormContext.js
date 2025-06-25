@@ -17,6 +17,11 @@ export const FormProvider = ({ children }) => {
   const [historyData, setHistoryData] = useState([])
   const itemsToUpdatePayment = ["gst", "purchaseRate", "discount", "quantity", "free", "unit", "salePrice"]
 
+  const handleTableFormChange = (e) => {
+    const { name, value } = e.target;
+    setTableForm((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
     
@@ -190,6 +195,8 @@ export const FormProvider = ({ children }) => {
   const updatePaymentDetails = (updatedFormData, index, cat) => {
     let netAmount = 0;
     let totalGstAmount = 0;
+    let totalAdjustmentAmount = 0;
+
     let grossAmount = 0;
     let totalMedicineAmount = 0;
     let totalDiscountAmount = 0;
@@ -233,7 +240,7 @@ export const FormProvider = ({ children }) => {
           totalGstAmount += gstAmount;
           totalMedicineAmount += Number(totalPrice.toFixed(2));
           grossAmount += discountedPrice;
-          netAmount += totalPrice;
+          netAmount += totalPrice + totalAdjustmentAmount;
         }
       });
     }
@@ -271,6 +278,8 @@ export const FormProvider = ({ children }) => {
       netAmount: Number(finalNetAmount.toFixed(2)),
       totalDiscountAmount: Number(totalDiscountAmount.toFixed(2)),
       totalGstAmount: Number(totalGstAmount.toFixed(2)),
+      totalAdjustmentAmount: Number(totalAdjustmentAmount.toFixed(2)),
+
       grossAmount: Number(grossAmount.toFixed(2)),
       finalAmount,
     }));
@@ -319,7 +328,33 @@ export const FormProvider = ({ children }) => {
 
   return (
     <FormContext.Provider
-      value={{handleAddToFormData,setTableForm,tableForm, handleRegisterOpChange, handleDeleteRegisterOp, registerOp, handleRegiterOpCancel, errors, historyData, getHistoryWithMedicineName, formData, activePage, selectedUnit, ITEM_PER_PAGE, medicineQuery, currentMedicalIndex, handleReset, setFormData, handleChange, handleSubmit, setActivePage, handleTimingChange, updateMedicalDetail, handleInputDropDownChange, }}>
+      value={{
+        formData,
+        setFormData,
+        handleChange,
+        errors,
+        handleReset,
+        handleAddToFormData,
+        handleRegisterOpChange,
+        handleEditRegisterOP,
+        handleDeleteRegisterOp,
+        handleRegiterOpCancel,
+        handleInputDropDownChange,
+        validateErrors,
+        handleSubmit,
+        medicineQuery,
+        currentMedicalIndex,
+        handleTimingChange,
+        selectedUnit,
+        tableForm,
+        setTableForm,
+        activePage,
+        setActivePage,
+        historyData,
+        setHistoryData,
+        handleTableFormChange
+      }}
+    >
       {children}
     </FormContext.Provider>
   );
