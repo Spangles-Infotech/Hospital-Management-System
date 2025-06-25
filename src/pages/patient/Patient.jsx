@@ -43,7 +43,18 @@ console.log("Global redux string:", globalStr);
   const btnData = [
     {
       name: "New Patient",
-      onClick: () => { openModal(FormModal, { title: "New Patients", formField: patientFields, refetch:refetch, name:"/add-patient"}) }
+      onClick: () => { 
+        const filteredPatientFields = patientFields.map(section => 
+          Array.isArray(section) ? 
+            section.map(group => 
+              Array.isArray(group) ? 
+                group.filter(field => field.name !== "patientId") : 
+                group.name !== "patientId" ? group : null
+            ).filter(Boolean) : 
+            section.name !== "patientId" ? section : null
+        ).filter(Boolean);
+        openModal(FormModal, { title: "New Patients", formField: filteredPatientFields, refetch:refetch, name:"/add-patient"});
+      }
     }
   ]
 
