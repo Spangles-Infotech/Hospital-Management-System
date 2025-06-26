@@ -68,7 +68,7 @@ console.log("Global redux string:", globalStr);
     },
     {
       name: "editpenblue",
-      onClick:(id)=>{openModal(FormModal,{title:"Enter patient ",formField:editFormField, refetch:refetch, isEdit:true, name:`/update-patient`, id:id, getRoute:`/get-patient/${id}`})}
+      onClick:(id)=>{openModal(FormModal,{title:"Enter patient ",formField:editFormField, refetch:refetch, isEdit:true, name:`/update-patient/${id}`, getRoute:`/get-patient/${id}`})}
     }
   ]
 

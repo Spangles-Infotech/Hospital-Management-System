@@ -6,15 +6,24 @@ import { IconCard } from '../common/IconCard'
 import { usePostData } from '../../hooks/usePostData'
 import { useUpdateData } from '../../hooks/useUpdateData'
 import { usePatch } from '../../hooks/usePatch'
-// import { usePatch } from '../../hooks/usePatch'
+import { useGetData } from '../../hooks/useGetData'
 
-export const FormModal = ({title, formField, data, isEdit, name, refetch, label, isPatch=false}) => {
+export const FormModal = ({title, formField, data, isEdit, name, refetch, label, isPatch=false, getRoute}) => {
   const {closeModal} = useModal()
   const {postData} = usePostData(name)
   const {patchData} = usePatch(name)
   const {updateData} = useUpdateData(name)
   const {handleReset, formData, handleSubmit, setFormData, handleTableFormChange} = useForm()
   const notToReset = ["Add Category", "Add unit", "Add GST %", "Add Strength"]
+  const {data: fetchedData} = useGetData(getRoute, isEdit)
+
+  React.useEffect(() => {
+    if (isEdit && fetchedData) {
+      setFormData(fetchedData);
+    } else if (isEdit && data) {
+      setFormData(data);
+    }
+  }, [isEdit, data, fetchedData, setFormData]);
 
   const calculateAge = (dob) => {
     const today = new Date();
