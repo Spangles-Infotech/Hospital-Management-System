@@ -10,5 +10,6 @@ doctorRouter.post("/add-doctor", doctor)
 doctorRouter.put("/update-doctor/:userId", doctor)
 doctorRouter.patch("/inactivate-doctor/:userId", doctor)
 doctorRouter.patch("/update-doctor-fee/:userId", doctor)
+doctorRouter.get("/get-next-doctor-id", doctor)
 
 module.exports = doctorRouter

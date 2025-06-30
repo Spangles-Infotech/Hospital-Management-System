@@ -2,6 +2,7 @@ const { default: mongoose } = require("mongoose")
 const Doctor = require("../models/doctorfee.model")
 const User = require("../models/doctorUser.model")
 const { sendMessage, skipPage } = require("../utils/function")
+const DoctorFee = require("../models/doctorfee.model")
 
 const doctor = async(req, res, next)=>{
     try {
@@ -124,6 +125,17 @@ const doctor = async(req, res, next)=>{
           
         //     return sendMessage(res, 200, "Doctors Fetched Successfully", populatedDoctors);
         //   }
+        if (req.method === "GET" && req.url === "/get-next-doctor-id") {
+            const lastDoctor = await Doctor.findOne({}, {}, { sort: { doctorId: -1 } });
+            let nextId = "GDR001";
+            if (lastDoctor && lastDoctor.doctorId) {
+                const currentNumber = parseInt(lastDoctor.doctorId.slice(3));
+                const formattedNumber = (currentNumber + 1).toString().padStart(3, "0");
+                nextId = `GDR${formattedNumber}`;
+            }
+            return sendMessage(res, 200, "Next Doctor ID Fetched Successfully", { doctorId: nextId });
+        }
+
         if (req.method === "GET") {
           try {
             // 1. Fetch single doctor by doctorId
@@ -182,7 +194,20 @@ const doctor = async(req, res, next)=>{
           }
         }
 
-      
+        const getDoctorFee = async(req, res) => {
+          try {
+            const { name } = req.params; // 'name' is actually doctorId from the route
+            const doctorFeeData = await Doctor.findOne({ doctorId: name });
+        
+            if (!doctorFeeData) {
+              return sendMessage(res, 404, "Doctor Fee Not Found");
+            }
+        
+            return sendMessage(res, 200, "Doctor Fee Fetched Successfully", doctorFeeData);
+          } catch (error) {
+            return sendMessage(res, 500, "Error fetching doctor fee", error.message);
+          }
+        };
 
         
           
@@ -260,9 +285,9 @@ const doctor = async(req, res, next)=>{
 const getDoctorFee = async (req, res, next) => {
     try {
         const { name } = req.params;
-        const user = await User.findOne({ name }).select("_id");
+        const user = await User.findOne({ name }).select("doctorId");
         if (!user) return sendMessage(res, 404, "Doctor not found");
-        const fees = await Doctor.findOne({ userId: user._id }).distinct("fee");
+        const fees = await DoctorFee.findOne({ doctorId: user.doctorId }).distinct("fee");
         return sendMessage(res, 200, "Doctor Fee Fetched Successfully", fees);
     } catch (error) {
         next(error);
@@ -270,4 +295,7 @@ const getDoctorFee = async (req, res, next) => {
 };
 
 
-module.exports = {doctor, getDoctorFee}
+module.exports = {
+    doctor,
+    getDoctorFee
+}
