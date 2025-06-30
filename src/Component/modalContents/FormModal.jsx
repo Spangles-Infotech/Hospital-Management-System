@@ -16,6 +16,19 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
   const {handleReset, formData, handleSubmit, setFormData, handleTableFormChange} = useForm()
   const notToReset = ["Add Category", "Add unit", "Add GST %", "Add Strength"]
   const {data: fetchedData} = useGetData(getRoute, isEdit)
+  const {data: nextDoctorId} = useGetData("/get-next-doctor-id", !isEdit && name === "/add-doctor")
+  const {data: nextPatientId} = useGetData("/get-next-patient-id", !isEdit && name === "/add-patient")
+
+  React.useEffect(() => {
+    if (!isEdit && name === "/add-doctor" && nextDoctorId) {
+      setFormData((prev) => ({ ...prev, id: nextDoctorId.doctorId }));
+    } else if (!isEdit && name === "/add-patient" && nextPatientId) {
+      setFormData((prev) => ({ ...prev, patientId: nextPatientId.patientId }));
+    }
+  }, [isEdit, name, nextDoctorId, setFormData]);
+
+  console.log("FormModal formData:", formData);
+  console.log("FormModal nextPatientId:", nextPatientId);
 
   React.useEffect(() => {
     if (isEdit && fetchedData) {

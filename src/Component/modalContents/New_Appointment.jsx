@@ -40,14 +40,18 @@ const New_Appointment = ({refetch}) => {
         {
             label:"Doctor Fee",
             name:"doctorFee",
-            type:"number"
+            type:"text",
+            readOnly:true
         },
     ],
     [
         {
             label:"Appointment Date",
             name:"appointmentDate",
-            type:"date"
+            type:"date",
+            readOnly: true,
+
+            // readOnly:true
         },
         {
             label:"Payment Method",

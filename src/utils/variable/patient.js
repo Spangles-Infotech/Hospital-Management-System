@@ -40,10 +40,13 @@ export const tableHeading = [
 export const patientFields = [
     [
         // {
-        //     label:"Patient ID",
-        //     name:"patientId",
-        //     type:"text"
-        // },
+        {
+            label:"Patient ID",
+            name:"patientId",
+            type:"text",
+            readOnly:true,
+            isPatientId:true
+        },
         {
             label:"Patient Name / Baby of",
             name:"patientName",
@@ -261,18 +264,18 @@ export const patientPreviewField = [
             name:"Barcode"
         },
         additionalInfo:[
-            // {
-            //     label:"Birth Place",
-            //     name:"birthPlace"
-            // },
-            // {
-            //     label:"Birth Time",
-            //     name:"birthTime"
-            // },
-            // {
-            //     label:"Weight(when born)",
-            //     name:"weight"
-            // }
+            {
+                label:"Birth Place",
+                name:"birthPlace"
+            },
+            {
+                label:"Birth Time",
+                name:"birthTime"
+            },
+            {
+                label:"Weight(when born)",
+                name:"weight"
+            }
         ]
     }
 ]

@@ -3,11 +3,12 @@ import { stateDistrictMap } from "./staff"
 
 export const doctorFields = [
     [
-        // {
-        //     label:"Doctor ID",
-        //     name:"id",
-        //     type:"text"
-        // },
+        {
+            label:"Doctor ID",
+            name:"id",
+            type:"text",
+            readOnly:true
+        },
         {
             label:"Doctor Name",
             name:"name",
@@ -23,7 +24,9 @@ export const doctorFields = [
         {
             label:"Date of Birth",
             name:"dob",
-            type:"date"
+            type:"date",
+            readonly:true
+
         }
         
     ],
@@ -171,7 +174,8 @@ export const doctorFields = [
             //     label: "Day",
             //     name: "day",
             //     type: "text",
-            // },
+                // readOnly:true
+        // },
             {
                 label:"Day",
                 name:"day",

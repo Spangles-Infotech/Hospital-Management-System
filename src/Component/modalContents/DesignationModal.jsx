@@ -8,7 +8,7 @@ const DesignationModal = () => {
   const { handlePostDesignation, data, handleDeleteDesignation} = useOthers()
 
   return (
-    <div className='flex flex-col gap-6 p-4'>
+    <div className='flex flex-col gap-6 p-4 w-[400px] h-[300px] overflow-y-auto'>
       <div className='flex gap-4 items-end'>
         <div className='flex-1'>
           <Input 
