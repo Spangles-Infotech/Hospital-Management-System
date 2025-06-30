@@ -161,7 +161,9 @@ export const patientFields = [
             options:[], // This will be dynamically populated
             type:"select",
             dependsOn: "state",
-            getOptions: (formData) => formData.state && stateDistrictMap[formData.state] ? stateDistrictMap[formData.state] : []
+            // getOptions: (formData) => (formData && formData.state && stateDistrictMap[formData.state]) ? stateDistrictMap[formData.state] : []
+            getOptions: (formData) => (formData && formData.state && stateDistrictMap[formData.state]) ? stateDistrictMap[formData.state] : []
+
           },
     ],
     [
@@ -397,7 +399,7 @@ export const editFormField = [
             options:[], // This will be dynamically populated
             type:"select",
             dependsOn: "state",
-            getOptions: (formData) => formData.state && stateDistrictMap[formData.state] ? stateDistrictMap[formData.state] : []
+            getOptions: (formData) => (formData && formData.state && stateDistrictMap[formData.state]) ? stateDistrictMap[formData.state] : []
           },
     ],
     [

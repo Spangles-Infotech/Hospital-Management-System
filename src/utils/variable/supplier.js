@@ -135,7 +135,9 @@ export const supplierFormField = [
     options:[], // This will be dynamically populated
     type:"select",
     dependsOn: "state",
-    getOptions: (formData) => formData.state && stateDistrictMap[formData.state] ? stateDistrictMap[formData.state] : []
+    // getOptions: (formData) => formData.state && stateDistrictMap[formData.state] ? stateDistrictMap[formData.state] : []
+    getOptions: (formData) => (formData && formData.state && stateDistrictMap[formData.state]) ? stateDistrictMap[formData.state] : []
+
   },
 ],
 [
