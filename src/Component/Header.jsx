@@ -13,7 +13,7 @@ const Header = () => {
 
         <div className="py-4 flex gap-4">
           <img src={logoIcon} alt="Logo" className="w-12 h-12" />
-          <h1 className="text-3xl flex justify-center items-center font-medium text-primary font-roboto">Gunam Hospital</h1>
+          <h1 className="text-3xl flex justify-center items-center font-medium text-primary font-roboto">Gunam</h1>
           {/* <p className="text-primary text-sm">Product by Spangles Infotech</p> */}
         </div>
 

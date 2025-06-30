@@ -1,4 +1,5 @@
 import { editFormField } from "./expense"
+import { stateDistrictMap } from "./staff"
 
 export const doctorFields = [
     [
@@ -20,6 +21,30 @@ export const doctorFields = [
             type:"text"
         },
         {
+            label:"Date of Birth",
+            name:"dob",
+            type:"date"
+        }
+        
+    ],
+    [
+
+        {
+            label:"Gender",
+            name:"gender",
+            options:["Male", "Female", "Other"],
+            type:"select"
+        },
+        {
+            label:"Martial Status",
+            name:"martialStatus",
+            type:"select",
+            options:["Married", "Unmarried","Other"]
+        }
+    ],
+
+    [
+        {
             label:"Mobile Number",
             options:["+91", "+92", "+93"],
             name:"mobileNumber",
@@ -28,35 +53,16 @@ export const doctorFields = [
             inputName:"number",
 
         },
-        
-    ],
-    [
-        [
-            {
-                label:"Date of Birth",
-                name:"dob",
-                type:"date"
-            },
-            // {
-            //     label:"Age",
-            //     name:"age",
-            //     type:"text"
-            // }
-        ],
+
         {
-            label:"Gender",
-            name:"gender",
-            options:["Male", "Female", "Other"],
-            type:"radio"
-        }
-    ],
-    [
-        {
-            label:"Martial Status",
-            name:"martialStatus",
-            type:"radio",
-            options:["Married", "Unmarried","Other"]
-        }
+            label:"Alternate Mobile Number",
+            options:["+91", "+92", "+93"],
+            name:"alternateMobileNumber",
+            dropdownName:"countryCode",
+            type:"inputdropdown",
+            inputName:"number",
+
+        },
     ],
     [
         {
@@ -73,98 +79,63 @@ export const doctorFields = [
                 "O-"
               ],
             type:"select"
-        },
-        {
-            label:"Alternate Mobile Number",
-            options:["+91", "+92", "+93"],
-            name:"alternateMobileNumber",
-            dropdownName:"countryCode",
-            type:"inputdropdown",
-            inputName:"number",
+        }
+    ],[
 
-        },
-    ],
-    [
-        {
-            label:"Pincode",
-            name:"pincode",
-            type:"text"
-        },
         {
             label:"State",
             name:"state",
             options: [
-                "Andhra Pradesh",
-                "Arunachal Pradesh",
-                "Assam",
-                "Bihar",
-                "Chhattisgarh",
-                "Goa",
-                "Gujarat",
-                "Haryana",
-                "Himachal Pradesh",
-                "Jharkhand",
-                "Karnataka",
-                "Kerala",
-                "Madhya Pradesh",
-                "Maharashtra",
-                "Manipur",
-                "Meghalaya",
-                "Mizoram",
-                "Nagaland",
-                "Odisha",
-                "Punjab",
-                "Rajasthan",
-                "Sikkim",
-                "Tamil Nadu",
-                "Telangana",
-                "Tripura",
-                "Uttar Pradesh",
-                "Uttarakhand",
-                "West Bengal"
-              ],
-            type:"select"
-        },
-    ],
-    [
-        {
+              "Andhra Pradesh",
+              "Arunachal Pradesh",
+              "Assam",
+              "Bihar",
+              "Chhattisgarh",
+              "Goa",
+              "Gujarat",
+              "Haryana",
+              "Himachal Pradesh",
+              "Jharkhand",
+              "Karnataka",
+              "Kerala",
+              "Madhya Pradesh",
+              "Maharashtra",
+              "Manipur",
+              "Meghalaya",
+              "Mizoram",
+              "Nagaland",
+              "Odisha",
+              "Punjab",
+              "Rajasthan",
+              "Sikkim",
+              "Tamil Nadu",
+              "Telangana",
+              "Tripura",
+              "Uttar Pradesh",
+              "Uttarakhand",
+              "West Bengal"
+            ],
+            type:"select",
+          },
+          {
             label:"District",
             name:"district",
-            options: [
-                "Andhra Pradesh",
-                "Arunachal Pradesh",
-                "Assam",
-                "Bihar",
-                "Chhattisgarh",
-                "Goa",
-                "Gujarat",
-                "Haryana",
-                "Himachal Pradesh",
-                "Jharkhand",
-                "Karnataka",
-                "Kerala",
-                "Madhya Pradesh",
-                "Maharashtra",
-                "Manipur",
-                "Meghalaya",
-                "Mizoram",
-                "Nagaland",
-                "Odisha",
-                "Punjab",
-                "Rajasthan",
-                "Sikkim",
-                "Tamil Nadu",
-                "Telangana",
-                "Tripura",
-                "Uttar Pradesh",
-                "Uttarakhand",
-                "West Bengal"
-              ],
-            type:"select"
-        },
+            options:[], // This will be dynamically populated
+            type:"select",
+            dependsOn: "state",
+            getOptions: (formData) => formData.state && stateDistrictMap[formData.state] ? stateDistrictMap[formData.state] : []
+          },
+    ],
+    [
+
         {
             label:"City",
             name:"city",
+            type:"text"
+        },
+        {
+            label:"Pincode",
+            name:"pincode",
             type:"text"
         },
     ],
@@ -431,7 +402,7 @@ export const editDocterPreview =  [
             label:"Gender",
             name:"gender",
             options:["Male", "Female", "Other"],
-            type:"radio"
+            type:"select"
         }
     ],
 
@@ -461,17 +432,48 @@ export const editDocterPreview =  [
         {
             label:"State",
             name:"state",
-            options:["Maharashtra", "Gujarat", "Rajasthan"],
-            type:"select"
-        },
-    ],
-    [
-        {
+            options: [
+              "Andhra Pradesh",
+              "Arunachal Pradesh",
+              "Assam",
+              "Bihar",
+              "Chhattisgarh",
+              "Goa",
+              "Gujarat",
+              "Haryana",
+              "Himachal Pradesh",
+              "Jharkhand",
+              "Karnataka",
+              "Kerala",
+              "Madhya Pradesh",
+              "Maharashtra",
+              "Manipur",
+              "Meghalaya",
+              "Mizoram",
+              "Nagaland",
+              "Odisha",
+              "Punjab",
+              "Rajasthan",
+              "Sikkim",
+              "Tamil Nadu",
+              "Telangana",
+              "Tripura",
+              "Uttar Pradesh",
+              "Uttarakhand",
+              "West Bengal"
+            ],
+            type:"select",
+          },
+          {
             label:"District",
             name:"district",
-            options:["Maharashtra", "Gujarat", "Rajasthan"],
-            type:"select"
-        },
+            options:[], // This will be dynamically populated
+            type:"select",
+            dependsOn: "state",
+            getOptions: (formData) => formData.state && stateDistrictMap[formData.state] ? stateDistrictMap[formData.state] : []
+          },
+    ],
+    [
         {
             label:"City",
             name:"city",

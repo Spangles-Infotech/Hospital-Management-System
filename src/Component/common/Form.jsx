@@ -28,7 +28,20 @@ export const Form = ({item, formData, handleChange, errors, isBorder}) => {
             : item.type?.toLowerCase() === "textarea" ?
                 <TextArea label={item?.label} value={formData} onChange={handleChange}  name={item?.name} errors={errors} isBorder={isBorder} />
             : item?.type === "select" ? (
-                <Dropdown label={item?.label} value={formData} options={item?.useHook === "useDesignations" ? designations : item?.options} onChange={handleChange} name={item?.name} errors={errors} isBorder={isBorder} isAdd={item?.isAdd} title={item?.title} fields={item?.fields} route={item?.route} refetch={item.refetch} />
+                <Dropdown 
+                  label={item?.label} 
+                  value={formData} 
+                  options={item?.dependsOn ? item.getOptions(formData) : (item?.useHook === "useDesignations" ? designations : item?.options)} 
+                  onChange={handleChange} 
+                  name={item?.name} 
+                  errors={errors} 
+                  isBorder={isBorder} 
+                  isAdd={item?.isAdd} 
+                  title={item?.title} 
+                  fields={item?.fields} 
+                  route={item?.route} 
+                  refetch={item.refetch} 
+                />
             ) : item?.type === "radio" ? (
                 <RadioButton label={item?.label} value={formData} onChange={handleChange} name={item?.name} errors={errors} options={item?.options} isBorder={isBorder} />
             ) : item?.type === "" ?

@@ -1,3 +1,6 @@
+import { stateDistrictMap } from "./staff"
+
+
 export const supplierTableHeading = [
   {
     name:"Supplier ID",
@@ -92,14 +95,47 @@ export const supplierFormField = [
 ],
 [
   {
-    label:"District",
-    name: "district",
-    type:"text"
+    label:"State",
+    name:"state",
+    options: [
+      "Andhra Pradesh",
+      "Arunachal Pradesh",
+      "Assam",
+      "Bihar",
+      "Chhattisgarh",
+      "Goa",
+      "Gujarat",
+      "Haryana",
+      "Himachal Pradesh",
+      "Jharkhand",
+      "Karnataka",
+      "Kerala",
+      "Madhya Pradesh",
+      "Maharashtra",
+      "Manipur",
+      "Meghalaya",
+      "Mizoram",
+      "Nagaland",
+      "Odisha",
+      "Punjab",
+      "Rajasthan",
+      "Sikkim",
+      "Tamil Nadu",
+      "Telangana",
+      "Tripura",
+      "Uttar Pradesh",
+      "Uttarakhand",
+      "West Bengal"
+    ],
+    type:"select",
   },
   {
-    label:"State",
-    name: "state",
-    type:"text"
+    label:"District",
+    name:"district",
+    options:[], // This will be dynamically populated
+    type:"select",
+    dependsOn: "state",
+    getOptions: (formData) => formData.state && stateDistrictMap[formData.state] ? stateDistrictMap[formData.state] : []
   },
 ],
 [
