@@ -102,25 +102,22 @@ export const patientFields = [
                 isAgeField: true
             }
         ],
+
+    ],
+    [
         {
             label:"Gender",
             name:"gender",
             options:["Male", "Female", "Other"],
             type:"select"
-        }
-    ],
-    [
+        },
         {
             label:"Blood Group",
             name:"bloodGroup",
             options:["A+", "A-", "B+", "B-", "AB+", "AB-"],
             type:"select"
         },
-        {
-            label:"Pincode",
-            name:"pincode",
-            type:"text"
-        }
+
     ],
     [
         {
@@ -176,7 +173,9 @@ export const patientFields = [
             type:"text"
         },
         {
-            type:""
+            label:"Pincode",
+            name:"pincode",
+            type:"text"
         }
     ],
     {

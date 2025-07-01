@@ -140,12 +140,10 @@ export const staffTableHeading = [
     ],
     [
       [
-        { 
+        {
           label: "Date of Birth",
           name: "dob",
           type: "date",
-          readOnly: true,
-          maxLength: 10,
         },
         {
           label: "Age",

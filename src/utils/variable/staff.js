@@ -82,10 +82,12 @@ export const stateDistrictMap = {
 export const staffFields = [
   [
     {
-      label: "Staff ID",
-      name: "id",
-      type: "text",
-    },
+    label: "Staff ID",
+    name: "id",
+    type: "text",
+    readOnly: true,
+    isStaffId: true,
+  },
     {
       label: "Staff Name",
       name: "name",
@@ -102,15 +104,10 @@ export const staffFields = [
       label: "Husband's Name",
       name: "husbandName",
       type: "text",
-    },
-    {
-      label: "Mobile Number",
-      name: "mobileNumber",
-      options: ["+91", "+92", "+93"],
-      inputName: "number",
-      dropdownName: "countryCode",
-      type: "inputdropdown",
-    },
+    }
+  ],
+  [
+
   ],
   [
     [
@@ -119,46 +116,52 @@ export const staffFields = [
         name: "dob",
         type: "date",
       },
+      {
+        label: "Blood Group",
+        name: "bloodGroup",
+        options: [
+          "A+",
+          "A-",
+          "B+",
+          "B-",
+          "AB+",
+          "AB-",
+          "O+",
+          "O-"
+        ],
+        type: "select",
+      },
       // {
       //   label: "Age",
       //   name: "age",
       //   type: "text",
       // },
     ],
+
+  ],[
     {
       label: "Gender",
       name: "gender",
       options: ["Male", "Female", "Other"],
       type: "select",
     },
-  ],[
     {
       label: "Martial Status",
       name: "martial_status",
       options: ["Single", "Married", "Other"],
       type: "select",
     },
-    {
-      label: "Qualification",
-      name: "qualification",
-      type: "text",
-    },
+
   ],
   [
+
     {
-      label: "Blood Group",
-      name: "bloodGroup",
-      options: [
-        "A+",
-        "A-",
-        "B+",
-        "B-",
-        "AB+",
-        "AB-",
-        "O+",
-        "O-"
-      ],
-      type: "select",
+      label: "Mobile Number",
+      name: "mobileNumber",
+      options: ["+91", "+92", "+93"],
+      inputName: "number",
+      dropdownName: "countryCode",
+      type: "inputdropdown",
     },
     {
       label: "Alternate Mobile Number",
@@ -171,10 +174,13 @@ export const staffFields = [
   ],
   [
     {
-      label: "Pincode",
-      name: "pincode",
+      label: "Qualification",
+      name: "qualification",
       type: "text",
     },
+  ],
+  [
+
   ],
   [
   {
@@ -223,6 +229,18 @@ export const staffFields = [
 
     
   },
+  ],[
+    {
+      label:"City",
+      name:"city",
+      type:"text"
+  },
+    {
+      label: "Pincode",
+      name: "pincode",
+      type: "text",
+    },
+
   ],
   
   {
@@ -255,6 +273,8 @@ export const staffFields = [
       name: "relivingDate",
       type: "date",
     },
+
+  ],[
     {
       label: "Timing",
       name:"timing",
@@ -289,7 +309,7 @@ export const staffFields = [
           }
       ]
     }
-  ],
+  ]
 ];
 
 export const staffTableValue = [

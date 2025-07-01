@@ -53,7 +53,7 @@ export const Form = ({item, formData, handleChange, errors, isBorder}) => {
             : item.type === "search"?
                 <Search  value={formData["search"]} onChange={handleChange} isForm={true}  />
             :
-                <Input label={item?.label} type={item.type} options={item.options} value={formData} onChange={handleChange} name={item?.name} errors={errors} isBorder={isBorder} readOnly={item?.isAgeField || item?.readOnly} isDoctorIdReadOnly={item?.name === "id" && item?.readOnly} isPatientId={item?.isPatientId} />
+                <Input label={item?.label} type={item.type} options={item.options} value={formData} onChange={handleChange} name={item?.name} errors={errors} isBorder={isBorder} readOnly={item?.isAgeField || item?.readOnly} isDoctorIdReadOnly={item?.name === "id" && item?.readOnly} />
         }
     </>
   )
