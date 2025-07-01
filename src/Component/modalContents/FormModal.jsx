@@ -19,7 +19,7 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
   const {data: nextDoctorId} = useGetData("/get-next-doctor-id", !isEdit && name === "/add-doctor")
   const {data: nextPatientId} = useGetData("/get-next-patient-id", !isEdit && name === "/add-patient")
   const {data: nextStaffId} = useGetData("/get-next-staff-id", !isEdit && name === "/add-staff")
-  console.log(nextStaffId?.nextStaffId,"nextStaffId")
+  console.log(nextStaffId?.nextStaffId,"nextStaffId full object")
 
   React.useEffect(() => {
     if (!isEdit && name === "/add-doctor" && nextDoctorId) {
@@ -27,7 +27,8 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
     } else if (!isEdit && name === "/add-patient" && nextPatientId) {
       setFormData((prev) => ({ ...prev, patientId: nextPatientId.patientId }));
     } else if (!isEdit && name === "/add-staff" && nextStaffId) {
-      setFormData((prev) => ({ ...prev, id: nextStaffId.staffId }));
+      console.log("Setting staff ID:", nextStaffId?.da);
+      setFormData((prev) => ({ ...prev, id: nextStaffId?.nextStaffId }));
     }
   }, [isEdit, name, nextDoctorId, nextPatientId, nextStaffId, setFormData]);
 
