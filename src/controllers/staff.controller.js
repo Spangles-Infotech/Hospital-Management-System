@@ -5,16 +5,14 @@ const addStaff = async(req,res, next)=>{
     try {
         const lastStaff = await User.findOne({}, {}, { sort: { id: -1 } });
         
-        let nextId = "STAF-001";
+        let nextStaffIdNum = 1;
         if (lastStaff && lastStaff.id) {
-            const currentNumber = parseInt(lastStaff.id.slice(5));
-            if (currentNumber === 0) {
-                nextId = `STAF-001`;
-            } else {
-                const formattedNumber = (currentNumber + 1).toString().padStart(3, "0");
-                nextId = `STAF-${formattedNumber}`;
+            const lastIdNum = parseInt(lastStaff.id.replace('STAF-', ''));
+            if (!isNaN(lastIdNum)) {
+                nextStaffIdNum = lastIdNum + 1;
             }
         }
+        const nextId = `STAF-${String(nextStaffIdNum).padStart(3, '0')}`;
         
         await User.create({ ...req.body, id: nextId })
         return sendMessage(res, 201, "Staff Created Successfully")
@@ -56,16 +54,14 @@ const getNextStaffId = async(req,res, next)=>{
     try {
         const lastStaff = await User.findOne({}, {}, { sort: { id: -1 } });
         
-        let nextId = "STAF-001";
+        let nextStaffIdNum = 1;
         if (lastStaff && lastStaff.id) {
-            const currentNumber = parseInt(lastStaff.id.slice(5));
-            if (currentNumber === 0) {
-                nextId = `STAF-001`;
-            } else {
-                const formattedNumber = (currentNumber + 1).toString().padStart(3, "0");
-                nextId = `STAF-${formattedNumber}`;
+            const lastIdNum = parseInt(lastStaff.id.replace('STAF-', ''));
+            if (!isNaN(lastIdNum)) {
+                nextStaffIdNum = lastIdNum + 1;
             }
         }
+        const nextId = `STAF-${String(nextStaffIdNum).padStart(3, '0')}`;
         return sendMessage(res, 200, "Next Staff ID fetched Successfully", {nextStaffId: nextId})
     } catch (error) {
         next(error)
