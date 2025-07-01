@@ -1,11 +1,12 @@
 const express = require("express")
-const staff = require("../controllers/staff.controller")
+const { addStaff, getAllStaff, getStaffById, updateStaff, getNextStaffId } = require("../controllers/staff.controller")
 
 const staffRouter = express.Router()
 
-staffRouter.get("/get-all-staff", staff)
-staffRouter.get("/get-staff/:userId", staff)
-staffRouter.post("/add-staff", staff)
-staffRouter.put("/update-staff/:userId", staff)
+staffRouter.get("/get-all-staff", getAllStaff)
+staffRouter.get("/get-staff/:userId", getStaffById)
+staffRouter.post("/add-staff", addStaff)
+staffRouter.put("/update-staff/:userId", updateStaff)
+staffRouter.get("/get-next-staff-id", getNextStaffId)
 
 module.exports = staffRouter
