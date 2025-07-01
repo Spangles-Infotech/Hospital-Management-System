@@ -19,6 +19,7 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
   const {data: nextDoctorId} = useGetData("/get-next-doctor-id", !isEdit && name === "/add-doctor")
   const {data: nextPatientId} = useGetData("/get-next-patient-id", !isEdit && name === "/add-patient")
   const {data: nextStaffId} = useGetData("/get-next-staff-id", !isEdit && name === "/add-staff")
+  console.log(nextStaffId?.nextStaffId,"nextStaffId")
 
   React.useEffect(() => {
     if (!isEdit && name === "/add-doctor" && nextDoctorId) {

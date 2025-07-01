@@ -1,7 +1,7 @@
 import React from "react";
 import { getDateFromISO } from "../../utils/functions/function";
 
-export const Input = ({ label, type = "text", value, onChange, errors, name, isBorder, isSingle=false, readOnly, isDoctorIdReadOnly, isPatientId }) => {
+export const Input = ({ label, type = "text", value, onChange, errors, name, isBorder, isSingle=false, readOnly, isDoctorIdReadOnly, isPatientId, isStaffId }) => {
 
   console.log("Input component - name:", name, "value:", value, "isPatientId:", isPatientId);
   const color = value?.["availableQuantity"] <= 100 ? "text-[#E50000]" : "text-[#009206]"
@@ -21,7 +21,7 @@ export const Input = ({ label, type = "text", value, onChange, errors, name, isB
         readOnly={readOnly}
         onKeyDown={(e) => { if (readOnly && type === "date") e.preventDefault(); }}
         maxLength={type === "text" && name === "appointmentDate" ? 10 : undefined}
-        className={`h-[50px]  ${type === "time" ? "appearance-none bg-time bg-no-repeat bg-bottom-4 bg-[length:20px_20px]" : ""} ${name === "availableQuantity" ? color : "text-customBlack"} ${isBorder ? "rounded-md border border-[#DDDDDD] focus:ring-primary focus:outline-primary px-[10px]" : "focus:outline-none px-[5px]" } ${isDoctorIdReadOnly ? "text-red-500 font-bold" : ""} ${isPatientId ? "text-red-500" : ""}`}
+        className={`h-[50px]  ${type === "time" ? "appearance-none bg-time bg-no-repeat bg-bottom-4 bg-[length:20px_20px]" : ""} ${name === "availableQuantity" ? color : "text-customBlack"} ${isBorder ? "rounded-md border border-[#DDDDDD] focus:ring-primary focus:outline-primary px-[10px]" : "focus:outline-none px-[5px]" } ${isDoctorIdReadOnly ? "text-red-500 font-bold" : ""} ${isPatientId ? "text-red-500 font-bold" : ""} ${isStaffId ? "text-red-500 font-bold" : ""}`}
       />
       {
         errors && errors[name] &&
