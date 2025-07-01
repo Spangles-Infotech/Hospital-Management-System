@@ -74,12 +74,12 @@ const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory
         </div>
       </div>
       <div className="flex gap-7 items-center justify-end p-5 mt-10">
-        <p 
+        {/* <p 
           className="text-red-600 cursor-pointer text-lg" 
           onClick={handleDiscard}
         >
           Discard
-        </p>
+        </p> */}
         <button
           type="submit"
           className="w-[20%] bg-primary p-2 text-white rounded-lg hover:bg-primary transition text-lg"

@@ -76,11 +76,13 @@ export const adminSidebarData = [
         icon:"in-patients",
         path:"/admin/in-patients",
     },
-    {
-        name:"Labs",
-        icon:"labs",
-        path:"/admin/labs",
-    },
+    // {
+        // name:"Labs",
+        // icon:"labs",
+        // path:"/admin/labs",
+        // path:"/admin/dashboard",
+
+    // },
     {
         name:"IP Billing",
         icon:"ipbilling",

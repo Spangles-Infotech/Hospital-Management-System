@@ -32,9 +32,9 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
     }
   }, [isEdit, name, nextDoctorId, nextPatientId, nextStaffId, setFormData]);
 
-  console.log("FormModal formData:", formData);
-  console.log("FormModal nextPatientId:", nextPatientId);
-  console.log("FormModal nextStaffId:", nextStaffId);
+  // console.log("FormModal formData:", formData);
+  // console.log("FormModal nextPatientId:", nextPatientId);
+  // console.log("FormModal nextStaffId:", nextStaffId);
 
   React.useEffect(() => {
     if (isEdit && fetchedData) {
@@ -72,6 +72,7 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
 
   const handleSubmitForm = async () => {
     if (!formData) return;
+    console.log("Submitting formData:", formData);
     const response = isPatch ? await patchData(formData) : isEdit ? await updateData(formData) : await postData(formData);
     if ([200, 201].includes(response)) {
       if(refetch)refetch();

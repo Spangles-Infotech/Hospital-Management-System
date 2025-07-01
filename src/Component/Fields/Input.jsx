@@ -3,7 +3,7 @@ import { getDateFromISO } from "../../utils/functions/function";
 
 export const Input = ({ label, type = "text", value, onChange, errors, name, isBorder, isSingle=false, readOnly, isDoctorIdReadOnly, isPatientId, isStaffId }) => {
 
-  console.log("Input component - name:", name, "value:", value, "isPatientId:", isPatientId);
+  // console.log("Input component - name:", name, "value:", value, "isPatientId:", isPatientId);
   const color = value?.["availableQuantity"] <= 100 ? "text-[#E50000]" : "text-[#009206]"
   return (
     <div className="flex flex-col gap-2 w-full">

@@ -19,7 +19,7 @@ const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false, 
     const updatedRows = row.filter((_, i) => i !== index);
     setFormData((prevFormData) => {
       const updatedFormData = { ...prevFormData };
-      updatedFormData[title] = updatedFormData?.[title].filter((_,i)=> i!==index)
+      updatedFormData[title] = updatedFormData[title] ? updatedFormData[title].filter((_,i)=> i!==index) : [];
       return updatedFormData;
     });
     setRow(updatedRows)

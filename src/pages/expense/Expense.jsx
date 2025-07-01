@@ -85,16 +85,16 @@ const Expense = () => {
     ]
   return (
     <section className='m-4 p-4 flex flex-col gap-[20px]'>
-        <h1>Expense Filter</h1>
+        <h1 className=' text-primary font-[600] text-[20px] font-roboto'>Expense Filter</h1>
         <div className='flex gap-4 mb-4'>
-            <label className='flex justify-center items-center '>startDate</label>
+            <label className='flex justify-center items-center '>StartDate</label>
             <input
                 type='date'
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
                 className='p-2 border border-gray-300 rounded'
             />
-            <label className='flex justify-center items-center ' >endDate</label>
+            <label className='flex justify-center items-center ' >EndDate</label>
 
             <input
                 type='date'
@@ -102,7 +102,7 @@ const Expense = () => {
                 onChange={(e) => setEndDate(e.target.value)}
                 className='p-2 border border-gray-300 rounded'
             />
-            <label className='flex justify-center items-center ' >status</label>
+            <label className='flex justify-center items-center ' >Status</label>
 
             <select
                 value={status}

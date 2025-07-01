@@ -3,10 +3,18 @@ import { IoIosSearch } from "react-icons/io";
 import notificationIcon from "../assests/notification.png";
 import profileIcon from "../assests/profile.png";
 import logoIcon from "../assests/Gunam.png";
-
+import { useNavigate } from "react-router-dom";
 
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    navigate("/");
+  };
+
   return (
     <header className="py-5 w-full bg-white fixed z-50 ">
       <div className="flex items-center justify-between px-10 w-full">
@@ -39,6 +47,7 @@ const Header = () => {
               <p className="text-xl text-stone-700 font-semibold">Pharms</p>
               <p className="text-gray-500">Admin</p>
             </div>
+            <button onClick={handleLogout} className="ml-4 px-4 py-2 bg-red-500 text-white rounded-md">Logout</button>
           </div>
         </div>
         
