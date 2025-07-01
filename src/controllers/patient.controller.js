@@ -56,6 +56,16 @@ const patient = async (req, res, next) => {
   
     try {
       if (req.method === "POST") {
+        const lastPatient = await Patient.findOne().sort({ _id: -1 });
+        let nextPatientIdNum = 1;
+        if (lastPatient && lastPatient.patientId) {
+          const lastIdNum = parseInt(lastPatient.patientId.replace('PAT-', ''));
+          if (!isNaN(lastIdNum)) {
+            nextPatientIdNum = lastIdNum + 1;
+          }
+        }
+        const newPatientId = `PAT-${String(nextPatientIdNum).padStart(3, '0')}`;
+        req.body.patientId = newPatientId;
         await Patient.create({ ...req.body, additionalInfo });
         return sendMessage(res, 201, "Patient Created Successfully");
       }
@@ -152,21 +162,4 @@ const getPatientInfo = async(req, res, next)=>{
     }
 }
 
-const getNextPatientId = async (req, res, next) => {
-    try {
-      const lastPatient = await Patient.findOne().sort({ _id: -1 });
-      let nextPatientIdNum = 1;
-      if (lastPatient && lastPatient.patientId) {
-        const lastIdNum = parseInt(lastPatient.patientId.replace('PAT-', ''));
-        if (!isNaN(lastIdNum)) {
-          nextPatientIdNum = lastIdNum + 1;
-        }
-      }
-      const newPatientId = `PAT-${String(nextPatientIdNum).padStart(3, '0')}`;
-      return sendMessage(res, 200, "Next Patient ID fetched Successfully", { patientId: newPatientId });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-module.exports = {patient, getPatientInfo, getNextPatientId}
+module.exports = {patient, getPatientInfo}
