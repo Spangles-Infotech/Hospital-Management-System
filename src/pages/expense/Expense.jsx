@@ -93,6 +93,9 @@ const Expense = () => {
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
                 className='p-2 border border-gray-300 rounded'
+                onKeyDown={(e) => {
+                    e.preventDefault();
+                }}
             />
             <label className='flex justify-center items-center ' >EndDate</label>
 
@@ -101,6 +104,9 @@ const Expense = () => {
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
                 className='p-2 border border-gray-300 rounded'
+                onKeyDown={(e) => {
+                    e.preventDefault();
+                }}
             />
             <label className='flex justify-center items-center ' >Status</label>
 
