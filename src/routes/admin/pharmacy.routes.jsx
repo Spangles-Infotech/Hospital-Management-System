@@ -77,6 +77,10 @@ export default [
                 path:"purchase/preview/:id",
                 element:<PurchasePreview />
             },
+            {
+                path:"purchaseTable/preview/:id",
+                element:<PurchasePreview />
+            },
             
             {
                 path:"purchase/add-form",
@@ -88,6 +92,10 @@ export default [
             },
             {
                 path:"purchase/edit-form/:id",
+                element:<PurchaseForm isEdit={true} />
+            },
+            {
+                path:"purchaseTable/edit-form/:id",
                 element:<PurchaseForm isEdit={true} />
             }
         ]

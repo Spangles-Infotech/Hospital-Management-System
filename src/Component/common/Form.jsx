@@ -14,7 +14,6 @@ import { useDesignations } from '../../hooks/useDesignations'
 export const Form = ({item, formData, handleChange, errors, isBorder}) => {
     const {handleInputDropDownChange} = useForm()
     const { designations } = useDesignations()
-    console.log("designations", designations)
 
   return (
     <>

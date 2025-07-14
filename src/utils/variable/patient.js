@@ -93,7 +93,10 @@ export const patientFields = [
                 label:"Date of Birth",
                 name:"dob",
                 type:"date",
-                onChange: "calculateAge"
+                onChange: "calculateAge",
+                onKeyDown: (e) => {
+                  e.preventDefault();
+                },
             },
             {
                 label:"Age",

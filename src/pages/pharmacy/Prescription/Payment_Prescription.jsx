@@ -6,17 +6,18 @@ import { historyTableHeading, historyValue } from "../../../utils/variable/purch
 
 const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory=false, isDiscount=false}) => {
   
-  const {formData, handleChange, historyData} = useForm()
+  const {formData, handleChange, historyData, handleSavePurchase} = useForm()
   const paymentOptions = ["Cash", "Credit/Debit Card", "UPI", "Net Banking"]
 
   return (
     <div className="mt-5">
-      <div className="flex justify-between">
+      <div className="flex flex-col justify-between">
         <div>
         {
           isHistory ?
-            <div className="w-[90%] p-2 bg-white rounded-lg">
+            <div className="w-[60%]  p-2 bg-white rounded-lg">
               <Table tableHead={historyTableHeading} tableValue={historyData} isLoading={false}/>
+              
             </div>
           :
           <div className="border-primary border rounded-[15px] mt-5 w-[400px]  h-[150px] p-6 bg-white">
@@ -64,7 +65,13 @@ const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory
           </div>
           <div className="flex justify-between px-4 py-2">
             <p className="text-stone-600">Adjustment Value</p>
-            <p className="text-orange-500">{formData?.["totalGstAmount"]}</p>
+            <input
+              type="number"
+              name="adjustmentValue"
+              value={formData?.["adjustmentValue"] || 0}
+              onChange={handleChange}
+              className="text-orange-500 text-right border-none focus:ring-0 focus:outline-none w-24"
+            />
           </div>
           <div className="w-full h-[1px] bg-primary mt-4"></div>
           <div className="flex justify-between text-lg px-3 py-3">

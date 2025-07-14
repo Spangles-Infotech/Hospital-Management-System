@@ -352,7 +352,9 @@ export const FormProvider = ({ children }) => {
         setActivePage,
         historyData,
         setHistoryData,
-        handleTableFormChange
+        handleTableFormChange,
+        getHistoryWithMedicineName,
+        updateMedicalDetail
       }}
     >
       {children}
