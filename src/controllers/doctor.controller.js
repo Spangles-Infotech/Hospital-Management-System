@@ -2,7 +2,6 @@ const { default: mongoose } = require("mongoose")
 const Doctor = require("../models/doctorfee.model")
 const User = require("../models/doctorUser.model")
 const { sendMessage, skipPage } = require("../utils/function")
-const DoctorFee = require("../models/doctorfee.model")
 
 const doctor = async(req, res, next)=>{
     try {
@@ -285,9 +284,9 @@ const doctor = async(req, res, next)=>{
 const getDoctorFee = async (req, res, next) => {
     try {
         const { name } = req.params;
-        const user = await User.findOne({ name }).select("doctorId");
+        const user = await User.findOne({ name }).select("_id");
         if (!user) return sendMessage(res, 404, "Doctor not found");
-        const fees = await DoctorFee.findOne({ doctorId: user.doctorId }).distinct("fee");
+        const fees = await Doctor.findOne({ doctorId: user.doctorId }).distinct("fee");
         return sendMessage(res, 200, "Doctor Fee Fetched Successfully", fees);
     } catch (error) {
         next(error);
