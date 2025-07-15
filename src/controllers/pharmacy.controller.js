@@ -367,5 +367,15 @@ const getAllMedicineName = async(req,res,next)=>{
     }
 }
 
+const getAllBatchNumbersByMedicineName = async(req,res,next)=>{
+    try {
+        const {medicineName} = req.params
+        const response = await MedicineInfo.find({'medicines.medicineName': medicineName}).distinct('medicines.batchNo')
+        return sendMessage(res, 200, "Batch Numbers fetched Successfully", response)
+    } catch (error) {
+        next(error)
+    }
+}
 
-module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, tags, getAllMedicineName, getPurchaseDetailsByMedicineName, getStockName}
+
+module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, tags, getAllMedicineName, getPurchaseDetailsByMedicineName, getStockName, getAllBatchNumbersByMedicineName}
