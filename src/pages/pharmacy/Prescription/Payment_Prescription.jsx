@@ -44,13 +44,13 @@ const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory
           </div>
         </div>
         <div className="border-primary border rounded-[15px]  mt-5 w-[40%] bg-white" >
-          <div className="flex justify-between px-4 py-3">
+          {/* <div className="flex justify-between px-4 py-3">
             <div className="flex gap-3">
               <input type="checkbox" value={formData?.["isRoundOff"]} name="isRoundOff" onChange={handleChange} />
               <p className="text-slate-700 font-medium ">Rounded off</p>
             </div>
             <p className="text-orange-500">-{formData?.["roundOff"]}</p>
-          </div>
+          </div> */}
           <div className="flex justify-between px-4 py-2">
             <p className="text-stone-600">Gross Amount</p>
             <p className="text-red-600">{formData?.["grossAmount"]}</p>

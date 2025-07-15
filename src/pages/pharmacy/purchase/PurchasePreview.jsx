@@ -18,7 +18,7 @@ const PurchasePreview = () => {
     if(location.pathname.startsWith("/admin/pharmacy/supplier")){
       navigate("/admin/pharmacy/suppliers")
     }else{
-      navigate("/admin/pharmacy/purchase")
+      navigate("/admin/pharmacy/purchaseTable")
     }
   }
 
@@ -103,7 +103,7 @@ const PurchasePreview = () => {
       <div className="border-primary border  rounded-[15px]  mt-5 w-[40%] bg-white place-self-end">
         <div className="flex justify-between  px-4 py-4">
           <div className="flex gap-3">
-            <input type="checkbox" checked={data?.isRoundOff || false} />
+            {/* <input type="checkbox" checked={data?.isRoundOff || false} /> */}
             <p className="text-slate-700 font-medium ">Rounded off</p>
           </div>
           <p className="text-orange-500">{data?.roundOff || 0}</p>

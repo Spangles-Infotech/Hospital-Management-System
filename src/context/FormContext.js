@@ -248,13 +248,13 @@ export const FormProvider = ({ children }) => {
     // Round off logic
     let finalNetAmount = Number(netAmount.toFixed(2));
     let roundOff = 0;
-    if (updatedFormData["isRoundOff"]) {
+    // if (updatedFormData["isRoundOff"]) {
       roundOff = Number((finalNetAmount % 1).toFixed(2));
       finalNetAmount = Math.round(finalNetAmount);
-    } else {
-      finalNetAmount = Number(finalNetAmount.toFixed(2));
-      roundOff = Number((finalNetAmount % 1).toFixed(2));
-    }
+    // } else {
+      // finalNetAmount = Number(finalNetAmount.toFixed(2));
+      // roundOff = Number((finalNetAmount % 1).toFixed(2));
+    // }
     
     // Add bill total (only once)
     finalNetAmount += totalBillAmount;

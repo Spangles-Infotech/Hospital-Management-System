@@ -134,7 +134,7 @@ export const historyTableHeading = [
     },
     {
         name:"Free Quantity",
-        path:"availableQuantity"
+        path:"free"
     },
     {
         name:"Purchase Quantity",
@@ -143,7 +143,7 @@ export const historyTableHeading = [
     // 
     {
         name:"Date of purchase",
-        path:"availableQuantity"
+        path:"purchaseDate"
     },
     {
         name:"order number",
