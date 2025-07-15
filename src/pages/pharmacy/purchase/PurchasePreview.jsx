@@ -1,7 +1,7 @@
 import React from "react";
 import { PharmacyPreviewInfo } from "../../../Component/preview content/PharmacyPreviewInfo";
 import { supplierPurchasePreviewField } from "../../../utils/variable/supplier";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useFetchData } from "../../../hooks/useFetchData";
 import { useCommon } from "../../../hooks/useCommon";
@@ -12,7 +12,8 @@ const PurchasePreview = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  const {location} = useCommon()
+  // const {location} = useCommon()
+  const location = useLocation(); 
   const { data, isLoading, error } = useFetchData(id ? `/get-purchase/${id}`: null);
 
 useEffect(() => {
@@ -24,7 +25,9 @@ useEffect(() => {
 
       const fetchBatchNumbers = async () => {
         try {
-          const response = await axios.get(`http://localhost:3500/api/get-all-batch-numbers/${medicine.medicineName}`);
+          // const response = await axios.get(`http://localhost:3500/api/get-all-batch-numbers/${medicine.medicineName}`);
+          const response = await axios.get(`https://hospital-management-system-eexc.onrender.com/api/get-all-batch-numbers/${medicine.medicineName}`);
+
 
           if (response.data.length != 0) {
             setAllBatchNumbers((prev) => {
