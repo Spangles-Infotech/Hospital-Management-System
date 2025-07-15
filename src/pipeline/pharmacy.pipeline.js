@@ -31,6 +31,10 @@ const getPurchaseHistoryPipeline = (medicineName)=>{
                 purchaseRate: "$medicineDetails.medicines.purchaseRate",
                 mrp: "$medicineDetails.medicines.mrp",
                 discount: "$medicineDetails.medicines.discount",
+                batch: "$medicineDetails.medicines.batchNo",
+                free: "$medicineDetails.medicines.free",
+
+
                 purchaseDate: 1 // Include purchaseDate for sorting
             }
         },

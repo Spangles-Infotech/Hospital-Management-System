@@ -242,6 +242,7 @@ const purchase = async(req,res, next)=>{
         if(req.method === "GET"){
             if (purchaseId) {
                 const purchase = await Purchase.findById(purchaseId).populate("medicineInfo").populate("paymentInfo");
+                console.log(purchase,"purchase")
                 if (!purchase) {
                     return sendMessage(res, 404, "Purchase not found");
                 }
