@@ -2,16 +2,51 @@ import React from "react";
 import { PharmacyPreviewInfo } from "../../../Component/preview content/PharmacyPreviewInfo";
 import { supplierPurchasePreviewField } from "../../../utils/variable/supplier";
 import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useFetchData } from "../../../hooks/useFetchData";
 import { useCommon } from "../../../hooks/useCommon";
 import { getDateFromISO } from "../../../utils/functions/function";
+import axios from "axios";
 const PurchasePreview = () => {
+  const [allBatchNumbers, setAllBatchNumbers] = useState({});
 
   const { id } = useParams();
   const navigate = useNavigate();
   const {location} = useCommon()
   const { data, isLoading, error } = useFetchData(id ? `/get-purchase/${id}`: null);
-  const tableHeader =[ "MEDICINE NAME", "HSN", "MEDICINE CATEGORY", "BATCH NO.", "EXP DATE", "QTY","FREE", "UNIT","T.QTY", "P.RATE", "MRP", "DIS%", "GST%", "AMOUNT"]
+
+useEffect(() => {
+  if (data?.medicines) {
+    data.medicines.forEach((medicine) => {
+      if (!medicine || !medicine.medicineName) {
+        return; // Skip if medicineName is missing
+      }
+
+      const fetchBatchNumbers = async () => {
+        try {
+          const response = await axios.get(`http://localhost:3500/api/get-all-batch-numbers/${medicine.medicineName}`);
+
+          if (response.data.length != 0) {
+            setAllBatchNumbers((prev) => {
+              const newState = {
+                ...prev,
+                [medicine.medicineName]: response.data.data,
+              };
+              console.log(`Updated allBatchNumbers for ${medicine.medicineName}:`, newState[medicine.medicineName]);
+              return newState;
+            });
+          }
+        } catch (err) {
+          console.error(`Failed to fetch batch numbers for ${medicine.medicineName}:`, err);
+        }
+      };
+
+      fetchBatchNumbers(); // Call the async function
+    });
+  }
+}, [data]);
+
+  const tableHeader =[ "MEDICINE NAME", "HSN", "MEDICINE CATEGORY", "BATCH NO.", "SIMILAR BATCH NO.", "EXP DATE", "QTY","FREE", "UNIT","T.QTY", "P.RATE", "MRP", "DIS%", "GST%", "AMOUNT"]
 
 
   const handleClickBack = ()=>{
@@ -64,6 +99,9 @@ const PurchasePreview = () => {
                 </td>
                 <td className="px-4 py-3 border border-primary">
                   {medicine?.batchNo}
+                </td>
+                <td className="px-4 py-3 border border-primary">
+                  {allBatchNumbers[medicine?.medicineName]?.filter(batch => batch !== medicine?.batchNo).join(', ') || '-'}
                 </td>
                 <td className="px-4 py-3 border border-primary">
                   {getDateFromISO(medicine?.expDate)}
