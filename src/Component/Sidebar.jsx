@@ -1,5 +1,6 @@
 
-import React,{ useState } from 'react'
+import React,{ useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom';
 import { ReportIcon } from '../icons/ReportIcon';
 import { DashboardIcon } from '../icons/DashboardIcon';
 import { RegisteredOpIcon } from '../icons/RegisteredOpIcon';
@@ -27,8 +28,21 @@ export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}
 
     const {handleReset} = useForm()
     const [isCollapsed, setIsCollapsed] = useState(false)
+    const location = useLocation();
     
     const navigate = useNavigate()
+
+    useEffect(() => {
+      adminSidebarData.forEach(item => {
+        if (item.components) {
+          item.components.forEach(subItem => {
+            if (location.pathname.startsWith(subItem.tab_path)) {
+              setMenuOpen(item.name);
+            }
+          });
+        }
+      });
+    }, [location.pathname, setMenuOpen]);
     
     const handleOpenMenu = (name)=>{
       if(name === isMenuOpen){
@@ -45,6 +59,7 @@ export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}
       handleReset()
       closeModal()
       navigate(path)
+      // The useEffect hook will now handle setting isMenuOpen based on the path
     }
 
     const toggleSidebar = ()=>{
@@ -83,18 +98,18 @@ export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}
         {
         adminSidebarData.map((item)=>(
           <div className={`mr-3 rounded-r-[10px]   flex flex-col ${isMenuOpen === item.name ? "gap-3":"gap-0"} `} key={item.name}>
-              <div className={`linkss  flex justify-between p-3 pl-6 items-center pr-[10px] transition-all duration-500 ease-in-out  hover:text-white hover:bg-primary rounded-r-[10px] ${isCurrentLocation(item.path) ? "text-white bg-primary fill-white active"  : "text-[#505050] fill-custom-black font-roboto"}`}>
-                <div className='flex  gap-[15px]' z-5 onClick={()=> item.components ? handleOpenMenu(item.name) : handleSelectMenu(item.path)} >
+              <div onClick={()=> item.components ? handleOpenMenu(item.name) : handleSelectMenu(item.path)} className={`linkss  flex justify-between p-3 pl-6 items-center pr-[10px] transition-all duration-500 ease-in-out  hover:text-white hover:bg-primary rounded-r-[10px] ${isCurrentLocation(item.path) ? "text-white bg-primary fill-white active"  : "text-[#505050] fill-custom-black font-roboto"}`}>
+                <div className='flex  gap-[15px]' z-5  >
                   {sidebarIcons[item.icon]}
                 {!isCollapsed &&
                   
                 (
 
-                  <p  className={`font-[400] text-[18px] transition-all duration-500 ease-in-out ${sidebarWidth < 100 ? "opacity-0" : "opacity-100"}`}>{item.name}</p>
+                  <p  className={`font-[400] w-[200px] text-[16px] transition-all duration-500 ease-in-out ${sidebarWidth < 100 ? "opacity-0" : "opacity-100"}`}>{item.name}</p>
                 ) 
                 } 
                 </div>
-                <div onClick={()=>handleOpenMenu(item.name)} className={`flex items-center justify-center size-[25px] object-contain transition-all duration-500 ease-in-out  ${!item.components ? "hidden" :""} ${isMenuOpen === item.name ? "rotate-[-180deg]":"rotate-y-0"} `}>
+                <div onClick={()=>handleOpenMenu(item.name)} className={`flex items-center justify-center size-[12px] object-contain transition-all duration-500 ease-in-out  ${!item.components ? "hidden" :""} ${isMenuOpen === item.name ? "rotate-[-180deg]":"rotate-y-0"} `}>
                   <ArrowIcon />
                 </div>
               </div>
@@ -103,8 +118,8 @@ export const Sidebar = ({sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen}
                 <div className={` flex flex-col pl-[30px] gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "max-h-[240px]":"max-h-0 "} `}>
                   {item?.components.map((it)=>( 
                     <div onClick={()=>handleSelectMenu(it.path)} className={`flex  items-center gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "visible opacity-100":"invisible opacity-0"}`} key={it.tab_path}>
-                      <p className={`size-2 rounded-full transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "bg-primary" : "bg-[#C8C8C8]"}`}></p>
-                      <p className={` text-[16px] font-[400] transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "text-primary" : "text-[#505050]"} `}>{it.tab_name}</p>
+                      <p className={`size-2 rounded-full transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "bg-primary " : "bg-[#C8C8C8]"}`}></p>
+                      <p className={` text-[16px] w-[190px] font-[400] transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "text-primary font-[600]" : "text-[#505050]"} `}>{it.tab_name}</p>
                     </div>
                   ))}
                 </div>

@@ -69,7 +69,7 @@ export default [
                 element:<PurchaseForm />
             },
             {
-                path:"purchaseTable",
+                path:"reportspurchase",
                 element:<PurchaseTable />
             },
 
@@ -78,7 +78,7 @@ export default [
                 element:<PurchasePreview />
             },
             {
-                path:"purchaseTable/preview/:id",
+                path:"reportspurchase/preview/:id",
                 element:<PurchasePreview />
             },
             
@@ -87,7 +87,7 @@ export default [
                 element:<PurchaseForm />
             },
             {
-                path:"purchaseTable/add-form",
+                path:"reportspurchase/add-form",
                 element:<PurchaseForm />
             },
             {
@@ -95,7 +95,7 @@ export default [
                 element:<PurchaseForm isEdit={true} />
             },
             {
-                path:"purchaseTable/edit-form/:id",
+                path:"reportspurchase/edit-form/:id",
                 element:<PurchaseForm isEdit={true} />
             }
         ]
