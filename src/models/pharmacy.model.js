@@ -50,8 +50,11 @@ const purchaseSchema = mongoose.Schema({
     purchaseDate:String,
     supplierName:String,
     supplierPhoneNumber:String,
+    paymentStatus:String,
+
     invoiceNumber:String,
     deliveryDate:String,
+    
     medicineInfo:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"MedicineInfo",

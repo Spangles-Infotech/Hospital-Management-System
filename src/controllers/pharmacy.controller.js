@@ -92,7 +92,8 @@ const stocks = async(req,res,next)=>{
             return sendMessage(res, 200, "Data Fetched Successfully", stocks, total)
         }
         if(req.method === "PUT"){
-            await Stock.findByIdAndUpdate(stockId, req.body, {new:true})
+            console.log(Purchase,"Purchase")
+            await Purchase.findByIdAndUpdate(purchaseId, req.body, {new:true})
             return sendMessage(res, 200, "Data Updated Successfully")
         }
     } catch (error) {
@@ -242,7 +243,6 @@ const purchase = async(req,res, next)=>{
         if(req.method === "GET"){
             if (purchaseId) {
                 const purchase = await Purchase.findById(purchaseId).populate("medicineInfo").populate("paymentInfo");
-                console.log(purchase,"purchase")
                 if (!purchase) {
                     return sendMessage(res, 404, "Purchase not found");
                 }
@@ -250,11 +250,17 @@ const purchase = async(req,res, next)=>{
                 return sendMessage(res, 200, "Data Fetched Successfully", transformedPurchase);
             }
             setQuery([], search, searchItems, query, from, to, "date")
-            const purchases = await Purchase.find(query).select(["orderNumber", "invoiceNumber", "purchaseDate", "supplierName"]).populate("medicineInfo", "totalQuantity").populate("paymentInfo", "netAmount").limit(limit).skip(skipPage(page, limit))
+            const purchases = await Purchase.find(query).select(["orderNumber", "invoiceNumber", "purchaseDate", "supplierName","Payment","paymentStatus"]).populate("medicineInfo", "totalQuantity").populate("paymentInfo", "netAmount").limit(limit).skip(skipPage(page, limit))
             const total = await Purchase.countDocuments(query)
             return sendMessage(res, 200, "Data fetched Succesfully", purchases, total)
         }
         if(req.method === "PUT"){
+            if(req.path.includes("update-purchase-payment-status")){
+                const {purchaseId} = req.params
+                const {payment} = req.body
+                await Purchase.findByIdAndUpdate(purchaseId, {paymentStatus: payment}, {new:true})
+                return sendMessage(res, 200, "Payment Status Updated Successfully")
+            }
             const purchase = await Purchase.findById(purchaseId)
             await MedicineInfo.findByIdAndUpdate(purchase.medicineInfo, {medicines:medicines, totalAmount:netAmount, totalQuantity:totalQuantity}, {new:true})
             await PaymentInfo.findByIdAndUpdate(purchase.paymentInfo, req.body, {new:true})

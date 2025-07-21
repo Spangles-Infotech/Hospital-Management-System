@@ -11,8 +11,12 @@ const transformPurchaseData = (purchase)=>{
         purchaseDate: purchase.purchaseDate,
         supplierName: purchase.supplierName,
         supplierPhoneNumber: purchase.supplierPhoneNumber,
+        payment: purchase.payment,
+
         invoiceNumber: purchase.invoiceNumber,
         deliveryDate: purchase.deliveryDate,
+        paymentStatus: purchase.paymentStatus,
+
         medicines: purchase.medicineInfo?.medicines || [],
         totalAmount: purchase.medicineInfo?.totalAmount || 0,
         totalQuantity: purchase.medicineInfo?.totalQuantity || 0,
