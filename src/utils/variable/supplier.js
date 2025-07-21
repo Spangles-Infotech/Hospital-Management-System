@@ -294,6 +294,10 @@ export const supplierPurchasePreviewField = [
 {
   label:"Invoice Date",
   name:"purchaseDate"
+},
+{
+  label:"Payment",
+  name:"paymentStatus"
 }
 ]
 

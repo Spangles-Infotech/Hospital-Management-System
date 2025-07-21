@@ -8,12 +8,27 @@ import { Pagination } from '../../../Component/common/Pagination'
 import { useForm } from '../../../context/FormContext'
 import { ITEMS_PER_PAGE } from '../../../utils/variable/dashboard'
 import { useModal } from '../../../context/ModalContext'
+// import { DotIcon } from '../../../icons/DotIcon'; // Assuming DotIcon will be used for paid/unpaid status
+import { usePurchase } from '../../../hooks/usePurchase';
+import { toast } from 'react-toastify';
 
 const PurchaseTable = () => {
 
   const navigate =useNavigate()
   const {activePage, handleReset, tableForm} = useForm()
   const {data, isLoading, error, total} = useFetchData("/get-all-purchase",`page=${activePage}&search=${tableForm?.search || ""}&from=${tableForm?.from || ""}&to=${tableForm?.to || ""}`)
+  const { updatePurchasePaymentStatus } = usePurchase();
+
+  const handlePaymentStatusChange = async (id, currentStatus) => {
+    const newStatus = currentStatus === "paid" ? "not paid" : "paid";
+    try {
+      await updatePurchasePaymentStatus(id, newStatus);
+      toast.success(`Payment status updated to ${newStatus}`);
+    } catch (error) {
+      toast.error(`Failed to update payment status: ${error.message}`);
+    }
+  };
+
   const btnData = [
     {
       name:"New Purchase",
@@ -31,9 +46,14 @@ const PurchaseTable = () => {
     },
     
 
-    {
+    { 
       name: "editpen",
-      onClick: (id) =>{navigate(`edit-form/${id}`)}
+      onClick: (id) => {navigate(`edit-form/${id}`)}
+    },
+    {
+      name: "cash", // Placeholder for paid/unpaid icon
+      onClick: (id, rowData) => handlePaymentStatusChange(id, rowData.Payment),
+      condition: (rowData) => rowData.Payment !== undefined // Only show if paymentStatus exists
     }
   ]
   return (

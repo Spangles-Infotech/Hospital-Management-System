@@ -33,6 +33,10 @@ export const purchaseTableHeading = [
         path2:"netAmount",
         isNested:true
     },
+    {
+        name:"Payment",
+        path:"paymentStatus"
+    },
 
     {
         name:"Action",
@@ -116,6 +120,16 @@ export const NewPurchaseField = [
             name:"deliveryDate",
             type:"date"
         }
+    ],
+    [
+                        {
+            label:"Payment",
+            name:"Payment",
+            options:["paid","not paid"],
+            type:"select"
+        },
+            
+
     ]
 ]
 
@@ -129,7 +143,11 @@ export const historyTableHeading = [
         path:"supplierName"
     },
     {
-        name:"Total Quantity",
+        name:"Date of purchase",
+        path:"purchaseDate"
+    },
+    {
+        name:"Purchase Quantity",
         path:"availableQuantity"
     },
     {
@@ -137,18 +155,17 @@ export const historyTableHeading = [
         path:"free"
     },
     {
-        name:"Purchase Quantity",
+        name:"Total Quantity",
         path:"availableQuantity"
     },
+
+
     // 
-    {
-        name:"Date of purchase",
-        path:"purchaseDate"
-    },
-    {
-        name:"order number",
-        path:"availableQuantity"
-    },
+
+    // {
+    //     name:"order number",
+    //     path:"availableQuantity"
+    // },
     {
         name:"Purchase Rate",
         path:"purchaseRate"

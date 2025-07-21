@@ -72,7 +72,7 @@ export const usePurchase = () => {
             label:"Supplier ID",
             name:"supplierId",
             type:"text"
-        },
+        },],[
 
         {
             label:"Supplier Name",
@@ -86,6 +86,13 @@ export const usePurchase = () => {
             name:"supplierPhoneNumber",
             type:"text"
         },
+                                {
+            label:"Payment",
+            name:"paymentStatus",
+            options:["paid","not paid"],
+            type:"select"
+        },
+
 
     ],
     [
@@ -106,10 +113,16 @@ export const usePurchase = () => {
             name:"deliveryDate",
             type:"date"
         }
-    ]
+    ],
+
+    
   ]
 
 
+
+  const updatePurchasePaymentStatus = async (id, newStatus) => {
+    await updateData(id, { paymentStatus: newStatus });
+  };
 
   return {
     handleBackToPurchase,
@@ -117,5 +130,6 @@ export const usePurchase = () => {
     NewPurchaseField,
     supplierData,
     getOrderId,
+    updatePurchasePaymentStatus,
   };
 };

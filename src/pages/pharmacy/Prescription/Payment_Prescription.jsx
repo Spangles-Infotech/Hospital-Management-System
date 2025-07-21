@@ -11,11 +11,11 @@ const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory
 
   return (
     <div className="mt-5">
-      <div className="flex flex-col justify-between">
+      <div className="flex  flex-col    ">
         <div>
         {
           isHistory ?
-            <div className="w-[60%]  p-2 bg-white rounded-lg">
+            <div className="  p-2 bg-white rounded-lg">
               <Table tableHead={historyTableHeading} tableValue={historyData} isLoading={false}/>
               
             </div>
@@ -43,7 +43,7 @@ const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory
             </div>
           </div>
         </div>
-        <div className="border-primary border rounded-[15px]  mt-5 w-[40%] bg-white" >
+        <div className="border-primary  ml-[60%]  border rounded-[15px]  mt-5 w-[40%] bg-white" >
           {/* <div className="flex justify-between px-4 py-3">
             <div className="flex gap-3">
               <input type="checkbox" value={formData?.["isRoundOff"]} name="isRoundOff" onChange={handleChange} />
@@ -51,7 +51,7 @@ const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory
             </div>
             <p className="text-orange-500">-{formData?.["roundOff"]}</p>
           </div> */}
-          <div className="flex justify-between px-4 py-2">
+          <div className="flex justify-between mr-2 px-4 py-2">
             <p className="text-stone-600">Gross Amount</p>
             <p className="text-red-600">{formData?.["grossAmount"]}</p>
           </div>
