@@ -1,11 +1,14 @@
 import React from "react";
 import { Action } from "./Action";
+import { Checkbox } from "./Checkbox";
 import { Status } from "./Status";
 import {
   getDateFromISO,
   getTableCellColor,
 } from "../../../utils/functions/function";
 import { TableSkeleton } from "../../skeletons/TableSkeleton";
+import { usePurchase } from "../../../hooks/usePurchase";
+import { toast } from "react-toastify";
 
 export const Table = ({
   tableHead,
@@ -15,8 +18,23 @@ export const Table = ({
   isBlue = false,
   isDoc = false,
   isPat = false,
-  isRoom  = false
+  isRoom  = false,
+  refreshTable
 }) => {
+  const { updatePurchasePaymentStatus } = usePurchase();
+
+  const handlePaymentStatusChange = async (id, currentStatus) => {
+    console.log(currentStatus,"currentStatus")
+    const newStatus = currentStatus === "paid" ? "not paid" : "paid";
+    try {
+      await updatePurchasePaymentStatus(id, newStatus);
+      toast.success(`Payment status updated to ${newStatus}`);
+      refreshTable();
+    } catch (error) {
+      toast.error(`Failed to update payment status: ${error.message}`);
+    }
+  };
+
   console.log("tableValue", tableValue);
   return (
     <table
@@ -75,6 +93,17 @@ export const Table = ({
                   >
                     {i + 1}
                   </td>
+                ) : item.name === "Paid Status" ? (
+                  <td
+                    key={index}
+                    className="px-6 py-3 font-roboto text-left font-[400]"
+                  >
+                    <Checkbox
+                      id={val?._id}
+                      checked={val?.paymentStatus === "paid"}
+                      onChange={() => handlePaymentStatusChange(val?._id, val?.paymentStatus)}
+                    />
+                  </td>
                 ) : item.name !== "Action" ? (
                   <td
                     key={index}
@@ -95,7 +124,6 @@ export const Table = ({
                   <Action
                     key={index}
                     path={item.path}
-                    // id={ isRoom? val?.section  : isDoc ?  val?.userId?._id : isPat ? { id: val?._id, patientId: val?.patientId?._id }  : val?._id}
                     id={
                       isRoom
                         ? val?.section || "-"
@@ -107,7 +135,6 @@ export const Table = ({
                         ? { id: val?._id || "-", patientId: val?.patientId?._id || "-" }
                         : val?._id || "-"
                     }
-                    
                     actionData={actionData}
                     rowData={val}
                   />

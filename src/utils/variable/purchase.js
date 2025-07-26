@@ -39,6 +39,10 @@ export const purchaseTableHeading = [
     },
 
     {
+        name:"Paid Status",
+        path:"paidStatusCheckbox"
+    },
+    {
         name:"Action",
         path:"normal"
     }

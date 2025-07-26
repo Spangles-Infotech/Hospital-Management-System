@@ -1,20 +1,34 @@
 import React from 'react'
 import { ToolTip } from '../ToolTip'
+import { Checkbox } from './Checkbox';
 
 export const Action = ({actionData, id, rowData}) => {
   console.log(id,"id")
   return (
     <td className='flex gap-[15px] items-center h-full px-6 py-3'>
         {
-            actionData?.map((item)=>(
-               <ToolTip name={item.name} data={item.data} key={item.name} id={id}>
-                  <img 
-                    key={item.name} 
-                    src={require(`../../../assests/${item.name}.png`)} alt="eye-icon" className={`size-[30px] object-contain cursor-pointer rounded-[15%]`} 
-                    onClick={item.name !== "tripledot" ? ()=>item.onClick(id, rowData) : undefined}
+            actionData?.map((item) => {
+              if (item.name === "checkbox") {
+                return (
+                  <Checkbox
+                    key={item.name}
+                    id={id}
+                    checked={item.checked(rowData)}
+                    onChange={() => item.onChange(id, rowData)}
                   />
-               </ToolTip>
-            ))
+                );
+              } else {
+                return (
+                  <ToolTip name={item.name} data={item.data} key={item.name} id={id}>
+                    <img 
+                      key={item.name} 
+                      src={require(`../../../assests/${item.name}.png`)} alt="eye-icon" className={`size-[30px] object-contain cursor-pointer rounded-[15%]`} 
+                      onClick={item.name !== "tripledot" ? ()=>item.onClick(id, rowData) : undefined}
+                    />
+                  </ToolTip>
+                );
+              }
+            })
         }
     </td>
   )
