@@ -146,9 +146,13 @@ export const historyTableHeading = [
         name:"Date of purchase",
         path:"purchaseDate"
     },
+        {
+        name:"Order Number",
+        path:"availableQuantity"
+    },
     {
         name:"Purchase Quantity",
-        path:"availableQuantity"
+        path:"unit"
     },
     {
         name:"Free Quantity",

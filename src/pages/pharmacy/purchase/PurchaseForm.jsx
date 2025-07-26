@@ -73,7 +73,11 @@ const PurchaseForm = ({isEdit=false}) => {
             <span>Add Stock</span>
         </div>
       </div>
+      <div className='flex'>
       <MedicinePrescription tableHeader={tableHeader} fields={fields} title={"medicines"} count={data?.["medicines"]?.length} isEdit={isEdit} />
+      {/* <MedicinepaymnetSideMenu/> */}
+
+      </div>
       <Payment_Prescription handleClick={handleSavePurchase} handleDiscard={handleBackToPurchase} isEdit={isEdit} id={id} isHistory={true} />
     </section>
   )

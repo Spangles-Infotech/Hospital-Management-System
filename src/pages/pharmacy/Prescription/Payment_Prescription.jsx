@@ -9,9 +9,11 @@ const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory
   const {formData, handleChange, historyData, handleSavePurchase} = useForm()
   const paymentOptions = ["Cash", "Credit/Debit Card", "UPI", "Net Banking"]
 
+  console.log(historyData,"historyDatahistoryData")
+
   return (
     <div className="mt-5">
-      <div className="flex  flex-col    ">
+      <div className="flex      ">
         <div>
         {
           isHistory ?
@@ -43,7 +45,7 @@ const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory
             </div>
           </div>
         </div>
-        <div className="border-primary  ml-[60%]  border rounded-[15px]  mt-5 w-[40%] bg-white" >
+        <div className="border-primary ml-2   border rounded-[15px]  mt-1 w-[40%] bg-white" >
           {/* <div className="flex justify-between px-4 py-3">
             <div className="flex gap-3">
               <input type="checkbox" value={formData?.["isRoundOff"]} name="isRoundOff" onChange={handleChange} />
