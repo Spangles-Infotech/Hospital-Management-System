@@ -152,7 +152,7 @@ export const historyTableHeading = [
     },
         {
         name:"Order Number",
-        path:"availableQuantity"
+        path:"orderNumber"
     },
     {
         name:"Purchase Quantity",
