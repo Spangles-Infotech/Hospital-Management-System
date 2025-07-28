@@ -35,7 +35,8 @@ const getPurchaseHistoryPipeline = (medicineName)=>{
                 free: "$medicineDetails.medicines.free",
                 all:"$medicineDetails",
                 unit:"$medicineDetails.medicines.unit",
-
+                orderNumber: 1,
+                invoiceNumber: 1,
 
                 purchaseDate: 1 // Include purchaseDate for sorting
             }
