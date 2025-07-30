@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+.add-patient-container{
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 20px;
+    width: 100%;
+    margin: auto; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+
+.form-label-controls{
+    padding-bottom: 20px;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: "Roboto", sans-serif;
+    color: #505050;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: left;
+    margin-top: 20px;
+}
+
+.form-controls{
+    border: 1px solid #898989;
+    border-radius: 6px;
+    padding: 10px;
+    height: 50px;
+    width: 100%;
+}
+
+.form-controls-select{
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    font-family: "Roboto", sans-serif !important;
+    color: #505050 !important;
+}
+
+.discard-add-btn{
+    display: flex;
+    justify-content: flex-end;
+    gap: 25px;
+    padding-top : 30px;
+}
+
+.discard-patient-btn{
+    color: red;
+    font-family: "Roboto", sans-serif;
+    font-size: 18px;
+    padding: 5px;
+    border: 1px solid white;
+}
+
+.add-patient-btn{
+    color: white;
+    background-color: #1F9CC6;
+    font-family: "Roboto", sans-serif;
+    font-size: 18px;
+    padding: 10px;
+    border: 1px solid #1F9CC6;
+    border-radius: 5px;
+}
