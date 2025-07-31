@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import './NewAppointment.css'
 import { useNavigate } from 'react-router-dom';
+import Select from "react-select";
 
 export const NewAppointment = () => {
     const navigate = useNavigate();
 
-    const [tags, setTags] = useState(["Cold", "Cough", "Fever"]);
+    const [tags, setTags] = useState([]);
     const [input, setInput] = useState("");
     const [showNotes, setShowNotes] = useState(false);
     
@@ -33,6 +34,49 @@ export const NewAppointment = () => {
 
     const isFutureDate = selectedDate > today;
 
+
+    const optionsDoctor = [
+        {value: "Dr. Rajesh Kumar", label: "Dr. Rajesh Kumar"},
+        {value: "Dr. Priya Nair", label: "Dr. Priya Nair"},
+        {value: "Dr. Arjun Mehta", label: "Dr. Arjun Mehta"},
+    ]
+
+    const optionsDept = [
+        {value: "Cardiology", label:"Cardiology"},
+        {value: "Neurology", label:"Neurology"},
+        {value: "Orthopedics", label:"Orthopedics"},
+        {value: "Pediatrics", label:"Pediatrics"},
+        {value: "Dermatology", label:"Dermatology"},
+    ]
+
+    const customStyles = {
+        control: (base) => ({
+            ...base,
+            borderColor: "#898989",
+            borderRadius: "4px",
+            padding: "2px",
+            minHeight: "35px",
+            fontSize: "14px",
+            backgroundColor: "#FBFBFD",
+            boxShadow: "none",
+            "&:hover": {
+                borderColor: "#1F9CC6",
+            },
+        }),
+        option: (base, state) => ({
+            ...base,
+            backgroundColor: state.isFocused ? "#1F9CC6" : "#fff",
+            color: state.isFocused ? "#fff" : "#505050",
+            fontSize: "14px",
+            fontFamily: "Roboto, sans-serif",
+            cursor: "pointer",
+        }),
+        singleValue: (base) => ({
+            ...base,
+            color: "#505050",
+        }),
+    };
+
     const handleDiscard = () => {
         navigate(-1); // Go back one page
     };
@@ -57,14 +101,12 @@ export const NewAppointment = () => {
                             </div>
                             <div className="form-group">
                                 <label className="form-label-controls">Doctor Name:</label>
-                                <select
-                                    className="form-controls form-controls-select"
-                                >
-                                    <option value="">Select</option>
-                                    <option value="Dr. Rajesh Kumar">Dr. Rajesh Kumar</option>
-                                    <option value="Dr. Priya Nair">Dr. Priya Nair</option>
-                                    <option value="Dr. Arjun Mehta">Dr. Arjun Mehta</option>
-                                </select>
+                                <Select
+                                    options={optionsDoctor}
+                                    styles={customStyles}
+                                    classNamePrefix='form-controls'
+                                    placeholder="Select"
+                                />
                             </div>
                             <div className="form-group">
                                 <label className="form-label-controls">Date:</label>
@@ -91,16 +133,12 @@ export const NewAppointment = () => {
                             </div>
                             <div className="form-group">
                                 <label className="form-label-controls">Department:</label>
-                                <select
-                                    className="form-controls form-controls-select"
-                                >
-                                    <option value="">Select</option>
-                                    <option value="Cardiology">Cardiology</option>
-                                    <option value="Neurology">Neurology</option>
-                                    <option value="Orthopedics">Orthopedics</option>
-                                    <option value="Pediatrics">Pediatrics</option>
-                                    <option value="Dermatology">Dermatology</option>
-                                </select>
+                                <Select
+                                    options={optionsDept}
+                                    styles={customStyles}
+                                    classNamePrefix="form-controls"
+                                    placeholder="Select"
+                                />
                             </div>
                             {isFutureDate && (
                                 <div className="form-group">
@@ -130,12 +168,24 @@ export const NewAppointment = () => {
                             <div className="form-group">
                                 <label className="form-label-controls">Reason:</label>
                                 <div className="input-form-tags modal-tags">
-                                    <div className="form-control d-flex flex-wrap gap-2 p-2">
+                                    <div
+                                        className="form-control d-flex flex-wrap gap-2 p-2"
+                                        style={{
+                                            backgroundColor: "#E7F1FC",
+                                            color: "black",
+                                            border: "1px solid #ccc",
+                                            borderRadius: "4px",
+                                        }}
+                                    >
                                         {tags.map((tag, index) => (
                                             <span
                                                 key={index}
-                                                className="badge bg-light text-dark d-flex align-items-center"
-                                                style={{ paddingRight: "8px" }}
+                                                className="badge d-flex align-items-center"
+                                                style={{
+                                                    backgroundColor: "#d0e6fa",
+                                                    color: "black",
+                                                    paddingRight: "8px",
+                                                }}
                                             >
                                                 {tag}
                                                 <button
@@ -146,6 +196,7 @@ export const NewAppointment = () => {
                                                 ></button>
                                             </span>
                                         ))}
+
                                         <input
                                             type="text"
                                             className="border-0 flex-grow-1"
@@ -153,7 +204,12 @@ export const NewAppointment = () => {
                                             value={input}
                                             onChange={(e) => setInput(e.target.value)}
                                             onKeyDown={handleKeyDown}
-                                            style={{ outline: "none", minWidth: "150px" }}
+                                            style={{
+                                                outline: "none",
+                                                minWidth: "150px",
+                                                backgroundColor: "#E7F1FC",
+                                                color: "black",
+                                            }}
                                         />
                                     </div>
                                 </div>

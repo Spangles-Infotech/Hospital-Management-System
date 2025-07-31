@@ -12,8 +12,8 @@
 
 
 .form-label-controls{
-    padding-bottom: 20px;
-    font-size: 20px;
+    padding-bottom: 10px;
+    font-size: 14px;
     font-weight: 500;
     font-family: "Roboto", sans-serif;
     color: #505050;
@@ -29,18 +29,29 @@
 
 .form-controls{
     border: 1px solid #898989;
-    border-radius: 6px;
-    padding: 10px;
-    height: 50px;
+    background-color: #FBFBFD;
+    border-radius: 4px;
+    padding: 3px;
+    height: 43px;
     width: 100%;
+    font-size: 14px;
+}
+
+.form-controls:focus {
+    border: 2px solid #1F9CC6;
+    /* border-color: #1F9CC6; */
+    outline: none;
+    box-shadow: 0 0 2px #1F9CC6;
 }
 
 .form-controls-select{
-    font-size: 16px !important;
+    font-size: 14px !important;
     font-weight: 500 !important;
     font-family: "Roboto", sans-serif !important;
     color: #505050 !important;
 }
+
+
 
 .discard-add-btn{
     display: flex;
@@ -65,4 +76,15 @@
     padding: 10px;
     border: 1px solid #1F9CC6;
     border-radius: 5px;
+}
+
+.add-new-head{
+    font-size: 21px;
+    font-weight: 700;
+    color: #1F9CC6;
+}
+
+.basic-info{
+    font-size: 18px;
+    font-weight: 700;
 }
