@@ -35,3 +35,23 @@
 .my-element {
   border-right: 1.5px solid rgb(8, 155, 171); 
 }
+
+/* For WebKit browsers (Chrome, Safari, Edge) */
+* {
+  scrollbar-width: thin;            /* Firefox */
+  scrollbar-color: #1F9CC6 transparent;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #1F9CC6;
+  /* border-radius: 10px; */
+  border: none;
+}

@@ -15,7 +15,7 @@ const New_Appointment = ({refetch}) => {
   const [selectedPatient, setSelectedPatient] = useState({})
   const {data:patientData} = useFetchData( "/get-patient-info", `search=${search}`)
   const {data:doctorName} = useFetchData("/get-all-doctor?isName=true")
-  
+   
   const handleSetSearch = (e)=>{
     if(selectedPatient){
         setSelectedPatient({})
