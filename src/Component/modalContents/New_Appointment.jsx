@@ -81,7 +81,7 @@ const New_Appointment = ({refetch}) => {
     <div className="flex items-center justify-center overflow-hidden w-[700px]">
       <div className="w-full h-full  bg-white flex flex-col gap-[20px]">
         <div className="flex items-center justify-between">
-          <p className="text-stone-700 text-lg font-medium">New Appointment</p>
+          <p className="text-stone-700 text-lg font-medium">New Appointmentss</p>
         </div>
         <div className="flex flex-col gap-[20px]">
           <div className="flex items-center gap-5 justify-between p-4">

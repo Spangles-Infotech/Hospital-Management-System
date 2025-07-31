@@ -86,7 +86,7 @@ export const AddPatient = (data, isEdit, name,) => {
                 <form>
                     <div className="row add-patient-container">
                         <div className="col-sm-12">
-                            <h3>Add New Patient</h3>
+                            <h3>Add New Patientss</h3>
                             <h4>Basic Information</h4>
                         </div>
 
