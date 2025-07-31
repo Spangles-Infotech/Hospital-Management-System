@@ -6,7 +6,7 @@ import { IconCard } from '../common/IconCard'
 import { usePostData } from '../../hooks/usePostData'
 import { useUpdateData } from '../../hooks/useUpdateData'
 import { usePatch } from '../../hooks/usePatch'
-import { useGetData } from '../../hooks/useGetData'
+import { useGetData } from '../../hooks/useGetData' 
 
 export const FormModal = ({title, formField, data, isEdit, name, refetch, label, isPatch=false, getRoute}) => {
   const {closeModal} = useModal()

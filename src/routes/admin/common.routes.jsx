@@ -17,6 +17,7 @@ import settingRoutes from "./setting.routes";
 import reportsRoutes from "./reports.routes";
 import Login from "../../pages/login/Login";
 import { AddPatient } from "../../pages/patient/AddPatient";
+import { NewAppointment } from "../../pages/registered-op/NewAppointment";
 
 export default [
     {
@@ -30,6 +31,10 @@ export default [
             {
                 path:"registered-op-nurse",
                 element:<RegisteredOP_1 /> 
+            },
+            {
+                path:"registered-op-nurse/newappointment",
+                element:<NewAppointment /> 
             },
             {
                 path:"registered-op-doctor",

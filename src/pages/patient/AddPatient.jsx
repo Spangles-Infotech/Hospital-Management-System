@@ -1,10 +1,28 @@
 import React, { useState } from 'react';
 import './AddPatient.css';
+import { useNavigate } from 'react-router-dom';
+import { useGetData } from '../../hooks/useGetData';
+import { useForm } from '../../context/FormContext';
 
-export const AddPatient = () => {
-
+export const AddPatient = (data, isEdit, name,) => {
+    const navigate = useNavigate();
     const [tags, setTags] = useState(["Cold", "Cough", "Fever"]);
     const [input, setInput] = useState("");
+    const today = new Date().toISOString().split('T')[0]; // Format: 'YYYY-MM-DD'
+    const [selectedDate, setSelectedDate] = useState(today);
+    const [dob, setDob] = useState('');
+    const [age, setAge] = useState('');
+    const { formData, setFormData } = useForm();
+    const { data: nextPatientId } = useGetData("/get-next-patient-id", !isEdit);
+
+
+    React.useEffect(() => {
+        if (!isEdit && nextPatientId?.patientId) {
+            setFormData((prev) => ({ ...prev, patientId: nextPatientId.patientId }));
+        }
+    }, [isEdit, nextPatientId, setFormData]);
+
+
 
     const handleKeyDown = (e) => {
         if ((e.key === "Enter" || e.key === "Tab") && input.trim()) {
@@ -19,6 +37,48 @@ export const AddPatient = () => {
 
     const removeTag = (tagToRemove) => {
         setTags(tags.filter((tag) => tag !== tagToRemove));
+    };
+
+    const handleDateChange = (e) => {
+        setSelectedDate(e.target.value);
+    };
+
+    const isFutureDate = selectedDate > today;
+
+
+    const handleDobChange = (e) => {
+  let selectedDob = e.target.value;
+
+  const parts = selectedDob.split('-');
+  const year = parts[0];
+
+  // If user tries to type more than 4 digits in year, reject update entirely
+  if (year.length > 4) return;
+
+  setDob(selectedDob);
+
+  // Only calculate age if full date is available
+  if (parts.length === 3 && year.length === 4) {
+    const birthDate = new Date(selectedDob);
+    const today = new Date();
+    let calculatedAge = today.getFullYear() - birthDate.getFullYear();
+
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      calculatedAge--;
+    }
+
+    setAge(calculatedAge >= 0 ? calculatedAge : '');
+  } else {
+    setAge('');
+  }
+};
+
+
+
+
+    const handleDiscard = () => {
+        navigate(-1); // Go back one page
     };
     return (
         <>
@@ -36,15 +96,22 @@ export const AddPatient = () => {
                                 <input
                                     type="text"
                                     className="form-controls"
+                                    readOnly
                                     required
+                                    value={formData.patientId || ''}
+                                    style={{ color: 'red', fontWeight:'700' }}
                                 />
                             </div>
+
+
                             <div className="form-group">
                                 <label className="form-label-controls">DOB:</label>
                                 <input
                                     type="date"
                                     className="form-controls"
                                     required
+                                    value={dob}
+                                    onChange={handleDobChange}
                                 />
                             </div>
                             <div className="form-group">
@@ -79,6 +146,7 @@ export const AddPatient = () => {
                                 <input
                                     type="number"
                                     className="form-controls"
+                                    value={age}
                                     readOnly
                                 />
                             </div>
@@ -125,7 +193,7 @@ export const AddPatient = () => {
 
                     <div className="row add-patient-container">
                         <div className="col-sm-12">
-                            <h4>Address</h4>
+
                             <div className="form-group">
                                 <label className="form-label-controls">Address:</label>
                                 <textarea
@@ -141,7 +209,7 @@ export const AddPatient = () => {
                     </div>
                     <div className="row add-patient-container">
                         <div className="col-sm-12">
-                            <h4>Reason</h4>
+
                             <div className="form-group">
                                 <label className="form-label-controls">Reason:</label>
                                 <div className="input-form-tags modal-tags">
@@ -193,6 +261,17 @@ export const AddPatient = () => {
                                     <option value="Dr. Arjun Mehta">Dr. Arjun Mehta</option>
                                 </select>
                             </div>
+                            <div className="form-group">
+                                <label className="form-label-controls">Appoitnment Date:</label>
+                                <input
+                                    type="date"
+                                    className="form-controls"
+                                    required
+                                    min={today} // restricts to today or future
+                                    value={selectedDate}
+                                    onChange={handleDateChange}
+                                />
+                            </div>
                         </div>
                         <div className="col-sm-6">
                             <div className="form-group">
@@ -208,9 +287,19 @@ export const AddPatient = () => {
                                     <option value="Dermatology">Dermatology</option>
                                 </select>
                             </div>
+                            {isFutureDate && (
+                                <div className="form-group">
+                                    <label className="form-label-controls">Appoitment Time:</label>
+                                    <input
+                                        type="time"
+                                        className="form-controls"
+                                        required
+                                    />
+                                </div>
+                            )}
                         </div>
                         <div className="col-sm-12 discard-add-btn">
-                            <button className='discard-patient-btn'>Discard</button>
+                            <button className='discard-patient-btn' onClick={handleDiscard}>Discard</button>
                             <button className='add-patient-btn'>Save & Add Appointment</button>
                         </div>
                     </div>

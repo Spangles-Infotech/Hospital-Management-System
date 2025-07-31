@@ -8,8 +8,10 @@ import { useModal } from '../../context/ModalContext';
 import { useRegisteredOp } from "../../hooks/useRegisteredOp";
 import { FormModal } from "../../Component/modalContents/FormModal";
 import { useForm } from "../../context/FormContext";
+import { useNavigate } from "react-router-dom";
 
 const RegisteredOP_1 = () => {
+  const navigate = useNavigate();
   const {setFormData} = useForm()
   const { openModal } = useModal();
   const { data, isLoading, refetch } = useRegisteredOp();
@@ -18,7 +20,8 @@ const RegisteredOP_1 = () => {
     {
       name: "New Appointment",
       onClick: () => {
-        openModal(New_Appointment, { title: "Add Appointments", refetch: refetch, name: "/register-appointment" });
+        // openModal(New_Appointment, { title: "Add Appointments", refetch: refetch, name: "/register-appointment" });
+        navigate('newappointment')
       }
     }
   ];

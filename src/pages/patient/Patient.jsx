@@ -46,7 +46,7 @@ console.log("Global redux string:", globalStr);
     {
       name: "New Patient",
       onClick: () => { 
-        navigate('add')
+        navigate('add') 
       }
     }
   ]
