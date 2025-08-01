@@ -1,33 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AddPatient.css';
 import { useNavigate } from 'react-router-dom';
 import { useGetData } from '../../hooks/useGetData';
 import { useForm } from '../../context/FormContext';
 import Select from "react-select";
+import { fetch } from '../../api/fetch';  
+import { toast } from 'react-toastify'; 
 
 export const AddPatient = (data, isEdit, name,) => {
-    const navigate = useNavigate();
-    const [tags, setTags] = useState([]);
-    const [input, setInput] = useState("");
+    const navigate = useNavigate(); 
+    const [tags, setTags] = useState([]); 
+    const [input, setInput] = useState(""); 
     const today = new Date().toISOString().split('T')[0]; // Format: 'YYYY-MM-DD'
     const [selectedDate, setSelectedDate] = useState(today);
-    const [dob, setDob] = useState('');
-    const [age, setAge] = useState('');
-    const { formData, setFormData } = useForm();
+    const [selectedTime, setSelectedTime] = useState(''); 
+    const [dob, setDob] = useState(''); 
+    const [age, setAge] = useState(''); 
+    const [loading, setLoading] = useState(false);
+    const [patientName, setPatientName] = useState(''); 
+    const [guardianName, setGuardianName] = useState('');
+    const [mobileNumber, setMobileNumber] = useState('');
+    const [address, setAddress] = useState('');
+    const [gender, setGender] = useState(null);
+    const [bloodGroup, setBloodGroup] = useState(null);
+    const [maritalStatus, setMaritalStatus] = useState(null);
+    const [doctorName, setDoctorName] = useState(null);
+    const [department, setDepartment] = useState(null);
+    const { formData, setFormData } = useForm(); 
     const { data: nextPatientId } = useGetData("/get-next-patient-id", !isEdit);
 
 
-    React.useEffect(() => {
-        if (!isEdit && nextPatientId?.patientId) {
+    React.useEffect(() => { 
+        if (!isEdit && nextPatientId?.patientId) { 
             setFormData((prev) => ({ ...prev, patientId: nextPatientId.patientId }));
         }
-    }, [isEdit, nextPatientId, setFormData]);
+    }, [isEdit, nextPatientId, setFormData]); 
 
 
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e) => { 
         if ((e.key === "Enter" || e.key === "Tab") && input.trim()) {
-            e.preventDefault();
+            e.preventDefault();     
+
             const newTag = input.trim();
             if (!tags.includes(newTag)) {
                 setTags([...tags, newTag]);
@@ -45,7 +59,6 @@ export const AddPatient = (data, isEdit, name,) => {
     };
 
     const isFutureDate = selectedDate > today;
-
 
     const handleDobChange = (e) => {
         let selectedDob = e.target.value;
@@ -92,17 +105,18 @@ export const AddPatient = (data, isEdit, name,) => {
         { value: "O", label: "O" },
     ];
 
+
     const optionsMarital = [
         { value: "Married", label: "Married" },
         { value: "Unmarried", label: "Unmarried" },
     ]
-
 
     const optionsDoctor = [
         {value: "Dr. Rajesh Kumar", label: "Dr. Rajesh Kumar"},
         {value: "Dr. Priya Nair", label: "Dr. Priya Nair"},
         {value: "Dr. Arjun Mehta", label: "Dr. Arjun Mehta"},
     ]
+
 
     const optionsDept = [
         {value: "Cardiology", label:"Cardiology"},
@@ -111,6 +125,7 @@ export const AddPatient = (data, isEdit, name,) => {
         {value: "Pediatrics", label:"Pediatrics"},
         {value: "Dermatology", label:"Dermatology"},
     ]
+
 
     const customStyles = {
         control: (base) => ({
@@ -139,15 +154,82 @@ export const AddPatient = (data, isEdit, name,) => {
             color: "#505050",
         }),
     };
+    
 
 
     const handleDiscard = () => {
         navigate(-1); // Go back one page
     };
+
+    const handleSaveAndAddAppointment = async () => {
+        // Validate form fields
+        if (!patientName || !mobileNumber || !address || !gender || !bloodGroup || !doctorName || !selectedDate) {
+            toast.error('Please fill all required fields');
+            return;
+        }
+
+        if (mobileNumber.length !== 10) {
+            toast.error('Mobile number must be 10 digits');
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            // Step 1: Create the patient
+            const patientData = {
+                patientId: formData.patientId,
+                patientName: {
+                    name: patientName
+                },
+                mobileNumber: {
+                    number: mobileNumber
+                },
+                address,
+                age,
+                gender: gender.value,
+                bloodGroup: bloodGroup.value,
+                maritalStatus: maritalStatus ? maritalStatus.value : null,
+                guardianName
+            };
+
+            const patientResponse = await fetch.post('/add-patient', patientData);
+
+            if (patientResponse.status === 201) {
+                // Step 2: Create the appointment
+                const appointmentData = {
+                    patientId: formData.patientId,
+                    doctorName: doctorName.value,
+                    department: department.value,
+                    appointmentDate: selectedDate,
+                    appointmentTime: selectedTime,
+                    patientType: 'OP',
+                    status: 'registered',
+                    reason: tags.join(', ')
+                };
+
+                const appointmentResponse = await fetch.post('/register-appointment', appointmentData);
+
+                if (appointmentResponse.status === 201) {
+                    toast.success('Patient and appointment created successfully');
+                    navigate('/patient');
+                } else {
+                    toast.error('Failed to create appointment');
+                }
+            } else {
+                toast.error('Failed to create patient');
+            }
+        } catch (error) {
+            console.error('Error creating patient and appointment:', error);
+            toast.error('An error occurred. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
     return (
         <>
             <div className="container">
-                <form>
+                <form onSubmit={(e) => e.preventDefault()}>
                     <div className="row add-patient-container">
                         <div className="col-sm-12">
                             <p className='add-new-head'>Add New Patient</p>
@@ -185,6 +267,8 @@ export const AddPatient = (data, isEdit, name,) => {
                                     styles={customStyles}
                                     classNamePrefix="form-controls"
                                     placeholder="Select"
+                                    value={bloodGroup}
+                                    onChange={(selectedOption) => setBloodGroup(selectedOption)}
                                 />
                             </div>
                         </div>
@@ -195,6 +279,8 @@ export const AddPatient = (data, isEdit, name,) => {
                                     type="text"
                                     className="form-controls"
                                     required
+                                    value={patientName}
+                                    onChange={(e) => setPatientName(e.target.value)}
                                 />
                             </div>
                             <div className="form-group">
@@ -213,6 +299,8 @@ export const AddPatient = (data, isEdit, name,) => {
                                     styles={customStyles}
                                     classNamePrefix="form-controls"
                                     placeholder="Select"
+                                    value={maritalStatus}
+                                    onChange={(selectedOption) => setMaritalStatus(selectedOption)}
                                 />
                             </div>
                         </div>
@@ -222,6 +310,8 @@ export const AddPatient = (data, isEdit, name,) => {
                                 <input
                                     type="text"
                                     className="form-controls"
+                                    value={guardianName}
+                                    onChange={(e) => setGuardianName(e.target.value)}
                                 />
                             </div>
                             <div className="form-group">
@@ -231,6 +321,8 @@ export const AddPatient = (data, isEdit, name,) => {
                                     styles={customStyles}
                                     classNamePrefix="form-controls"
                                     placeholder="Select"
+                                    value={gender}
+                                    onChange={(selectedOption) => setGender(selectedOption)}
                                 />
                             </div>
                             <div className="form-group">
@@ -241,6 +333,8 @@ export const AddPatient = (data, isEdit, name,) => {
                                     maxLength={10}
                                     inputMode="numeric"
                                     pattern="\d{10}"
+                                    value={mobileNumber}
+                                    onChange={(e) => setMobileNumber(e.target.value.replace(/[^0-9]/g, ""))}
                                     onInput={(e) => {
                                         // Replace any non-digit character
                                         e.target.value = e.target.value.replace(/[^0-9]/g, "");
@@ -261,6 +355,8 @@ export const AddPatient = (data, isEdit, name,) => {
                                     className="form-controls"
                                     rows="4"
                                     style={{ width: '100%', height: '150px' }}
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
                                     required
                                 />
                             </div>
@@ -337,6 +433,8 @@ export const AddPatient = (data, isEdit, name,) => {
                                     styles={customStyles}
                                     classNamePrefix='form-controls'
                                     placeholder="Select"
+                                    value={doctorName}
+                                    onChange={(selectedOption) => setDoctorName(selectedOption)}
                                 />
                             </div>
                             <div className="form-group">
@@ -359,6 +457,8 @@ export const AddPatient = (data, isEdit, name,) => {
                                     styles={customStyles}
                                     classNamePrefix="form-controls"
                                     placeholder="Select"
+                                    value={department}
+                                    onChange={(selectedOption) => setDepartment(selectedOption)}
                                 />
                             </div>
                             {isFutureDate && (
@@ -367,6 +467,8 @@ export const AddPatient = (data, isEdit, name,) => {
                                     <input
                                         type="time"
                                         className="form-controls"
+                                        value={selectedTime}
+                                        onChange={(e) => setSelectedTime(e.target.value)}
                                         required
                                     />
                                 </div>
@@ -374,7 +476,14 @@ export const AddPatient = (data, isEdit, name,) => {
                         </div>
                         <div className="col-sm-12 discard-add-btn">
                             <button className='discard-patient-btn' onClick={handleDiscard}>Discard</button>
-                            <button className='add-patient-btn'>Save & Add Appointment</button>
+                            <button 
+                                type="button" 
+                                className='add-patient-btn' 
+                                onClick={handleSaveAndAddAppointment} 
+                                disabled={loading}
+                            >
+                                {loading ? 'Processing...' : 'Save & Add Appointment'}
+                            </button>
                         </div>
                     </div>
                 </form>
