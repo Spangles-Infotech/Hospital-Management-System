@@ -13,7 +13,7 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
   const {postData} = usePostData(name)
   const {patchData} = usePatch(name)
   const {updateData} = useUpdateData(name)
-  const {handleReset, formData, handleSubmit, setFormData, handleTableFormChange} = useForm()
+  const {handleReset, formData, handleSubmit, setFormData, handleTableFormChange} = useForm() 
   const notToReset = ["Add Category", "Add unit", "Add GST %", "Add Strength"]
   const {data: fetchedData} = useGetData(getRoute, isEdit)
   const {data: nextDoctorId} = useGetData("/get-next-doctor-id", !isEdit && name === "/add-doctor")

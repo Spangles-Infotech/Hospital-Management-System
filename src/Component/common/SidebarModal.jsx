@@ -68,7 +68,7 @@ export const SidebarModal = ({isOpen, onClose, formField, isEdit,id, refetch, is
                 <FormLayout data={!isEdit && !isAdd ? stockFormField : !isEdit && isAdd ? stockEditFormField : stockEditFormField} />
             </div>
             <div className='flex justify-end items-end'>
-                <button onClick={(e)=>handleSaveForm(e)} className="w-[30%] bg-[#1F9CC6] p-2 text-white rounded-lg hover:bg-[#1F9CC6] transition text-lg" >{title}</button>
+                <button onClick={(e)=>handleSaveForm(e)} className="w-[30%] bg-[#1F9CC6] p-2 rounded-lg hover:bg-[#1F9CC6] transition text-lg" >{title}</button>
             </div>
         </div>
     </>

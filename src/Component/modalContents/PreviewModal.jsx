@@ -17,7 +17,7 @@ const PreviewModal = ({ title, previewFields, data }) => {
                 alt="Patient Detail"
                 className="w-8 h-8"
               /> */}
-              <p className="text-slate-700 text-xl font-medium">{title}</p>
+              <p className="text-slate-700 text-xl font-medium">{title}</p> 
             </div>
 
             {/* heading section */}
@@ -33,7 +33,7 @@ const PreviewModal = ({ title, previewFields, data }) => {
             ))}
 
           </div>
-          <div className="w-full h-[1px] bg-[#DCFFFF]"></div>
+          {/* <div className="w-full h-[1px] bg-[#DCFFFF]"></div> */}
           <div className="w-[500px] flex flex-wrap gap-[10px] py-4 ">
             {
               previewField.isSingle && previewField.fields.map((field)=>(
@@ -63,7 +63,7 @@ const PreviewModal = ({ title, previewFields, data }) => {
               }
           </div>
           <BarcodePreview data={data} previewField={previewField} />
-          <div className="w-full h-[1px] bg-[#DCFFFF]"></div>
+          {/* <div className="w-full h-[1px] bg-[#DCFFFF]"></div> */}
           <Timing data={data} previewField={previewField} />
           <StaffInfo data={data} previewField={previewField} />
           <AdditionalInfo data={data} previewField={previewField} />

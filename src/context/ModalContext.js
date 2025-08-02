@@ -7,7 +7,7 @@ const ModalContext = createContext()
 export const ModalProvider = ({children})=>{
     const [modalState, setModalState] = useState({
         isOpen: false,
-        content: null,
+        content: null, 
         contentProps: {},
         name:""
     })

@@ -1,9 +1,9 @@
-.new-appointment-container{
+.bill-container{
     background-color: #ffffff;
     border-radius: 5px;
     padding: 20px;
     width: 100%;
-    margin: auto; 
+    margin: 10px; 
+    margin-left: 5px !important;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-} 
-
+}

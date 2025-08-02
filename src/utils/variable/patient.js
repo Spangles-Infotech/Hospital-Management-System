@@ -222,32 +222,37 @@ export const tableValue = [
 export const patientPreviewField = [
     {
         icon:"PatientDetailIcon",
-        head:[
-            {
-                title:"Patient ID",
-                name:"patientId",
-            }
-        ],
+        // head:[
+        //     {
+        //         title:"Patient ID",
+        //         name:"patientId",
+        //     }
+        // ],
         fields:[
             {
+                label:"Patient ID",
+                name:"patientId",
+            },
+            {
                 label:"Patient Name",
+                name:"patientName",
+                name2:"title",
+                isNested:true
+            },
+            {
+                label:"Gaurdian / Person Name",
                 name1:"patientName",
                 name2:"title",
                 isNested:true
             },
             {
-                label:"Address",
+                label:"Date of Birth",
                 name:"address"
             },
+            
             {
                 label:"Age",
                 name:"age"
-            },
-            {
-                label:"Phone Number",
-                name1:"mobileNumber",
-                name2:"number",
-                isNested:true
             },
             {
                 label:"Gender",
@@ -257,28 +262,46 @@ export const patientPreviewField = [
                 label:"Blood Group",
                 name:"bloodGroup"
             },
+            
+            
+            
+            
             {
-                label:"Patient Type",
-                name:"patientType"
-            }
+                label:"Marital Status",
+                name:""
+            },
+            {
+                label:"Phone Number",
+                name1:"mobileNumber",
+                name2:"number",
+                isNested:true
+            },
+            {
+                label:"Address",
+                name:"address"
+            },
+            // {
+            //     label:"Patient Type",
+            //     name:"patientType"
+            // }
         ],
         image:{
             name:"Barcode"
         },
-        additionalInfo:[
-            {
-                label:"Birth Place",
-                name:"birthPlace"
-            },
-            {
-                label:"Birth Time",
-                name:"birthTime"
-            },
-            {
-                label:"Weight(when born)",
-                name:"weight"
-            }
-        ]
+        // additionalInfo:[
+        //     // {
+        //     //     label:"Birth Place",
+        //     //     name:"birthPlace"
+        //     // }, 
+        //     {
+        //         label:"Birth Time",
+        //         name:"birthTime"
+        //     },
+        //     {
+        //         label:"Weight(when born)",
+        //         name:"weight"
+        //     }
+        // ]
     }
 ]
 

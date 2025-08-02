@@ -5,7 +5,7 @@ import { useGetData } from '../../hooks/useGetData';
 import { useForm } from '../../context/FormContext';
 import Select from "react-select";
 
-export const AddPatient = (data, isEdit, name,) => {
+export const AddPatient = (data, isEdit, name,) => { 
     const navigate = useNavigate();
     const [tags, setTags] = useState([]);
     const [input, setInput] = useState("");
@@ -13,7 +13,7 @@ export const AddPatient = (data, isEdit, name,) => {
     const [selectedDate, setSelectedDate] = useState(today);
     const [dob, setDob] = useState('');
     const [age, setAge] = useState('');
-    const { formData, setFormData } = useForm();
+    const { formData, setFormData } = useForm(); 
     const { data: nextPatientId } = useGetData("/get-next-patient-id", !isEdit);
 
 
@@ -252,6 +252,7 @@ export const AddPatient = (data, isEdit, name,) => {
                         </div>
                     </div>
 
+
                     <div className="row add-patient-container">
                         <div className="col-sm-12">
 
@@ -314,7 +315,7 @@ export const AddPatient = (data, isEdit, name,) => {
                                                 outline: "none",
                                                 minWidth: "150px",
                                                 backgroundColor: "#E7F1FC",
-                                                color: "black",
+                                                color: "black", 
                                             }}
                                         />
                                     </div>

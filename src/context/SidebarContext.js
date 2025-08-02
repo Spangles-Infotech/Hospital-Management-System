@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { SidebarModal } from "../Component/common/SidebarModal";
+import { SidebarModal } from "../Component/common/SidebarModal"; 
 
 const SidebarModalContext = createContext()
 
