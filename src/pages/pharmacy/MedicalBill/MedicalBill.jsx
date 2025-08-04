@@ -44,7 +44,10 @@ const [selectedPatient, setSelectedPatient] = useState(null);
 
 const handleSearchByPatientId = async (id) => {
   try {
-    const response = await axios.get(`http://localhost:3500/api/patient/get-patient/${id}`);
+    // const response = await axios.get(`http://localhost:3500/api/patient/get-patient/${id}`);
+    const response = await axios.get(`https://hospital-management-system-eexc.onrender.com/api/patient/get-patient/${id}`);
+
+
     const result = response.data;
 
     if (result && result.patientName?.name) {
