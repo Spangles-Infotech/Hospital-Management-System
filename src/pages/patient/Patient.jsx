@@ -31,7 +31,7 @@ const globalStr  = useSelector((state) => state.globalString.value);
   }
   console.log(searchQuery,"searchQuery")
 
-console.log("Global redux string:", globalStr);
+console.log("Global redux string:", globalStr); 
 
 
   // useEffect(() => {

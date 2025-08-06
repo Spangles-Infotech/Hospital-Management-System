@@ -23,10 +23,18 @@ const Layout = () => {
     }
   };
   
+  // const handleMouseUp = () => {
+  //   setMenuOpen("")
+  //   isResizing.current = false;
+  // };
+
   const handleMouseUp = () => {
-    setMenuOpen("")
+  if (isResizing.current) {
     isResizing.current = false;
-  };
+  }
+  // Remove setMenuOpen("") here
+};
+
 
   const location = useLocation();
 

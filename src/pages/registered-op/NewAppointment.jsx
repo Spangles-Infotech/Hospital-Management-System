@@ -10,7 +10,7 @@ export const NewAppointment = () => {
     const [input, setInput] = useState("");
     const [showNotes, setShowNotes] = useState(false);
     
-    const today = new Date().toISOString().split('T')[0]; // Format: 'YYYY-MM-DD'
+    const today = new Date().toISOString().split('T')[0]; // Format: 'YYYY-MM-DD' 
     const [selectedDate, setSelectedDate] = useState(today);
 
     const handleKeyDown = (e) => {

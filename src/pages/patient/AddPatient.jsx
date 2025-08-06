@@ -362,6 +362,7 @@ export const AddPatient = (data, isEdit, name,) => {
                         </div>
                     </div>
 
+
                     <div className="row add-patient-container">
                         <div className="col-sm-12">
 
@@ -426,7 +427,7 @@ export const AddPatient = (data, isEdit, name,) => {
                                                 outline: "none",
                                                 minWidth: "150px",
                                                 backgroundColor: "#E7F1FC",
-                                                color: "black",
+                                                color: "black", 
                                             }}
                                         />
                                     </div>

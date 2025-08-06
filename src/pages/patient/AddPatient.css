@@ -6,7 +6,8 @@
     border-radius: 5px;
     padding: 20px;
     width: 100%;
-    margin: auto; 
+    margin: 10px; 
+    margin-left: 5px !important;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
@@ -31,7 +32,7 @@
     border: 1px solid #898989;
     background-color: #FBFBFD;
     border-radius: 4px;
-    padding: 3px;
+    padding: 3px; 
     height: 43px;
     width: 100%;
     font-size: 14px;

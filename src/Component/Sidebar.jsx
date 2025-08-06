@@ -15,6 +15,7 @@ import { FaBedPulse, FaUserNurse } from 'react-icons/fa6';
 import { IoCashOutline, IoNewspaper, IoSettingsSharp } from 'react-icons/io5';
 import { BsFillBoxSeamFill } from 'react-icons/bs';
 import { LuHospital } from 'react-icons/lu';
+import './Sidebar.css';
 
 export const Sidebar = ({ sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen, setIsLoading }) => {
 
@@ -91,15 +92,15 @@ export const Sidebar = ({ sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen
       <div className='absolute right-0 border-white border-2 -top-3 bg-[#1F9CC6] text-white rounded-full p-1 cursor-pointer' style={{ zIndex: 101100 }} onClick={toggleSidebar}>
         {isCollapsed ? <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="white"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" /></svg> : <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="2418pxpx" fill="white"><path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" /></svg>}
       </div>
-      <aside className='flex flex-col absolute  my-element  border-r-4 gap-[10px] cursor-pointer font-roboto fixed overflow-y-auto  relative' style={{ width: "inherit" }}>
+      <aside className='flex flex-col absolute  my-element  border-r-4 gap-[10px] cursor-pointer font-roboto fixed overflow-x-hidden overflow-y-auto  relative' style={{ width: "inherit", height: "90vh"  }}>
         {/* <div className='relative -right-2 top-1 bg-[#1F9CC6] text-white rounded-full  p-2 cursor-pointer   ' style={{zIndex:101100}} onClick={toggleSidebar}>
         {isCollapsed? <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z"/></svg> : <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="white"><path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z"/></svg>}
         </div>      */}
         {/* The original div is commented out and moved above */}
         {
           adminSidebarData.map((item) => (
-            <div className={`mr-3 rounded-r-[10px]   flex flex-col ${isMenuOpen === item.name ? "gap-3" : "gap-0"} `} key={item.name}>
-              <div onClick={() => item.components ? handleOpenMenu(item.name) : handleSelectMenu(item.path, false)} className={`linkss  flex justify-between p-1 pl-3 ml-2 items-center pr-[10px] transition-all duration-500 ease-in-out  hover:text-white hover:bg-[#1F9CC6] rounded-[10px] ${isCurrentLocation(item.path) ? "text-white bg-[#1F9CC6] fill-white active" : "text-[#505050] fill-custom-black font-roboto"}`}>
+            <div className={`mr-4 rounded-r-[10px]   flex flex-col ${isMenuOpen === item.name ? "gap-3" : "gap-0"} `} key={item.name}>
+              <div onClick={() => item.components ? handleOpenMenu(item.name) : handleSelectMenu(item.path, false)} className={`linkss  flex justify-between  pl-[10px] pt-1 pb-1 ml-2 items-center pr-[10px] transition-all duration-500 ease-in-out  hover:text-white hover:bg-[#1F9CC6] rounded-[10px] ${isCurrentLocation(item.path) ? "text-white bg-[#1F9CC6] fill-white active" : "text-[#505050] fill-custom-black font-roboto"}`}>
                 <div className='flex items-center   gap-[15px]' z-5  >
                   {/* <div className='rounded border border-2'> */}
                   <div className='rounded-xl border border-2 w-[35px] h-[35px] p-[6px] flex items-center justify-center'>
@@ -120,11 +121,17 @@ export const Sidebar = ({ sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen
               </div>
               {
                 item.components &&
-                <div className={` flex flex-col pl-[30px] gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "max-h-[240px]" : "max-h-0 "} `}>
+                <div className={` flex flex-col pl-[30px] gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "max-h-[270px]" : "max-h-0 "} `}>
                   {item?.components.map((it) => (
                     <div onClick={() => handleSelectMenu(it.path, true)} className={`flex w-[190px]  items-center gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "visible opacity-100" : "invisible opacity-0"}`} key={it.tab_path}>
                       <p className={`size-2 rounded-full transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "bg-[#1F9CC6] " : "bg-[#C8C8C8]"}`}></p>
-                      <p className={` text-[16px]  font-[400] transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "text-[#1F9CC6] font-[600]" : "text-[#505050]"} `}>{it.tab_name}</p>
+                      {/* <p className={` text-[16px]  font-[400] transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "text-[#1F9CC6] font-[600]" : "text-[#505050]"} `}>{it.tab_name}</p> */}
+                      {!isCollapsed && (
+                        <p className={`text-[16px] font-[400] transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "text-[#1F9CC6] font-[600]" : "text-[#505050]"}`}>
+                          {it.tab_name}
+                        </p>
+                      )}
+
                     </div>
                   ))}
                 </div>

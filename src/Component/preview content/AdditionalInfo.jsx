@@ -14,5 +14,5 @@ export const AdditionalInfo = ({previewField, data}) => {
         ))}
       </div>
     </div>
-  );
+  ); 
 };
