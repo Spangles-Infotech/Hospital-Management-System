@@ -6,6 +6,7 @@ import { useForm } from '../../context/FormContext';
 import Select from "react-select";
 import { fetch } from '../../api/fetch';  
 import { toast } from 'react-toastify'; 
+import { PatientTypeToggle } from '../../Component/common/PatientTypeToggle';
 
 export const AddPatient = (data, isEdit, name,) => {
     const navigate = useNavigate(); 
@@ -32,7 +33,7 @@ export const AddPatient = (data, isEdit, name,) => {
 
     React.useEffect(() => { 
         if (!isEdit && nextPatientId?.patientId) { 
-            setFormData((prev) => ({ ...prev, patientId: nextPatientId.patientId }));
+            setFormData((prev) => ({ ...prev, patientId: nextPatientId.patientId, patientType: prev.patientType || 'OP' }));
         }
     }, [isEdit, nextPatientId, setFormData]); 
 
@@ -190,7 +191,8 @@ export const AddPatient = (data, isEdit, name,) => {
                 gender: gender.value,
                 bloodGroup: bloodGroup.value,
                 maritalStatus: maritalStatus ? maritalStatus.value : null,
-                guardianName
+                guardianName,
+                patientType: formData.patientType || 'OP'
             };
 
             const patientResponse = await fetch.post('/add-patient', patientData);
@@ -203,25 +205,31 @@ export const AddPatient = (data, isEdit, name,) => {
                     department: department.value,
                     appointmentDate: selectedDate,
                     appointmentTime: selectedTime,
-                    patientType: 'OP',
-                    status: 'registered',
+                    patientType: formData.patientType || 'OP',
+                    // Use 'yet to consult' instead of 'registered' to match backend enum
+                    status: 'yet to consult',
                     reason: tags.join(', ')
                 };
 
-                const appointmentResponse = await fetch.post('/register-appointment', appointmentData);
+                try {
+                    const appointmentResponse = await fetch.post('/register-appointment', appointmentData);
 
-                if (appointmentResponse.status === 201) {
-                    toast.success('Patient and appointment created successfully');
-                    navigate('/patient');
-                } else {
-                    toast.error('Failed to create appointment');
+                    if (appointmentResponse.status === 201) {
+                        toast.success('Patient and appointment created successfully');
+                        navigate('/patient');
+                    } else {
+                        toast.error(`Failed to create appointment: ${appointmentResponse.data?.message || 'Unknown error'}`);
+                    }
+                } catch (appointmentError) {
+                    console.error('Error creating appointment:', appointmentError);
+                    toast.error(`Appointment creation failed: ${appointmentError.response?.data?.message || appointmentError.message || 'Unknown error'}`);
                 }
             } else {
-                toast.error('Failed to create patient');
+                toast.error(`Failed to create patient: ${patientResponse.data?.message || 'Unknown error'}`);
             }
         } catch (error) {
             console.error('Error creating patient and appointment:', error);
-            toast.error('An error occurred. Please try again.');
+            toast.error(`An error occurred: ${error.response?.data?.message || error.message || 'Please try again.'}`);
         } finally {
             setLoading(false);
         }
@@ -232,8 +240,16 @@ export const AddPatient = (data, isEdit, name,) => {
                 <form onSubmit={(e) => e.preventDefault()}>
                     <div className="row add-patient-container">
                         <div className="col-sm-12">
-                            <p className='add-new-head'>Add New Patient</p>
-                            <p className='basic-info'>Basic Information</p>
+                            <div className="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p className='add-new-head'>Add New Patient</p>
+                                    <p className='basic-info'>Basic Information</p>
+                                </div>
+                                <div className="d-flex align-items-center gap-2">
+                                    <span>Patient Type:</span>
+                                    <PatientTypeToggle />
+                                </div>
+                            </div>
                         </div>
 
                         <div className="col-sm-4">
