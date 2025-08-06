@@ -28,6 +28,11 @@ const patientSchema = mongoose.Schema({
         type:String,
         enum:["Male", "Female",]
     },
+    patientType:{
+        type:String,
+        enum:["OP", "IP"],
+        default:"OP"
+    },
     pincode:String,
     state:String,
     district:String,
