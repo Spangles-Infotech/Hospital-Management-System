@@ -9,24 +9,8 @@ const registeredOp = async(req, res,next)=>{
     try {
        const {appointmentId} = req.params
        if(req.method === "POST"){
-            // If patientId is a string (like GH|IP|2025|0001), find the patient first
-            if(req.body.patientId && typeof req.body.patientId === 'string') { 
-                const Patient = require("../models/patient.model"); 
-                const patient = await Patient.findOne({ patientId: req.body.patientId });
-                if(!patient) { 
-                    return sendMessage(res, 404, "Patient not found with the provided ID");  
-                }
-                // Replace string patientId with MongoDB ObjectId
-                req.body.patientId = patient._id;
-            }
-            
-            // Ensure status is a valid enum value
-            if(req.body.status === 'registered') { 
-                req.body.status = 'yet to consult'; 
-            } 
-            
-            await Appointment.create(req.body); 
-            return sendMessage(res,"201", "Appointment Registered Successfully"); 
+            await Appointment.create(req.body)
+            return sendMessage(res,"201", "Appointment Registered Successfully")
        }
        if(req.method === "GET"){
         if(appointmentId){

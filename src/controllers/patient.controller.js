@@ -10,19 +10,13 @@ const addPatient = async (req, res, next) => {
   try {
     const lastPatient = await Patient.findOne().sort({ _id: -1 });
     let nextPatientIdNum = 1;
-    const currentYear = new Date().getFullYear();
-    
     if (lastPatient && lastPatient.patientId) {
-      // Extract the numeric part after the last '|' character
-      const parts = lastPatient.patientId.split('|');
-      if (parts.length === 4) {
-        const lastIdNum = parseInt(parts[3]);
-        if (!isNaN(lastIdNum)) {
-          nextPatientIdNum = lastIdNum + 1;
-        }
+      const lastIdNum = parseInt(lastPatient.patientId.replace('PAT-', ''));
+      if (!isNaN(lastIdNum)) {
+        nextPatientIdNum = lastIdNum + 1;
       }
     }
-    const newPatientId = `GH|IP|${currentYear}|${String(nextPatientIdNum).padStart(4, '0')}`;
+    const newPatientId = `PAT-${String(nextPatientIdNum).padStart(3, '0')}`;
     req.body.patientId = newPatientId;
     await Patient.create({ ...req.body, additionalInfo });
     return sendMessage(res, 201, "Patient Created Successfully");
@@ -90,19 +84,13 @@ const getNextPatientId = async (req, res, next) => {
   try {
     const lastPatient = await Patient.findOne().sort({ _id: -1 });
     let nextPatientIdNum = 1;
-    const currentYear = new Date().getFullYear();
-    
     if (lastPatient && lastPatient.patientId) {
-      // Extract the numeric part after the last '|' character
-      const parts = lastPatient.patientId.split('|');
-      if (parts.length === 4) {
-        const lastIdNum = parseInt(parts[3]);
-        if (!isNaN(lastIdNum)) {
-          nextPatientIdNum = lastIdNum + 1;
-        }
+      const lastIdNum = parseInt(lastPatient.patientId.replace('PAT-', ''));
+      if (!isNaN(lastIdNum)) {
+        nextPatientIdNum = lastIdNum + 1;
       }
     }
-    const nextId = `GH|IP|${currentYear}|${String(nextPatientIdNum).padStart(4, '0')}`;
+    const nextId = `PAT-${String(nextPatientIdNum).padStart(3, '0')}`;
     return sendMessage(res, 200, "Next Patient ID fetched Successfully", { patientId: nextId });
   } catch (error) {
     next(error);
