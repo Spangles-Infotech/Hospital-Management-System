@@ -7,7 +7,6 @@ import { useFetchData } from "../../../hooks/useFetchData";
 import { useCommon } from "../../../hooks/useCommon";
 import { getDateFromISO } from "../../../utils/functions/function";
 import axios from "axios";
-import { fetch } from '../../../api/fetch';
 const PurchasePreview = () => {
   const [allBatchNumbers, setAllBatchNumbers] = useState({});
 
@@ -26,8 +25,9 @@ useEffect(() => {
 
       const fetchBatchNumbers = async () => {
         try {
-          // Use the configured fetch instance with the correct API endpoint
-          const response = await fetch.get(`get-all-batch-numbers/${medicine.medicineName}`);
+          // const response = await axios.get(`http://localhost:3500/api/get-all-batch-numbers/${medicine.medicineName}`);
+          const response = await axios.get(`https://hospital-management-system-eexc.onrender.com/api/get-all-batch-numbers/${medicine.medicineName}`);
+
 
           if (response.data.length != 0) {
             setAllBatchNumbers((prev) => {

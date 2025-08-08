@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useGetData } from '../../hooks/useGetData';
 import { useForm } from '../../context/FormContext';
 import Select from "react-select";
-import { fetch } from '../../api/fetch';  
+import { PatientTypeToggle } from '../../Component/common/PatientTypeToggle';
 import { toast } from 'react-toastify'; 
 
 export const AddPatient = (data, isEdit, name,) => {
@@ -30,8 +30,8 @@ export const AddPatient = (data, isEdit, name,) => {
     const { data: nextPatientId } = useGetData("/get-next-patient-id", !isEdit);
 
 
-    React.useEffect(() => { 
-        if (!isEdit && nextPatientId?.patientId) { 
+    React.useEffect(() => {
+        if (!isEdit && nextPatientId?.patientId) {
             setFormData((prev) => ({ ...prev, patientId: nextPatientId.patientId }));
         }
     }, [isEdit, nextPatientId, setFormData]); 
@@ -160,7 +160,6 @@ export const AddPatient = (data, isEdit, name,) => {
     const handleDiscard = () => {
         navigate(-1); // Go back one page
     };
-
     const handleSaveAndAddAppointment = async () => {
         // Validate form fields
         if (!patientName || !mobileNumber || !address || !gender || !bloodGroup || !doctorName || !selectedDate) {
@@ -232,8 +231,16 @@ export const AddPatient = (data, isEdit, name,) => {
                 <form onSubmit={(e) => e.preventDefault()}>
                     <div className="row add-patient-container">
                         <div className="col-sm-12">
-                            <p className='add-new-head'>Add New Patient</p>
-                            <p className='basic-info'>Basic Information</p>
+                            <div className="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p className='add-new-head'>Add New Patient</p>
+                                    <p className='basic-info'>Basic Information</p>
+                                </div>
+                                <div className="d-flex align-items-center gap-2">
+                                    <span>Patient Type:</span>
+                                    <PatientTypeToggle />
+                                </div>
+                            </div>
                         </div>
 
                         <div className="col-sm-4">
@@ -346,7 +353,6 @@ export const AddPatient = (data, isEdit, name,) => {
                         </div>
                     </div>
 
-
                     <div className="row add-patient-container">
                         <div className="col-sm-12">
 
@@ -411,7 +417,7 @@ export const AddPatient = (data, isEdit, name,) => {
                                                 outline: "none",
                                                 minWidth: "150px",
                                                 backgroundColor: "#E7F1FC",
-                                                color: "black", 
+                                                color: "black",
                                             }}
                                         />
                                     </div>
