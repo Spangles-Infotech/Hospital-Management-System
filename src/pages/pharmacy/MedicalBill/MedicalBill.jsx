@@ -9,6 +9,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
+import { fetch } from '../../../api/fetch';
+import { FaPlus, FaTrash } from 'react-icons/fa';
 
 
 const medicineList = [
@@ -37,6 +39,9 @@ const [patientDetails, setPatientDetails] = useState({
   name: "",
   phone: "",
   age: "",
+  gender: "",
+  address: "",
+  bloodGroup: ""
 });
 const [phone, setPhone] = useState("");
 const [patientList, setPatientList] = useState([]);
@@ -44,66 +49,160 @@ const [selectedPatient, setSelectedPatient] = useState(null);
 
 const handleSearchByPatientId = async (id) => {
   try {
-    // const response = await axios.get(`http://localhost:3500/api/patient/get-patient/${id}`);
-    const response = await axios.get(`https://hospital-management-system-eexc.onrender.com/api/patient/get-patient/${id}`);
-
-
-    const result = response.data;
-
-    if (result && result.patientName?.name) {
-      const selected = result;
-
-      setSelectedPatient(selected); // optional if you're handling selected patient
-
+    // Use the configured fetch instance with the correct API endpoint
+    const response = await fetch.get(`get-patient/${id}`);
+    
+    // Check if the response contains data
+    if (response.data && response.data.status === 200 && response.data.data) {
+      const patient = response.data.data;
+      
+      setSelectedPatient(patient); // Store the full patient object
+      
+      // Update patient details with the fetched data
       setPatientDetails({
-        id: selected._id,
-        name: selected.patientName.name || "",
-        phone: selected.MobileNumber?.number || "",  // Adjust if mobileNumber has `.number` too
-        age: selected.age || "",
+        id: patient._id,
+        name: patient.patientName?.name || "",
+        phone: patient.mobileNumber?.number || "",
+        age: patient.age || "",
+        gender: patient.gender || "",
+        address: patient.address || "",
+        bloodGroup: patient.bloodGroup || ""
       });
     } else {
-      // handle no result
+      // Handle no result or error in response
+      console.log("No patient found with this ID or invalid response");
       setPatientDetails({
         id: "",
         name: "",
         phone: "",
         age: "",
+        gender: "",
+        address: "",
+        bloodGroup: ""
       });
     }
   } catch (error) {
     console.error("Error searching by patient ID:", error);
+    // Reset patient details on error
+    setPatientDetails({
+      id: "",
+      name: "",
+      phone: "",
+      age: "",
+      gender: "",
+      address: "",
+      bloodGroup: ""
+    });
   }
 };
 
 const fetchPatientsByPhone = async (phoneNumber) => {
   try {
-    const response = await fetch(`http://localhost:3500/api/get-patient-info?phone=${phoneNumber}`);
-    if (response.ok) {
-      const data = await response.json();
-      setPatientList(data);
-      if (data.length === 1) {
-        // Auto-select if only one patient
-        setSelectedPatient(data[0]);
+    // Use the configured fetch instance with the correct API endpoint
+    const response = await fetch.get(`get-patient-info?search=${phoneNumber}`);
+    
+    // Check if the response contains data
+    if (response.data && response.data.status === 200 && response.data.data) {
+      const patients = response.data.data;
+      setPatientList(patients);
+      
+      // Auto-select if only one patient is found
+      if (patients.length === 1) {
+        const patient = patients[0];
+        setSelectedPatient(patient);
+        
+        // Update patient details with the selected patient data
+        setPatientDetails({
+          id: patient._id,
+          name: patient.patientName?.name || "",
+          phone: patient.mobileNumber?.number || "",
+          age: patient.age || "",
+          gender: patient.gender || "",
+          address: patient.address || "",
+          bloodGroup: patient.bloodGroup || ""
+        });
       }
+    } else {
+      // Clear patient list if no results
+      setPatientList([]);
     }
   } catch (err) {
     console.error("Error fetching patient info by phone", err);
+    setPatientList([]);
   }
 };
 
 useEffect(() => {
-  if (patientId.trim().length >= 3) { // add basic length check
+  // Only search when patientId has a valid format (PAT-XXX)
+  if (patientId.trim() && (patientId.startsWith('PAT-') || patientId.length >= 3)) {
     handleSearchByPatientId(patientId);
-  }
-}, [patientId]);
-useEffect(() => {
-  if (phone.length >= 6) {
-    fetchPatientsByPhone(phone);
-  } else {
-    setPatientList([]);
+  } else if (patientId.trim() === '') {
+    // Clear patient details if patientId is cleared
+    setPatientDetails({
+      id: '',
+      name: '',
+      phone: '',
+      age: '',
+      gender: '',
+      address: '',
+      bloodGroup: ''
+    });
     setSelectedPatient(null);
   }
-}, [phone]);
+}, [patientId]);
+
+// Function to pre-fill form with patient data from JSON
+const fillFormWithPatientData = (patientData) => {
+  if (patientData && patientData.data) {
+    const patient = patientData.data;
+    
+    // Set the patient ID
+    setPatientId(patient.patientId || "");
+    
+    // Update patient details with the fetched data
+    setPatientDetails({
+      id: patient._id || "",
+      name: patient.patientName?.name || "",
+      phone: patient.mobileNumber?.number || "",
+      age: patient.age || "",
+      gender: patient.gender || "",
+      address: patient.address || "",
+      bloodGroup: patient.bloodGroup || ""
+    });
+    
+    // Store the full patient object
+    setSelectedPatient(patient);
+  }
+};
+
+// Load patient data when component mounts
+useEffect(() => {
+  // This simulates receiving the patient data from an API or parent component
+  const patientData = { 
+    "message": "Patient fetched Successfully", 
+    "data": { 
+      "patientName": { 
+        "name": "Test Name" 
+      }, 
+      "mobileNumber": { 
+        "number": "9638527410" 
+      }, 
+      "_id": "6891a4274d6ff4016dffbb66", 
+      "patientId": "PAT-004", 
+      "age": "21", 
+      "gender": "Male", 
+      "address": "Test Address", 
+      "bloodGroup": "B+", 
+      "createdAt": "2025-08-05T06:26:47.531Z", 
+      "__v": 0 
+    } 
+  };
+  
+  // Fill the form with the patient data
+  fillFormWithPatientData(patientData);
+}, []);
+
+// Phone search is now handled directly in the input's onChange event
 
 
 
@@ -233,9 +332,12 @@ useEffect(() => {
         setPatientDetails({
           ...patientDetails,
           id: selected._id,
-          name: selected.patient_name,
-          phone: selected.phone,
-          age: selected.age,
+          name: selected.patientName?.name || "",
+          phone: selected.mobileNumber?.number || "",
+          age: selected.age || "",
+          gender: selected.gender || "",
+          address: selected.address || "",
+          bloodGroup: selected.bloodGroup || ""
         });
       }}
       value={selectedPatient?._id || ""}
@@ -243,7 +345,7 @@ useEffect(() => {
       <option value="">Select Patient</option>
       {patientList.map((patient) => (
         <option key={patient._id} value={patient._id}>
-          {patient.patient_name} ({patient._id})
+          {patient.patientName?.name || "Unknown"} ({patient.patientId || patient._id})
         </option>
       ))}
     </select>
@@ -278,10 +380,14 @@ useEffect(() => {
       const phone = e.target.value.replace(/[^0-9]/g, "");
       setPatientDetails({ ...patientDetails, phone });
       setSelectedPatient(null); // Reset selected dropdown if typing new number
-    }}
-    onBlur={() => {
-      if (patientDetails.phone.length === 10) {
-        fetchPatientsByPhone(patientDetails.phone); // Fetch from backend
+      setPhone(phone); // Update the phone state for search
+      
+      // If phone number is at least 6 digits, start searching
+      if (phone.length >= 6) {
+        fetchPatientsByPhone(phone);
+      } else if (phone.length === 0) {
+        // Clear patient list if phone field is cleared
+        setPatientList([]);
       }
     }}
   />
@@ -290,6 +396,43 @@ useEffect(() => {
                         <div className="form-group">
                             <label className="form-label-controls">Department:</label>
                             <Select options={optionsDept} styles={customStyles} classNamePrefix="form-controls" placeholder="Select" />
+                        </div>
+                    </div>
+                </div>
+                
+                {/* Additional Patient Details Row */}
+                <div className="row">
+                    <div className="col-sm-4">
+                        <div className="form-group">
+                            <label className="form-label-controls">Gender:</label>
+                            <input
+                                type="text"
+                                className="form-controls"
+                                value={patientDetails.gender}
+                                readOnly
+                            />
+                        </div>
+                    </div>
+                    <div className="col-sm-4">
+                        <div className="form-group">
+                            <label className="form-label-controls">Blood Group:</label>
+                            <input
+                                type="text"
+                                className="form-controls"
+                                value={patientDetails.bloodGroup}
+                                readOnly
+                            />
+                        </div>
+                    </div>
+                    <div className="col-sm-4">
+                        <div className="form-group">
+                            <label className="form-label-controls">Address:</label>
+                            <input
+                                type="text"
+                                className="form-controls"
+                                value={patientDetails.address}
+                                readOnly
+                            />
                         </div>
                     </div>
                 </div>

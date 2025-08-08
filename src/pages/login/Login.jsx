@@ -3,6 +3,7 @@ import Loginbg from "../../assests/Loginbg.png";
 import { useNavigate } from "react-router-dom";
 import poster from "../../assests/poster.png";
 import axios from "axios";
+import { fetch } from '../../api/fetch';
 
 const Login = () => {
 
@@ -20,11 +21,8 @@ const Login = () => {
     setLoading(true);
 
     try {
-      // const response = await axios.post("http:localhost:3500/api/auth/login", {
-      const response = await axios.post("https://hospital-management-system-eexc.onrender.com/api/auth/login", {
-
-
-        // const response = await axios.post("http://localhost:3500/api/auth/login",{
+      // Use the configured fetch instance with the correct API endpoint
+      const response = await fetch.post("auth/login", {
         userName: username,
         password: password
       });
