@@ -18,7 +18,7 @@ const prescription = async(req,res,next)=>{
             const medicine = await MedicineInfo.create({medicines:medicines, totalAmount:totalAmount, totalQuantity:totalQuantity})
             const fee = await Billing.create(bills)
             const paymentInfo = await PaymentInfo.create(req.body)
-            await Appointment.findByIdAndUpdate(id, {medicineInfo:medicine._id, opBillingInfo:fee._id, paymentInfo:paymentInfo._id}, {new:true})
+            await Appointment.findOneAndUpdate({ _id: id }, {medicineInfo:medicine._id, opBillingInfo:fee._id, paymentInfo:paymentInfo._id}, {new:true})
             return sendMessage(res, 201, "Medicine and Bills Information  Created")
         }
         if(req.method === "GET"){
@@ -30,10 +30,10 @@ const prescription = async(req,res,next)=>{
             return sendMessage(res, 200, "Data Fetch Successfully", prescriptions)
         }
         if(req.method === "PUT"){
-            const appointment = await Appointment.findById(appointmentId)
-            await MedicineInfo.findByIdAndUpdate(appointment.medicineInfo, {medicines:medicines, totalAmount:totalAmount, totalQuantity:totalQuantity}, {new:true})
-            await Billing.findByIdAndUpdate(appointment.opBillingInfo, {fees:bills}, {new:true})
-            await PaymentInfo.findByIdAndUpdate(appointment.paymentInfo, req.body, {new:true})
+            const appointment = await Appointment.findOne({ _id: appointmentId })
+            await MedicineInfo.findOneAndUpdate({ _id: appointment.medicineInfo }, {medicines:medicines, totalAmount:totalAmount, totalQuantity:totalQuantity}, {new:true})
+            await Billing.findOneAndUpdate({ _id: appointment.opBillingInfo }, {fees:bills}, {new:true})
+            await PaymentInfo.findOneAndUpdate({ _id: appointment.paymentInfo }, req.body, {new:true})
             return sendMessage(res, 200,"Data updated successfully")
         }
 
@@ -80,7 +80,7 @@ const stocks = async(req,res,next)=>{
                 return sendMessage(res, 200, "Data Fetched Successfully", stocks, total);
             }
             if(stockId){
-                const stock = await Stock.findById(stockId)
+                const stock = await Stock.findOne({ _id: stockId })
                 return sendMessage(res, 200, "Data Fetched Successfully", stock)
             }
             setQuery([], search, searchItems, query, from, to, "stockDate")
@@ -93,7 +93,7 @@ const stocks = async(req,res,next)=>{
         }
         if(req.method === "PUT"){
             console.log(Purchase,"Purchase")
-            await Purchase.findByIdAndUpdate(purchaseId, req.body, {new:true})
+            await Purchase.findOneAndUpdate({ _id: purchaseId }, req.body, {new:true})
             return sendMessage(res, 200, "Data Updated Successfully")
         }
     } catch (error) {
@@ -157,7 +157,7 @@ const supplier = async(req,res,next)=>{
         }
         if(req.method === "GET"){
             if(supplierId){
-                const supplier = await Supplier.findById(supplierId)
+                const supplier = await Supplier.findOne({ _id: supplierId })
                 .populate({
                     path: "purchaseHistory",
                     populate: [
@@ -176,7 +176,7 @@ const supplier = async(req,res,next)=>{
             return sendMessage(res, 200, "Data Fetched Successfully", suppliers, total)
         }
         if(req.method === "PUT"){
-            await Supplier.findByIdAndUpdate(supplierId, req.body ,{new:true})
+            await Supplier.findOneAndUpdate({ _id: supplierId }, req.body ,{new:true})
             return sendMessage(res, 200, "Data Updated Successfully")
         }
 
@@ -242,7 +242,7 @@ const purchase = async(req,res, next)=>{
         }
         if(req.method === "GET"){
             if (purchaseId) {
-                const purchase = await Purchase.findById(purchaseId).populate("medicineInfo").populate("paymentInfo");
+                const purchase = await Purchase.findOne({ _id: purchaseId }).populate("medicineInfo").populate("paymentInfo");
                 if (!purchase) {
                     return sendMessage(res, 404, "Purchase not found");
                 }
@@ -258,13 +258,13 @@ const purchase = async(req,res, next)=>{
             if(req.path.includes("update-purchase-payment-status")){
                 const {purchaseId} = req.params
                 const {payment} = req.body
-                await Purchase.findByIdAndUpdate(purchaseId, {paymentStatus: payment}, {new:true})
+                await Purchase.findOneAndUpdate({ _id: purchaseId }, {paymentStatus: payment}, {new:true})
                 return sendMessage(res, 200, "Payment Status Updated Successfully")
             }
-            const purchase = await Purchase.findById(purchaseId)
-            await MedicineInfo.findByIdAndUpdate(purchase.medicineInfo, {medicines:medicines, totalAmount:netAmount, totalQuantity:totalQuantity}, {new:true})
-            await PaymentInfo.findByIdAndUpdate(purchase.paymentInfo, req.body, {new:true})
-            await Purchase.findByIdAndUpdate(purchaseId, req.body, {new:true})
+            const purchase = await Purchase.findOne({ _id: purchaseId })
+            await MedicineInfo.findOneAndUpdate({ _id: purchase.medicineInfo }, {medicines:medicines, totalAmount:netAmount, totalQuantity:totalQuantity}, {new:true})
+            await PaymentInfo.findOneAndUpdate({ _id: purchase.paymentInfo }, req.body, {new:true})
+            await Purchase.findOneAndUpdate({ _id: purchaseId }, req.body, {new:true})
             return sendMessage(res, 200, "Data Updated Successfully")
         }
     } catch (error) {

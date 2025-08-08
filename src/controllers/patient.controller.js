@@ -56,7 +56,8 @@ const getAllPatient = async (req, res, next) => {
 const getPatientById = async (req, res, next) => {
   const { patientId } = req.params;
   try {
-    const patient = await Patient.findById(patientId);
+    // Search by patientId field with case-insensitive matching to handle variations like 'pat-004' vs 'PAT-004'
+    const patient = await Patient.findOne({ patientId: { $regex: new RegExp('^' + patientId + '$', 'i') } });
     if (!patient) {
       return sendMessage(res, 404, "Patient Not Found");
     }
@@ -69,8 +70,9 @@ const getPatientById = async (req, res, next) => {
 const updatePatient = async (req, res, next) => {
   const { patientId } = req.params;
   try {
-    await Patient.findByIdAndUpdate(
-      patientId,
+    // Search by patientId field with case-insensitive matching to handle variations like 'pat-004' vs 'PAT-004'
+    await Patient.findOneAndUpdate(
+      { patientId: { $regex: new RegExp('^' + patientId + '$', 'i') } },
       { ...req.body, updatedAt: Date.now() },
       { new: true }
     );

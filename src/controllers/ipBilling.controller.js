@@ -13,7 +13,7 @@ const ipPatient = async(req,res,next)=>{
             if (!req.body.appointmentId) {
                 return sendMessage(res, 400, "Appointment ID is required");
             }
-            const appointment = await Appointment.findById(req.body.appointmentId)
+            const appointment = await Appointment.findOne({ _id: req.body.appointmentId })
             if (!appointment) {
                 return sendMessage(res, 404, "Appointment not found");
             }
@@ -117,7 +117,7 @@ const ipBilling = async(req,res,next)=>{
         }
         if(req.method === "POST"){
             console.log("body", req.body)
-            const appointment = await Appointment.findById(req.body.appointmentId)
+            const appointment = await Appointment.findOne({ _id: req.body.appointmentId })
             if(!appointment){
                 return sendMessage(res, 404, "Appointment not found")
             }
