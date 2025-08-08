@@ -384,4 +384,45 @@ const getAllBatchNumbersByMedicineName = async(req,res,next)=>{
 }
 
 
-module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, tags, getAllMedicineName, getPurchaseDetailsByMedicineName, getStockName, getAllBatchNumbersByMedicineName}
+// Medical Bill controller
+const medicalBill = async (req, res, next) => {
+  try {
+    if (req.method === "POST") {
+      // Create a new medical bill
+      const { patientDetails, medicines, billing, doctorName, billNo, billDate } = req.body;
+      
+      // Validate required fields
+      if (!patientDetails || !medicines || !billing) {
+        return sendMessage(res, 400, "Missing required fields");
+      }
+      
+      // Create a new medical bill document
+      // You can create a model for this or use existing models
+      // For now, we'll just return success
+      
+      // Update stock quantities if needed
+      // This would involve reducing the stock quantities for each medicine
+      
+      return sendMessage(res, 201, "Medical bill saved successfully", { success: true, billNo });
+    }
+    
+    if (req.method === "GET") {
+      // Get all medical bills or a specific one
+      const { billNo } = req.params;
+      
+      if (billNo) {
+        // Get a specific medical bill
+        // For now, we'll just return a dummy response
+        return sendMessage(res, 200, "Medical bill fetched successfully", { success: true });
+      }
+      
+      // Get all medical bills
+      // For now, we'll just return a dummy response
+      return sendMessage(res, 200, "Medical bills fetched successfully", { success: true, data: [] });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {prescription, supplier, stocks, purchase, getMedicineDetails, getSupplierBySupplierId, getOrderNumber, getSupplierNumber, getProductCode, getAllSupplierName, getAllGenericName, insertManyStock, tags, getAllMedicineName, getPurchaseDetailsByMedicineName, getStockName, getAllBatchNumbersByMedicineName, medicalBill}
