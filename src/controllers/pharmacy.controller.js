@@ -126,18 +126,21 @@ const getMedicineDetails = async (req, res, next) => {
     try {
         const { medicineName, batchNumber } = req.query;
         let result = [];
-        if(batchNumber !== ""){
-            result = await Stock.findOne({batchNumber:batchNumber, productName: medicineName }).select(["totalQuantity", "expiryDate", "salePrice"])
-            return sendMessage(res, 200, "Data Fetched Successfully", result);
-        }
+        // if(batchNumber !== ""){
+        //     result = await Stock.findOne({batchNumber:batchNumber, productName: medicineName }).select(["totalQuantity", "expiryDate", "salePrice"])
+        //     return sendMessage(res, 200, "Data Fetched Successfully", result);
+        // }
         if (!medicineName) {
             return sendMessage(res, 400, "Medicine name is required");
         }
         result = await Stock.findOne({ productName: medicineName })
-        .select(["category", "gst","productCode", "totalQuantity", "hsnCode", "pack", "unit"]);
+        // .select(["category", "gst","productCode", "totalQuantity", "hsnCode", "pack", "unit","salesPrice"]);
+        .select();
+
         if (!result) {
             return sendMessage(res, 404, "Medicine not found");
         }
+        console.log(result,"med result")
         return sendMessage(res, 200, "Data Fetched Successfully", result);
     } catch (error) {
         next(error);

@@ -67,6 +67,33 @@ const getPatientById = async (req, res, next) => {
   }
 };
 
+// const getPatientById = async (req, res, next) => {
+//   const { patientId } = req.params;
+//   try {
+//     // Build pattern for GH|IP|(currentYear)0001 format
+//     const currentYear = new Date().getFullYear();
+//     const regexPattern = `^GH\\|IP\\|${currentYear}\\d{4}$`;
+
+//     // Check if input matches the GH|IP|YYYY0001 format
+//     if (!new RegExp(regexPattern, "i").test(patientId)) {
+//       return sendMessage(res, 400, "Invalid patientId format. Expected: GH|IP|YYYY0001");
+//     }
+
+//     // Search by patientId with case-insensitive matching
+//     const patient = await Patient.findOne({
+//       patientId: { $regex: new RegExp('^' + patientId + '$', 'i') }
+//     });
+
+//     if (!patient) {
+//       return sendMessage(res, 404, "Patient Not Found");
+//     }
+
+//     return sendMessage(res, 200, "Patient fetched Successfully", patient);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
 const updatePatient = async (req, res, next) => {
   const { patientId } = req.params;
   try {
@@ -82,17 +109,44 @@ const updatePatient = async (req, res, next) => {
   }
 };
 
+// const getNextPatientId = async (req, res, next) => {
+//   try {
+//     const lastPatient = await Patient.findOne().sort({ _id: -1 });
+//     let nextPatientIdNum = 1;
+//     if (lastPatient && lastPatient.patientId) {
+//       const lastIdNum = parseInt(lastPatient.patientId.replace('PAT-', ''));
+//       if (!isNaN(lastIdNum)) {
+//         nextPatientIdNum = lastIdNum + 1;
+//       }
+//     }
+//     const nextId = `PAT-${String(nextPatientIdNum).padStart(3, '0')}`;
+//     return sendMessage(res, 200, "Next Patient ID fetched Successfully", { patientId: nextId });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
 const getNextPatientId = async (req, res, next) => {
   try {
-    const lastPatient = await Patient.findOne().sort({ _id: -1 });
+    const currentYear = new Date().getFullYear();
+    const prefix = `GH|IP|${currentYear}|`;
+
+    // Find last patient for the current year
+    const lastPatient = await Patient.findOne({
+      patientId: { $regex: `^${prefix}\\d{4}$`, $options: "i" }
+    }).sort({ _id: -1 });
+
     let nextPatientIdNum = 1;
+
     if (lastPatient && lastPatient.patientId) {
-      const lastIdNum = parseInt(lastPatient.patientId.replace('PAT-', ''));
+      const lastIdNum = parseInt(lastPatient.patientId.replace(prefix, ''));
       if (!isNaN(lastIdNum)) {
         nextPatientIdNum = lastIdNum + 1;
       }
     }
-    const nextId = `PAT-${String(nextPatientIdNum).padStart(3, '0')}`;
+
+    const nextId = `${prefix}${String(nextPatientIdNum).padStart(4, '0')}`;
+
     return sendMessage(res, 200, "Next Patient ID fetched Successfully", { patientId: nextId });
   } catch (error) {
     next(error);
