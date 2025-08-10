@@ -1,5 +1,6 @@
 const Appointment = require("../models/appointment.modal")
 const Billing = require("../models/billing.model")
+const MedicalBill = require("../models/medicalbill.model")
 const MedicineInfo = require("../models/medicineInfo.model")
 const PaymentInfo = require("../models/paymentInfo.model")
 const { Supplier, Purchase, Stock, Tag } = require("../models/pharmacy.model")
@@ -400,13 +401,21 @@ const medicalBill = async (req, res, next) => {
       }
       
       // Create a new medical bill document
-      // You can create a model for this or use existing models
-      // For now, we'll just return success
+
+
+      // Create a new medical bill document
+      const newMedicalBill = await MedicalBill.create({
+        patientDetails,
+        medicines,
+        billing,
+        doctorName,
+        billNo,
+        billDate
+      });
       
-      // Update stock quantities if needed
-      // This would involve reducing the stock quantities for each medicine
+      // Update stock quantities if needed (this logic would go here)
       
-      return sendMessage(res, 201, "Medical bill saved successfully", { success: true, billNo });
+      return sendMessage(res, 201, "Medical bill saved successfully", { success: true, billNo: newMedicalBill.billNo, medicalBill: newMedicalBill });
     }
     
     if (req.method === "GET") {
@@ -415,13 +424,15 @@ const medicalBill = async (req, res, next) => {
       
       if (billNo) {
         // Get a specific medical bill
-        // For now, we'll just return a dummy response
-        return sendMessage(res, 200, "Medical bill fetched successfully", { success: true });
+        const medicalBill = await MedicalBill.findOne({ billNo });
+        if (!medicalBill) {
+          return sendMessage(res, 404, "Medical bill not found");
+        }
+        return sendMessage(res, 200, "Medical bill fetched successfully", medicalBill);
       }
       
-      // Get all medical bills
-      // For now, we'll just return a dummy response
-      return sendMessage(res, 200, "Medical bills fetched successfully", { success: true, data: [] });
+      const medicalBills = await MedicalBill.find({});
+      return sendMessage(res, 200, "Medical bills fetched successfully", medicalBills);
     }
   } catch (error) {
     next(error);
