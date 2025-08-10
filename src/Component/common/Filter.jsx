@@ -59,6 +59,7 @@ export const Filter = () => {
           className="mt-1 block w-full pl-3 pr-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
           value={tableForm?.from || ''}
           onChange={handleFromDateChange}
+          max="2040-12-31"
         />
       </div>
 
@@ -71,6 +72,8 @@ export const Filter = () => {
           className="mt-1 block w-full pl-3 pr-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
           value={tableForm?.to || ''}
           onChange={handleToDateChange}
+          max="2040-12-31"
+
         />
       </div>
     </div>

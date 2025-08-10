@@ -453,6 +453,8 @@ export const AddPatient = (data, isEdit, name,) => {
                                     min={today} // restricts to today or future
                                     value={selectedDate}
                                     onChange={handleDateChange}
+                                    max={"2040-12-31"}
+
                                 />
                             </div>
                         </div>
