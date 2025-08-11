@@ -6,19 +6,19 @@ import {
   TextField, IconButton, CircularProgress
 } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from '@mui/icons-material/Add'; 
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 import { fetch } from '../../../api/fetch'; // working fetch instance
-import { useReactToPrint } from 'react-to-print';
-
-export const MedicalBill = () => {
+import { useReactToPrint } from 'react-to-print'; 
+ 
+export const MedicalBill = () => { 
   const componentRef = useRef();
 
   const [rows, setRows] = useState([{ medicine: null, quantity: 1, unitPrice: 0, total: 0 }]);
   const [discount, setDiscount] = useState(0);
   const [taxPercent, setTaxPercent] = useState(5);
-  const [roundOff, setRoundOff] = useState(0);
+  const [roundOff, setRoundOff] = useState(0); 
   const [formData, setFormData] = useState({
     patientId: '',
     name: '',
@@ -237,19 +237,7 @@ export const MedicalBill = () => {
   const taxAmount = (subtotal * taxPercent) / 100;
   const grandTotal = subtotal + taxAmount - discount + roundOff;
 
-  const optionsDoctor = [
-    { value: "Dr. Rajesh Kumar", label: "Dr. Rajesh Kumar" },
-    { value: "Dr. Priya Nair", label: "Dr. Priya Nair" },
-    { value: "Dr. Arjun Mehta", label: "Dr. Arjun Mehta" },
-  ];
 
-  const optionsDept = [
-    { value: "Cardiology", label: "Cardiology" },
-    { value: "Neurology", label: "Neurology" },
-    { value: "Orthopedics", label: "Orthopedics" },
-    { value: "Pediatrics", label: "Pediatrics" },
-    { value: "Dermatology", label: "Dermatology" },
-  ];
 
   const customStyles = {
     control: (base) => ({
@@ -391,13 +379,13 @@ export const MedicalBill = () => {
             </div>
             <div className="form-group">
               <label>Consulted Doctor Name:</label>
-              <Select 
-                options={loadingDoctors ? [] : (doctorList.length > 0 ? doctorList : optionsDoctor)}
-                styles={customStyles} 
-                placeholder={loadingDoctors ? "Loading doctors..." : "Select Doctor"}
-                isLoading={loadingDoctors}
-                onChange={(selectedOption) => setFormData({ ...formData, doctorName: selectedOption ? selectedOption.value : '' })}
-                value={doctorList.find(option => option.value === formData.doctorName) || null}
+              <TextField
+                type="text"
+                size="small"
+                placeholder="Doctor Name"
+                value={formData.doctorName}
+                onChange={(e) => setFormData({ ...formData, doctorName: e.target.value })}
+                fullWidth
               />
             </div>
           </div>
@@ -422,12 +410,13 @@ export const MedicalBill = () => {
             </div>
             <div className="form-group">
               <label>Department:</label>
-              <Select 
-                options={optionsDept} 
-                styles={customStyles} 
-                placeholder="Select Department"
-                onChange={(selectedOption) => setFormData({ ...formData, department: selectedOption ? selectedOption.value : '' })}
-                value={optionsDept.find(option => option.value === formData.department) || null}
+              <TextField
+                type="text"
+                size="small"
+                placeholder="Department"
+                value={formData.department}
+                onChange={(e) => setFormData({ ...formData, department: e.target.value })}
+                fullWidth
               />
             </div>
           </div>
