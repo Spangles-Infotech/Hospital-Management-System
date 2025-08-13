@@ -178,7 +178,7 @@ export const MedicalBill = () => {
     } catch (error) {
       console.error('Error fetching doctor list:', error);
       // Fallback to default doctor list if API fails
-      setDoctorList(optionsDoctor);
+      // setDoctorList(optionsDoctor);
     } finally {
       setLoadingDoctors(false);
     }
@@ -235,7 +235,7 @@ export const MedicalBill = () => {
 
   const subtotal = rows.reduce((sum, row) => sum + row.total, 0);
   const taxAmount = (subtotal * taxPercent) / 100;
-  const grandTotal = subtotal + taxAmount - discount + roundOff;
+  const grandTotal = subtotal  - discount + roundOff;
 
 
 

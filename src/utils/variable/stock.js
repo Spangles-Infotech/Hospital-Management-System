@@ -58,6 +58,65 @@ export const stockTableHeading = [
   },
 ];
 
+export const medicalTableHeading = [
+  {
+    name: "Date",
+    path: "productCode",
+  },
+
+  {
+    name: "Patient Id.",
+    path: "batchNumber",
+  },
+
+  {
+    name: "Patient Name",
+    path: "productName",
+  },
+
+  {
+    name: "Doctor",
+    path: "category",
+  },
+
+  {
+    name: "Particular",
+    path: "hsnCode",
+  },
+
+  {
+    name: "Total amount",
+    path: "stockedDate",
+    date:true
+  },
+
+  // {
+  //   name: "Expiry Date",
+  //   path: "expiryDate",
+  //   date: "true",
+  // },
+  // {
+  //   name: "Stocked Date",
+  //   path: "stockedDate",
+  //   date: "true",
+  // },
+  
+
+  // {
+  //   name: "In Stock",
+  //   path: "totalQuantity",
+  // },
+
+  // {
+  //   name: "SalePrice",
+  //   path: "salesPrice",
+  // },
+
+  {
+    name: "Action",
+    path: "normal",
+  },
+];
 export const stockEditFormField = [
   [{ label: "Product Code", name: "productCode", type: "text" }, { label: "Product Name", name: "productName", type: "text" }],
   [{ label: "Generic Name", name: "genericName", type: "text" }, { label: "HSN Code", name: "hsnCode", type: "text" }],

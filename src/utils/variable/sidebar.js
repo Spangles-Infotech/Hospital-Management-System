@@ -45,6 +45,11 @@ export const adminSidebarData = [
                 tab_path: "/admin/pharmacy/medicalbill",
             },
             {
+                tab_name: "MedicalReports",
+                path: "/admin/pharmacy/medicalreports", 
+                tab_path: "/admin/pharmacy/medicalreports",
+            },
+            {
                 tab_name: "Stocks",
                 path: "/admin/pharmacy/stocks",
                 tab_path: "/admin/pharmacy/stocks",

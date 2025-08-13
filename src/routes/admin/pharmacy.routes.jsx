@@ -1,5 +1,6 @@
 import PharmacyLayout from "../../layout/PharmacyLayout";
 import { MedicalBill } from "../../pages/pharmacy/MedicalBill/MedicalBill";
+import { MedicalReports } from "../../pages/pharmacy/MedicalBill/MedicalReports";
 import Prescription from "../../pages/pharmacy/Prescription/Prescription";
 import PrescriptionPreview from "../../pages/pharmacy/Prescription/PrescriptionPreview";
 import Stocks from "../../pages/pharmacy/Stocks";
@@ -38,6 +39,10 @@ export default [
             {
                 path:"medicalbill",
                 element:<MedicalBill/>
+            },
+            {
+                path:"medicalreports",
+                element:<MedicalReports/>
             },
             {
                 path:"stocks",
