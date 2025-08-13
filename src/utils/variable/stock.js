@@ -77,12 +77,15 @@ export const medicalTableHeading = [
   },
   {
     name: "Particular",
-    id: "medicines.medicines",
+    id: "medicines",
+    render: (item) =>
+      item.medicines
+        ?.map((medicine) => medicine.medicineName)
+        .join(", "),
   },
   {
     name: "Total amount",
     id: "billing.grandTotal",
-    date:true
   },
   {
     name: "Action",

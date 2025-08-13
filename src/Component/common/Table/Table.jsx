@@ -112,6 +112,9 @@ export const Table = ({
                       color: getTableCellColor(item.label, item.format ? item.format(null, val) : (item.id && item.id.includes('.') ? item.id.split('.').reduce((o, i) => o?.[i], val) : val?.[item.id]))
                   }}> 
                     {(() => {
+                      if (item.render) {
+                        return item.render(val);
+                      }
                       if (!item.id) {
                         console.error("item.id is undefined for item:", item);
                         return "-";
@@ -119,7 +122,7 @@ export const Table = ({
                       const resolvedValue = item.format
                         ? item.format(null, val)
                         : item.date
-                        ? getDateFromISO(item.id.includes('.') ? item.id.split('.').reduce((o, i) => o?.[i], val) : val?.[item.id])
+                        ? (typeof (item.id.includes('.') ? item.id.split('.').reduce((o, i) => o?.[i], val) : val?.[item.id]) === 'string' ? getDateFromISO(item.id.includes('.') ? item.id.split('.').reduce((o, i) => o?.[i], val) : val?.[item.id]) : '-')
                         : (item.id.includes('.') ? item.id.split('.').reduce((o, i) => o?.[i], val) : val?.[item.id]);
 
                       if (item.id.includes('.')) {
