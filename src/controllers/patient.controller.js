@@ -129,7 +129,10 @@ const updatePatient = async (req, res, next) => {
 const getNextPatientId = async (req, res, next) => {
   try {
     const currentYear = new Date().getFullYear();
-    const prefix = `GH|IP|${currentYear}|`;
+    // const prefix = `GH|IP|${currentYear}|`;
+    const prefix = `GH / ${currentYear} / IP -`;
+
+    // GH / 2025 / IP - 0001
 
     // Find last patient for the current year
     const lastPatient = await Patient.findOne({
