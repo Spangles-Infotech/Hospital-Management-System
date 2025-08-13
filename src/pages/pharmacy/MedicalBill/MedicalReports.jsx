@@ -16,11 +16,21 @@ import { useForm } from "../../../context/FormContext"
 import { useFetchData } from "../../../hooks/useFetchData"
 import { useStock } from "../../../hooks/useStock"
 import { medicalTableHeading, stockTableHeading } from "../../../utils/variable/stock"
+// import { API_ENDPOINTS } from '../../api/endpoints';
+// import { PAGINATION_LIMIT } from '../../utils/constants/dashboard';
 
 export const MedicalReports = () => {
   const { activePage, tableForm} = useForm()
-  const {data, isLoading, error, total} = useFetchData("/medical-bill", `page=${activePage}&limit=25&search=${tableForm?.search || ""}&from=${tableForm?.from || ""}&to=${tableForm?.to || ""}&category=${tableForm?.category || ""}`)
+  const {data, isLoading, error, total} = useFetchData("/medical-bill", `page=${activePage}&limit=${25}&search=${tableForm?.search || ""}&from=${tableForm?.from || ""}&to=${tableForm?.to || ""}&category=${tableForm?.category || ""}`)
   const {stockActionData, addStockButtonData} = useStock()
+
+  if (isLoading) {
+    return <div>Loading medical reports...</div>; // Or a more sophisticated loading spinner
+  }
+
+  if (error) {
+    return <div style={{ color: 'red' }}>Error: {error.message || 'Failed to fetch medical reports.'}</div>;
+  }
 
   return (
   <section className='m-4 bg-white rounded-[15px]'>

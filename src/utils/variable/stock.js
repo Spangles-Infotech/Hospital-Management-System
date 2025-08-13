@@ -61,15 +61,15 @@ export const stockTableHeading = [
 export const medicalTableHeading = [
   {
     name: "Date",
-    path: "productCode",
+    path: "billDate",
   },
   {
     name: "Patient Id.",
-    path: "batchNumber",
+    path: "patientDetails.patientId",
   },
   {
     name: "Patient Name",
-    path: "productName",
+    path: "patientDetails?.patientName",
   },
   {
     name: "Doctor",
