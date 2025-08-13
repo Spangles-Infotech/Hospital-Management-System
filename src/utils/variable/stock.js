@@ -61,55 +61,32 @@ export const stockTableHeading = [
 export const medicalTableHeading = [
   {
     name: "Date",
-    path: "billDate",
+    id: "billDate",
   },
   {
     name: "Patient Id.",
-    path: "patientDetails.patientId",
+    id: "patientDetails.patientId",
   },
   {
     name: "Patient Name",
-    path: "patientDetails?.patientName",
+    id: "patientDetails.patientName",
   },
   {
     name: "Doctor",
-    path: "category",
+    id: "doctorName",
   },
   {
     name: "Particular",
-    path: "hsnCode",
+    id: "medicines.medicines",
   },
   {
     name: "Total amount",
-    path: "stockedDate",
+    id: "billing.grandTotal",
     date:true
   },
-
-  // {
-  //   name: "Expiry Date",
-  //   path: "expiryDate",
-  //   date: "true",
-  // },
-  // {
-  //   name: "Stocked Date",
-  //   path: "stockedDate",
-  //   date: "true",
-  // },
-  
-
-  // {
-  //   name: "In Stock",
-  //   path: "totalQuantity",
-  // },
-
-  // {
-  //   name: "SalePrice",
-  //   path: "salesPrice",
-  // },
-
   {
     name: "Action",
-    path: "normal",
+    id: "action",
   },
 ];
 export const stockEditFormField = [

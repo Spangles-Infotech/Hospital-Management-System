@@ -84,16 +84,16 @@ export const Table = ({
               } `}
             >
               {tableHead.map((item, index) =>
-                item.name === "Status" ? (
-                  <Status key={index} data={val} item={item} />
-                ) : item?.path === "si.no." ? (
+                item.id === "si.no." ? (
                   <td
                     key={index}
                     className="px-6 py-3 font-roboto text-left font-[400]"
                   >
                     {i + 1}
                   </td>
-                ) : item.name === "Paid Status" ? (
+                ) : item.id === "status" ? (
+                  <Status key={index} data={val} item={item} />
+                ) : item.id === "paidStatus" ? (
                   <td
                     key={index}
                     className="px-6 py-3 font-roboto text-left font-[400]"
@@ -104,21 +104,29 @@ export const Table = ({
                       onChange={() => handlePaymentStatusChange(val?._id, val?.paymentStatus)}
                     />
                   </td>
-                ) : item.name !== "Action" ? (
+                ) : item.id !== "action" ? (
                   <td
                     key={index}
                     className="px-6 py-3 font-roboto text-left font-[400]"
                     style={{
-                      color: getTableCellColor(item.name, val[item.path]),
-                    }}
-                  >
-                    {(item.date
-                      ? getDateFromISO(val?.[item.path])
-                      : item?.isDoubleNested 
-                      ?  val?.[item.path1]?.[item?.path2]?.[item?.path3]
-                      : item.isNested
-                      ? val?.[item.path1]?.[item?.path2]
-                      : val?.[item.path]) || "-"}
+                      color: getTableCellColor(item.label, item.format ? item.format(null, val) : (item.id && item.id.includes('.') ? item.id.split('.').reduce((o, i) => o?.[i], val) : val?.[item.id]))
+                  }}> 
+                    {(() => {
+                      if (!item.id) {
+                        console.error("item.id is undefined for item:", item);
+                        return "-";
+                      }
+                      const resolvedValue = item.format
+                        ? item.format(null, val)
+                        : item.date
+                        ? getDateFromISO(item.id.includes('.') ? item.id.split('.').reduce((o, i) => o?.[i], val) : val?.[item.id])
+                        : (item.id.includes('.') ? item.id.split('.').reduce((o, i) => o?.[i], val) : val?.[item.id]);
+
+                      if (item.id.includes('.')) {
+                        console.log(`Nested path: ${item.id}, Resolved value:`, resolvedValue);
+                      }
+                      return resolvedValue || "-";
+                    })()}
                   </td>
                 ) : (
                   <Action
