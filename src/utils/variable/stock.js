@@ -63,27 +63,22 @@ export const medicalTableHeading = [
     name: "Date",
     path: "productCode",
   },
-
   {
     name: "Patient Id.",
     path: "batchNumber",
   },
-
   {
     name: "Patient Name",
     path: "productName",
   },
-
   {
     name: "Doctor",
     path: "category",
   },
-
   {
     name: "Particular",
     path: "hsnCode",
   },
-
   {
     name: "Total amount",
     path: "stockedDate",

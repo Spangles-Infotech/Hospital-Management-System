@@ -19,7 +19,7 @@ import { medicalTableHeading, stockTableHeading } from "../../../utils/variable/
 
 export const MedicalReports = () => {
   const { activePage, tableForm} = useForm()
-  const {data, isLoading, error, total} = useFetchData("/get-all-stock", `page=${activePage}&limit=25&search=${tableForm?.search || ""}&from=${tableForm?.from || ""}&to=${tableForm?.to || ""}&category=${tableForm?.category || ""}`)
+  const {data, isLoading, error, total} = useFetchData("/medical-bill", `page=${activePage}&limit=25&search=${tableForm?.search || ""}&from=${tableForm?.from || ""}&to=${tableForm?.to || ""}&category=${tableForm?.category || ""}`)
   const {stockActionData, addStockButtonData} = useStock()
 
   return (
