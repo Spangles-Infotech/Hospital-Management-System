@@ -10,6 +10,7 @@
 
 import { Filter } from "../../../Component/common/Filter"
 import { Pagination } from "../../../Component/common/Pagination"
+import { MedicalTable } from "../../../Component/common/Table/MedicalTable"
 import { Table } from "../../../Component/common/Table/Table"
 import { TableHeader } from "../../../Component/common/Table/TableHeader"
 import { useForm } from "../../../context/FormContext"
@@ -37,7 +38,7 @@ export const MedicalReports = () => {
     <h4>Medical bills</h4>
    {/* <TableHeader title={"Stock"} buttonData={addStockButtonData} /> */}
    <Filter />
-   <Table tableHead={medicalTableHeading} tableValue={data} actionData={stockActionData} isLoading={isLoading} error={error} />  
+   <MedicalTable tableHead={medicalTableHeading} tableValue={data} actionData={stockActionData} isLoading={isLoading} error={error} />  
    {
       data?.length > 0 &&
       <Pagination total={total} />
