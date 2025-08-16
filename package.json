@@ -1,5 +1,6 @@
 {
   "name": "pathma_hospital",
+  "authour":"gautam wise",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

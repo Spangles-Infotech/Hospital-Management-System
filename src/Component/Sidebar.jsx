@@ -121,7 +121,7 @@ export const Sidebar = ({ sidebarWidth, setSidebarWidth, setMenuOpen, isMenuOpen
               </div>
               {
                 item.components &&
-                <div className={` flex flex-col pl-[30px] gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "max-h-[270px]" : "max-h-0 "} `}>
+                <div className={` flex flex-col pl-[30px] gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "max-h-[300px]" : "max-h-0 "} `}>
                   {item?.components.map((it) => (
                     <div onClick={() => handleSelectMenu(it.path, true)} className={`flex w-[190px]  items-center gap-4 transition-all duration-500 ease-in-out  ${isMenuOpen === item.name ? "visible opacity-100" : "invisible opacity-0"}`} key={it.tab_path}>
                       <p className={`size-2 rounded-full transition-all duration-300 ease-in-out ${isCurrentLocation(it.tab_path) ? "bg-[#1F9CC6] " : "bg-[#C8C8C8]"}`}></p>
