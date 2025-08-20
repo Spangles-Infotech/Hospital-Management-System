@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <header className="p-2 w-full bg-white fixed z-50">
       <div className="flex items-center justify-between px-5 w-full">
-        {/* Logo Section */}
+        {/* Logo Section    */}
         <div className="flex gap-4">
           <img src={logoIcon} alt="Logo" className="w-12 h-12" />
           <h1 className="text-3xl flex justify-center items-center font-medium text-[#1F9CC6] font-roboto">
