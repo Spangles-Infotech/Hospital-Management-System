@@ -43,13 +43,13 @@ const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false, 
 
   return (
     <section className="mt-10 w-full">
-    <div className="border-[1px] border-[#1F9CC6] rounded-[10px] overflow-hidden text-stone-500 bg-white w-full">
-      <table className="w-full table-responsive border-collapse">
+    <div className="border-2 border-[#1F9CC6] rounded-[15px] overflow-hidden text-stone-500 bg-white w-full">
+      <table className="w-full table-fixed border-collapse">
         <thead>
           <tr>
             {tableHeader?.map((item, i) => (
               <th
-                className={`p-2 text-center border-b-[1px] border-[#1F9CC6] 
+                className={`p-2 text-center border-b-2 border-[#1F9CC6] 
                   ${items.includes(item) ? "w-[90px]" : item === "AMOUNT" ? "w-[70px]" : "w-[50px]"} 
                   ${tableHeader.length - 1 === i ? "" : "border-r "} 
                   overflow-hidden text-ellipsis whitespace-nowrap`}
@@ -63,7 +63,7 @@ const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false, 
         <tbody>
           {
             row?.map((items, index) => (
-              <tr className={`border-t items-center border-b border-[#1F9CC6] text-stone-600`} key={index}>
+              <tr className={`border-t items-center border-b 1F9CC6 text-stone-600`} key={index}>
                 {items?.map((item, i) => (
                   <td
                    className={`p-2 ${items.length - 1 === i ? "flex" : "border-r border-[#1F9CC6]"}`}
@@ -95,7 +95,7 @@ const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false, 
           }
           <tr>
             <td colSpan={tableHeader.length - 2} className="text-start p-4">
-              <button className="px-6 py-2 border-[1px] border-[#1F9CC6] text-[#1F9CC6] rounded-md" onClick={handleAddRow}>
+              <button className="px-6 py-2 border-2 border-[#1F9CC6] text-[#1F9CC6] rounded-md" onClick={handleAddRow}>
                 Add Row
               </button>
             </td>
@@ -105,7 +105,7 @@ const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false, 
                 <p>{title === "bills" ? formData?.["totalBillQuantity"] :formData?.["totalQuantity"]}</p>
               </div>
             </td>
-            <td className="border-l border-[#1F9CC6] text-center align-middle">{ title === "bills" ? formData?.["totalBillAmount"] :formData?.["totalMedicineAmount"]}</td>
+            <td className="border-l border-primary text-center align-middle">{ title === "bills" ? formData?.["totalBillAmount"] :formData?.["totalMedicineAmount"]}</td>
           </tr>
         </tbody>
       </table>
@@ -118,7 +118,7 @@ const MedicinePrescription = ({tableHeader, fields, title, count, isEdit=false, 
 export default MedicinePrescription;
 
 {/* item.name === "quantity" ? 
-<td className={`border-r border-[#1F9CC6] flex w-auto gap-[5px] p-2`} key={`${index}-quantity`}>
+<td className={`border-r border-primary flex w-auto gap-[5px] p-2`} key={`${index}-quantity`}>
   <div className="w-[46%] h-full">
     <Form
       item={{ label: "", name:"quantity", "type": "text"}}
@@ -128,7 +128,7 @@ export default MedicinePrescription;
       isBorder={false}
     />
   </div>
-  <div className="h-[55px] w-[1%] bg-[#1F9CC6]"></div>
+  <div className="h-[55px] w-[1%] bg-primary"></div>
   <div className="w-[46%]">
     <Form
       item={{ label: "", name:"availableQuantity", "type": "text"}}
