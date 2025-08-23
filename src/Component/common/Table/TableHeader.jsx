@@ -10,7 +10,7 @@ export const TableHeader = ({title, buttonData, isSearch=true, button, isBlue=fa
   // console.log(tableForm,"handleTableFormChange")
 
   return (
-    <div className={`flex flex-wrap items-center justify-between h-[80px] rounded-xl px-5 ${isBlue ? "" : " bg-white "}`}>
+    <div className={`flex flex-wrap items-center justify-between h-[80px] rounded-xl px-5 ${isBlue ? "" : " bg-white  "}`}>
       <div className="inline-flex space-x-3">
         <h1 className={`${isBlue ? "text-customBlack font-[500] text-[24px] font-poppins" : " text-[#1F9CC6] font-[600] text-[20px] font-roboto"}`}>{title}</h1>
       </div>
@@ -25,10 +25,17 @@ export const TableHeader = ({title, buttonData, isSearch=true, button, isBlue=fa
               buttonData?.map((item)=>(
                   <div
                       key={item.name}
+                      style={{hover: { backgroundColor: "#1F9CC6" }}}
                       onClick={() => item.onClick && item.onClick()}
-                      role="button" 
-                      className="flex flex-row gap-1 items-center px-3 py-1 h-[30px] 2xl:h-[35px] border border-[#1F9CC6] text-white transition-all duration-500 bg-[#1F9CC6] rounded text-sm space-x-2 hover:bg-white hover:text-[#1F9CC6] fill-white focus:ring-4 focus:ring-teal-200 cursor-pointer hover:fill-[#1F9CC6]"
+                      // role="button" 
+                      // className="flex flex-row gap-1 items-center px-3 py-1 h-[30px] 2xl:h-[35px] border border-[#1F9CC6] text-white transition-all duration-500 bg-[#1F9CC6] rounded text-sm space-x-2 hover:bg-white hover:border-[#1F9CC6] hover:text-[#1F9CC6] fill-white focus:ring-4 focus:ring-teal-200 cursor-pointer "
+                      // className="flex flex-row gap-1 items-center px-3 py-1 h-[30px] 2xl:h-[35px] border border-[#1F9CC6] text-white transition-all duration-500 bg-[#1F9CC6] rounded text-sm space-x-2 hover:bg-white hover:border-[#1F9CC6] hover:text-[#1F9CC6]  focus:ring-4 focus:ring-teal-200 cursor-pointer "
+                      //  className="flex flex-row gap-1 items-center px-3 py-1 h-[30px] 2xl:h-[35px] border border-[#1F9CC6] text-white transition-all duration-500 bg-[#1F9CC6] rounded text-sm space-x-2 hover:bg-white hover:border-[#1F9CC6] hover:text-[#1F9CC6] focus:ring-4 focus:ring-teal-200 cursor-pointer"
+                      //  className="flex flex-row gap-1 items-center px-3 py-1 h-[30px] 2xl:h-[35px] border border-primary text-white transition-all duration-500 bg-primary  rounded text-sm space-x-2 hover:bg-white hover:text-secondary "
+                      className="button-select"
+                      // className="flex flex-row gap-1 items-center px-3 py-1 h-[30px] 2xl:h-[35px] border border-[#1F9CC6] text-white transition-all duration-500 bg-[#1F9CC6] rounded text-sm space-x-2 hover:bg-white hover:border-[#1F9CC6] hover:text-[#1F9CC6] fill-white focus:ring-4 focus:ring-teal-200 cursor-pointer "
                   >
+
                       {item.icon ? <item.icon />  : <AddIcon /> }
                       <span>{item.name}</span>
                   </div>

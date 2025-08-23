@@ -11,4 +11,48 @@
   .my-element {
     border: 12px solid rgb(8, 155, 171); 
   }
+
+
+
+  /* select */
+
+  /* Base styles for the button */
+.button-select {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  height: 30px;
+  border: 1px solid #1F9CC6;
+  color: #ffffff;
+  transition: all 500ms ease-in-out;
+  background-color: #1F9CC6;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  /* Equivalent to `fill-white` for SVG icons */
+  fill: #ffffff;
+}
+
+/* Styles for devices with a larger screen (2xl breakpoint) */
+@media (min-width: 1536px) {
+  .button-select {
+    height: 35px;
+  }
+}
+
+/* Hover and Focus styles for the button */
+.button-select:hover {
+  background-color: #ffffff;
+  border-color: #1F9CC6;
+  color: #1F9CC6;
+  /* Equivalent to `hover:fill-[#1F9CC6]` for SVG icons */
+  fill: #1F9CC6;
+}
+
+.button-select:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px #c2f0f0;
+}
   
