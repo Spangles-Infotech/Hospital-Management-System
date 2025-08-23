@@ -17,7 +17,7 @@ const Payment_Prescription = ({handleClick, handleDiscard, isEdit, id, isHistory
         <div className="">
         {
           isHistory ?
-            <div className="  p-2 bg-white rounded-lg  w-[950px] overflow-x-auto">
+            <div className="  p-2 bg-white rounded-lg  w-[1250px] overflow-x-auto">
               <Table tableHead={historyTableHeading} tableValue={historyData} isLoading={false}/>
               
             </div>

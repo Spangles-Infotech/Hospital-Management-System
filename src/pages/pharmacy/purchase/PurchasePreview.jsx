@@ -147,6 +147,7 @@ useEffect(() => {
       <div className="border-[#1F9CC6] border  rounded-[15px]  mt-5 w-[40%] bg-white place-self-end">
         <div className="flex justify-between  px-4 py-4">
           <div className="flex gap-3">
+            
             {/* <input type="checkbox" checked={data?.isRoundOff || false} /> */}
             <p className="text-slate-700 font-medium ">Rounded off</p>
           </div>
