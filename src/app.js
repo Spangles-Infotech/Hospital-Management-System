@@ -17,8 +17,6 @@ const otherRouter = require("./routes/other.route")
 const authRouter = require("./routes/auth.route")
 const designationRouter = require("./routes/designation.route")
 
-
-
 connectDB()
 
 // const corsOptions = {
@@ -46,6 +44,7 @@ app.get("/", (req,res)=>{
 
 app.use("/api", roomRouter)
 app.use("/api", staffRouter)
+app.use("/api", require("./routes/tag.route"))
 app.use("/api", doctorRouter)
 app.use("/api", patientRouter)
 app.use("/api", appointmentRouter)
@@ -59,7 +58,5 @@ app.use('/api/auth', authRouter)
 app.use('/api', designationRouter)
 
 
-app.use(undefinedRoutes)
-app.use(errorHandler)
 
 module.exports = app

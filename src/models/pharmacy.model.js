@@ -68,29 +68,17 @@ const purchaseSchema = mongoose.Schema({
 })
 
 const TagsSchema = mongoose.Schema({
-    category:[
-        {
-            title:String
-        }
-    ],
-    strength:[
-        {
-            title:String
-        }
-    ],
-    packs:[
-        {
-            title:String
-        }
-    ],
-    gst:[
-        {
-            title:Number
-        }
-    ]
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    type: {
+        type: String,
+        required: true,
+        enum: ['category', 'strength', 'pack', 'gst', 'unit'] // Added 'unit' as it's used in frontend
+    }
 })
-
-
 const Tag = mongoose.model("Tag", TagsSchema)
 const Supplier = mongoose.model("Supplier", supplierSchema)
 const Stock = mongoose.model("Stock", stocksSchema)

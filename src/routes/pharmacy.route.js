@@ -44,9 +44,7 @@ pharmacyRouter.get("/get-order-id", getOrderNumber)
 pharmacyRouter.get("/get-medicine-purchase-history/:medicineName", getPurchaseDetailsByMedicineName)
 pharmacyRouter.get("/get-all-batch-numbers/:medicineName", getAllBatchNumbersByMedicineName)
 
-// tag routes
-pharmacyRouter.get("/get-tags", tags)
-pharmacyRouter.post("/add-tags", tags)
+
 
 // medical bill routes
 pharmacyRouter.post("/medical-bill", medicalBill)
