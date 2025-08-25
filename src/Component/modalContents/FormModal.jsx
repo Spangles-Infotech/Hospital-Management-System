@@ -41,7 +41,8 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
 
     if (tagType) {
       const response = await fetch.get(`/get-tags?type=${tagType}&&tag=${tagType}`);
-      setTags(response.data);
+      console.log(response.data.data,"response")
+      setTags(response.data.data);
     }
   };
 
@@ -133,10 +134,10 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
         {tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-2">
             {tags.map((tag) => (
-              <div key={tag._id} className="flex items-center bg-gray-200 px-3 py-1 rounded-full text-sm">
-                {tag.name}
+              <div key={tag} className="flex items-center bg-gray-200 px-3 py-1 rounded-full text-sm">
+                {tag}
                 <button
-                  onClick={() => handleDeleteTag(tag._id)}
+                  onClick={() => handleDeleteTag(tag)}
                   className="ml-2 text-red-500 hover:text-red-700 focus:outline-none"
                 >
                   X
