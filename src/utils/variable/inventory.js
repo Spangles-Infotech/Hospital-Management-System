@@ -67,6 +67,21 @@ export const inventoryTableValue = [
 ]
 
 export const inventoryFormField = [
+    {
+        label:"Add Category",
+        name:"category",
+        type:"text"
+    },
+    {
+        label:"Add Strength",
+        name:"strength",
+        type:"text"
+    },
+    {
+        label:"Add unit",
+        name:"unit",
+        type:"text"
+    },
     [
         {
             label:"Item Name",

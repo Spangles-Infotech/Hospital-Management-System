@@ -6,9 +6,13 @@ import { IconCard } from '../common/IconCard'
 import { usePostData } from '../../hooks/usePostData'
 import { useUpdateData } from '../../hooks/useUpdateData'
 import { usePatch } from '../../hooks/usePatch'
-import { useGetData } from '../../hooks/useGetData' 
+import { useGetData } from '../../hooks/useGetData'
+import { useDeleteData } from '../../hooks/useDeleteData'
+import { fetch } from '../../api/fetch'; 
 
 export const FormModal = ({title, formField, data, isEdit, name, refetch, label, isPatch=false, getRoute}) => {
+  const [tags, setTags] = React.useState([]);
+  const { deleteData } = useDeleteData("/delete-tag");
   const {closeModal} = useModal()
   const {postData} = usePostData(name)
   const {patchData} = usePatch(name)
@@ -20,6 +24,42 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
   const {data: nextPatientId} = useGetData("/get-next-patient-id", !isEdit && name === "/add-patient")
   const {data: nextStaffId} = useGetData("/get-next-staff-id", !isEdit && name === "/add-staff")
   console.log(nextStaffId?.nextStaffId,"nextStaffId full object")
+
+  const fetchTags = async () => {
+    let tagType = '';
+    switch (title) {
+        case "Add Category":
+            tagType = 'medicineCategory';
+            break;
+        case "Add Strength":
+            tagType = 'strength';
+            break;
+        case "Add unit":
+            tagType = 'unit';
+            break;
+    }
+
+    if (tagType) {
+      const response = await fetch.get(`/get-tags?type=${tagType}&&tag=${tagType}`);
+      setTags(response.data);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchTags();
+  }, [title, refetch]);
+
+  const handleDeleteTag = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this tag?");
+    if (confirmDelete) {
+      const status = await deleteData(id);
+      if (status === 200) {
+        fetchTags(); // Refresh tags after deletion
+      } else {
+        alert("Failed to delete tag.");
+      }
+    }
+  };
 
   React.useEffect(() => {
     if (!isEdit && name === "/add-doctor" && nextDoctorId) {
@@ -81,6 +121,7 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
         handleReset()
       }else{
         setFormData((prev)=>({...prev, [formField[0]?.name]:""}))
+        fetchTags(); // Refresh tags after adding a new one
       }
     }
   };
@@ -88,7 +129,22 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
   return (
     <div className='flex flex-col gap-[20px]  min-w-[600px]'>
         <p className='text-[20px] font-[500]'>{title}</p>
-        {data.length > 0 && <IconCard />}
+        {data && data.length > 0 && <IconCard />}
+        {tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-2">
+            {tags.map((tag) => (
+              <div key={tag._id} className="flex items-center bg-gray-200 px-3 py-1 rounded-full text-sm">
+                {tag.name}
+                <button
+                  onClick={() => handleDeleteTag(tag._id)}
+                  className="ml-2 text-red-500 hover:text-red-700 focus:outline-none"
+                >
+                  X
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
         <div className='flex flex-col gap-[10px]'>
             <FormLayout data={formField} handleFieldChange={handleFieldChange} />
         </div>

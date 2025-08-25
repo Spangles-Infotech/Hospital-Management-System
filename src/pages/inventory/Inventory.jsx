@@ -18,7 +18,25 @@ const Inventory = () => {
         {
             name: "New Stock",
             onClick: () => { 
-                openModal(FormModal, { title: "New Stock", formField: inventoryFormField, refetch, name: "add-inventory" });
+                openModal(FormModal, { title: "New Stock", formField: inventoryFormField.slice(3), refetch, name: "add-inventory" });
+            }
+        },
+        {
+            name: "Add Category",
+            onClick: () => {
+                openModal(FormModal, { title: "Add Category", formField: [inventoryFormField[0]], refetch, name: "add-tag" });
+            }
+        },
+        {
+            name: "Add Strength",
+            onClick: () => {
+                openModal(FormModal, { title: "Add Strength", formField: [inventoryFormField[1]], refetch, name: "add-tag" });
+            }
+        },
+        {
+            name: "Add unit",
+            onClick: () => {
+                openModal(FormModal, { title: "Add unit", formField: [inventoryFormField[2]], refetch, name: "add-tag" });
             }
         }
     ];

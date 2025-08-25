@@ -25,9 +25,9 @@ useEffect(() => {
 
       const fetchBatchNumbers = async () => {
         try {
-          // const response = await axios.get(`http://localhost:3500/api/get-all-batch-numbers/${medicine.medicineName}`);
+          const response = await axios.get(`http://localhost:3500/api/get-all-batch-numbers/${medicine.medicineName}`);
           // const response = await axios.get(`https://hospital-management-system-eexc.onrender.com/api/get-all-batch-numbers/${medicine.medicineName}`);
-          const response = await axios.get(`https://server.gunamhospitals.com/api/get-all-batch-numbers/${medicine.medicineName}`);
+          // const response = await axios.get(`https://server.gunamhospitals.com/api/get-all-batch-numbers/${medicine.medicineName}`);
 
           // 
 
