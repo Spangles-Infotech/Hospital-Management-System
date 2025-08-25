@@ -16,6 +16,9 @@ const ipRouter = require("./routes/ip.route")
 const otherRouter = require("./routes/other.route")
 const authRouter = require("./routes/auth.route")
 const designationRouter = require("./routes/designation.route")
+const tagrouter = require("./routes/tag.route")
+
+// tagrouter
 
 connectDB()
 
@@ -56,6 +59,9 @@ app.use("/api", ipRouter)
 app.use('/api', otherRouter)
 app.use('/api/auth', authRouter)
 app.use('/api', designationRouter)
+app.use('/api', tagrouter)
+
+
 
 
 
