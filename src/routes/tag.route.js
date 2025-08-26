@@ -3,9 +3,9 @@ const { addTag, getTags, deleteTag } = require('../controllers/tag.controller');
 
 const tagrouter = express.Router();
 
-router.post('/add-tag', addTag);
-router.get('/get-tags', getTags);
-router.post('/delete-tag/:tag', deleteTag);
+// tagrouter.post('/add-tag', addTag);
+// tagrouter.get('/get-tags', getTags);
+tagrouter.delete('/delete-tag/:name', deleteTag);
 
 // module.exports = router;
 module.exports = tagrouter

@@ -24,8 +24,10 @@ exports.getTags = async (req, res) => {
 
 exports.deleteTag = async (req, res) => {
     try {
-        const { id, type } = req.body;
-        await Tag.findOneAndDelete({ _id: id, type });
+        const { name } = req.params;
+        const { type } = req.query;
+        console.log(name,"name")
+        await Tag.findOneAndDelete({ name, type });
         res.status(200).json({ message: 'Tag deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: 'Error deleting tag', error: error.message });

@@ -45,6 +45,10 @@ pharmacyRouter.get("/get-medicine-purchase-history/:medicineName", getPurchaseDe
 pharmacyRouter.get("/get-all-batch-numbers/:medicineName", getAllBatchNumbersByMedicineName)
 
 
+// tag routes
+pharmacyRouter.get("/get-tags", tags)
+pharmacyRouter.post("/add-tags", tags)
+
 
 // medical bill routes
 pharmacyRouter.post("/medical-bill", medicalBill)
