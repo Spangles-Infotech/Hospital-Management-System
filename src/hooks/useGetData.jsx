@@ -12,7 +12,7 @@ export const useGetData = (url, condition = true) => {
         setIsLoading(true);
         try {
             const response = await fetch.get(url);
-            setData(response.data.data);
+            setData(response.data);
             setError(null);
         } catch (err) {
             setError(err.message);
