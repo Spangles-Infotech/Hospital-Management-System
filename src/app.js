@@ -17,6 +17,7 @@ const otherRouter = require("./routes/other.route")
 const authRouter = require("./routes/auth.route")
 const designationRouter = require("./routes/designation.route")
 const tagrouter = require("./routes/tag.route")
+const stockTagsRouter = require("./routes/stockTags.route")
 
 // tagrouter
 
@@ -60,6 +61,7 @@ app.use('/api', otherRouter)
 app.use('/api/auth', authRouter)
 app.use('/api', designationRouter)
 app.use('/api', tagrouter)
+app.use('/api', stockTagsRouter)
 
 
 
