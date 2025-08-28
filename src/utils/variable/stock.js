@@ -92,15 +92,41 @@ export const medicalTableHeading = [
     id: "action",
   },
 ];
+
+export const stockFormField = [
+  [{ label: "Product Code", name: "productCode", type: "text" }, { label: "Batch No.", name: "batchNumber", type: "text" }],
+  [{ label: "Product Name", name: "productName", type: "text" }, { label: "Generic Name", name: "genericName", type: "text" }],
+  [{ label: "Strength", name: "strength", type: "select", route: "GET_STRENGTHS" }],
+  [{ label: "Category", name: "category", type: "select", route: "GET_CATEGORIES" }, { label: "HSN Code", name: "hsnCode", type: "text" }],
+  [{ label: "Stocked Date", name: "stockedDate", type: "date" }, { label: "Expiry Date", name: "expiryDate", type: "date" }],
+  [{ label: "In Stock", name: "inStock", type: "number" }, { label: "Unit", name: "unit", type: "select", route: "GET_UNITS" }],
+  [{ label: "Pack", name: "pack", type: "select", route: "GET_PACKS" }, { label: "Low Stock", name: "lowStock", type: "number" }],
+  [{ label: "Gst %", name: "gst", type: "number" }, { label: "Purchase Price", name: "purchasePrice", type: "number" }],
+  [{ label: "Sales Price", name: "salesPrice", type: "number" }, { label: "Supplier", name: "supplier", type: "text" }],
+  [
+    {
+      label: "Expire Alert",
+      name: "expireAlert",
+      options: ["months", "weeks", "days"],
+      inputName: "count",
+      inputType: "number",
+      dropdownName: "duration",
+      type: "inputdropdown",
+      align: "right",
+    },
+  ],
+];
+
 export const stockEditFormField = [
   [{ label: "Product Code", name: "productCode", type: "text" }, { label: "Product Name", name: "productName", type: "text" }],
   [{ label: "Generic Name", name: "genericName", type: "text" }, { label: "HSN Code", name: "hsnCode", type: "text" }],
+  [{ label: "Strength", name: "strength", type: "select", route: "GET_STRENGTHS" }],
   [
     {
       label: "Category",
       name: "category",
       type: "select",
-      options: ["Tablet", "Syrup", "Injection"],
+      route: "GET_CATEGORIES",
     },
     {
       label: "Expire Alert",
@@ -113,7 +139,7 @@ export const stockEditFormField = [
       align:"right"
     },
   ],
-  [{ label: "Pack", name: "pack", type: "text" }, { label: "Low Stock", name: "lowStock", type: "number" }],
+  [{ label: "Pack", name: "pack", type: "select", route: "GET_UNITS" }, { label: "Low Stock", name: "lowStock", type: "number" }],
   [{ label: "Gst %", name: "gst", type: "number" },{label:"Total Quantity", name:"totalQuantity", type:"number"}],
   [{label:"Purchase Price", name:"purchasePrice", type:"number"},{label:"Sales Price", name:"salesPrice", type:"number"}],
 ];
@@ -205,33 +231,31 @@ export const stockPreviewFields = [
 ];
 
 export const tagFormFields = {
-  "medicine":[
+  "category":[
     {
         label:"",
-        name:"medicineCategory",
+        name:"name",
         type:"string",
     }
   ],
   "pack":[
-    [
-      {
-          label:"",
-          name:"unitsCategory",
-          type:"number",
-      },
-    ]
+    {
+        label:"",
+        name:"name",
+        type:"string",
+    }
   ],
   "strength":[
     {
         label:"",
-        name:"strengthCategory",
+        name:"name",
         type:"string",
     }
   ],
   "gst":[
     {
         label:"",
-        name:"gstCategory",
+        name:"name",
         type:"number",
     }
   ],

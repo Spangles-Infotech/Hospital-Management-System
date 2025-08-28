@@ -10,10 +10,10 @@ export const usePostData = (url, options = {}) => {
   const [error, setError] = useState(null)
   const { handleReset } = useForm()
 
-  const postData = async (body) => {
+  const postData = async (body, postRoute = url) => {
     setIsLoading(true)
     try {
-      const response = await fetch.post(url, body)
+      const response = await fetch.post(postRoute, body)
       setMessage(response.data.message)
 
       if (response.status === 201) {

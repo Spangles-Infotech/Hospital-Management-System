@@ -29,7 +29,7 @@ export const Dropdown = ({ value, onChange, label, options, isIndexIsValue=false
       >
         {undefinedValue && <option>select</option>}
         {Array.isArray(options) && (options || [])?.map((option, index) => (
-          <option key={option} value={isIndexIsValue ? index  : option?._id}>{option?.category || option}</option>
+          <option key={option} value={isIndexIsValue ? index  : option?._id}>{option?.name || option}</option>
         ))}
       </select>
       {

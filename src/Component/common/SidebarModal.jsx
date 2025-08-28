@@ -65,7 +65,7 @@ export const SidebarModal = ({isOpen, onClose, formField, isEdit,id, refetch, is
                 <img src={require("../../assests/cancel.png")} alt="close-icon" className='object-contain size-[25px] cursor-pointer' onClick={onClose} />
             </div>
             <div className='flex flex-col gap-[10px]'>
-                <FormLayout data={!isEdit && !isAdd ? stockFormField : !isEdit && isAdd ? stockEditFormField : stockEditFormField} />
+                <FormLayout data={!isEdit && !isAdd ? stockFormField : stockEditFormField} />
             </div>
             <div className='flex justify-end items-end'>
                 <button onClick={(e)=>handleSaveForm(e)} className="w-[30%] bg-[#1F9CC6] p-2 rounded-lg hover:bg-[#1F9CC6] transition text-lg" >{title}</button>

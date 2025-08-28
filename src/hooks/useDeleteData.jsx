@@ -6,12 +6,12 @@ export const useDeleteData = (url) => {
     const [message, setMessage] = useState("");
     const [error, setError] = useState(null);
 
-    const deleteData = async ({ name, type }) => { 
+    const deleteData = async (id) => { 
         setIsLoading(true);
         setError(null); 
 
         try {
-            const response = await fetch.delete(`${url}/${name}?type=${type}`);
+            const response = await fetch.delete(`${url}/${id}`);
             if (response.status === 200) {
                 setMessage(response.data.message || "Deleted successfully!");
             }

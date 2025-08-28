@@ -1,12 +1,22 @@
 import { createContext, useContext, useState } from "react";
 import { fetch } from "../api/fetch";
 import { getDateFromISO } from "../utils/functions/function";
+import { stockFormField, stockEditFormField } from "../utils/variable/stock";
 
 const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
   const ITEM_PER_PAGE = 15
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(() => {
+    const allFields = [...stockFormField.flat(2), ...stockEditFormField.flat(2)];
+    const initialData = {};
+    allFields.forEach(field => {
+      if (field && field.name) {
+        initialData[field.name] = '';
+      }
+    });
+    return initialData;
+  });
   const [tableForm, setTableForm] = useState({})
   const [registerOp ,setRegisterOp] = useState({})
   const [errors, setErrors] = useState({});
