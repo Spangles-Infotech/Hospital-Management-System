@@ -164,6 +164,8 @@ export const unitFields = {
   ],
 };
 
+
+
 export const stockPreviewFields = [
   {
     isSingle: true,
@@ -246,18 +248,13 @@ export const tagFormFields = {
     }
   ],
   "strength":[
-    {
-        label:"",
-        name:"name",
-        type:"string",
-    }
+    [{label:"Name", name:"name", type:"text"}]
+  ],
+  "unit":[
+    [{label:"Name", name:"name", type:"text"}]
   ],
   "gst":[
-    {
-        label:"",
-        name:"name",
-        type:"number",
-    }
+    [{label:"Name", name:"name", type:"number"}]
   ],
 
 }

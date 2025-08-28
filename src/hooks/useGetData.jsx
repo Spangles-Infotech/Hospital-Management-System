@@ -26,6 +26,6 @@ export const useGetData = (url, condition = true) => {
     }, [fetchData]);
 
   return{
-    isLoading, data, error
+    isLoading, data, error, fetchData
   }
 }

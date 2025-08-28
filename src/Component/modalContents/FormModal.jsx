@@ -8,9 +8,10 @@ import { useUpdateData } from '../../hooks/useUpdateData'
 import { usePatch } from '../../hooks/usePatch'
 import { useGetData } from '../../hooks/useGetData'
 import { useDeleteData } from '../../hooks/useDeleteData'
-import { API_ENDPOINTS } from '../../api/endpoints'; 
+import { API_ENDPOINTS } from '../../api/endpoints';
+import { tagFormFields } from '../../utils/variable/stock'; 
 
-export const FormModal = ({title, formField, data, isEdit, name, refetch, label, isPatch=false, getRoute}) => {
+export const FormModal = ({title, data, isEdit, name, refetch, label, isPatch=false, getRoute}) => {
   // const [tags, setTags] = React.useState([]);
   const [deleteTagRoute, setDeleteTagRoute] = React.useState('');
   const { deleteData } = useDeleteData(deleteTagRoute);
@@ -127,20 +128,20 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
     let postRoute = name;
 
     if (title === "Add Category") {
-      dataToSend = { name: formData[formField[0]?.name] };
+      dataToSend = { name: formData.name };
       postRoute = '/add-category';
     } else if (title === "Add Strength") {
-      dataToSend = { name: formData[formField[0]?.name] };
+      dataToSend = { name: formData.name };
       postRoute = '/add-strength';
     } else if (title === "Add unit") {
-      dataToSend = { name: formData[formField[0]?.name] };
+      dataToSend = { name: formData.name };
       postRoute = '/add-unit';
     } else if (title === "Add GST %") {
-      dataToSend = { name: formData[formField[0]?.name] };
-      postRoute = '/add-gst'; // Assuming you'll add these routes later
+      dataToSend = { name: formData.name };
+      postRoute = '/add-gst';
     } else if (title === "Add Pack") {
-      dataToSend = { name: formData[formField[0]?.name] };
-      postRoute = '/add-pack'; // Assuming you'll add these routes later
+      dataToSend = { name: formData.name };
+      postRoute = '/add-pack';
     }
 
     const response = isPatch ? await patchData(dataToSend) : isEdit ? await updateData(dataToSend) : await postData(dataToSend, postRoute);
@@ -151,8 +152,8 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
       if (!notToReset.includes(title)){ 
         handleReset()
       }else{
-        setFormData((prev)=>({...prev, [formField[0]?.name]:""}))
-        fetchData(); // Refresh tags after adding a new one
+        setFormData((prev)=>({...prev, name:""}))
+        fetchData();
       }
     }
   };
@@ -177,11 +178,11 @@ export const FormModal = ({title, formField, data, isEdit, name, refetch, label,
           </div>
         )}
         <div className='flex flex-col gap-[10px]'>
-            <FormLayout data={formField} handleFieldChange={handleFieldChange} />
+            <FormLayout data={tagFormFields[title.split(' ')[1].toLowerCase()]} handleFieldChange={handleFieldChange} />
         </div>
         <div className="flex gap-7 items-center justify-end p-5">
           <p onClick={() => { handleReset(); closeModal(); }}  className="text-red-600 cursor-pointer text-lg w-[150px]"> Discard </p>
-          <button onClick={(e)=>handleSubmit(e, formField, handleSubmitForm)} className="w-[150px] bg-[#1F9CC6] p-2 text-white rounded-lg hover:bg-[#1F9CC6] transition text-lg" > Save </button>
+          <button onClick={(e)=>handleSubmit(e, tagFormFields[title.split(' ')[1].toLowerCase()], handleSubmitForm)} className="w-[150px] bg-[#1F9CC6] p-2 text-white rounded-lg hover:bg-[#1F9CC6] transition text-lg" > Save </button>
         </div>
     </div>
   )
