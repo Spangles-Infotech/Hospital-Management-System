@@ -344,6 +344,20 @@ export const MedicalBill = () => {
               <input type="number" className="form-controls" value={patientDetails.age} readOnly />
             </div>
           </div>
+          <div className="col-sm-4">
+
+          <div className="form-group">
+            <label>Gender:</label>
+            <input type="text" className="form-controls" value={patientDetails.gender} readOnly />
+            </div>
+          <div className="form-group"><label>Blood Group:</label><input type="text" className="form-controls" value={patientDetails.bloodGroup} readOnly /></div>
+          </div>
+          {/* </div> */}
+
+
+            {/* <div className="form-group"><label>Address:</label><input type="text" className="form-controls" value={patientDetails.address} readOnly /></div> */}
+
+          {/*  */}
           {/* Patient Name & Doctor */}
           <div className="col-sm-4">
             <div className="form-group">
@@ -377,20 +391,7 @@ export const MedicalBill = () => {
                 <input type="text" className="form-controls" value={patientDetails.patientName} readOnly />
               )}
             </div>
-            <div className="form-group">
-              <label>Consulted Doctor Name:</label>
-              <TextField
-                type="text"
-                size="small"
-                placeholder="Doctor Name"
-                value={formData.doctorName}
-                onChange={(e) => setFormData({ ...formData, doctorName: e.target.value })}
-                fullWidth
-              />
-            </div>
-          </div>
-          {/* Phone & Dept */}
-          <div className="col-sm-4">
+
             <div className="form-group">
               <label>Mobile Number:</label>
               <input
@@ -408,26 +409,64 @@ export const MedicalBill = () => {
                 }}
               />
             </div>
+
+            
+          </div>
+          {/* 1111  1 1  1 1 1  1 1 */}
+
+
+
+
+
+
+
+
+
+
+
+          {/* 2 2  2 2  2 2 2 2  2  */}
+          {/* Phone & Dept */}
+          <div className="col-sm-4   ">
             <div className="form-group">
-              <label>Department:</label>
-              <TextField
-                type="text"
-                size="small"
-                placeholder="Department"
+              <label>Consulted Doctor Name:</label>
+                 <input type="text" className="form-controls"
+                value={formData.doctorName}
+                onChange={(e) => setFormData({ ...formData, doctorName: e.target.value })}
+            
+            // value={patientDetails.gender}
+             readOnly />
+
+            </div>
+            
+
+            <div className="form-group">
+              
+                <label>Department:</label>
+              <input type="text" 
+              className="form-controls"
+                // value={formData.doctorName}
                 value={formData.department}
+
+                // onChange={(e) => setFormData({ ...formData, doctorName: e.target.value })}
                 onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                fullWidth
-              />
+
+            
+            // value={patientDetails.gender}
+             readOnly />
+
             </div>
           </div>
+
         </div>
 
+          {/* <div className="row  flex justify-content-center  " style={{}}> */}
+          {/* <div className="col-sm-4"><label>Gender:</label><input type="text" className="form-controls" value={patientDetails.gender} readOnly /></div> */}
+          {/* <div className="col-sm-4"><label>Blood Group:</label><input type="text" className="form-controls" value={patientDetails.bloodGroup} readOnly /></div> */}
+          {/* <div className="col-sm-4"><label>Address:</label><input type="text" className="form-controls" value={patientDetails.address} readOnly /></div> */}
+        {/* </div> */}
+
         {/* Extra details */}
-        <div className="row   " style={{paddingX:"10px"}}>
-          <div className="col-sm-4"><label>Gender:</label><input type="text" className="form-controls" value={patientDetails.gender} readOnly /></div>
-          <div className="col-sm-4"><label>Blood Group:</label><input type="text" className="form-controls" value={patientDetails.bloodGroup} readOnly /></div>
-          <div className="col-sm-4"><label>Address:</label><input type="text" className="form-controls" value={patientDetails.address} readOnly /></div>
-        </div>
+
 
         {/* Bill Table */}
         <div className="row bill-container mt-4">
