@@ -10,10 +10,13 @@ import { Search } from '../Fields/Search'
 import { useForm } from '../../context/FormContext'
 import { SearchDropdown } from '../Fields/SearchDropdown'
 import { useDesignations } from '../../hooks/useDesignations'
+import { useFetchData } from '../../hooks/useFetchData'
+import * as endpoints from '../../api/endpoints'
 
 export const Form = ({item, formData, handleChange, errors, isBorder}) => {
     const {handleInputDropDownChange} = useForm()
     const { designations } = useDesignations()
+    const { data: fetchedOptions } = useFetchData(item.route ? endpoints[item.route.substring(1).toUpperCase().replace(/-/g, '_')] : null);
 
   return (
     <>
@@ -30,7 +33,7 @@ export const Form = ({item, formData, handleChange, errors, isBorder}) => {
                 <Dropdown 
                   label={item?.label} 
                   value={formData} 
-                  options={item?.dependsOn ? item.getOptions(formData) : (item?.useHook === "useDesignations" ? designations : item?.options)} 
+                  options={item.options ? item.options : (item.route ? fetchedOptions.map(option => ({ label: option.name, value: option._id })) : (item?.dependsOn ? item.getOptions(formData) : (item?.useHook === "useDesignations" ? designations : [])))} 
                   onChange={handleChange} 
                   name={item?.name} 
                   errors={errors} 

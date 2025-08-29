@@ -14,6 +14,7 @@ export const useFetchData = (baseUrl, query) => {
         setIsLoading(true);
         try {
             const response = await fetch.get(url);
+            // console.log(response,"responseresponse")
             setData(response.data.data);
             setTotal(response.data?.total)
             setError(null);
